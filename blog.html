@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CERD8SRPBP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CERD8SRPBP');
+  </script>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog del Camino de Santiago | Guías, Consejos y Rutas</title>
+  <meta name="description" content="Consejos prácticos, rutas, etapas, presupuesto y preparación para hacer el Camino de Santiago con toda la información que necesitas.">
+  <link rel="canonical" href="https://easycaminosantiago.com/blog.html">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    .blog-hero {
+      background: linear-gradient(135deg, #2D4A52 0%, #56A1A4 100%);
+      padding: 80px 40px 60px;
+      text-align: center;
+      color: white;
+    }
+    .blog-hero h1 { color: white; font-size: 2.4rem; margin-bottom: 12px; }
+    .blog-hero p { color: rgba(255,255,255,0.85); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+    .blog-grid {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 32px;
+    }
+    .blog-card {
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      background: white;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .blog-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+    .blog-card-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      background: #ECE7E2;
+      display: block;
+    }
+    .blog-card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+    .blog-tag { display: inline-block; background: #EBF5F6; color: #56A1A4; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; margin-bottom: 10px; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.04em; }
+    .blog-card-body h2 { font-size: 1.2rem; color: #2D4A52; margin-bottom: 10px; line-height: 1.3; }
+    .blog-card-body p { color: #5a6b6a; font-size: 0.92rem; line-height: 1.65; flex: 1; }
+    .blog-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 18px; padding-top: 14px; border-top: 1px solid #ECE7E2; }
+    .blog-card-date { font-size: 0.8rem; color: #8a9b9a; }
+    .blog-read-more { font-size: 0.85rem; font-weight: 700; color: #56A1A4; font-family: var(--font-heading); }
+    @media (max-width: 768px) {
+      .blog-hero { padding: 60px 20px 40px; }
+      .blog-hero h1 { font-size: 1.8rem; }
+      .blog-grid { grid-template-columns: 1fr; gap: 20px; margin: 40px auto; }
+    }
+  </style>
+
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://easycaminosantiago.com/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://easycaminosantiago.com/blog.html"}]}
+</script>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="ecs-nav">
+  <a href="index.html"><img src="easy-camino-santiago-logo.png" alt="Easy Camino Santiago" class="ecs-nav-logo"></a>
+  <ul>
+    <li class="nav-dropdown">
+      <a href="#"><span class="es-txt">Rutas</span><span class="en-txt" style="display:none">Routes</span></a>
+      <div class="nav-dropdown-menu">
+        <a href="camino-frances.html">Camino Francés</a>
+        <a href="camino-frances-sarria.html">⭐ Últimas 100km desde Sarria</a>
+        <a href="camino-portugues.html">Camino Portugués</a>
+        <a href="camino-portugues-costa.html">Camino Portugués por la Costa</a>
+        <a href="camino-norte.html">Camino del Norte</a>
+        <a href="camino-finisterre.html">Camino de Finisterre</a>
+        <a href="camino-ingles.html">Camino Inglés</a>
+        <a href="camino-primitivo.html">Camino Primitivo</a>
+        <a href="camino-bicicleta.html">En Bicicleta</a>
+      </div>
+    </li>
+    <li><a href="index.html#ecs-servicios"><span class="es-txt">Servicios</span><span class="en-txt" style="display:none">Services</span></a></li>
+    <li><a href="blog.html" style="color:var(--azul);font-weight:700;"><span class="es-txt">Blog</span><span class="en-txt" style="display:none">Blog</span></a></li>
+    <li><a href="contacto.html"><span class="es-txt">Contacto</span><span class="en-txt" style="display:none">Contact</span></a></li>
+    <li><a href="reserva.html" class="btn-nav"><span class="es-txt">Planifica tu Camino</span><span class="en-txt" style="display:none">Plan your Camino</span></a></li>
+    <li><div class="lang-toggle"><button class="lang-btn active" onclick="ecsSetLang('es')">ES</button><button class="lang-btn" onclick="ecsSetLang('en')">EN</button></div></li>
+  </ul>
+  <button class="nav-hamburger" onclick="ecsToggleNav()"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-mobile-overlay" id="nav-mobile">
+  <button class="nav-mobile-close" onclick="ecsToggleNav()">✕</button>
+  <a href="index.html"><span class="es-txt">Inicio</span><span class="en-txt" style="display:none">Home</span></a>
+  <a href="camino-frances-sarria.html">⭐ 100km desde Sarria</a>
+  <a href="camino-frances.html">Camino Francés</a>
+  <a href="camino-portugues.html">Camino Portugués</a>
+  <a href="camino-norte.html">Camino del Norte</a>
+  <a href="camino-primitivo.html">Camino Primitivo</a>
+  <a href="camino-ingles.html">Camino Inglés</a>
+  <a href="camino-finisterre.html">Camino de Finisterre</a>
+  <a href="reserva.html" style="color:#F3A949;font-weight:bold">→ <span class="es-txt">Planifica tu Camino</span><span class="en-txt" style="display:none">Plan your Camino</span></a>
+</div>
+
+<!-- Hero -->
+<div class="blog-hero">
+  <h1><span class="es-txt">Blog del Camino de Santiago</span><span class="en-txt" style="display:none">Camino de Santiago Blog</span></h1>
+  <p><span class="es-txt">Guías prácticas, consejos de peregrinos y todo lo que necesitas saber antes de salir al Camino.</span><span class="en-txt" style="display:none">Practical guides, pilgrim tips and everything you need to know before setting out on the Camino.</span></p>
+</div>
+
+<!-- Articles Grid -->
+<div class="blog-grid">
+
+  <article class="blog-card">
+    <a href="blog-mochila-camino-santiago.html" style="display:block;text-decoration:none;">
+      <img src="blog-img-mochila.jpg" alt="Mochila Camino de Santiago" class="blog-card-img">
+    </a>
+    <div class="blog-card-body">
+      <span class="blog-tag"><span class="es-txt">Preparación</span><span class="en-txt" style="display:none">Preparation</span></span>
+      <h2><a href="blog-mochila-camino-santiago.html" style="color:inherit;text-decoration:none;"><span class="es-txt">Qué llevar en la mochila del Camino de Santiago: lista completa 2025</span><span class="en-txt" style="display:none">What to pack for the Camino de Santiago: complete checklist 2025</span></a></h2>
+      <p><span class="es-txt">Una mochila mal preparada puede arruinar tu Camino. La lista definitiva: ropa técnica, calzado, botiquín y lo que definitivamente no necesitas llevar.</span><span class="en-txt" style="display:none">A badly packed bag can ruin your Camino. The definitive list: technical clothing, footwear, first-aid kit and what you definitely don't need to bring.</span></p>
+      <div class="blog-card-footer">
+        <span class="blog-card-date">Easy Camino Santiago</span>
+        <a href="blog-mochila-camino-santiago.html" class="blog-read-more"><span class="es-txt">Leer más →</span><span class="en-txt" style="display:none">Read more →</span></a>
+      </div>
+    </div>
+  </article>
+
+  <article class="blog-card">
+    <a href="blog-cuanto-cuesta-camino-santiago.html" style="display:block;text-decoration:none;">
+      <img src="blog-img-costes.jpg" alt="Cuánto cuesta el Camino de Santiago" class="blog-card-img">
+    </a>
+    <div class="blog-card-body">
+      <span class="blog-tag"><span class="es-txt">Presupuesto</span><span class="en-txt" style="display:none">Budget</span></span>
+      <h2><a href="blog-cuanto-cuesta-camino-santiago.html" style="color:inherit;text-decoration:none;"><span class="es-txt">¿Cuánto cuesta hacer el Camino de Santiago? Presupuesto real 2025</span><span class="en-txt" style="display:none">How much does the Camino de Santiago cost? Real budget 2025</span></a></h2>
+      <p><span class="es-txt">Desglose completo de gastos: alojamiento, comida, transporte y extras. Desde 35€/día en albergue hasta 120€/día en hotel. Con y sin agencia.</span><span class="en-txt" style="display:none">Full cost breakdown: accommodation, food, transport and extras. From €35/day in a hostel to €120/day in a hotel. With and without an agency.</span></p>
+      <div class="blog-card-footer">
+        <span class="blog-card-date">Easy Camino Santiago</span>
+        <a href="blog-cuanto-cuesta-camino-santiago.html" class="blog-read-more"><span class="es-txt">Leer más →</span><span class="en-txt" style="display:none">Read more →</span></a>
+      </div>
+    </div>
+  </article>
+
+  <article class="blog-card">
+    <a href="blog-mejor-epoca-camino-santiago.html" style="display:block;text-decoration:none;">
+      <img src="blog-img-epoca.jpg" alt="Mejor época para hacer el Camino de Santiago" class="blog-card-img">
+    </a>
+    <div class="blog-card-body">
+      <span class="blog-tag"><span class="es-txt">Planificación</span><span class="en-txt" style="display:none">Planning</span></span>
+      <h2><a href="blog-mejor-epoca-camino-santiago.html" style="color:inherit;text-decoration:none;"><span class="es-txt">La mejor época para hacer el Camino de Santiago: mes a mes</span><span class="en-txt" style="display:none">The best time to do the Camino de Santiago: month by month</span></a></h2>
+      <p><span class="es-txt">Mayo, junio y septiembre concentran el 60% de los peregrinos. Descubre qué mes se adapta mejor a ti según el clima, la afluencia y los precios.</span><span class="en-txt" style="display:none">May, June and September account for 60% of pilgrims. Find out which month suits you best based on weather, crowds and prices.</span></p>
+      <div class="blog-card-footer">
+        <span class="blog-card-date">Easy Camino Santiago</span>
+        <a href="blog-mejor-epoca-camino-santiago.html" class="blog-read-more"><span class="es-txt">Leer más →</span><span class="en-txt" style="display:none">Read more →</span></a>
+      </div>
+    </div>
+  </article>
+
+  <article class="blog-card">
+    <a href="blog-que-camino-elegir.html" style="display:block;text-decoration:none;">
+      <img src="blog-img-elegir-camino.jpg" alt="Qué Camino de Santiago elegir" class="blog-card-img">
+    </a>
+    <div class="blog-card-body">
+      <span class="blog-tag"><span class="es-txt">Rutas</span><span class="en-txt" style="display:none">Routes</span></span>
+      <h2><a href="blog-que-camino-elegir.html" style="color:inherit;text-decoration:none;"><span class="es-txt">¿Qué Camino de Santiago elegir? Guía completa por perfil</span><span class="en-txt" style="display:none">Which Camino de Santiago should you choose? Complete guide by profile</span></a></h2>
+      <p><span class="es-txt">Comparativa de todas las rutas según tu tiempo, forma física y lo que buscas. Encuentra el Camino perfecto para ti.</span><span class="en-txt" style="display:none">Comparison of all routes by your time, fitness and what you're looking for. Find the perfect Camino for you.</span></p>
+      <div class="blog-card-footer">
+        <span class="blog-card-date">Easy Camino Santiago</span>
+        <a href="blog-que-camino-elegir.html" class="blog-read-more"><span class="es-txt">Leer más →</span><span class="en-txt" style="display:none">Read more →</span></a>
+      </div>
+    </div>
+  </article>
+
+  <article class="blog-card">
+    <a href="blog-camino-frances-o-portugues.html" style="display:block;text-decoration:none;">
+      <img src="blog-img-frances-portugues.jpg" alt="Camino Francés o Camino Portugués" class="blog-card-img">
+    </a>
+    <div class="blog-card-body">
+      <span class="blog-tag"><span class="es-txt">Rutas</span><span class="en-txt" style="display:none">Routes</span></span>
+      <h2><a href="blog-camino-frances-o-portugues.html" style="color:inherit;text-decoration:none;"><span class="es-txt">Camino Francés o Camino Portugués: ¿cuál elegir?</span><span class="en-txt" style="display:none">French Way or Portuguese Way: which to choose?</span></a></h2>
+      <p><span class="es-txt">La comparativa definitiva entre las dos rutas más populares. Distancia, dificultad, paisaje, masificación y precio para ayudarte a decidir.</span><span class="en-txt" style="display:none">The definitive comparison between the two most popular routes. Distance, difficulty, landscape, crowds and price to help you decide.</span></p>
+      <div class="blog-card-footer">
+        <span class="blog-card-date">Easy Camino Santiago</span>
+        <a href="blog-camino-frances-o-portugues.html" class="blog-read-more"><span class="es-txt">Leer más →</span><span class="en-txt" style="display:none">Read more →</span></a>
+      </div>
+    </div>
+  </article>
+
+  <article class="blog-card">
+    <a href="blog-cuantos-dias-camino-sarria.html" style="display:block;text-decoration:none;">
+      <img src="blog-img-galicia.jpg" alt="Cuántos días desde Sarria a Santiago" class="blog-card-img">
+    </a>
+    <div class="blog-card-body">
+      <span class="blog-tag"><span class="es-txt">Planificación</span><span class="en-txt" style="display:none">Planning</span></span>
+      <h2><a href="blog-cuantos-dias-camino-sarria.html" style="color:inherit;text-decoration:none;"><span class="es-txt">¿Cuántos días se tarda desde Sarria hasta Santiago?</span><span class="en-txt" style="display:none">How many days does it take from Sarria to Santiago?</span></a></h2>
+      <p><span class="es-txt">Guía completa con las etapas de 5 y 6 días, distancias, dificultad y consejos para planificar tu Camino desde Sarria.</span><span class="en-txt" style="display:none">Complete guide with 5 and 6-day stages, distances, difficulty and tips to plan your Camino from Sarria.</span></p>
+      <div class="blog-card-footer">
+        <span class="blog-card-date">Easy Camino Santiago</span>
+        <a href="blog-cuantos-dias-camino-sarria.html" class="blog-read-more"><span class="es-txt">Leer más →</span><span class="en-txt" style="display:none">Read more →</span></a>
+      </div>
+    </div>
+  </article>
+
+  <article class="blog-card">
+    <a href="blog-camino-santiago-principiantes.html" style="display:block;text-decoration:none;">
+      <img src="blog-img-principiantes.jpg" alt="Camino de Santiago para principiantes" class="blog-card-img">
+    </a>
+    <div class="blog-card-body">
+      <span class="blog-tag"><span class="es-txt">Preparación</span><span class="en-txt" style="display:none">Preparation</span></span>
+      <h2><a href="blog-camino-santiago-principiantes.html" style="color:inherit;text-decoration:none;"><span class="es-txt">Camino de Santiago para principiantes: guía completa</span><span class="en-txt" style="display:none">Camino de Santiago for beginners: complete guide</span></a></h2>
+      <p><span class="es-txt">Todo lo que necesitas saber para hacer tu primer Camino: qué ruta elegir, cómo prepararte físicamente y qué llevar.</span><span class="en-txt" style="display:none">Everything you need to know for your first Camino: which route to choose, how to train and what to bring.</span></p>
+      <div class="blog-card-footer">
+        <span class="blog-card-date">Easy Camino Santiago</span>
+        <a href="blog-camino-santiago-principiantes.html" class="blog-read-more"><span class="es-txt">Leer más →</span><span class="en-txt" style="display:none">Read more →</span></a>
+      </div>
+    </div>
+  </article>
+
+  <article class="blog-card">
+    <a href="blog-como-conseguir-compostela.html" style="display:block;text-decoration:none;">
+      <img src="blog-img-compostela.jpg" alt="Cómo conseguir la Compostela" class="blog-card-img">
+    </a>
+    <div class="blog-card-body">
+      <span class="blog-tag"><span class="es-txt">Consejos</span><span class="en-txt" style="display:none">Tips</span></span>
+      <h2><a href="blog-como-conseguir-compostela.html" style="color:inherit;text-decoration:none;"><span class="es-txt">Cómo conseguir la Compostela del Camino de Santiago</span><span class="en-txt" style="display:none">How to get the Compostela of the Camino de Santiago</span></a></h2>
+      <p><span class="es-txt">Requisitos, credencial del peregrino, cuántos sellos necesitas y dónde recoger tu Compostela al llegar a Santiago.</span><span class="en-txt" style="display:none">Requirements, pilgrim passport, how many stamps you need and where to collect your Compostela when you arrive in Santiago.</span></p>
+      <div class="blog-card-footer">
+        <span class="blog-card-date">Easy Camino Santiago</span>
+        <a href="blog-como-conseguir-compostela.html" class="blog-read-more"><span class="es-txt">Leer más →</span><span class="en-txt" style="display:none">Read more →</span></a>
+      </div>
+    </div>
+  </article>
+
+  <article class="blog-card">
+    <a href="blog-camino-santiago-pareja-familia.html" style="display:block;text-decoration:none;">
+      <img src="blog-img-pareja.jpg" alt="Camino de Santiago en pareja o familia" class="blog-card-img">
+    </a>
+    <div class="blog-card-body">
+      <span class="blog-tag"><span class="es-txt">Consejos</span><span class="en-txt" style="display:none">Tips</span></span>
+      <h2><a href="blog-camino-santiago-pareja-familia.html" style="color:inherit;text-decoration:none;"><span class="es-txt">Camino de Santiago en pareja o en familia: rutas y consejos</span><span class="en-txt" style="display:none">Camino de Santiago as a couple or family: routes and tips</span></a></h2>
+      <p><span class="es-txt">Las mejores rutas para ir en pareja o con niños, consejos de alojamiento y cómo adaptar el Camino a todos los ritmos.</span><span class="en-txt" style="display:none">The best routes for couples or families with children, accommodation tips and how to adapt the Camino to every pace.</span></p>
+      <div class="blog-card-footer">
+        <span class="blog-card-date">Easy Camino Santiago</span>
+        <a href="blog-camino-santiago-pareja-familia.html" class="blog-read-more"><span class="es-txt">Leer más →</span><span class="en-txt" style="display:none">Read more →</span></a>
+      </div>
+    </div>
+  </article>
+
+  <article class="blog-card">
+    <a href="blog-albergue-hotel-pension-camino.html" style="display:block;text-decoration:none;">
+      <img src="blog-img-alojamiento.jpg" alt="Albergue, hotel o pensión en el Camino" class="blog-card-img">
+    </a>
+    <div class="blog-card-body">
+      <span class="blog-tag"><span class="es-txt">Alojamiento</span><span class="en-txt" style="display:none">Accommodation</span></span>
+      <h2><a href="blog-albergue-hotel-pension-camino.html" style="color:inherit;text-decoration:none;"><span class="es-txt">Albergue, hotel o pensión en el Camino: ¿cuál es mejor para ti?</span><span class="en-txt" style="display:none">Hostel, hotel or guesthouse on the Camino: which is best for you?</span></a></h2>
+      <p><span class="es-txt">Comparativa completa de todos los tipos de alojamiento con precios, ventajas e inconvenientes de cada opción.</span><span class="en-txt" style="display:none">Full comparison of all accommodation types with prices, pros and cons of each option.</span></p>
+      <div class="blog-card-footer">
+        <span class="blog-card-date">Easy Camino Santiago</span>
+        <a href="blog-albergue-hotel-pension-camino.html" class="blog-read-more"><span class="es-txt">Leer más →</span><span class="en-txt" style="display:none">Read more →</span></a>
+      </div>
+    </div>
+  </article>
+
+</div>
+
+<!-- CTA -->
+<section style="background:linear-gradient(135deg,#EBF5F6,#D8EDF0);padding:60px 24px;text-align:center;">
+  <div style="max-width:600px;margin:0 auto;">
+    <h2 style="color:#2D4A52;margin-bottom:12px;"><span class="es-txt">¿Listo para planificar tu Camino?</span><span class="en-txt" style="display:none">Ready to plan your Camino?</span></h2>
+    <p style="color:#5a6b6a;margin-bottom:28px;"><span class="es-txt">Cuéntanos qué ruta te interesa y te enviamos un presupuesto personalizado en menos de 24 horas. Sin compromiso.</span><span class="en-txt" style="display:none">Tell us which route interests you and we'll send you a personalised quote in under 24 hours. No obligation.</span></p>
+    <a href="reserva.html" style="background:#F3A949;color:white;padding:14px 32px;border-radius:30px;font-weight:700;font-family:'Raleway',sans-serif;font-size:1rem;display:inline-block;text-decoration:none;"><span class="es-txt">Solicitar presupuesto gratis →</span><span class="en-txt" style="display:none">Request a free quote →</span></a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="ecs-footer" id="ecs-contacto">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div class="footer-logo"><img src="easy-camino-santiago-logo.png" alt="Easy Camino Santiago"></div>
+      <p><span class="es-txt">Agencia especializada en el Camino de Santiago con base en Lugo. Planificamos cada etapa para que solo te preocupes de caminar.</span><span class="en-txt" style="display:none">Specialist Camino de Santiago agency based in Lugo. We plan every stage so you only have to think about walking.</span></p>
+    </div>
+    <div class="footer-col">
+      <h4><span class="es-txt">Nuestros Caminos</span><span class="en-txt" style="display:none">Our Routes</span></h4>
+      <a href="camino-frances.html">Camino Francés</a>
+      <a href="camino-frances-sarria.html">Últimas 100km desde Sarria</a>
+      <a href="camino-portugues.html">Camino Portugués</a>
+      <a href="camino-portugues-costa.html">Portugués por la Costa</a>
+      <a href="camino-norte.html">Camino del Norte</a>
+      <a href="camino-primitivo.html">Camino Primitivo</a>
+      <a href="camino-ingles.html">Camino Inglés</a>
+      <a href="camino-bicicleta.html">En Bicicleta</a>
+    </div>
+    <div class="footer-col">
+      <h4>Blog</h4>
+      <a href="blog-mochila-camino-santiago.html"><span class="es-txt">Qué llevar en la mochila</span><span class="en-txt" style="display:none">What to pack</span></a>
+      <a href="blog-cuanto-cuesta-camino-santiago.html"><span class="es-txt">Cuánto cuesta el Camino</span><span class="en-txt" style="display:none">Cost of the Camino</span></a>
+      <a href="blog-mejor-epoca-camino-santiago.html"><span class="es-txt">Mejor época para ir</span><span class="en-txt" style="display:none">Best time to go</span></a>
+      <a href="blog-que-camino-elegir.html"><span class="es-txt">Cómo elegir ruta</span><span class="en-txt" style="display:none">How to choose a route</span></a>
+    </div>
+    <div class="footer-col">
+      <h4><span class="es-txt">Contacto</span><span class="en-txt" style="display:none">Contact</span></h4>
+      <p><a href="mailto:info@easycaminosantiago.com">info@easycaminosantiago.com</a></p>
+      <p style="margin-top:8px"><a href="tel:+34982907629">982 907 629</a></p>
+      <p style="margin-top:8px">Lugo, España</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Easy Camino Santiago · <a href="politica-reservas.html"><span class="es-txt">Privacidad</span><span class="en-txt" style="display:none">Privacy</span></a> · <a href="aviso-legal.html"><span class="es-txt">Aviso legal</span><span class="en-txt" style="display:none">Legal notice</span></a> · <a href="politica-cookies.html">Cookies</a></p>
+  </div>
+</footer>
+
+<script>
+function ecsSetLang(lang){document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.lang-btn').forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes(lang))b.classList.add('active');});if(lang==='es'){document.querySelectorAll('.es-txt').forEach(e=>e.style.display='inline');document.querySelectorAll('.en-txt').forEach(e=>e.style.display='none');}else{document.querySelectorAll('.es-txt').forEach(e=>e.style.display='none');document.querySelectorAll('.en-txt').forEach(e=>e.style.display='inline');}document.querySelectorAll('[data-ph-es]').forEach(el=>{el.placeholder=lang==='es'?el.getAttribute('data-ph-es'):el.getAttribute('data-ph-en');});document.querySelectorAll('option[data-es]').forEach(opt=>{opt.textContent=lang==='es'?opt.getAttribute('data-es'):opt.getAttribute('data-en');});localStorage.setItem('ecsLang',lang);}
+document.addEventListener('DOMContentLoaded',function(){var saved=localStorage.getItem('ecsLang')||'es';ecsSetLang(saved);});
+function ecsToggleNav(){document.getElementById('nav-mobile').classList.toggle('open');}
+</script>
+
+</body>
+</html>

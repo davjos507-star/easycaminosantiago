@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CERD8SRPBP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CERD8SRPBP');
+  </script>
+<meta charset="UTF-8">
+<meta name="theme-color" content="#56A1A4">
+    <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Folleto Camino desde Sarria — Easy Camino Santiago</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root { --azul:#56A1A4; --azul-dark:#2D4A52; --naranja:#F3A949; --crema:#ECE7E2; --gris:#5a6b6a; --font-h:'Raleway',sans-serif; --font-b:'Lato',sans-serif; }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:var(--font-b);color:var(--azul-dark);background:#f0f4f4;}
+  .print-bar{position:fixed;top:0;left:0;right:0;z-index:999;background:var(--azul);padding:12px 32px;display:flex;justify-content:space-between;align-items:center;}
+  .print-bar span{color:rgba(255,255,255,0.7);font-family:var(--font-b);font-size:0.9rem;}
+  .btn-print{background:var(--naranja);color:white;border:none;padding:10px 28px;border-radius:25px;font-family:var(--font-h);font-weight:700;font-size:0.95rem;cursor:pointer;}
+  .btn-print:hover{background:#d4882a;}
+  .page{width:210mm;min-height:297mm;margin:52px auto 20px;background:white;box-shadow:0 4px 30px rgba(0,0,0,0.15);position:relative;overflow:hidden;}
+  .cover{background: var(--azul);display:flex;flex-direction:column;}
+  .cover-top{background:linear-gradient(160deg,#2D4A52 0%,#56A1A4 50%,#2D4A52 100%);padding:48px 48px 40px;flex:1;display:flex;flex-direction:column;justify-content:space-between;min-height:180mm;}
+  .cover-logo{height:56px;width:auto;filter:brightness(0) invert(1);}
+  .cover-ruta-label{font-family:var(--font-b);font-size:0.8rem;font-weight:700;color:var(--naranja);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;}
+  .cover h1{font-family:var(--font-h);font-weight:800;font-size:3.4rem;color:white;line-height:1.05;margin-bottom:8px;}
+  .cover h1 em{color:var(--naranja);font-style:normal;}
+  .cover-subtitle{font-family:var(--font-b);color:rgba(255,255,255,0.75);font-size:1.05rem;line-height:1.6;max-width:340px;margin-bottom:36px;}
+  .cover-highlights{display:flex;flex-direction:column;gap:10px;}
+  .cover-highlight{display:flex;align-items:center;gap:12px;font-family:var(--font-b);color:white;font-size:0.88rem;}
+  .cover-highlight::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--naranja);flex-shrink:0;}
+  .cover-stats{background:var(--azul);padding:28px 48px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+  .cover-stat{text-align:center;padding:0 16px;border-right:1px solid rgba(255,255,255,0.12);}
+  .cover-stat:last-child{border-right:none;}
+  .cover-stat strong{display:block;font-family:var(--font-h);font-size:1.6rem;font-weight:800;color:var(--naranja);margin-bottom:4px;}
+  .cover-stat span{font-family:var(--font-b);font-size:0.72rem;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:0.5px;}
+  .cover-bottom{background:white;padding:24px 48px;display:flex;justify-content:space-between;align-items:center;}
+  .cover-precio-label{font-family:var(--font-b);font-size:0.75rem;color:var(--gris);text-transform:uppercase;letter-spacing:1px;}
+  .cover-precio-valor{font-family:var(--font-h);font-size:2rem;font-weight:800;color:var(--azul-dark);}
+  .cover-precio-valor span{font-size:0.9rem;font-weight:400;color:var(--gris);}
+  .cover-badge{background:var(--crema);border:1px solid rgba(86,161,164,0.2);padding:8px 18px;border-radius:20px;font-family:var(--font-b);font-size:0.8rem;color:var(--azul);font-weight:600;}
+  .page-header{background:var(--azul);padding:22px 40px;display:flex;justify-content:space-between;align-items:center;}
+  .page-header-logo{height:36px;filter:brightness(0) invert(1);}
+  .page-header-title{font-family:var(--font-h);font-weight:700;font-size:0.9rem;color:rgba(255,255,255,0.7);letter-spacing:1px;text-transform:uppercase;}
+  .page-header-num{font-family:var(--font-h);font-weight:800;font-size:1.1rem;color:var(--naranja);}
+  .page-content{padding:36px 40px;}
+  .section-label{font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:var(--naranja);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+  .section-h2{font-family:var(--font-h);font-weight:800;font-size:1.8rem;color:var(--azul-dark);margin-bottom:16px;line-height:1.2;}
+  .section-line{width:48px;height:4px;background:var(--naranja);border-radius:2px;margin-bottom:24px;}
+  .body-text{font-family:var(--font-b);font-size:0.88rem;color:var(--gris);line-height:1.75;margin-bottom:16px;}
+  .itinerary-overview{display:flex;flex-direction:column;gap:0;}
+  .day-row{display:flex;align-items:center;gap:0;border-bottom:1px solid #e0eeec;padding:14px 0;}
+  .day-row:last-child{border-bottom:none;}
+  .day-num{width:44px;height:44px;min-width:44px;border-radius:50%;background:var(--azul-dark);color:var(--naranja);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-weight:800;font-size:1rem;margin-right:18px;}
+  .day-info{flex:1;}
+  .day-title{font-family:var(--font-h);font-weight:700;font-size:0.92rem;color:var(--azul-dark);margin-bottom:3px;}
+  .day-desc{font-family:var(--font-b);font-size:0.78rem;color:var(--gris);}
+  .day-km{font-family:var(--font-h);font-weight:700;font-size:0.8rem;color:var(--azul);background:var(--crema);padding:4px 12px;border-radius:20px;border:1px solid rgba(86,161,164,0.15);}
+  .day-page-header{background: linear-gradient(135deg, var(--azul) 0%, #6AAFB2 100%);padding:28px 40px 24px;}
+  .day-page-label{font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:var(--naranja);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;}
+  .day-page-title{font-family:var(--font-h);font-weight:800;font-size:1.5rem;color:white;line-height:1.2;}
+  .day-page-meta{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;}
+  .day-meta-tag{font-family:var(--font-b);font-size:0.75rem;font-weight:600;color:white;background:rgba(255,255,255,0.15);padding:4px 12px;border-radius:20px;border:1px solid rgba(255,255,255,0.25);}
+  .day-description{padding:24px 40px 20px;font-family:var(--font-b);font-size:0.86rem;color:var(--gris);line-height:1.75;border-bottom:2px solid var(--crema);}
+  .aloj-section{padding:20px 40px;}
+  .aloj-label{font-family:var(--font-b);font-size:0.7rem;font-weight:700;color:var(--naranja);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
+  .aloj-intro{font-family:var(--font-b);font-size:0.78rem;color:var(--gris);font-style:italic;margin-bottom:16px;line-height:1.6;}
+  .aloj-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .aloj-card{background:var(--crema);border-radius:10px;padding:14px 16px;border-left:3px solid var(--azul);}
+  .aloj-card.full{grid-column:1/-1;}
+  .aloj-name{font-family:var(--font-h);font-weight:700;font-size:0.88rem;color:var(--azul-dark);margin-bottom:4px;}
+  .aloj-type{display:inline-block;font-family:var(--font-b);font-size:0.68rem;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
+  .aloj-desc{font-family:var(--font-b);font-size:0.76rem;color:var(--gris);line-height:1.6;}
+  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;}
+  .info-block{background:var(--crema);border-radius:12px;padding:20px;}
+  .info-block-title{font-family:var(--font-h);font-weight:700;font-size:0.88rem;color:var(--azul-dark);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+  .info-block-title::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--naranja);flex-shrink:0;}
+  .info-block ul{list-style:none;}
+  .info-block ul li{font-family:var(--font-b);font-size:0.78rem;color:var(--gris);padding:5px 0;border-bottom:1px solid rgba(86,161,164,0.1);display:flex;gap:8px;align-items:flex-start;line-height:1.5;}
+  .info-block ul li:last-child{border-bottom:none;}
+  .info-block ul li::before{content:'✓';color:var(--azul);font-weight:bold;flex-shrink:0;}
+  .info-block ul li.no::before{content:'✗';color:#c0392b;}
+  .faq-item-print{margin-bottom:14px;}
+  .faq-q-print{font-family:var(--font-h);font-weight:700;font-size:0.85rem;color:var(--azul-dark);margin-bottom:5px;}
+  .faq-a-print{font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;}
+  .page-footer{background:var(--azul);padding:16px 40px;display:flex;justify-content:space-between;align-items:center;}
+  .footer-contact{font-family:var(--font-b);font-size:0.75rem;color:rgba(255,255,255,0.65);}
+  .footer-web{font-family:var(--font-h);font-weight:700;font-size:0.8rem;color:var(--naranja);}
+  .booking-steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:24px 0;}
+  .booking-step{background:var(--crema);border-radius:12px;padding:20px;text-align:center;}
+  .step-num{width:36px;height:36px;border-radius:50%;background:var(--azul-dark);color:var(--naranja);font-family:var(--font-h);font-weight:800;font-size:1rem;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
+  .step-title{font-family:var(--font-h);font-weight:700;font-size:0.88rem;color:var(--azul-dark);margin-bottom:8px;}
+  .step-desc{font-family:var(--font-b);font-size:0.76rem;color:var(--gris);line-height:1.6;}
+  .contact-final{background: linear-gradient(135deg, var(--azul) 0%, #6AAFB2 100%);border-radius:14px;padding:28px 32px;margin-top:24px;display:flex;justify-content:space-between;align-items:center;}
+  .contact-final-text h3{font-family:var(--font-h);font-weight:800;font-size:1.2rem;color:white;margin-bottom:6px;}
+  .contact-final-text p{font-family:var(--font-b);font-size:0.82rem;color:rgba(255,255,255,0.75);}
+  .contact-details{display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
+  .contact-item{font-family:var(--font-b);font-size:0.82rem;color:white;}
+  .contact-item strong{color:var(--naranja);}
+  @media print {
+    .print-bar{display:none!important;}
+    body{background:white;}
+    .page{margin:0;box-shadow:none;page-break-after:always;width:100%;}
+    .page:last-child{page-break-after:avoid;}
+  }
+</style>
+</head>
+<body>
+
+<div class="print-bar">
+  <span>Easy Camino Santiago — Folleto Camino desde Sarria</span>
+  <button class="btn-print" onclick="window.print()">⬇ Descargar PDF</button>
+</div>
+
+<!-- PÁGINA 1: PORTADA -->
+<div class="page cover">
+  <div class="cover-top">
+    <div>
+      <div class="cover-ruta-label">Guía de viaje oficial</div>
+      <h1>Camino<br>desde <em>Sarria</em></h1>
+      <p class="cover-subtitle">Las últimas 115km del Camino Francés. El mínimo para la Compostela oficial. Perfectas para familias, primeros peregrinos y viajeros con tiempo limitado.</p>
+      <div class="cover-highlights">
+        <div class="cover-highlight">Ruta más popular de España para obtener la Compostela</div>
+        <div class="cover-highlight">5 etapas por la Galicia más auténtica</div>
+        <div class="cover-highlight">Agencia en Lugo — 20 minutos de Sarria</div>
+        <div class="cover-highlight">Todo organizado: alojamiento, mochila y apoyo 24h</div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-stats">
+    <div class="cover-stat"><strong>115 km</strong><span>Distancia total</span></div>
+    <div class="cover-stat"><strong>5</strong><span>Etapas</span></div>
+    <div class="cover-stat"><strong>6 noches</strong><span>Alojamiento</span></div>
+    <div class="cover-stat"><strong>Fácil</strong><span>Dificultad</span></div>
+  </div>
+  <div class="cover-bottom">
+    <div>
+      <div class="cover-precio-label">Precio desde</div>
+      <div class="cover-precio-valor">399€ <span>por persona</span></div>
+    </div>
+    <div class="cover-badge">⭐ La ruta más vendida</div>
+  </div>
+</div>
+
+<!-- PÁGINA 2: DESCRIPCIÓN + RESUMEN ITINERARIO -->
+<!-- ============================================================ -->
+<!-- PAGINA HISTORIA: EL CAMINO DE SANTIAGO -->
+<!-- ============================================================ -->
+<div class="page">
+  <!-- Cabecera historia -->
+  <div style="background:linear-gradient(135deg,var(--azul) 0%,#6AAFB2 100%);padding:32px 40px 28px;">
+    <div style="font-family:var(--font-b);font-size:0.7rem;font-weight:700;color:var(--naranja);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;">Historia y tradición</div>
+    <h2 style="font-family:var(--font-h);font-weight:900;font-size:2rem;color:white;line-height:1.15;margin-bottom:0;">El Camino de Santiago:<br><em style="font-style:normal;color:rgba(255,255,255,0.75);font-weight:400;font-size:1.1rem;">Mil años de fe, cultura y aventura humana</em></h2>
+  </div>
+
+  <div style="padding:26px 40px 20px;">
+
+    <!-- Cita destacada -->
+    <div style="border-left:4px solid var(--naranja);padding:12px 20px;margin-bottom:22px;background:rgba(240,161,69,0.06);border-radius:0 8px 8px 0;">
+      <p style="font-family:var(--font-h);font-size:1rem;font-style:italic;color:var(--azul-dark);line-height:1.5;margin:0;">"El Camino de Santiago es el único camino europeo declarado Patrimonio de la Humanidad por la UNESCO, en 1985. Cada año, más de 300.000 personas de todo el mundo recorren sus sendas."</p>
+    </div>
+
+    <!-- DOS COLUMNAS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:22px;">
+
+      <!-- Columna izquierda -->
+      <div>
+        <div style="font-family:var(--font-b);font-size:0.65rem;font-weight:700;color:var(--naranja);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;">¿Quién fue el Apóstol Santiago?</div>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin:0;">Santiago el Mayor, hijo de Zebedeo, fue uno de los primeros cuatro discípulos elegidos por Jesús, junto a Pedro, Andrés y Juan. Pescador del mar de Galilea, Jesús le apodó con su hermano "Hijos del Trueno" por su carácter apasionado y decidido.</p>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">Fue el primer apóstol mártir: el rey Herodes Agripa I lo mandó decapitar hacia el año 44 d.C. Según la tradición, sus discípulos trasladaron su cuerpo en barco hasta las costas de Galicia, donde fue sepultado en lo que hoy es Compostela.</p>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">En el siglo IX, el ermitaño Pelayo observó unas luces misteriosas sobre un campo. Al investigar, se descubrió una tumba que el obispo Teodomiro identificó como la del Apóstol. El rey Alfonso II mandó construir una iglesia sobre el sepulcro, germen de la actual Catedral.</p>
+      </div>
+
+      <!-- Columna derecha -->
+      <div>
+        <div style="font-family:var(--font-b);font-size:0.65rem;font-weight:700;color:var(--naranja);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;">El nacimiento de la peregrinación</div>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin:0;">La noticia del hallazgo se extendió por toda Europa y pronto comenzaron a llegar peregrinos de todos los rincones de la cristiandad. En el siglo X la peregrinación a Compostela era ya un hecho consolidado, rivalizando con los viajes a Roma y Jerusalén.</p>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">Los siglos XI y XII fueron su época de mayor esplendor. Reyes como Sancho III y Alfonso VI impulsaron la ruta, construyendo caminos, puentes y hospederías. Las órdenes religiosas de Cluny organizaron la infraestructura que haría famoso el Camino Francés.</p>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">El Camino atravesó épocas de decadencia —la Peste Negra, las guerras religiosas— pero siempre renació. En 1884, el Papa León XIII reafirmó la autenticidad de las reliquias, y el siglo XX trajo el mayor revival de la historia moderna.</p>
+      </div>
+
+    </div>
+
+    <!-- TIMELINE -->
+    <div style="margin-bottom:18px;">
+      <div style="font-family:var(--font-b);font-size:0.65rem;font-weight:700;color:var(--azul);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Cronología esencial</div>
+      <div style="display:flex;gap:0;align-items:flex-start;position:relative;">
+        <div style="position:absolute;top:10px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--azul),var(--naranja));opacity:0.25;"></div>
+        <!-- Hitos -->
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--azul);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--azul);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--azul);">s. I d.C.</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">Martirio y traslado de los restos de Santiago a Galicia</div>
+        </div>
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--azul);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--azul);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--azul);">834</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">Descubrimiento del sepulcro. Alfonso II manda construir la primera iglesia</div>
+        </div>
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--azul);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--azul);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--azul);">1122</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">El Papa Calixto II crea el Año Santo Compostelano</div>
+        </div>
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--naranja);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--naranja);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--naranja);">1985</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">La UNESCO declara el Camino Patrimonio de la Humanidad</div>
+        </div>
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--naranja);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--naranja);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--naranja);">Hoy</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">+300.000 peregrinos al año de más de 180 países</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRES BLOQUES INFERIORES -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+      <div style="background:var(--crema);border-radius:8px;padding:13px 14px;border-top:3px solid var(--azul);">
+        <div style="font-family:var(--font-h);font-weight:800;font-size:0.8rem;color:var(--azul-dark);margin-bottom:5px;">El Año Jacobeo</div>
+        <p style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.55;margin:0;">Se celebra cuando el 25 de julio —festividad del Apóstol— cae en domingo. El Papa Calixto II instituyó este privilegio en 1122. En Año Santo, la Puerta Santa de la Catedral se abre y los peregrinos pueden obtener la indulgencia plenaria.</p>
+      </div>
+      <div style="background:var(--crema);border-radius:8px;padding:13px 14px;border-top:3px solid var(--azul);">
+        <div style="font-family:var(--font-h);font-weight:800;font-size:0.8rem;color:var(--azul-dark);margin-bottom:5px;">La Compostela</div>
+        <p style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.55;margin:0;">Certificado oficial expedido por la Catedral. El nombre del peregrino se inscribe en latín, firmado por el Secretario del Cabildo. En 1985 se entregaron 2.491; hoy superan las 300.000 al año. Se obtiene recorriendo al menos 100 km a pie o 200 km en bici.</p>
+      </div>
+      <div style="background:var(--crema);border-radius:8px;padding:13px 14px;border-top:3px solid var(--naranja);">
+        <div style="font-family:var(--font-h);font-weight:800;font-size:0.8rem;color:var(--azul-dark);margin-bottom:5px;">La Bendición del Peregrino</div>
+        <p style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.55;margin:0;">Tradición medieval que se celebra en Roncesvalles al inicio del Camino Francés y en otras iglesias de la ruta. El clérigo reza para que el peregrino "emprenda el viaje y regrese sano y salvo con la ayuda de Dios". Un rito que une fe, historia y comunidad.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · Lugo, Galicia</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Camino desde Sarria</div>
+    <div class="page-header-num">02</div>
+  </div>
+  <div class="page-content">
+    <div class="section-label">La ruta</div>
+    <div class="section-h2">El Camino más inteligente para la Compostela</div>
+    <div class="section-line"></div>
+    <p class="body-text">Las últimas 115km del Camino Francés desde Sarria son la opción más popular y práctica para quienes quieren vivir la experiencia auténtica del Camino de Santiago sin disponer de varios meses. Superan el mínimo de 100km exigido por la Catedral para otorgar la Compostela oficial.</p>
+    <p class="body-text">Nuestra agencia está en Lugo, a tan solo 20 minutos de Sarria en tren. Esa proximidad nos permite conocer como nadie cada alojamiento, cada restaurante y cada tramo del recorrido. Las etapas discurren entre robledales centenarios, aldeas de piedra gris, cruceiros medievales y el emblemático ambiente peregrino que hace único este camino.</p>
+
+    <div class="section-label" style="margin-top:24px;">Itinerario</div>
+    <div class="section-h2" style="font-size:1.3rem;">Visión general — 5 etapas</div>
+    <div class="section-line"></div>
+    <div class="itinerary-overview">
+      <div class="day-row">
+        <div class="day-num">1</div>
+        <div class="day-info">
+          <div class="day-title">Sarria → Portomarín</div>
+          <div class="day-desc">Monasterio de Barbadelo · Puente sobre el Miño · Villa medieval de Portomarín</div>
+        </div>
+        <div class="day-km">22,4 km</div>
+      </div>
+      <div class="day-row">
+        <div class="day-num">2</div>
+        <div class="day-info">
+          <div class="day-title">Portomarín → Palas de Rei</div>
+          <div class="day-desc">Alto de Ligonde · Aldeas de piedra gris · Meseta gallega</div>
+        </div>
+        <div class="day-km">24,8 km</div>
+      </div>
+      <div class="day-row">
+        <div class="day-num">3</div>
+        <div class="day-info">
+          <div class="day-title">Palas de Rei → Arzúa</div>
+          <div class="day-desc">Castillo de Pambre · Melide (pulpo) · Queso de Arzúa</div>
+        </div>
+        <div class="day-km">28,5 km</div>
+      </div>
+      <div class="day-row">
+        <div class="day-num">4</div>
+        <div class="day-info">
+          <div class="day-title">Arzúa → O Pedrouzo</div>
+          <div class="day-desc">Bosques de eucalipto · Aldeas dormidas · Víspera de Santiago</div>
+        </div>
+        <div class="day-km">19,3 km</div>
+      </div>
+      <div class="day-row">
+        <div class="day-num">5</div>
+        <div class="day-info">
+          <div class="day-title">O Pedrouzo → Santiago de Compostela</div>
+          <div class="day-desc">Monte do Gozo · Plaza del Obradoiro · Misa del Peregrino</div>
+        </div>
+        <div class="day-km">19,4 km</div>
+      </div>
+    </div>
+    <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);margin-top:16px;font-style:italic;">Opción de 6 etapas disponible: dividimos la etapa Palas de Rei→Arzúa en dos días para un ritmo más tranquilo. Ideal para familias con niños.</p>
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · info@easycaminosantiago.com · +34 982 907 629</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+<!-- PÁGINA 3: ETAPAS 1-2 -->
+<div class="page">
+  <div class="day-page-header">
+    <div class="day-page-label">Etapa 1</div>
+    <div class="day-page-title">Sarria → Portomarín</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">22,4 km</span>
+      <span class="day-meta-tag">+670m / -540m</span>
+      <span class="day-meta-tag">5–6 horas</span>
+    </div>
+  </div>
+  <div class="day-description">La etapa de bautismo. Cruzas el río Miño por el largo puente de Portomarín, dejando atrás Sarria entre bosques de robles y castaños. Pasas por el Monasterio de Barbadelo, uno de los más hermosos del Camino Francés. Llegas a la bonita villa de Portomarín con sus casas de piedra y su iglesia fortaleza románica elevada sobre el embalse.</div>
+  <div class="aloj-section">
+    <div class="aloj-label">Alojamiento en Portomarín</div>
+    <div class="aloj-intro">Seleccionamos para ti las mejores opciones en la villa medieval de Portomarín, a orillas del embalse del Belesar. Todas con excelente posición para comenzar la etapa 2 sin rodeos.</div>
+    <div class="aloj-grid">
+      <div class="aloj-card">
+        <div class="aloj-name">Pensión El Caminante</div>
+        <div class="aloj-type">Pensión · Hab. privada</div>
+        <div class="aloj-desc">Habitaciones cómodas en el casco histórico de Portomarín. Desayuno casero incluido, terraza con vistas al embalse.</div>
+      </div>
+      <div class="aloj-card">
+        <div class="aloj-name">Hotel Pousada de Portomarín</div>
+        <div class="aloj-type">Hotel 3★</div>
+        <div class="aloj-desc">Hotel de referencia en Portomarín con vistas panorámicas al embalse del Belesar. Restaurante propio con cocina gallega tradicional.</div>
+      </div>
+      <div class="aloj-card full">
+        <div class="aloj-name">Albergue Ferramenteiro</div>
+        <div class="aloj-type">Albergue privado</div>
+        <div class="aloj-desc">Albergue de referencia para los peregrinos en Portomarín. Ambiente acogedor, jardín y cocina equipada para uso de los huéspedes.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-page-header" style="margin-top:4px;">
+    <div class="day-page-label">Etapa 2</div>
+    <div class="day-page-title">Portomarín → Palas de Rei</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">24,8 km</span>
+      <span class="day-meta-tag">+600m / -620m</span>
+      <span class="day-meta-tag">6–7 horas</span>
+    </div>
+  </div>
+  <div class="day-description">Etapa suave con continuas subidas y bajadas entre aldeas de piedra gris. Cruzas el alto de Ligonde con vistas espléndidas sobre la meseta gallega. La hospitalidad de los pueblos del interior de Galicia te sorprenderá. Llegas a Palas de Rei, centro neurálgico con buen ambiente peregrino.</div>
+  <div class="aloj-section">
+    <div class="aloj-label">Alojamiento en Palas de Rei</div>
+    <div class="aloj-grid">
+      <div class="aloj-card">
+        <div class="aloj-name">Casa Rural O Cruceiro</div>
+        <div class="aloj-type">Casa rural</div>
+        <div class="aloj-desc">Casa rural de piedra gallega en las afueras de Palas de Rei. Jardín, ambiente tranquilo y desayuno artesano incluido.</div>
+      </div>
+      <div class="aloj-card">
+        <div class="aloj-name">Hotel Casanova</div>
+        <div class="aloj-type">Hotel 3★</div>
+        <div class="aloj-desc">El hotel más valorado de Palas de Rei entre los peregrinos. Habitaciones amplias, buen restaurante y ubicación céntrica.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · info@easycaminosantiago.com · +34 982 907 629</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+<!-- PÁGINA 4: ETAPAS 3-4-5 -->
+<div class="page">
+  <div class="day-page-header">
+    <div class="day-page-label">Etapa 3</div>
+    <div class="day-page-title">Palas de Rei → Arzúa</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">28,5 km</span>
+      <span class="day-meta-tag">+550m / -580m</span>
+      <span class="day-meta-tag">7–8 horas</span>
+    </div>
+  </div>
+  <div class="day-description">Una de las etapas más variadas. Cruzas el río Pambre y su castillo medieval, pasas por Melide —famosa por su pulpo a feira— y llegas a Arzúa, conocida por su queso de tetilla. Aquí el ambiente peregrino se intensifica al unirse el Camino Portugués.</div>
+  <div class="aloj-section" style="padding-bottom:8px;">
+    <div class="aloj-label">Alojamiento en Arzúa</div>
+    <div class="aloj-grid">
+      <div class="aloj-card">
+        <div class="aloj-name">Hotel Suiza</div>
+        <div class="aloj-type">Hotel · Hab. privada</div>
+        <div class="aloj-desc">Hotel clásico en el centro de Arzúa. Habitaciones cómodas y excelente restaurante con cocina gallega de temporada.</div>
+      </div>
+      <div class="aloj-card">
+        <div class="aloj-name">Albergue Ultreia</div>
+        <div class="aloj-type">Albergue privado</div>
+        <div class="aloj-desc">Albergue moderno en el corazón de Arzúa. Ambiente acogedor y terraza ideal para descansar tras los 28km de etapa.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-page-header">
+    <div class="day-page-label">Etapa 4</div>
+    <div class="day-page-title">Arzúa → O Pedrouzo</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">19,3 km</span>
+      <span class="day-meta-tag">+380m / -360m</span>
+      <span class="day-meta-tag">5–6 horas</span>
+    </div>
+  </div>
+  <div class="day-description">La penúltima etapa. Caminas por densos bosques de eucalipto que crean un ambiente casi mágico. En O Pedrouzo la expectativa es máxima: mañana llegas a Santiago. La emoción se palpa en cada conversación.</div>
+  <div class="aloj-section" style="padding-bottom:8px;">
+    <div class="aloj-label">Alojamiento en O Pedrouzo</div>
+    <div class="aloj-grid">
+      <div class="aloj-card full">
+        <div class="aloj-name">Hotel O Pino / Pensión O Pedrouzo</div>
+        <div class="aloj-type">Hotel · Pensión</div>
+        <div class="aloj-desc">Opciones familiares y cómodas en O Pedrouzo. La noche antes de llegar a Santiago es especial — la ambiente peregrino del pueblo lo hace inolvidable.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-page-header">
+    <div class="day-page-label">Etapa 5 — La llegada</div>
+    <div class="day-page-title">O Pedrouzo → Santiago de Compostela</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">19,4 km</span>
+      <span class="day-meta-tag">+250m / -280m</span>
+      <span class="day-meta-tag">5–6 horas</span>
+    </div>
+  </div>
+  <div class="day-description">El día más especial. Cruzas el Monte do Gozo —el "Monte de la Alegría"— desde donde ves por primera vez las torres de la Catedral. Entras en Santiago por el casco histórico. La Plaza del Obradoiro te espera con su abrazo al Apóstol y la Misa del Peregrino. Un momento que nunca olvidarás.</div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · info@easycaminosantiago.com · +34 982 907 629</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+<!-- PÁGINA 5: QUÉ INCLUYE + PRECIOS -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Qué incluye tu paquete</div>
+    <div class="page-header-num">05</div>
+  </div>
+  <div class="page-content">
+    <div class="section-label">Paquete todo incluido</div>
+    <div class="section-h2">Todo lo que necesitas, organizado</div>
+    <div class="section-line"></div>
+    <div class="info-grid">
+      <div class="info-block">
+        <div class="info-block-title">Incluye</div>
+        <ul>
+          <li>Alojamiento 6 noches reservado</li>
+          <li>Desayuno incluido cada día</li>
+          <li>Traslado de mochila (5 etapas)</li>
+          <li>Credencial del peregrino</li>
+          <li>Itinerario etapa a etapa</li>
+          <li>Apoyo telefónico 24h durante el Camino</li>
+          <li>Gestión de la Compostela</li>
+          <li>Seguro de viaje (paquetes pensión/hotel)</li>
+        </ul>
+      </div>
+      <div class="info-block">
+        <div class="info-block-title">No incluye</div>
+        <ul>
+          <li class="no">Vuelos o transporte hasta Sarria</li>
+          <li class="no">Comidas (excepto desayuno)</li>
+          <li class="no">Actividades opcionales en Santiago</li>
+          <li class="no">Gastos personales</li>
+        </ul>
+        <div style="margin-top:12px;font-family:var(--font-b);font-size:0.76rem;color:var(--azul);background:rgba(86,161,164,0.08);padding:10px;border-radius:8px;">
+          El traslado desde Lugo hasta Sarria (20 min en tren) lo podemos gestionar por +15€/persona.
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:8px;">Precios</div>
+    <div class="section-h2" style="font-size:1.3rem;">Elige tu tipo de alojamiento</div>
+    <div class="section-line"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div style="background:var(--crema);border-radius:12px;padding:18px;border:1px solid rgba(86,161,164,0.15);">
+        <div style="font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Albergue privado</div>
+        <div style="font-family:var(--font-h);font-weight:800;font-size:2rem;color:var(--azul-dark);">399€</div>
+        <div style="font-family:var(--font-b);font-size:0.75rem;color:var(--gris);margin-bottom:10px;">por persona · 6 noches</div>
+        <div style="font-family:var(--font-b);font-size:0.76rem;color:var(--gris);">Albergues privados seleccionados en todas las etapas. Ideal para conocer otros peregrinos.</div>
+      </div>
+      <div style="background:var(--azul-dark);border-radius:12px;padding:18px;position:relative;">
+        <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--naranja);color:white;font-family:var(--font-b);font-size:0.68rem;font-weight:700;padding:3px 12px;border-radius:10px;white-space:nowrap;">⭐ Más reservado</div>
+        <div style="font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Pensión privada</div>
+        <div style="font-family:var(--font-h);font-weight:800;font-size:2rem;color:var(--naranja);">549€</div>
+        <div style="font-family:var(--font-b);font-size:0.75rem;color:rgba(255,255,255,0.65);margin-bottom:10px;">por persona · 6 noches</div>
+        <div style="font-family:var(--font-b);font-size:0.76rem;color:rgba(255,255,255,0.75);">Habitación privada en pensiones. Descanso garantizado tras cada etapa.</div>
+      </div>
+      <div style="background:var(--crema);border-radius:12px;padding:18px;border:1px solid rgba(86,161,164,0.15);">
+        <div style="font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Hotel 3★</div>
+        <div style="font-family:var(--font-h);font-weight:800;font-size:2rem;color:var(--azul-dark);">749€</div>
+        <div style="font-family:var(--font-b);font-size:0.75rem;color:var(--gris);margin-bottom:10px;">por persona · 6 noches</div>
+        <div style="font-family:var(--font-b);font-size:0.76rem;color:var(--gris);">Hoteles 3★ seleccionados. Desayuno buffet, seguro completo y servicio premium.</div>
+      </div>
+    </div>
+    <p style="font-family:var(--font-b);font-size:0.76rem;color:var(--gris);margin-top:12px;text-align:center;">Reserva con solo el 30%. Resto 30 días antes de la salida. Cancelación gratuita hasta 21 días antes.</p>
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · info@easycaminosantiago.com · +34 982 907 629</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+<!-- PÁGINA 6: FAQ + RESERVA -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Preguntas frecuentes y reserva</div>
+    <div class="page-header-num">06</div>
+  </div>
+  <div class="page-content">
+    <div class="section-label">FAQ</div>
+    <div class="section-h2">Preguntas frecuentes</div>
+    <div class="section-line"></div>
+
+    <div class="faq-item-print">
+      <div class="faq-q-print">¿Puedo obtener la Compostela desde Sarria?</div>
+      <div class="faq-a-print">Sí. La Catedral exige un mínimo de 100km a pie. Nuestro paquete cubre 115km, superando ese mínimo. Solo necesitas sellar tu credencial al menos dos veces por etapa.</div>
+    </div>
+    <div class="faq-item-print">
+      <div class="faq-q-print">¿Qué nivel físico necesito?</div>
+      <div class="faq-a-print">Nivel fácil-moderado. Etapas de 19-28km con desniveles suaves. Recomendamos haber caminado 10-15km en alguna ocasión. Lo han hecho con éxito personas de 10 a 75 años.</div>
+    </div>
+    <div class="faq-item-print">
+      <div class="faq-q-print">¿Está incluido el traslado de mochila?</div>
+      <div class="faq-a-print">Sí, en todos los paquetes. Tu mochila grande viaja cada mañana al siguiente alojamiento mientras caminas con una mochila pequeña de día.</div>
+    </div>
+    <div class="faq-item-print">
+      <div class="faq-q-print">¿Cuándo es la mejor época?</div>
+      <div class="faq-a-print">De abril a junio y de septiembre a octubre. El Camino puede hacerse todo el año desde Sarria — no hay pasos de montaña con riesgo de nieve. Siempre recomendamos llevar chubasquero.</div>
+    </div>
+    <div class="faq-item-print">
+      <div class="faq-q-print">¿Con cuánta antelación debo reservar?</div>
+      <div class="faq-a-print">Recomendamos 4-6 semanas en temporada alta, 2-3 meses para Semana Santa y puentes. En temporada baja podemos organizarlo en menos de una semana.</div>
+    </div>
+
+    <div class="section-label" style="margin-top:24px;">Cómo reservar</div>
+    <div class="section-h2" style="font-size:1.3rem;">3 pasos para el Camino</div>
+    <div class="section-line"></div>
+    <div class="booking-steps">
+      <div class="booking-step">
+        <div class="step-num">1</div>
+        <div class="step-title">Contacta con nosotros</div>
+        <div class="step-desc">Escríbenos por Escríbenos o rellena el formulario en la web. Te respondemos en menos de 24h.</div>
+      </div>
+      <div class="booking-step">
+        <div class="step-num">2</div>
+        <div class="step-title">Presupuesto personalizado</div>
+        <div class="step-desc">Te enviamos un presupuesto adaptado a tus fechas, número de personas y tipo de alojamiento preferido.</div>
+      </div>
+      <div class="booking-step">
+        <div class="step-num">3</div>
+        <div class="step-title">Reserva y disfruta</div>
+        <div class="step-desc">Con solo el 30% confirmamos tu Camino. El resto lo pagas 30 días antes de salir. ¡A caminar!</div>
+      </div>
+    </div>
+
+    <div class="contact-final">
+      <div class="contact-final-text">
+        <h3>¿Listo para el Camino desde Sarria?</h3>
+        <p>Solicita tu presupuesto gratuito. Sara te llama en menos de 24h.</p>
+      </div>
+      <div class="contact-details">
+        <div class="contact-item"></div>
+        <div class="contact-item"><strong>Email:</strong> info@easycaminosantiago.com</div>
+        <div class="contact-item"><strong>Web:</strong> easycaminosantiago.com</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · info@easycaminosantiago.com · +34 982 907 629</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+</body>
+</html>

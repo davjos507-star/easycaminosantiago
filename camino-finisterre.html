@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camino de Finisterre desde Santiago — El Fin del Mundo | Easy Camino Santiago</title>
+  <meta name="description" content="Continúa hasta el Faro de Finisterre tras terminar en Santiago. 87km en 3-4 etapas hasta el 'fin del mundo'. Paquetes desde 249€ con alojamiento incluido.">
+  <meta name="keywords" content="camino finisterre, camino de finisterre precio, santiago finisterre, faro finisterre camino">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>.page-hero { background: linear-gradient(160deg, #56A1A4 0%, #6AAFB2 40%, #3F8A8D 100%); }</style>
+</head>
+<body>
+
+<!-- CALLBACK POPUP -->
+<div id="ecs-callback-overlay" onclick="ecsCloseCallback(event)">
+  <div id="ecs-callback-box">
+    <div id="ecs-callback-header">
+      <button id="ecs-callback-close" onclick="ecsCloseCallback()">✕</button>
+      <img src="easy-camino-santiago-logo.png" alt="Easy Camino Santiago" class="cb-logo">
+      <div class="cb-agente-foto"><img src="sara-agente-easy-camino-santiago.png" alt="Sara agente" onerror="this.style.display='none'"></div>
+      <h3>Sara · Easy Camino Santiago</h3>
+      <p>Tu experta en el Camino de Santiago</p>
+    </div>
+    <div id="ecs-callback-body">
+      <h4>¿Te llamamos gratis?</h4>
+      <p>Déjanos tu número y te llamamos en menos de 24h para asesorarte sin compromiso.</p>
+      <input type="tel" id="ecs-cb-tel" placeholder="+34 600 000 000">
+      <div id="ecs-cb-privacy">
+        <input type="checkbox" id="ecs-cb-check">
+        <label for="ecs-cb-check">Acepto la <a href="politica-reservas.html">política de privacidad</a> y el tratamiento de mis datos.</label>
+      </div>
+      <button id="ecs-cb-submit" onclick="ecsCbSubmit()">📞 Quiero que me llamen</button>
+      <p id="ecs-cb-nota">Tu número solo se usará para llamarte. Sin spam.</p>
+    </div>
+  </div>
+</div>
+
+<!-- WHATSAPP FLOAT -->
+<a href="tel:+34982907629" target="_blank" class="whatsapp-float">
+  <div class="wa-pulse"></div>
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span>¿Dudas? ¡Escríbenos!</span>
+</a>
+
+<!-- NAVBAR -->
+<nav class="ecs-nav">
+  <a href="index.html"><img src="easy-camino-santiago-logo.png" alt="Easy Camino Santiago" class="ecs-nav-logo"></a>
+  <ul>
+    <li class="nav-dropdown">
+      <a href="#">Rutas</a>
+      <div class="nav-dropdown-menu">
+        <a href="camino-frances.html">Camino Francés</a>
+        <a href="camino-frances-sarria.html">⭐ Últimas 100km desde Sarria</a>
+        <a href="camino-portugues.html">Camino Portugués</a>
+        <a href="camino-portugues-costa.html">Camino Portugués por la Costa</a>
+        <a href="camino-norte.html">Camino del Norte</a>
+        <a href="camino-finisterre.html">Camino de Finisterre</a>
+        <a href="camino-ingles.html">Camino Inglés</a>
+        <a href="camino-primitivo.html">Camino Primitivo</a>
+        <a href="camino-bicicleta.html">En Bicicleta</a>
+      </div>
+    </li>
+    <li><a href="index.html#ecs-servicios">Servicios</a></li>
+    <li><a href="index.html#ecs-como">Cómo funciona</a></li>
+    <li><a href="index.html#ecs-contacto">Contacto</a></li>
+    <li><a href="index.html#ecs-planifica" class="btn-nav">Planifica tu Camino</a></li>
+    <li>
+      <button onclick="ecsOpenCallback()" class="btn-agente">
+        <div class="agente-avatar">
+          <img src="sara-agente-easy-camino-santiago.png" alt="Sara" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <svg style="display:none" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+        </div>
+        <div class="agente-txt"><strong>¿Necesitas ayuda?</strong><span>Te llamamos GRATIS</span></div>
+      </button>
+    </li>
+    <li><div class="lang-toggle"><button class="lang-btn active" onclick="ecsSetLang('es')">ES</button><button class="lang-btn" onclick="ecsSetLang('en')">EN</button></div></li>
+  </ul>
+  <button class="nav-hamburger" onclick="ecsToggleNav()"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-mobile-overlay" id="nav-mobile">
+  <button class="nav-mobile-close" onclick="ecsToggleNav()">✕</button>
+  <a href="index.html">Inicio</a>
+  <a href="camino-frances-sarria.html">⭐ 100km desde Sarria</a>
+  <a href="camino-frances.html">Camino Francés</a>
+  <a href="camino-portugues.html">Camino Portugués</a>
+  <a href="camino-norte.html">Camino del Norte</a>
+  <a href="camino-primitivo.html">Camino Primitivo</a>
+  <a href="camino-ingles.html">Camino Inglés</a>
+  <a href="camino-finisterre.html">Camino de Finisterre</a>
+  <a href="index.html#ecs-planifica" style="color:#F3A949;font-weight:bold">→ Planifica tu Camino</a>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <img class="page-hero-bg" src="downloaded_images/imagines seleccionadas/camino-finisterre-costa-galicia-rocas.jpg" alt="Costa de Galicia — Camino de Finisterre" loading="eager">
+
+  <div class="page-hero-content">
+    <h1>Camino de Finisterre — <em>El Fin del Mundo</em></h1>
+    <p>El Camino no termina en Santiago. Continúa hasta el Faro de Finisterre, el punto más occidental de Europa continental, donde el sol se hunde cada tarde en el Atlántico. 87km más de pura magia gallega.</p>
+    <div class="hero-badges">
+      <span class="badge">El epílogo perfecto</span>
+      <span class="badge">87 km</span>
+      <span class="badge">3 etapas</span>
+      <span class="badge">Nivel fácil</span>
+      <span class="badge badge-price">Desde 249€</span>
+    </div>
+    <div class="hero-cta-group">
+      <a href="#precios" class="btn-hero-primary">Seleccionar fecha</a>
+      <button onclick="ecsOpenCallback()" class="btn-hero-secondary">Pedir que me llamen</button>
+      <button onclick="ecsOpenFolleto()" style="background:transparent;color:white;border:2px solid rgba(255,255,255,0.6);padding:14px 28px;border-radius:8px;font-weight:700;cursor:pointer;font-family:'Raleway',sans-serif;display:inline-flex;align-items:center;gap:8px;">&#x1F4D6; Folleto del camino</button>
+    </div>
+  </div>
+</section>
+
+<!-- ROUTE STRIP -->
+<div class="route-strip">
+  <div class="route-strip-item"><strong>87 km</strong><span>Distancia total</span></div>
+  <div class="route-strip-item"><strong>3</strong><span>Etapas</span></div>
+  <div class="route-strip-item"><strong>3 noches</strong><span>Alojamiento</span></div>
+  <div class="route-strip-item"><strong>Fácil</strong><span>Dificultad</span></div>
+  <div class="route-strip-item"><strong>Todo el año</strong><span>Temporada</span></div>
+  <div class="route-strip-item"><strong>Santiago de Compostela</strong><span>Inicio</span></div>
+</div>
+
+<!-- STICKY SUB-NAV -->
+<div class="page-subnav" id="page-subnav">
+  <div class="page-subnav-inner">
+    <nav class="page-subnav-tabs" id="subnav-tabs">
+      <a href="#sec-descripcion" class="subnav-tab" data-sec="sec-descripcion">Descripción</a>
+      <a href="#sec-itinerario" class="subnav-tab" data-sec="sec-itinerario">Itinerario</a>
+      <a href="#precios" class="subnav-tab" data-sec="precios">Precios</a>
+      <a href="#sec-incluye" class="subnav-tab" data-sec="sec-incluye">¿Qué incluye?</a>
+    </nav>
+    <div class="page-subnav-btns">
+      <a href="#precios" class="subnav-btn subnav-btn-primary">📅 Seleccionar fecha</a>
+      <button onclick="ecsOpenCallback()" class="subnav-btn subnav-btn-outline">📞 Preguntar</button>
+      <button onclick="ecsOpenFolleto()" class="subnav-btn subnav-btn-outline">📖 Folleto</button>
+    </div>
+  </div>
+</div>
+
+<!-- DESCRIPTION SECTION -->
+<section class="ecs-section description-section">
+  <div class="ecs-container">
+    <h2>Finisterre: el final del Camino que va más allá del final</h2>
+    <p>Durante siglos, los peregrinos medievales que llegaban a Santiago de Compostela no se detenían ahí. Seguían caminando tres días más hacia el oeste, hasta llegar al cabo Finisterre —"Finis Terrae" en latín, el fin de la tierra— donde el continente europeo literalmente se acaba y comienza el océano Atlántico. Para ellos, ese era el verdadero final del Camino: el punto donde no había más tierra, solo agua y la puesta de sol más bella del mundo.</p>
+    <p>Hoy, el Camino de Finisterre es uno de los tramos más especiales para los peregrinos que han llegado a Santiago. Tras la euforia de la Plaza del Obradoiro, estos 87 kilómetros adicionales ofrecen una transición diferente: el Camino se vacía de peregrinos, los paisajes se vuelven más salvajes y el ritmo se ralentiza. Por las aldeas de piedra de Galicia, entre eucaliptos y pinos, el camino desciende lentamente hacia el océano.</p>
+    <p>La tradición más poderosa del Camino de Finisterre es la quema de ropa al llegar al faro: botas, calcetines, una prenda usada durante el Camino. Es un ritual de purificación, de dejar atrás lo viejo y abrazar lo nuevo. Ver la puesta de sol desde el faro de Finisterre —el 0,00km del Camino— mientras el sol se hunde en el Atlántico es una experiencia que no se olvida. Algunos peregrinos añaden la extensión a Muxía (+31km), otro santuario atlántico de gran devoción jacobea.</p>
+  </div>
+</section>
+
+<!-- ITINERARY SECTION -->
+<section class="ecs-section itinerary-section" id="sec-itinerario">
+  <div class="ecs-container">
+    <h2>Itinerario del Camino de Finisterre</h2>
+    <p class="section-subtitle">3 etapas desde Santiago hasta el faro del fin del mundo.</p>
+
+    <div class="etapas-list">
+      <div class="etapa">
+        <div class="etapa-num">1</div>
+        <div class="etapa-content">
+          <h3>Santiago de Compostela → Negreira</h3>
+          <p>La salida de la ciudad sagrada. El primer día del Camino de Finisterre comienza en la Catedral y atraviesa el extrarradio de Santiago por caminos entre pinos y eucaliptos. Cruzando el río Tambre por el puente romano, se llega a Negreira, la primera gran parada antes de la costa.</p>
+          <div class="etapa-meta">
+            <span>22 km</span>
+            <span>Dificultad baja</span>
+            <span>Llegada: Negreira</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="etapa">
+        <div class="etapa-num">2</div>
+        <div class="etapa-content">
+          <h3>Negreira → Olveiroa</h3>
+          <p>El corazón rural de Galicia. La etapa más larga y quizá la más bella del Camino de Finisterre. El camino atraviesa un Galicia profunda y auténtica, con aldeas de cuatro casas, hórreos milenarios, cruceiros en cada cruce y vacas rumiando bajo la lluvia. Olveiroa, un diminuto pueblo medieval perfectamente conservado, es la parada antes del gran final.</p>
+          <div class="etapa-meta">
+            <span>33 km</span>
+            <span>Dificultad baja-media</span>
+            <span>Llegada: Olveiroa</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="etapa">
+        <div class="etapa-num">3</div>
+        <div class="etapa-content">
+          <h3>Olveiroa → Faro de Finisterre</h3>
+          <p>El gran final: el faro del 0,00km. La última etapa desciende desde Olveiroa por montes de tojo y brezo hasta la villa de Finisterre, con su puerto pesquero y sus restaurantes de marisco. Desde el pueblo, el último kilómetro hasta el faro es una subida corta pero cargada de emoción. En la piedra km 0,00 se termina el Camino. El Atlántico y el poniente esperan al peregrino.</p>
+          <div class="etapa-meta">
+            <span>32 km</span>
+            <span>Dificultad baja</span>
+            <span>Llegada: Faro de Finisterre</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="etapa">
+        <div class="etapa-num">+</div>
+        <div class="etapa-content">
+          <h3>Extensión opcional: Finisterre → Muxía (+31 km)</h3>
+          <p>Para los que quieren más. Desde Finisterre, un día adicional de camino lleva hasta Muxía, el otro gran santuario atlántico de la Costa da Morte. La Virxe da Barca, la piedra de abalar y la costa salvaje de los naufragios son dignos de este epílogo del epílogo. Recomendamos combinarlo con el regreso en autobús o taxi a Santiago.</p>
+          <div class="etapa-meta">
+            <span>31 km</span>
+            <span>Dificultad baja</span>
+            <span>Llegada: Muxía (opcional)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING SECTION -->
+<section class="ecs-section pricing-section" id="precios">
+  <div class="ecs-container">
+    <h2>Paquetes y Precios</h2>
+    <p class="section-subtitle">El epílogo perfecto para tu Camino. Combinable con cualquier ruta jacobea.</p>
+    <div class="pricing-grid pricing-grid-2">
+
+      <div class="pricing-card">
+        <div class="pricing-card-header">
+          <h3>Albergue Privado</h3>
+          <div class="pricing-price">249€<span>/persona</span></div>
+          <p>Alojamiento en habitación compartida en albergues privados seleccionados en el Camino de Finisterre</p>
+        </div>
+        <ul class="pricing-features">
+          <li>3 noches en albergues privados</li>
+          <li>Traslado de mochila las 3 etapas</li>
+          <li>Credencial (o sellos adicionales)</li>
+          <li>Itinerario detallado</li>
+          <li>Apoyo telefónico 24h</li>
+          <li>Fisterrana (certificado llegada a Finisterre)</li>
+        </ul>
+        <a href="index.html#ecs-planifica" class="btn-pricing">Reservar ahora</a>
+      </div>
+
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Más reservado</div>
+        <div class="pricing-card-header">
+          <h3>Pensión Hab. Privada</h3>
+          <div class="pricing-price">349€<span>/persona</span></div>
+          <p>Habitación privada en pensiones y casas de aldea con encanto en la ruta a Finisterre</p>
+        </div>
+        <ul class="pricing-features">
+          <li>3 noches en habitación privada</li>
+          <li>Traslado de mochila las 3 etapas</li>
+          <li>Credencial (o sellos adicionales)</li>
+          <li>Itinerario detallado</li>
+          <li>Apoyo telefónico 24h</li>
+          <li>Fisterrana (certificado llegada a Finisterre)</li>
+          <li>Seguro de viaje incluido</li>
+        </ul>
+        <a href="index.html#ecs-planifica" class="btn-pricing">Reservar ahora</a>
+      </div>
+
+    </div>
+    <p class="pricing-note">Precios por persona en habitación doble. Suplemento individual disponible. Añade la extensión a Muxía por 89€ más.</p>
+  </div>
+</section>
+
+<!-- INCLUDED SECTION -->
+<section class="ecs-section included-section" id="sec-incluye">
+  <div class="ecs-container">
+    <h2>¿Qué incluye tu paquete?</h2>
+    <div class="included-grid">
+      <div class="included-item">
+        <h4>Alojamiento 3 noches</h4>
+        <p>Albergues o pensiones seleccionadas noche a noche en el Camino de Finisterre.</p>
+      </div>
+      <div class="included-item">
+        <h4>Traslado de mochila</h4>
+        <p>Recogemos tu mochila cada mañana y la llevamos al siguiente alojamiento.</p>
+      </div>
+      <div class="included-item">
+        <h4>Fisterrana</h4>
+        <p>El certificado oficial de llegada al Km 0,00 de Finisterre, entregado en el albergue del faro.</p>
+      </div>
+      <div class="included-item">
+        <h4>Itinerario detallado</h4>
+        <p>Guía completa con mapas, distancias y puntos de interés de la Costa da Morte.</p>
+      </div>
+      <div class="included-item">
+        <h4>Apoyo 24h</h4>
+        <p>Línea de emergencias disponible las 24 horas durante todo el recorrido a Finisterre.</p>
+      </div>
+      <div class="included-item">
+        <h4>Información Costa da Morte</h4>
+        <p>Te informamos de las mejores playas, miradores y restaurantes de la legendaria Costa da Morte.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="ecs-section faq-section">
+  <div class="ecs-container">
+    <h2>Preguntas frecuentes sobre el Camino de Finisterre</h2>
+    <div class="faq">
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="ecsFaqToggle(this)">
+          <span>¿El Camino de Finisterre da derecho a la Compostela?</span>
+          
+        </div>
+        <div class="faq-a">
+          <p>No, el Camino de Finisterre no da derecho a la Compostela, ya que esta solo se obtiene llegando a Santiago de Compostela. Sin embargo, al llegar al faro de Finisterre puedes obtener la "Fisterrana", un certificado oficial expedido por el albergue del faro que acredita que has completado el Camino hasta el km 0,00. Este documento es muy valorado y querido por los peregrinos como complemento a la Compostela.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="ecsFaqToggle(this)">
+          <span>¿Es cierto que los peregrinos queman ropa en Finisterre?</span>
+          
+        </div>
+        <div class="faq-a">
+          <p>Sí, es una tradición antigua que sigue muy viva. La quema en la playa o cerca del faro tiene un significado simbólico de purificación y cierre: deshacerse de lo viejo, de lo que ya no necesitas, para comenzar una nueva etapa vital. Algunos peregrinos queman botas desgastadas, calcetines, una camiseta. Otros simplemente llevan una nota escrita con lo que quieren dejar atrás. Es un ritual muy personal y muy poderoso.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="ecsFaqToggle(this)">
+          <span>¿Se puede hacer el Camino de Finisterre sin haber hecho otro Camino?</span>
+          
+        </div>
+        <div class="faq-a">
+          <p>Sí, técnicamente sí. El Camino de Finisterre comienza en Santiago y no requiere haber hecho otro Camino previamente. Sin embargo, culturalmente tiene más sentido hacerlo como continuación de otro Camino, ya que la emoción de seguir caminando después de alcanzar Santiago es única. Dicho esto, muchas personas hacen solo este tramo por su belleza paisajística y su significado espiritual, sin haber hecho el Camino Francés o Portugués.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="ecsFaqToggle(this)">
+          <span>¿Qué es mejor: ir a Finisterre, a Muxía o a los dos?</span>
+          
+        </div>
+        <div class="faq-a">
+          <p>Si tienes tiempo, los dos. Finisterre y Muxía son los dos grandes santuarios atlánticos de la Costa da Morte y se complementan perfectamente. Finisterre es el km 0,00, el punto más occidental, con el faro icónico. Muxía es un santuario mariano de enorme devoción con una energía especial junto al mar. La ruta clásica es ir a Finisterre (3 días desde Santiago) y continuar a Muxía (1 día más), o viceversa, y regresar en bus a Santiago.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q" onclick="ecsFaqToggle(this)">
+          <span>¿En qué época del año es mejor hacer el Camino de Finisterre?</span>
+          
+        </div>
+        <div class="faq-a">
+          <p>El Camino de Finisterre puede hacerse todo el año, pero los meses más recomendables son mayo-junio y septiembre-octubre. En verano la Costa da Morte está en su mejor momento aunque con más turistas. En invierno el camino puede ser muy ventoso y lluvioso, aunque tiene una belleza dramática incomparable. Lo ideal es llegar al faro a tiempo para la puesta de sol: asegúrate de gestionar bien la última jornada para no llegar de noche.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-final">
+  <div class="ecs-container">
+    <h2>El sol te espera en el fin del mundo</h2>
+    <p>El Camino de Finisterre es el final perfecto para cualquier Camino de Santiago. Cuéntanos y te lo planificamos junto con tu ruta jacobea o por separado.</p>
+    <div class="cta-final-btns">
+      <a href="index.html#ecs-planifica" class="btn-cta-primary">Planifica tu Camino ahora</a>
+      <button onclick="ecsOpenCallback()" class="btn-cta-secondary">Pedir que me llamen</button>
+      
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="ecs-footer" id="ecs-contacto">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <div class="footer-logo"><img src="easy-camino-santiago-logo.png" alt="Easy Camino Santiago"></div>
+      <p>Agencia especializada en el Camino de Santiago con base en Lugo. Planificamos cada etapa para que solo te preocupes de caminar.</p>
+      <div class="social-links">
+        <a href="https://facebook.com/easycaminosantiago" target="_blank" class="social-btn">f Facebook</a>
+        <a href="https://instagram.com/easycaminosantiago" target="_blank" class="social-btn">📷 Instagram</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Nuestros Caminos</h4>
+      <a href="camino-frances.html">Camino Francés</a>
+      <a href="camino-frances-sarria.html">Últimas 100km desde Sarria</a>
+      <a href="camino-portugues.html">Camino Portugués</a>
+      <a href="camino-portugues-costa.html">Portugués por la Costa</a>
+      <a href="camino-norte.html">Camino del Norte</a>
+      <a href="camino-primitivo.html">Camino Primitivo</a>
+      <a href="camino-ingles.html">Camino Inglés</a>
+      <a href="camino-bicicleta.html">En Bicicleta</a>
+    </div>
+    <div class="footer-col">
+      <h4>Caminos más vendidos</h4>
+      <a href="camino-frances-sarria.html">Últimas 100km desde Sarria</a>
+      <a href="camino-frances.html">Camino Francés desde St Jean</a>
+      <a href="camino-portugues.html">Camino Portugués desde Porto</a>
+      <a href="camino-ingles.html">Camino Inglés desde Ferrol</a>
+      <a href="camino-finisterre.html">Camino de Finisterre</a>
+    </div>
+    <div class="footer-col">
+      <h4>Información</h4>
+      <a href="politica-reservas.html">Política de Reservas</a>
+      <a href="politica-cancelacion.html">Política de Cancelación</a>
+      <a href="politica-cookies.html">Política de Cookies</a>
+      <a href="aviso-legal.html">Aviso Legal</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <p><a href="mailto:info@easycaminosantiago.com">info@easycaminosantiago.com</a></p>
+      <p><a href="tel:+34982907629">982 907 629</a></p>
+      <p>Calle Estrada Granxa, 38<br>CP 27002 – Lugo, España</p>
+      <p>Lun–Vie: 9:00–19:00</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Easy Camino Santiago · <a href="https://easycaminosantiago.com">easycaminosantiago.com</a> | Buen Camino ✦ Ultreia</p>
+    <p style="margin-top:8px;font-size:0.8rem;color:#5a6b6a;">
+      <a href="politica-reservas.html">Política de privacidad</a> · <a href="aviso-legal.html">Aviso legal</a> · <a href="politica-cookies.html">Cookies</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+function ecsOpenCallback(){document.getElementById('ecs-callback-overlay').classList.add('open');}
+function ecsCloseCallback(e){if(!e||e.target===document.getElementById('ecs-callback-overlay')||e.currentTarget===document.getElementById('ecs-callback-close')){document.getElementById('ecs-callback-overlay').classList.remove('open');}}
+function ecsCbSubmit(){var tel=document.getElementById('ecs-cb-tel').value.trim();var check=document.getElementById('ecs-cb-check').checked;if(!tel){alert('Por favor introduce tu número de teléfono.');return;}if(!check){alert('Debes aceptar la política de privacidad.');return;}document.getElementById('ecs-callback-body').innerHTML='<div style="text-align:center;padding:20px 0"><div style="font-size:2.5rem;margin-bottom:16px">✅</div><h4 style="color:#56A1A4;margin-bottom:8px">¡Gracias!</h4><p>Te llamaremos en menos de 24h al número <strong>'+tel+'</strong>. Sin compromiso.</p></div>';}
+function ecsSetLang(lang){document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.lang-btn').forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes(lang))b.classList.add('active');});}
+function ecsToggleNav(){document.getElementById('nav-mobile').classList.toggle('open');}
+function ecsFaqToggle(el){el.parentElement.classList.toggle('open');}
+</script>
+
+<!-- FOLLETO MODAL -->
+<div id="ecs-folleto-overlay" onclick="ecsCloseFolleto(event)" style="display:none;position:fixed;inset:0;background:rgba(1,46,56,0.85);z-index:2000;justify-content:center;align-items:center;">
+  <div style="background:white;border-radius:20px;padding:44px 36px;max-width:460px;width:90%;position:relative;box-shadow:0 24px 60px rgba(0,0,0,0.3);">
+    <button onclick="ecsCloseFolletoBtn()" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:#999;line-height:1;">&#x2715;</button>
+    <div style="text-align:center;margin-bottom:28px;">
+      <div style="font-size:2.4rem;margin-bottom:10px;">&#x1F4D6;</div>
+      <h3 style="font-family:'Raleway',sans-serif;font-size:1.4rem;font-weight:800;color:#2D4A52;margin-bottom:8px;">Descarga tu folleto gratis</h3>
+      <p style="color:#5a6b6a;font-size:0.88rem;line-height:1.6;">D&eacute;janos tus datos y accede al folleto completo con etapas, alojamientos, precios y consejos.</p>
+    </div>
+    <input type="text" id="ecs-fl-nombre" placeholder="Tu nombre *" style="width:100%;padding:13px 16px;border:1.5px solid #dde8e8;border-radius:8px;margin-bottom:10px;font-size:0.9rem;font-family:inherit;box-sizing:border-box;">
+    <input type="email" id="ecs-fl-email" placeholder="Tu email *" style="width:100%;padding:13px 16px;border:1.5px solid #dde8e8;border-radius:8px;margin-bottom:10px;font-size:0.9rem;font-family:inherit;box-sizing:border-box;">
+    <input type="tel" id="ecs-fl-tel" placeholder="Tu tel&eacute;fono (opcional)" style="width:100%;padding:13px 16px;border:1.5px solid #dde8e8;border-radius:8px;margin-bottom:16px;font-size:0.9rem;font-family:inherit;box-sizing:border-box;">
+    <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:22px;">
+      <input type="checkbox" id="ecs-fl-check" style="margin-top:4px;flex-shrink:0;width:15px;height:15px;">
+      <label for="ecs-fl-check" style="font-size:0.8rem;color:#5a6b6a;line-height:1.5;cursor:pointer;">Acepto la <a href="politica-reservas.html" style="color:#56A1A4;">pol&iacute;tica de privacidad</a> y el tratamiento de mis datos.</label>
+    </div>
+    <button onclick="ecsSubmitFolleto()" style="width:100%;background:#F3A949;color:white;border:none;padding:15px;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;font-family:'Raleway',sans-serif;">&#x1F4D6; Ver mi folleto</button>
+  </div>
+</div>
+
+<script>
+var _ecsFolletoUrl='folleto-camino-finisterre.html';
+function ecsOpenFolleto(){var el=document.getElementById('ecs-folleto-overlay');el.style.display='flex';}
+function ecsCloseFolletoBtn(){document.getElementById('ecs-folleto-overlay').style.display='none';}
+function ecsCloseFolleto(e){if(e.target===document.getElementById('ecs-folleto-overlay'))document.getElementById('ecs-folleto-overlay').style.display='none';}
+function ecsSubmitFolleto(){
+  var n=document.getElementById('ecs-fl-nombre').value.trim();
+  var em=document.getElementById('ecs-fl-email').value.trim();
+  var ch=document.getElementById('ecs-fl-check').checked;
+  if(!n){alert('Por favor introduce tu nombre.');return;}
+  if(!em||em.indexOf('@')===-1){alert('Por favor introduce un email v\u00e1lido.');return;}
+  if(!ch){alert('Debes aceptar la pol\u00edtica de privacidad.');return;}
+  localStorage.setItem('ecs_folleto_nombre',n);
+  localStorage.setItem('ecs_folleto_url',_ecsFolletoUrl);
+  window.location.href='descarga-folleto.html?ruta='+encodeURIComponent(_ecsFolletoUrl);
+}
+</script>
+
+
+<script>
+(function(){
+  var tabs = document.querySelectorAll('.subnav-tab[data-sec]');
+  var secs = [];
+  tabs.forEach(function(t){ var el=document.getElementById(t.dataset.sec); if(el) secs.push({tab:t,el:el}); });
+  function setActive(){
+    var top = window.scrollY + 140;
+    var active = null;
+    secs.forEach(function(s){ if(s.el.getBoundingClientRect().top + window.scrollY <= top) active=s; });
+    tabs.forEach(function(t){ t.classList.remove('active'); });
+    if(active) active.tab.classList.add('active');
+  }
+  window.addEventListener('scroll', setActive, {passive:true});
+  setActive();
+})();
+</script>
+
+</body>
+</html>

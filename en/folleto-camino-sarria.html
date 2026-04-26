@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CERD8SRPBP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CERD8SRPBP');
+  </script>
+<meta charset="UTF-8">
+<meta name="theme-color" content="#56A1A4">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="apple-touch-icon" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camino from Sarria Brochure — Easy Camino Santiago</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--azul:#56A1A4;--azul-dark:#2D4A52;--naranja:#F3A949;--crema:#ECE7E2;--gris:#5a6b6a;--font-h:'Raleway',sans-serif;--font-b:'Lato',sans-serif;}
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:var(--font-b);color:var(--azul-dark);background:#f0f4f4;}
+  .print-bar{position:fixed;top:0;left:0;right:0;z-index:999;background:var(--azul);padding:12px 32px;display:flex;justify-content:space-between;align-items:center;}
+  .print-bar span{color:rgba(255,255,255,0.7);font-size:0.9rem;}
+  .btn-print{background:var(--naranja);color:white;border:none;padding:10px 28px;border-radius:25px;font-family:var(--font-h);font-weight:700;font-size:0.95rem;cursor:pointer;}
+  .page{width:210mm;min-height:297mm;margin:52px auto 20px;background:white;box-shadow:0 4px 30px rgba(0,0,0,0.15);overflow:hidden;}
+  .cover{background:var(--azul);display:flex;flex-direction:column;}
+  .cover-top{background:linear-gradient(160deg,#2D4A52 0%,#56A1A4 50%,#2D4A52 100%);padding:48px 48px 40px;flex:1;display:flex;flex-direction:column;justify-content:space-between;min-height:180mm;}
+  .cover-ruta-label{font-family:var(--font-b);font-size:0.8rem;font-weight:700;color:var(--naranja);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;}
+  .cover h1{font-family:var(--font-h);font-weight:800;font-size:3.2rem;color:white;line-height:1.05;margin-bottom:8px;}
+  .cover h1 em{color:var(--naranja);font-style:normal;}
+  .cover-subtitle{font-family:var(--font-b);color:rgba(255,255,255,0.75);font-size:1rem;line-height:1.6;max-width:340px;margin-bottom:36px;}
+  .cover-highlights{display:flex;flex-direction:column;gap:10px;}
+  .cover-highlight{display:flex;align-items:center;gap:12px;font-family:var(--font-b);color:white;font-size:0.88rem;}
+  .cover-highlight::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--naranja);flex-shrink:0;}
+  .cover-stats{background:var(--azul);padding:28px 48px;display:grid;grid-template-columns:repeat(4,1fr);}
+  .cover-stat{text-align:center;padding:0 16px;border-right:1px solid rgba(255,255,255,0.12);}
+  .cover-stat:last-child{border-right:none;}
+  .cover-stat strong{display:block;font-family:var(--font-h);font-size:1.6rem;font-weight:800;color:var(--naranja);margin-bottom:4px;}
+  .cover-stat span{font-family:var(--font-b);font-size:0.72rem;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:0.5px;}
+  .cover-bottom{background:white;padding:24px 48px;display:flex;justify-content:space-between;align-items:center;}
+  .cover-precio-label{font-family:var(--font-b);font-size:0.75rem;color:var(--gris);text-transform:uppercase;letter-spacing:1px;}
+  .cover-precio-valor{font-family:var(--font-h);font-size:2rem;font-weight:800;color:var(--azul-dark);}
+  .cover-precio-valor span{font-size:0.9rem;font-weight:400;color:var(--gris);}
+  .cover-badge{background:var(--crema);border:1px solid rgba(86,161,164,0.2);padding:8px 18px;border-radius:20px;font-family:var(--font-b);font-size:0.8rem;color:var(--azul);font-weight:600;}
+  .page-header{background:var(--azul);padding:22px 40px;display:flex;justify-content:space-between;align-items:center;}
+  .page-header-title{font-family:var(--font-h);font-weight:700;font-size:0.9rem;color:rgba(255,255,255,0.7);letter-spacing:1px;text-transform:uppercase;}
+  .page-header-num{font-family:var(--font-h);font-weight:800;font-size:1.1rem;color:var(--naranja);}
+  .page-content{padding:36px 40px;}
+  .section-label{font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:var(--naranja);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+  .section-h2{font-family:var(--font-h);font-weight:800;font-size:1.8rem;color:var(--azul-dark);margin-bottom:16px;line-height:1.2;}
+  .section-line{width:48px;height:4px;background:var(--naranja);border-radius:2px;margin-bottom:24px;}
+  .body-text{font-family:var(--font-b);font-size:0.88rem;color:var(--gris);line-height:1.75;margin-bottom:16px;}
+  .itinerary-overview{display:flex;flex-direction:column;}
+  .day-row{display:flex;align-items:center;border-bottom:1px solid #e0eeec;padding:12px 0;}
+  .day-row:last-child{border-bottom:none;}
+  .day-num{width:44px;height:44px;min-width:44px;border-radius:50%;background:var(--azul-dark);color:var(--naranja);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-weight:800;font-size:1rem;margin-right:18px;}
+  .day-info{flex:1;}
+  .day-title{font-family:var(--font-h);font-weight:700;font-size:0.92rem;color:var(--azul-dark);margin-bottom:3px;}
+  .day-desc{font-family:var(--font-b);font-size:0.78rem;color:var(--gris);}
+  .day-km{font-family:var(--font-h);font-weight:700;font-size:0.8rem;color:var(--azul);background:var(--crema);padding:4px 12px;border-radius:20px;border:1px solid rgba(86,161,164,0.15);white-space:nowrap;}
+  .day-page-header{background:linear-gradient(135deg,var(--azul) 0%,#6AAFB2 100%);padding:28px 40px 24px;}
+  .day-page-label{font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:var(--naranja);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;}
+  .day-page-title{font-family:var(--font-h);font-weight:800;font-size:1.5rem;color:white;line-height:1.2;}
+  .day-page-meta{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;}
+  .day-meta-tag{font-family:var(--font-b);font-size:0.75rem;font-weight:600;color:white;background:rgba(255,255,255,0.15);padding:4px 12px;border-radius:20px;border:1px solid rgba(255,255,255,0.25);}
+  .day-description{padding:20px 40px 16px;font-family:var(--font-b);font-size:0.86rem;color:var(--gris);line-height:1.75;border-bottom:2px solid var(--crema);}
+  .aloj-section{padding:16px 40px;}
+  .aloj-label{font-family:var(--font-b);font-size:0.7rem;font-weight:700;color:var(--naranja);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
+  .aloj-intro{font-family:var(--font-b);font-size:0.78rem;color:var(--gris);font-style:italic;margin-bottom:14px;line-height:1.6;}
+  .aloj-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .aloj-card{background:var(--crema);border-radius:10px;padding:13px 15px;border-left:3px solid var(--azul);}
+  .aloj-card.full{grid-column:1/-1;}
+  .aloj-name{font-family:var(--font-h);font-weight:700;font-size:0.86rem;color:var(--azul-dark);margin-bottom:4px;}
+  .aloj-type{display:inline-block;font-family:var(--font-b);font-size:0.68rem;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px;}
+  .aloj-desc{font-family:var(--font-b);font-size:0.75rem;color:var(--gris);line-height:1.55;}
+  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;}
+  .info-block{background:var(--crema);border-radius:12px;padding:18px;}
+  .info-block-title{font-family:var(--font-h);font-weight:700;font-size:0.88rem;color:var(--azul-dark);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+  .info-block-title::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--naranja);flex-shrink:0;}
+  .info-block ul{list-style:none;}
+  .info-block ul li{font-family:var(--font-b);font-size:0.76rem;color:var(--gris);padding:4px 0;border-bottom:1px solid rgba(86,161,164,0.1);display:flex;gap:8px;align-items:flex-start;line-height:1.5;}
+  .info-block ul li:last-child{border-bottom:none;}
+  .info-block ul li::before{content:'✓';color:var(--azul);font-weight:bold;flex-shrink:0;}
+  .info-block ul li.no::before{content:'✗';color:#c0392b;}
+  .faq-item-print{margin-bottom:12px;}
+  .faq-q-print{font-family:var(--font-h);font-weight:700;font-size:0.85rem;color:var(--azul-dark);margin-bottom:4px;}
+  .faq-a-print{font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;}
+  .booking-steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:16px 0;}
+  .booking-step{background:var(--crema);border-radius:12px;padding:16px;text-align:center;}
+  .step-num{width:32px;height:32px;border-radius:50%;background:var(--azul-dark);color:var(--naranja);font-family:var(--font-h);font-weight:800;font-size:0.9rem;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;}
+  .step-title{font-family:var(--font-h);font-weight:700;font-size:0.82rem;color:var(--azul-dark);margin-bottom:6px;}
+  .step-desc{font-family:var(--font-b);font-size:0.73rem;color:var(--gris);line-height:1.5;}
+  .contact-final{background:linear-gradient(135deg,var(--azul) 0%,#6AAFB2 100%);border-radius:14px;padding:22px 28px;margin-top:16px;display:flex;justify-content:space-between;align-items:center;}
+  .contact-final-text h3{font-family:var(--font-h);font-weight:800;font-size:1.1rem;color:white;margin-bottom:5px;}
+  .contact-final-text p{font-family:var(--font-b);font-size:0.78rem;color:rgba(255,255,255,0.75);}
+  .contact-details{display:flex;flex-direction:column;gap:6px;align-items:flex-end;}
+  .contact-item{font-family:var(--font-b);font-size:0.78rem;color:white;}
+  .contact-item strong{color:var(--naranja);}
+  .page-footer{background:var(--azul);padding:16px 40px;display:flex;justify-content:space-between;align-items:center;}
+  .footer-contact{font-family:var(--font-b);font-size:0.75rem;color:rgba(255,255,255,0.65);}
+  .footer-web{font-family:var(--font-h);font-weight:700;font-size:0.8rem;color:var(--naranja);}
+  @media print{.print-bar{display:none!important;}body{background:white;}.page{margin:0;box-shadow:none;page-break-after:always;width:100%;}.page:last-child{page-break-after:avoid;}}
+</style>
+</head>
+<body>
+<div class="print-bar">
+  <span>Easy Camino Santiago — Camino from Sarria Brochure</span>
+  <button class="btn-print" onclick="window.print()">⬇ Download PDF</button>
+</div>
+
+<!-- PAGE 1: COVER -->
+<div class="page cover">
+  <div class="cover-top">
+    <div>
+      <div class="cover-ruta-label">Official travel guide</div>
+      <h1>Camino<br>from <em>Sarria</em></h1>
+      <p class="cover-subtitle">The last 115 km of the Camino Francés. The minimum required for the official Compostela. Perfect for families, first-time pilgrims and travellers with limited time.</p>
+      <div class="cover-highlights">
+        <div class="cover-highlight">Spain's most popular route for earning the Compostela</div>
+        <div class="cover-highlight">5 stages through the most authentic Galicia</div>
+        <div class="cover-highlight">Agency in Lugo — 20 minutes from Sarria</div>
+        <div class="cover-highlight">Everything organised: accommodation, luggage transfer and 24h support</div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-stats">
+    <div class="cover-stat"><strong>115 km</strong><span>Total distance</span></div>
+    <div class="cover-stat"><strong>5</strong><span>Stages</span></div>
+    <div class="cover-stat"><strong>6 nights</strong><span>Accommodation</span></div>
+    <div class="cover-stat"><strong>Easy</strong><span>Difficulty</span></div>
+  </div>
+  <div class="cover-bottom">
+    <div>
+      <div class="cover-precio-label">Price from</div>
+      <div class="cover-precio-valor">399€ <span>per person</span></div>
+    </div>
+    <div class="cover-badge">⭐ Our best-seller</div>
+  </div>
+</div>
+
+<!-- PAGE 2: HISTORY -->
+<div class="page">
+  <div style="background:linear-gradient(135deg,var(--azul) 0%,#6AAFB2 100%);padding:32px 40px 28px;">
+    <div style="font-family:var(--font-b);font-size:0.7rem;font-weight:700;color:var(--naranja);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;">History &amp; tradition</div>
+    <h2 style="font-family:var(--font-h);font-weight:900;font-size:2rem;color:white;line-height:1.15;margin-bottom:0;">The Camino de Santiago:<br><em style="font-style:normal;color:rgba(255,255,255,0.75);font-weight:400;font-size:1.1rem;">A thousand years of faith, culture and human adventure</em></h2>
+  </div>
+  <div style="padding:26px 40px 20px;">
+    <div style="border-left:4px solid var(--naranja);padding:12px 20px;margin-bottom:22px;background:rgba(240,161,69,0.06);border-radius:0 8px 8px 0;">
+      <p style="font-family:var(--font-h);font-size:1rem;font-style:italic;color:var(--azul-dark);line-height:1.5;margin:0;">"The Camino de Santiago is the only European route declared a UNESCO World Heritage Site, in 1985. Every year, more than 300,000 people from around the world walk its paths."</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:22px;">
+      <div>
+        <div style="font-family:var(--font-b);font-size:0.65rem;font-weight:700;color:var(--naranja);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;">Who was the Apostle James?</div>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin:0;">James the Greater, son of Zebedee, was one of the first four disciples chosen by Jesus, alongside Peter, Andrew and John. A fisherman on the Sea of Galilee, Jesus nicknamed him and his brother "Sons of Thunder" for their passionate and determined character.</p>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">He was the first apostle martyr: King Herod Agrippa I ordered his beheading around 44 AD. According to tradition, his disciples transported his body by sea to the coast of Galicia, where he was buried in what is now Compostela.</p>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">In the 9th century, the hermit Pelayo observed mysterious lights over a field. When investigated, a tomb was discovered that Bishop Teodomiro identified as the Apostle's. King Alfonso II ordered a church built over the sepulchre — the seed of today's Cathedral.</p>
+      </div>
+      <div>
+        <div style="font-family:var(--font-b);font-size:0.65rem;font-weight:700;color:var(--naranja);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;">The birth of the pilgrimage</div>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin:0;">News of the discovery spread across Europe and pilgrims began arriving from every corner of Christendom. By the 10th century, the pilgrimage to Compostela was firmly established, rivalling journeys to Rome and Jerusalem.</p>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">The 11th and 12th centuries were the golden age. Kings such as Sancho III and Alfonso VI promoted the route, building roads, bridges and hostels. The Cluniac religious orders organised the infrastructure that made the Camino Francés world-famous.</p>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">The Camino endured periods of decline — the Black Death, the Wars of Religion — but always revived. In 1884, Pope Leo XIII reaffirmed the authenticity of the relics, and the 20th century brought the greatest revival in modern history.</p>
+      </div>
+    </div>
+    <div style="margin-bottom:18px;">
+      <div style="font-family:var(--font-b);font-size:0.65rem;font-weight:700;color:var(--azul);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Key milestones</div>
+      <div style="display:flex;gap:0;align-items:flex-start;position:relative;">
+        <div style="position:absolute;top:10px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--azul),var(--naranja));opacity:0.25;"></div>
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--azul);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--azul);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--azul);">1st c. AD</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">Martyrdom and transfer of James's remains to Galicia</div>
+        </div>
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--azul);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--azul);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--azul);">834</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">Discovery of the tomb. Alfonso II orders the first church built</div>
+        </div>
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--azul);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--azul);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--azul);">1122</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">Pope Callixtus II creates the Jacobean Holy Year</div>
+        </div>
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--naranja);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--naranja);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--naranja);">1985</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">UNESCO declares the Camino a World Heritage Site</div>
+        </div>
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--naranja);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--naranja);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--naranja);">Today</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">300,000+ pilgrims per year from over 180 countries</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+      <div style="background:var(--crema);border-radius:8px;padding:13px 14px;border-top:3px solid var(--azul);">
+        <div style="font-family:var(--font-h);font-weight:800;font-size:0.8rem;color:var(--azul-dark);margin-bottom:5px;">The Holy Year</div>
+        <p style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.55;margin:0;">Celebrated when 25 July — the feast of the Apostle — falls on a Sunday. Pope Callixtus II instituted this privilege in 1122. In a Holy Year, the Holy Door of the Cathedral opens and pilgrims may obtain a plenary indulgence.</p>
+      </div>
+      <div style="background:var(--crema);border-radius:8px;padding:13px 14px;border-top:3px solid var(--azul);">
+        <div style="font-family:var(--font-h);font-weight:800;font-size:0.8rem;color:var(--azul-dark);margin-bottom:5px;">The Compostela</div>
+        <p style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.55;margin:0;">The official certificate issued by the Cathedral. The pilgrim's name is inscribed in Latin and signed by the Cathedral Secretary. In 1985 just 2,491 were awarded; today more than 300,000 are issued per year. Requires at least 100 km on foot or 200 km by bicycle.</p>
+      </div>
+      <div style="background:var(--crema);border-radius:8px;padding:13px 14px;border-top:3px solid var(--naranja);">
+        <div style="font-family:var(--font-h);font-weight:800;font-size:0.8rem;color:var(--azul-dark);margin-bottom:5px;">The Pilgrim's Blessing</div>
+        <p style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.55;margin:0;">A medieval tradition celebrated at Roncesvalles at the start of the Camino Francés and in churches along other routes. The cleric prays that the pilgrim "may undertake the journey and return home safe and sound with God's help." A rite that unites faith, history and community.</p>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · Lugo, Galicia</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+<!-- PAGE 3: ROUTE OVERVIEW -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Camino from Sarria</div>
+    <div class="page-header-num">02</div>
+  </div>
+  <div class="page-content">
+    <div class="section-label">The route</div>
+    <div class="section-h2">The smartest Camino for the Compostela</div>
+    <div class="section-line"></div>
+    <p class="body-text">The last 115 km of the Camino Francés from Sarria are the most popular and practical option for those who want to experience the authentic Camino de Santiago without spending several months on the road. They exceed the 100 km minimum required by the Cathedral to award the official Compostela.</p>
+    <p class="body-text">Our agency is based in Lugo, just 20 minutes from Sarria by train. That proximity means we know every accommodation, every restaurant and every stretch of the route better than anyone. The stages wind through centuries-old oak forests, grey stone villages, medieval wayside crosses and the iconic pilgrim atmosphere that makes this route truly unique.</p>
+
+    <div class="section-label" style="margin-top:24px;">Itinerary</div>
+    <div class="section-h2" style="font-size:1.3rem;">Overview — 5 stages</div>
+    <div class="section-line"></div>
+    <div class="itinerary-overview">
+      <div class="day-row">
+        <div class="day-num">1</div>
+        <div class="day-info">
+          <div class="day-title">Sarria → Portomarín</div>
+          <div class="day-desc">Barbadelo Monastery · Bridge over the Miño · Medieval town of Portomarín</div>
+        </div>
+        <div class="day-km">22.4 km</div>
+      </div>
+      <div class="day-row">
+        <div class="day-num">2</div>
+        <div class="day-info">
+          <div class="day-title">Portomarín → Palas de Rei</div>
+          <div class="day-desc">Alto de Ligonde · Grey stone hamlets · Galician plateau</div>
+        </div>
+        <div class="day-km">24.8 km</div>
+      </div>
+      <div class="day-row">
+        <div class="day-num">3</div>
+        <div class="day-info">
+          <div class="day-title">Palas de Rei → Arzúa</div>
+          <div class="day-desc">Pambre Castle · Melide (octopus) · Arzúa cheese</div>
+        </div>
+        <div class="day-km">28.5 km</div>
+      </div>
+      <div class="day-row">
+        <div class="day-num">4</div>
+        <div class="day-info">
+          <div class="day-title">Arzúa → O Pedrouzo</div>
+          <div class="day-desc">Eucalyptus forests · Sleeping hamlets · Eve of Santiago</div>
+        </div>
+        <div class="day-km">19.3 km</div>
+      </div>
+      <div class="day-row">
+        <div class="day-num">5</div>
+        <div class="day-info">
+          <div class="day-title">O Pedrouzo → Santiago de Compostela</div>
+          <div class="day-desc">Monte do Gozo · Plaza del Obradoiro · Pilgrim's Mass</div>
+        </div>
+        <div class="day-km">19.4 km</div>
+      </div>
+    </div>
+    <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);margin-top:16px;font-style:italic;">6-stage option available: we split the Palas de Rei→Arzúa stage into two days for a more relaxed pace. Ideal for families with children.</p>
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · info@easycaminosantiago.com · +34 982 907 629</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+<!-- PAGE 4: STAGES 1–2 -->
+<div class="page">
+  <div class="day-page-header">
+    <div class="day-page-label">Stage 1</div>
+    <div class="day-page-title">Sarria → Portomarín</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">22.4 km</span>
+      <span class="day-meta-tag">+670m / -540m</span>
+      <span class="day-meta-tag">5–6 hours</span>
+    </div>
+  </div>
+  <div class="day-description">The baptism stage. You cross the River Miño on Portomarín's long bridge, leaving Sarria behind through oak and chestnut forests. Along the way you pass the Barbadelo Monastery, one of the most beautiful on the Camino Francés. You arrive in the handsome town of Portomarín, with its stone houses and Romanesque fortress church perched above the reservoir.</div>
+  <div class="aloj-section">
+    <div class="aloj-label">Accommodation in Portomarín</div>
+    <div class="aloj-intro">We handpick the best options in the medieval town of Portomarín, on the shores of the Belesar reservoir. All are perfectly placed to start Stage 2 without detours.</div>
+    <div class="aloj-grid">
+      <div class="aloj-card">
+        <div class="aloj-name">Pensión El Caminante</div>
+        <div class="aloj-type">Pension · Private room</div>
+        <div class="aloj-desc">Comfortable rooms in the historic heart of Portomarín. Homemade breakfast included, terrace overlooking the reservoir.</div>
+      </div>
+      <div class="aloj-card">
+        <div class="aloj-name">Hotel Pousada de Portomarín</div>
+        <div class="aloj-type">3★ Hotel</div>
+        <div class="aloj-desc">Portomarín's flagship hotel with panoramic views over the Belesar reservoir. In-house restaurant serving traditional Galician cuisine.</div>
+      </div>
+      <div class="aloj-card full">
+        <div class="aloj-name">Albergue Ferramenteiro</div>
+        <div class="aloj-type">Private hostel</div>
+        <div class="aloj-desc">The go-to pilgrims' hostel in Portomarín. Welcoming atmosphere, garden and fully equipped kitchen for guests' use.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-page-header" style="margin-top:4px;">
+    <div class="day-page-label">Stage 2</div>
+    <div class="day-page-title">Portomarín → Palas de Rei</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">24.8 km</span>
+      <span class="day-meta-tag">+600m / -620m</span>
+      <span class="day-meta-tag">6–7 hours</span>
+    </div>
+  </div>
+  <div class="day-description">A gentle stage of constant ups and downs through grey stone hamlets. You cross the Alto de Ligonde with sweeping views over the Galician plateau. The warmth of the inland Galician villages will surprise you. You arrive in Palas de Rei, a lively hub with a great pilgrim atmosphere.</div>
+  <div class="aloj-section">
+    <div class="aloj-label">Accommodation in Palas de Rei</div>
+    <div class="aloj-grid">
+      <div class="aloj-card">
+        <div class="aloj-name">Casa Rural O Cruceiro</div>
+        <div class="aloj-type">Rural house</div>
+        <div class="aloj-desc">Galician stone country house on the outskirts of Palas de Rei. Garden, peaceful setting and homemade breakfast included.</div>
+      </div>
+      <div class="aloj-card">
+        <div class="aloj-name">Hotel Casanova</div>
+        <div class="aloj-type">3★ Hotel</div>
+        <div class="aloj-desc">Palas de Rei's highest-rated hotel among pilgrims. Spacious rooms, good restaurant and a central location.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · info@easycaminosantiago.com · +34 982 907 629</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+<!-- PAGE 5: STAGES 3–4–5 -->
+<div class="page">
+  <div class="day-page-header">
+    <div class="day-page-label">Stage 3</div>
+    <div class="day-page-title">Palas de Rei → Arzúa</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">28.5 km</span>
+      <span class="day-meta-tag">+550m / -580m</span>
+      <span class="day-meta-tag">7–8 hours</span>
+    </div>
+  </div>
+  <div class="day-description">One of the most varied stages. You cross the Pambre River and its medieval castle, pass through Melide — famous for its pulpo a feira octopus — and arrive in Arzúa, known for its tetilla cheese. Here the pilgrim atmosphere intensifies as the Portuguese Way joins the route.</div>
+  <div class="aloj-section" style="padding-bottom:8px;">
+    <div class="aloj-label">Accommodation in Arzúa</div>
+    <div class="aloj-grid">
+      <div class="aloj-card">
+        <div class="aloj-name">Hotel Suiza</div>
+        <div class="aloj-type">Hotel · Private room</div>
+        <div class="aloj-desc">Classic hotel in the centre of Arzúa. Comfortable rooms and an excellent restaurant with seasonal Galician cuisine.</div>
+      </div>
+      <div class="aloj-card">
+        <div class="aloj-name">Albergue Ultreia</div>
+        <div class="aloj-type">Private hostel</div>
+        <div class="aloj-desc">Modern hostel in the heart of Arzúa. Welcoming atmosphere and a terrace — the ideal spot to rest after 28 km on the road.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-page-header">
+    <div class="day-page-label">Stage 4</div>
+    <div class="day-page-title">Arzúa → O Pedrouzo</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">19.3 km</span>
+      <span class="day-meta-tag">+380m / -360m</span>
+      <span class="day-meta-tag">5–6 hours</span>
+    </div>
+  </div>
+  <div class="day-description">The penultimate stage. You walk through dense eucalyptus forests that create an almost magical atmosphere. In O Pedrouzo the anticipation is at its peak: tomorrow you reach Santiago. You can feel the excitement in every conversation.</div>
+  <div class="aloj-section" style="padding-bottom:8px;">
+    <div class="aloj-label">Accommodation in O Pedrouzo</div>
+    <div class="aloj-grid">
+      <div class="aloj-card full">
+        <div class="aloj-name">Hotel O Pino / Pensión O Pedrouzo</div>
+        <div class="aloj-type">Hotel · Pension</div>
+        <div class="aloj-desc">Family-run and comfortable options in O Pedrouzo. The night before arriving in Santiago is special — the pilgrim atmosphere of the village makes it unforgettable.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-page-header">
+    <div class="day-page-label">Stage 5 — Arrival</div>
+    <div class="day-page-title">O Pedrouzo → Santiago de Compostela</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">19.4 km</span>
+      <span class="day-meta-tag">+250m / -280m</span>
+      <span class="day-meta-tag">5–6 hours</span>
+    </div>
+  </div>
+  <div class="day-description">The most special day. You cross Monte do Gozo — the "Hill of Joy" — from where you see the Cathedral towers for the first time. You enter Santiago through the historic old town. The Plaza del Obradoiro awaits with the embrace of the Apostle and the Pilgrim's Mass. A moment you will never forget.</div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · info@easycaminosantiago.com · +34 982 907 629</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+<!-- PAGE 6: WHAT'S INCLUDED + PRICES -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">What your package includes</div>
+    <div class="page-header-num">05</div>
+  </div>
+  <div class="page-content">
+    <div class="section-label">All-inclusive package</div>
+    <div class="section-h2">Everything you need, all organised</div>
+    <div class="section-line"></div>
+    <div class="info-grid">
+      <div class="info-block">
+        <div class="info-block-title">Included</div>
+        <ul>
+          <li>6 nights' accommodation booked</li>
+          <li>Breakfast included every day</li>
+          <li>Luggage transfer (5 stages)</li>
+          <li>Pilgrim credential</li>
+          <li>Stage-by-stage itinerary</li>
+          <li>24h phone support during the Camino</li>
+          <li>Compostela management</li>
+          <li>Travel insurance (pension/hotel packages)</li>
+        </ul>
+      </div>
+      <div class="info-block">
+        <div class="info-block-title">Not included</div>
+        <ul>
+          <li class="no">Flights or transport to Sarria</li>
+          <li class="no">Meals (except breakfast)</li>
+          <li class="no">Optional activities in Santiago</li>
+          <li class="no">Personal expenses</li>
+        </ul>
+        <div style="margin-top:12px;font-family:var(--font-b);font-size:0.76rem;color:var(--azul);background:rgba(86,161,164,0.08);padding:10px;border-radius:8px;">
+          Transfer from Lugo to Sarria (20 min by train) can be arranged for +€15/person.
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:8px;">Prices</div>
+    <div class="section-h2" style="font-size:1.3rem;">Choose your accommodation type</div>
+    <div class="section-line"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div style="background:var(--crema);border-radius:12px;padding:18px;border:1px solid rgba(86,161,164,0.15);">
+        <div style="font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Private hostel</div>
+        <div style="font-family:var(--font-h);font-weight:800;font-size:2rem;color:var(--azul-dark);">399€</div>
+        <div style="font-family:var(--font-b);font-size:0.75rem;color:var(--gris);margin-bottom:10px;">per person · 6 nights</div>
+        <div style="font-family:var(--font-b);font-size:0.76rem;color:var(--gris);">Handpicked private hostels along every stage. Perfect for meeting fellow pilgrims.</div>
+      </div>
+      <div style="background:var(--azul-dark);border-radius:12px;padding:18px;position:relative;">
+        <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--naranja);color:white;font-family:var(--font-b);font-size:0.68rem;font-weight:700;padding:3px 12px;border-radius:10px;white-space:nowrap;">⭐ Most booked</div>
+        <div style="font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Private room</div>
+        <div style="font-family:var(--font-h);font-weight:800;font-size:2rem;color:var(--naranja);">549€</div>
+        <div style="font-family:var(--font-b);font-size:0.75rem;color:rgba(255,255,255,0.65);margin-bottom:10px;">per person · 6 nights</div>
+        <div style="font-family:var(--font-b);font-size:0.76rem;color:rgba(255,255,255,0.75);">Private room in guesthouses. Guaranteed rest after every stage.</div>
+      </div>
+      <div style="background:var(--crema);border-radius:12px;padding:18px;border:1px solid rgba(86,161,164,0.15);">
+        <div style="font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">3★ Hotel</div>
+        <div style="font-family:var(--font-h);font-weight:800;font-size:2rem;color:var(--azul-dark);">749€</div>
+        <div style="font-family:var(--font-b);font-size:0.75rem;color:var(--gris);margin-bottom:10px;">per person · 6 nights</div>
+        <div style="font-family:var(--font-b);font-size:0.76rem;color:var(--gris);">Selected 3★ hotels. Buffet breakfast, full insurance and premium service.</div>
+      </div>
+    </div>
+    <p style="font-family:var(--font-b);font-size:0.76rem;color:var(--gris);margin-top:12px;text-align:center;">Book with just 30% deposit. Balance due 30 days before departure. Free cancellation up to 21 days before.</p>
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · info@easycaminosantiago.com · +34 982 907 629</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+<!-- PAGE 7: FAQ + BOOKING -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Frequently asked questions &amp; booking</div>
+    <div class="page-header-num">06</div>
+  </div>
+  <div class="page-content">
+    <div class="section-label">FAQ</div>
+    <div class="section-h2">Frequently asked questions</div>
+    <div class="section-line"></div>
+
+    <div class="faq-item-print">
+      <div class="faq-q-print">Can I earn the Compostela starting from Sarria?</div>
+      <div class="faq-a-print">Yes. The Cathedral requires a minimum of 100 km on foot. Our package covers 115 km, exceeding that minimum. You simply need to stamp your credential at least twice per stage.</div>
+    </div>
+    <div class="faq-item-print">
+      <div class="faq-q-print">What level of fitness do I need?</div>
+      <div class="faq-a-print">Easy to moderate. Stages of 19–28 km with gentle elevation changes. We recommend having walked 10–15 km at some point before. People aged 10 to 75 have completed it successfully.</div>
+    </div>
+    <div class="faq-item-print">
+      <div class="faq-q-print">Is luggage transfer included?</div>
+      <div class="faq-a-print">Yes, in all packages. Your main bag travels each morning to the next accommodation while you walk with a small daypack.</div>
+    </div>
+    <div class="faq-item-print">
+      <div class="faq-q-print">When is the best time of year?</div>
+      <div class="faq-a-print">April to June and September to October. The route from Sarria can be walked year-round — there are no mountain passes with snow risk. We always recommend packing a rain jacket.</div>
+    </div>
+    <div class="faq-item-print">
+      <div class="faq-q-print">How far in advance should I book?</div>
+      <div class="faq-a-print">We recommend 4–6 weeks in high season, 2–3 months for Easter and bank holidays. In low season we can organise your Camino in less than a week.</div>
+    </div>
+
+    <div class="section-label" style="margin-top:24px;">How to book</div>
+    <div class="section-h2" style="font-size:1.3rem;">3 steps to your Camino</div>
+    <div class="section-line"></div>
+    <div class="booking-steps">
+      <div class="booking-step">
+        <div class="step-num">1</div>
+        <div class="step-title">Contact us</div>
+        <div class="step-desc">Write to us or fill in the form on the website. We reply within 24 hours.</div>
+      </div>
+      <div class="booking-step">
+        <div class="step-num">2</div>
+        <div class="step-title">Personal quote</div>
+        <div class="step-desc">We send you a quote tailored to your dates, group size and preferred accommodation type.</div>
+      </div>
+      <div class="booking-step">
+        <div class="step-num">3</div>
+        <div class="step-title">Book and enjoy</div>
+        <div class="step-desc">Just 30% confirms your Camino. The balance is due 30 days before departure. Time to walk!</div>
+      </div>
+    </div>
+
+    <div class="contact-final">
+      <div class="contact-final-text">
+        <h3>Ready for the Camino from Sarria?</h3>
+        <p>Request your free quote. Sara will call you within 24 hours.</p>
+      </div>
+      <div class="contact-details">
+        <div class="contact-item"><strong>Phone:</strong> +34 982 907 629</div>
+        <div class="contact-item"><strong>Email:</strong> info@easycaminosantiago.com</div>
+        <div class="contact-item"><strong>Web:</strong> easycaminosantiago.com</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · info@easycaminosantiago.com · +34 982 907 629</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+</body>
+</html>

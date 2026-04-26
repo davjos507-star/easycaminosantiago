@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CERD8SRPBP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CERD8SRPBP');
+  </script>
+<meta charset="UTF-8">
+<meta name="theme-color" content="#56A1A4">
+    <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Folleto Camino Inglés — Easy Camino Santiago</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  /* ====== VARIABLES ====== */
+  :root {
+    --azul:      #56A1A4;
+    --azul-dark: #2D4A52;
+    --naranja:   #F3A949;
+    --crema:     #ECE7E2;
+    --gris:      #5a6b6a;
+    --font-h:    'Raleway', sans-serif;
+    --font-b:    'Lato', sans-serif;
+  }
+
+  /* ====== RESET ====== */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-b); color: var(--azul-dark); background: #f0f4f4; }
+
+  /* ====== BOTON IMPRIMIR (solo pantalla) ====== */
+  .print-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    background: var(--azul); padding: 12px 32px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .print-bar span { color: rgba(255,255,255,0.7); font-family: var(--font-b); font-size: 0.9rem; }
+  .btn-print {
+    background: var(--naranja); color: white; border: none;
+    padding: 10px 28px; border-radius: 25px; font-family: var(--font-h);
+    font-weight: 700; font-size: 0.95rem; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-print:hover { background: #d4882a; }
+
+  /* ====== PAGINAS ====== */
+  .page {
+    width: 210mm; min-height: 297mm;
+    margin: 52px auto 20px; background: white;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+    position: relative; overflow: hidden;
+  }
+
+  /* ====== PORTADA ====== */
+  .cover {
+    background: var(--azul);
+    display: flex; flex-direction: column;
+  }
+  .cover-top {
+    background: linear-gradient(160deg, #56A1A4 0%, #6AAFB2 50%, #3F8A8D 100%);
+    padding: 48px 48px 40px; flex: 1;
+    display: flex; flex-direction: column; justify-content: space-between;
+    min-height: 180mm;
+  }
+  .cover-logo { height: 56px; width: auto; filter: brightness(0) invert(1); }
+  .cover-ruta-label {
+    font-family: var(--font-b); font-size: 0.8rem; font-weight: 700;
+    color: var(--naranja); letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .cover h1 {
+    font-family: var(--font-h); font-weight: 800; font-size: 3.6rem;
+    color: white; line-height: 1.05; margin-bottom: 8px;
+  }
+  .cover h1 em { color: var(--naranja); font-style: normal; }
+  .cover-subtitle {
+    font-family: var(--font-b); color: rgba(255,255,255,0.75);
+    font-size: 1.05rem; line-height: 1.6; max-width: 340px;
+    margin-bottom: 36px;
+  }
+  .cover-highlights { display: flex; flex-direction: column; gap: 10px; }
+  .cover-highlight {
+    display: flex; align-items: center; gap: 12px;
+    font-family: var(--font-b); color: white; font-size: 0.88rem;
+  }
+  .cover-highlight::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--naranja); flex-shrink: 0;
+  }
+  .cover-stats {
+    background: var(--azul); padding: 28px 48px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  }
+  .cover-stat {
+    text-align: center; padding: 0 16px;
+    border-right: 1px solid rgba(255,255,255,0.12);
+  }
+  .cover-stat:last-child { border-right: none; }
+  .cover-stat strong {
+    display: block; font-family: var(--font-h); font-size: 1.6rem;
+    font-weight: 800; color: var(--naranja); margin-bottom: 4px;
+  }
+  .cover-stat span {
+    font-family: var(--font-b); font-size: 0.72rem; color: rgba(255,255,255,0.65);
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .cover-bottom {
+    background: white; padding: 24px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .cover-precio-label { font-family: var(--font-b); font-size: 0.75rem; color: var(--gris); text-transform: uppercase; letter-spacing: 1px; }
+  .cover-precio-valor { font-family: var(--font-h); font-size: 2rem; font-weight: 800; color: var(--azul-dark); }
+  .cover-precio-valor span { font-size: 0.9rem; font-weight: 400; color: var(--gris); }
+  .cover-badge {
+    background: var(--crema); border: 1px solid rgba(86,161,164,0.2);
+    padding: 8px 18px; border-radius: 20px;
+    font-family: var(--font-b); font-size: 0.8rem; color: var(--azul);
+    font-weight: 600;
+  }
+
+  /* ====== CABECERA INTERIOR ====== */
+  .page-header {
+    background: var(--azul); padding: 22px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .page-header-logo { height: 36px; filter: brightness(0) invert(1); }
+  .page-header-title {
+    font-family: var(--font-h); font-weight: 700; font-size: 0.9rem;
+    color: rgba(255,255,255,0.7); letter-spacing: 1px; text-transform: uppercase;
+  }
+  .page-header-num {
+    font-family: var(--font-h); font-weight: 800; font-size: 1.1rem;
+    color: var(--naranja);
+  }
+  .page-content { padding: 36px 40px; }
+
+  /* ====== SECCION TITULOS ====== */
+  .section-label {
+    font-family: var(--font-b); font-size: 0.72rem; font-weight: 700;
+    color: var(--naranja); letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .section-h2 {
+    font-family: var(--font-h); font-weight: 800; font-size: 1.8rem;
+    color: var(--azul-dark); margin-bottom: 16px; line-height: 1.2;
+  }
+  .section-line {
+    width: 48px; height: 4px; background: var(--naranja);
+    border-radius: 2px; margin-bottom: 24px;
+  }
+  .body-text {
+    font-family: var(--font-b); font-size: 0.88rem;
+    color: var(--gris); line-height: 1.75; margin-bottom: 16px;
+  }
+
+  /* ====== ITINERARIO RESUMEN ====== */
+  .itinerary-overview { display: flex; flex-direction: column; gap: 0; }
+  .day-row {
+    display: flex; align-items: center; gap: 0;
+    border-bottom: 1px solid #e0eeec; padding: 14px 0;
+  }
+  .day-row:last-child { border-bottom: none; }
+  .day-num {
+    width: 44px; height: 44px; min-width: 44px; border-radius: 50%;
+    background: var(--azul); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-h); font-weight: 800; font-size: 1rem;
+    margin-right: 18px;
+  }
+  .day-info { flex: 1; }
+  .day-title { font-family: var(--font-h); font-weight: 700; font-size: 0.92rem; color: var(--azul-dark); margin-bottom: 3px; }
+  .day-desc { font-family: var(--font-b); font-size: 0.78rem; color: var(--gris); }
+  .day-km {
+    font-family: var(--font-h); font-weight: 700; font-size: 0.8rem;
+    color: var(--azul); background: var(--crema);
+    padding: 4px 12px; border-radius: 20px;
+    border: 1px solid rgba(86,161,164,0.15);
+  }
+
+  /* ====== DIA DETALLE ====== */
+  .day-page-header {
+    background: linear-gradient(135deg, var(--azul) 0%, #6AAFB2 100%);
+    padding: 28px 40px 24px;
+  }
+  .day-page-label {
+    font-family: var(--font-b); font-size: 0.72rem; font-weight: 700;
+    color: var(--naranja); letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .day-page-title {
+    font-family: var(--font-h); font-weight: 800; font-size: 1.5rem;
+    color: white; line-height: 1.2;
+  }
+  .day-page-meta {
+    display: flex; gap: 12px; margin-top: 12px; flex-wrap: wrap;
+  }
+  .day-meta-tag {
+    font-family: var(--font-b); font-size: 0.75rem; font-weight: 600;
+    color: white; background: rgba(255,255,255,0.15);
+    padding: 4px 12px; border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+  .day-description {
+    padding: 24px 40px 20px;
+    font-family: var(--font-b); font-size: 0.86rem;
+    color: var(--gris); line-height: 1.75;
+    border-bottom: 2px solid var(--crema);
+  }
+  .aloj-section { padding: 20px 40px; }
+  .aloj-label {
+    font-family: var(--font-b); font-size: 0.7rem; font-weight: 700;
+    color: var(--naranja); letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .aloj-intro {
+    font-family: var(--font-b); font-size: 0.78rem; color: var(--gris);
+    font-style: italic; margin-bottom: 16px; line-height: 1.6;
+  }
+  .aloj-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .aloj-card {
+    background: var(--crema); border-radius: 10px;
+    padding: 12px 14px; border-left: 3px solid var(--azul);
+  }
+  .aloj-card.full { grid-column: unset; }
+  .aloj-name {
+    font-family: var(--font-h); font-weight: 700; font-size: 0.88rem;
+    color: var(--azul-dark); margin-bottom: 4px;
+  }
+  .aloj-type {
+    display: inline-block; font-family: var(--font-b); font-size: 0.68rem;
+    font-weight: 700; color: var(--azul); text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 6px;
+  }
+  .aloj-desc {
+    font-family: var(--font-b); font-size: 0.76rem;
+    color: var(--gris); line-height: 1.6;
+  }
+
+  /* ====== INFO VIAJE ====== */
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  .info-block { background: var(--crema); border-radius: 12px; padding: 20px; }
+  .info-block-title {
+    font-family: var(--font-h); font-weight: 700; font-size: 0.88rem;
+    color: var(--azul-dark); margin-bottom: 10px; display: flex;
+    align-items: center; gap: 8px;
+  }
+  .info-block-title::before {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--naranja); flex-shrink: 0;
+  }
+  .info-block ul { list-style: none; }
+  .info-block ul li {
+    font-family: var(--font-b); font-size: 0.78rem; color: var(--gris);
+    padding: 5px 0; border-bottom: 1px solid rgba(86,161,164,0.1);
+    display: flex; gap: 8px; align-items: flex-start; line-height: 1.5;
+  }
+  .info-block ul li:last-child { border-bottom: none; }
+  .info-block ul li::before { content: '✓'; color: var(--azul); font-weight: bold; flex-shrink: 0; }
+  .info-block ul li.no::before { content: '✗'; color: #c0392b; }
+
+  /* ====== RUTA VISUAL ====== */
+  .route-visual {
+    display: flex; align-items: flex-start;
+    margin: 20px 0 28px; gap: 0;
+  }
+  .rv-stop { display: flex; flex-direction: column; align-items: center; flex: 1; }
+  .rv-stop:first-child .rv-dot { background: var(--naranja); width: 16px; height: 16px; border: 3px solid var(--naranja); }
+  .rv-stop:last-child .rv-dot { background: var(--naranja); width: 16px; height: 16px; border: 3px solid var(--naranja); }
+  .rv-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--azul-dark); border: 2px solid var(--azul);
+    flex-shrink: 0; z-index: 1;
+  }
+  .rv-line {
+    flex: 1; height: 2px; background: var(--azul);
+    opacity: 0.35; margin-top: 6px; align-self: flex-start;
+  }
+  .rv-label {
+    font-family: var(--font-b); font-size: 0.62rem;
+    color: var(--gris); margin-top: 6px; text-align: center;
+    line-height: 1.3; max-width: 68px;
+  }
+  .rv-km {
+    font-family: var(--font-h); font-size: 0.58rem;
+    font-weight: 700; color: var(--azul); opacity: 0.8;
+  }
+
+  /* ====== HIGHLIGHT DÍA ====== */
+  .day-highlight {
+    margin: 0 40px 4px;
+    padding: 11px 16px;
+    background: rgba(240,161,69,0.1);
+    border-left: 3px solid var(--naranja);
+    border-radius: 0 8px 8px 0;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .day-highlight-icon { color: var(--naranja); font-size: 0.9rem; flex-shrink: 0; margin-top: 1px; }
+  .day-highlight-text {
+    font-family: var(--font-b); font-size: 0.76rem;
+    color: var(--azul-dark); line-height: 1.55;
+  }
+  .day-highlight-text strong { color: var(--naranja); font-weight: 700; }
+
+  /* ====== ALOJ MEJORADO ====== */
+  .aloj-img {
+    width: 100%; height: 90px; object-fit: cover;
+    border-radius: 7px; margin-bottom: 9px; display: block;
+  }
+  .aloj-type {
+    display: inline-block;
+    background: var(--crema); color: var(--azul);
+    border: 1px solid rgba(86,161,164,0.25);
+    font-family: var(--font-b); font-size: 0.62rem; font-weight: 700;
+    padding: 2px 9px; border-radius: 20px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+
+  /* ====== PRECIOS ====== */
+  .price-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .price-col {
+    border-radius: 12px; padding: 18px 16px;
+    border: 1px solid rgba(86,161,164,0.15); background: var(--crema);
+  }
+  .price-col.featured { background: var(--azul); border-color: var(--azul); position: relative; }
+  .price-col-badge {
+    position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+    background: var(--naranja); color: white;
+    font-family: var(--font-b); font-size: 0.62rem; font-weight: 700;
+    padding: 3px 12px; border-radius: 10px; white-space: nowrap;
+  }
+  .price-col-name {
+    font-family: var(--font-b); font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--gris); margin-bottom: 8px;
+  }
+  .price-col.featured .price-col-name { color: rgba(255,255,255,0.6); }
+  .price-col-amount {
+    font-family: var(--font-h); font-weight: 800;
+    font-size: 2rem; color: var(--azul-dark); line-height: 1;
+  }
+  .price-col.featured .price-col-amount { color: var(--naranja); }
+  .price-col-per {
+    font-family: var(--font-b); font-size: 0.72rem;
+    color: var(--gris); margin-bottom: 10px;
+  }
+  .price-col.featured .price-col-per { color: rgba(255,255,255,0.55); }
+  .price-col-desc {
+    font-family: var(--font-b); font-size: 0.74rem;
+    color: var(--gris); line-height: 1.55;
+  }
+  .price-col.featured .price-col-desc { color: rgba(255,255,255,0.75); }
+
+  /* ====== FAQ ====== */
+  .faq-item-print { margin-bottom: 14px; }
+  .faq-q-print {
+    font-family: var(--font-h); font-weight: 700; font-size: 0.85rem;
+    color: var(--azul-dark); margin-bottom: 5px;
+  }
+  .faq-a-print {
+    font-family: var(--font-b); font-size: 0.78rem; color: var(--gris); line-height: 1.65;
+  }
+
+  /* ====== PIE DE PAGINA ====== */
+  .page-footer {
+    background: var(--azul); padding: 16px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-contact {
+    font-family: var(--font-b); font-size: 0.75rem;
+    color: rgba(255,255,255,0.65);
+  }
+  .footer-web {
+    font-family: var(--font-h); font-weight: 700; font-size: 0.8rem;
+    color: var(--naranja);
+  }
+
+  /* ====== BOOKING PAGE ====== */
+  .booking-steps { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 24px 0; }
+  .booking-step {
+    background: var(--crema); border-radius: 12px; padding: 20px;
+    text-align: center; position: relative;
+  }
+  .step-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--azul); color: white;
+    font-family: var(--font-h); font-weight: 800; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px;
+  }
+  .step-title {
+    font-family: var(--font-h); font-weight: 700; font-size: 0.88rem;
+    color: var(--azul-dark); margin-bottom: 8px;
+  }
+  .step-desc {
+    font-family: var(--font-b); font-size: 0.76rem; color: var(--gris); line-height: 1.6;
+  }
+  .contact-final {
+    background: linear-gradient(135deg, var(--azul) 0%, #6AAFB2 100%);
+    border-radius: 14px; padding: 28px 32px; margin-top: 24px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  .contact-item { color: white; }
+  .contact-item-label {
+    font-family: var(--font-b); font-size: 0.7rem; color: rgba(255,255,255,0.6);
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;
+  }
+  .contact-item-val {
+    font-family: var(--font-h); font-weight: 700; font-size: 0.95rem;
+    color: var(--naranja);
+  }
+
+  /* ====== PRINT ====== */
+  @media print {
+    .print-bar { display: none !important; }
+    body { background: white; }
+    .page {
+      width: 210mm; min-height: 297mm; margin: 0;
+      box-shadow: none; page-break-after: always;
+    }
+    .page:last-child { page-break-after: avoid; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BARRA IMPRIMIR -->
+<div class="print-bar">
+  <span>Folleto Camino Inglés — Easy Camino Santiago</span>
+  <button class="btn-print" onclick="window.print()">⬇ Descargar PDF</button>
+</div>
+
+<!-- ============================================================ -->
+<!-- PAGINA 1: PORTADA -->
+<!-- ============================================================ -->
+<div class="page cover">
+  <div class="cover-top">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+      <div style="font-family:var(--font-b);font-size:0.7rem;color:rgba(255,255,255,0.5);text-align:right;letter-spacing:1px;text-transform:uppercase;">Guía de ruta oficial<br>Camino de Santiago</div>
+    </div>
+    <div>
+      <div class="cover-ruta-label">La ruta de los peregrinos del mar</div>
+      <h1 style="font-size:4.2rem;">Camino<br><em>Inglés</em></h1>
+      <p class="cover-subtitle">Desde Ferrol hasta la Catedral de Santiago a través de la Galicia más auténtica. El único camino que nace junto al mar.</p>
+      <div style="display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap;">
+        <span style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:white;font-family:var(--font-b);font-size:0.72rem;padding:5px 12px;border-radius:20px;">113 km · 6 etapas</span>
+        <span style="background:rgba(240,161,69,0.25);border:1px solid rgba(240,161,69,0.4);color:var(--naranja);font-family:var(--font-b);font-size:0.72rem;padding:5px 12px;border-radius:20px;">Nivel fácil</span>
+        <span style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:white;font-family:var(--font-b);font-size:0.72rem;padding:5px 12px;border-radius:20px;">Compostela garantizada</span>
+      </div>
+      <div class="cover-highlights">
+        <div class="cover-highlight">Inicio único junto al mar en el puerto de Ferrol</div>
+        <div class="cover-highlight">Galicia rural y auténtica, sin masificaciones</div>
+        <div class="cover-highlight">Alojamientos seleccionados con habitación privada</div>
+        <div class="cover-highlight">Apoyo 24h de nuestro equipo en Lugo (Galicia)</div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-stats">
+    <div class="cover-stat"><strong>7</strong><span>Días de aventura</span></div>
+    <div class="cover-stat"><strong>113 km</strong><span>Distancia total</span></div>
+    <div class="cover-stat"><strong>6</strong><span>Etapas a pie</span></div>
+    <div class="cover-stat"><strong>Fácil</strong><span>Nivel de dificultad</span></div>
+  </div>
+  <div class="cover-bottom">
+    <div>
+      <div class="cover-precio-label">Precio desde</div>
+      <div class="cover-precio-valor">349€ <span>/persona</span></div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <div class="cover-badge">Marzo — Octubre</div>
+      <div class="cover-badge">Alojamiento incluido</div>
+      <div class="cover-badge">Traslado de mochila</div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · Lugo, Galicia · </div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGINA HISTORIA: EL CAMINO DE SANTIAGO -->
+<!-- ============================================================ -->
+<div class="page">
+  <!-- Cabecera historia -->
+  <div style="background:linear-gradient(135deg,var(--azul) 0%,#6AAFB2 100%);padding:32px 40px 28px;">
+    <div style="font-family:var(--font-b);font-size:0.7rem;font-weight:700;color:var(--naranja);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;">Historia y tradición</div>
+    <h2 style="font-family:var(--font-h);font-weight:900;font-size:2rem;color:white;line-height:1.15;margin-bottom:0;">El Camino de Santiago:<br><em style="font-style:normal;color:rgba(255,255,255,0.75);font-weight:400;font-size:1.1rem;">Mil años de fe, cultura y aventura humana</em></h2>
+  </div>
+
+  <div style="padding:26px 40px 20px;">
+
+    <!-- Cita destacada -->
+    <div style="border-left:4px solid var(--naranja);padding:12px 20px;margin-bottom:22px;background:rgba(240,161,69,0.06);border-radius:0 8px 8px 0;">
+      <p style="font-family:var(--font-h);font-size:1rem;font-style:italic;color:var(--azul-dark);line-height:1.5;margin:0;">"El Camino de Santiago es el único camino europeo declarado Patrimonio de la Humanidad por la UNESCO, en 1985. Cada año, más de 300.000 personas de todo el mundo recorren sus sendas."</p>
+    </div>
+
+    <!-- DOS COLUMNAS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:22px;">
+
+      <!-- Columna izquierda -->
+      <div>
+        <div style="font-family:var(--font-b);font-size:0.65rem;font-weight:700;color:var(--naranja);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;">¿Quién fue el Apóstol Santiago?</div>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin:0;">Santiago el Mayor, hijo de Zebedeo, fue uno de los primeros cuatro discípulos elegidos por Jesús, junto a Pedro, Andrés y Juan. Pescador del mar de Galilea, Jesús le apodó con su hermano "Hijos del Trueno" por su carácter apasionado y decidido.</p>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">Fue el primer apóstol mártir: el rey Herodes Agripa I lo mandó decapitar hacia el año 44 d.C. Según la tradición, sus discípulos trasladaron su cuerpo en barco hasta las costas de Galicia, donde fue sepultado en lo que hoy es Compostela.</p>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">En el siglo IX, el ermitaño Pelayo observó unas luces misteriosas sobre un campo. Al investigar, se descubrió una tumba que el obispo Teodomiro identificó como la del Apóstol. El rey Alfonso II mandó construir una iglesia sobre el sepulcro, germen de la actual Catedral.</p>
+      </div>
+
+      <!-- Columna derecha -->
+      <div>
+        <div style="font-family:var(--font-b);font-size:0.65rem;font-weight:700;color:var(--naranja);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;">El nacimiento de la peregrinación</div>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin:0;">La noticia del hallazgo se extendió por toda Europa y pronto comenzaron a llegar peregrinos de todos los rincones de la cristiandad. En el siglo X la peregrinación a Compostela era ya un hecho consolidado, rivalizando con los viajes a Roma y Jerusalén.</p>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">Los siglos XI y XII fueron su época de mayor esplendor. Reyes como Sancho III y Alfonso VI impulsaron la ruta, construyendo caminos, puentes y hospederías. Las órdenes religiosas de Cluny organizaron la infraestructura que haría famoso el Camino Francés.</p>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">El Camino atravesó épocas de decadencia —la Peste Negra, las guerras religiosas— pero siempre renació. En 1884, el Papa León XIII reafirmó la autenticidad de las reliquias, y el siglo XX trajo el mayor revival de la historia moderna.</p>
+      </div>
+
+    </div>
+
+    <!-- TIMELINE -->
+    <div style="margin-bottom:18px;">
+      <div style="font-family:var(--font-b);font-size:0.65rem;font-weight:700;color:var(--azul);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Cronología esencial</div>
+      <div style="display:flex;gap:0;align-items:flex-start;position:relative;">
+        <div style="position:absolute;top:10px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--azul),var(--naranja));opacity:0.25;"></div>
+        <!-- Hitos -->
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--azul);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--azul);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--azul);">s. I d.C.</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">Martirio y traslado de los restos de Santiago a Galicia</div>
+        </div>
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--azul);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--azul);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--azul);">834</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">Descubrimiento del sepulcro. Alfonso II manda construir la primera iglesia</div>
+        </div>
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--azul);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--azul);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--azul);">1122</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">El Papa Calixto II crea el Año Santo Compostelano</div>
+        </div>
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--naranja);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--naranja);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--naranja);">1985</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">La UNESCO declara el Camino Patrimonio de la Humanidad</div>
+        </div>
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--naranja);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--naranja);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--naranja);">Hoy</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">+300.000 peregrinos al año de más de 180 países</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRES BLOQUES INFERIORES -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+      <div style="background:var(--crema);border-radius:8px;padding:13px 14px;border-top:3px solid var(--azul);">
+        <div style="font-family:var(--font-h);font-weight:800;font-size:0.8rem;color:var(--azul-dark);margin-bottom:5px;">El Año Jacobeo</div>
+        <p style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.55;margin:0;">Se celebra cuando el 25 de julio —festividad del Apóstol— cae en domingo. El Papa Calixto II instituyó este privilegio en 1122. En Año Santo, la Puerta Santa de la Catedral se abre y los peregrinos pueden obtener la indulgencia plenaria.</p>
+      </div>
+      <div style="background:var(--crema);border-radius:8px;padding:13px 14px;border-top:3px solid var(--azul);">
+        <div style="font-family:var(--font-h);font-weight:800;font-size:0.8rem;color:var(--azul-dark);margin-bottom:5px;">La Compostela</div>
+        <p style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.55;margin:0;">Certificado oficial expedido por la Catedral. El nombre del peregrino se inscribe en latín, firmado por el Secretario del Cabildo. En 1985 se entregaron 2.491; hoy superan las 300.000 al año. Se obtiene recorriendo al menos 100 km a pie o 200 km en bici.</p>
+      </div>
+      <div style="background:var(--crema);border-radius:8px;padding:13px 14px;border-top:3px solid var(--naranja);">
+        <div style="font-family:var(--font-h);font-weight:800;font-size:0.8rem;color:var(--azul-dark);margin-bottom:5px;">La Bendición del Peregrino</div>
+        <p style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.55;margin:0;">Tradición medieval que se celebra en Roncesvalles al inicio del Camino Francés y en otras iglesias de la ruta. El clérigo reza para que el peregrino "emprenda el viaje y regrese sano y salvo con la ayuda de Dios". Un rito que une fe, historia y comunidad.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · Lugo, Galicia</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGINA 2: DESCRIPCIÓN + ITINERARIO RESUMEN -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Camino Inglés</div>
+    <div class="page-header-num">01</div>
+  </div>
+  <div class="page-content">
+    <div class="section-label">Descripción de la ruta</div>
+    <div class="section-h2">El Camino que nació en el mar</div>
+    <div class="section-line"></div>
+    <p class="body-text">En la Edad Media, la fama del Camino de Santiago se extendió por toda Europa. Los peregrinos procedentes de las Islas Británicas e Irlanda surcaban el océano hasta los puertos de A Coruña y Ferrol para iniciar su peregrinación a Santiago. Hoy utilizamos la salida desde Ferrol por ser la más pintoresca de las dos opciones.</p>
+    <p class="body-text">El Camino Inglés es el único de los grandes caminos jacobeos que comienza junto al mar, lo que convierte los primeros días en una experiencia única: paisaje costero salvaje antes de adentrarse en el corazón rural de Galicia. El camino discurre entonces por las tierras agrícolas del interior, dándote la oportunidad de disfrutar de la auténtica Galicia, su gente y su gastronomía.</p>
+    <p class="body-text">Tras superar el alto de Bruma-Mesón do Vento, el descenso hacia Santiago es suave y emocionante. La imponente Catedral Románica señala el final de tu peregrinación.</p>
+
+    <div style="margin-top:28px;">
+      <div class="section-label">Resumen de etapas</div>
+      <div class="section-line" style="margin-bottom:16px;"></div>
+      <div class="itinerary-overview">
+        <div class="day-row">
+          <div class="day-num">1</div>
+          <div class="day-info">
+            <div class="day-title">Llegada a Ferrol</div>
+            <div class="day-desc">Recepción en el alojamiento y entrega de documentación</div>
+          </div>
+          <div class="day-km">Llegada</div>
+        </div>
+        <div class="day-row">
+          <div class="day-num">2</div>
+          <div class="day-info">
+            <div class="day-title">Ferrol → Pontedeume</div>
+            <div class="day-desc">Costa, rías y el puente medieval de Pontedeume</div>
+          </div>
+          <div class="day-km">15–28 km</div>
+        </div>
+        <div class="day-row">
+          <div class="day-num">3</div>
+          <div class="day-info">
+            <div class="day-title">Pontedeume → Betanzos</div>
+            <div class="day-desc">Colinas verdes y aldeas rurales de Galicia</div>
+          </div>
+          <div class="day-km">20 km</div>
+        </div>
+        <div class="day-row">
+          <div class="day-num">4</div>
+          <div class="day-info">
+            <div class="day-title">Betanzos → San Paio de Buscás</div>
+            <div class="day-desc">Hospital de Bruma: confluencia de los caminos de Ferrol y A Coruña</div>
+          </div>
+          <div class="day-km">20–31 km</div>
+        </div>
+        <div class="day-row">
+          <div class="day-num">5</div>
+          <div class="day-info">
+            <div class="day-title">San Paio de Buscás → Sigüeiro</div>
+            <div class="day-desc">El paisaje más verde de Galicia, bosques y pistas rurales</div>
+          </div>
+          <div class="day-km">17–22 km</div>
+        </div>
+        <div class="day-row">
+          <div class="day-num">6</div>
+          <div class="day-info">
+            <div class="day-title">Sigüeiro → Santiago de Compostela</div>
+            <div class="day-desc">La llegada más emocionante: la Catedral te espera</div>
+          </div>
+          <div class="day-km">16 km</div>
+        </div>
+        <div class="day-row">
+          <div class="day-num">7</div>
+          <div class="day-info">
+            <div class="day-title">Regreso o día libre en Santiago</div>
+            <div class="day-desc">Misa del Peregrino, visita al casco histórico</div>
+          </div>
+          <div class="day-km">Libre</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RUTA VISUAL -->
+    <div style="margin-top:24px;">
+      <div class="section-label">Tu ruta de un vistazo</div>
+      <div class="route-visual">
+        <div class="rv-stop">
+          <div class="rv-dot"></div>
+          <div class="rv-label">Ferrol<br><span class="rv-km">Día 1</span></div>
+        </div>
+        <div class="rv-line"></div>
+        <div class="rv-stop">
+          <div class="rv-dot"></div>
+          <div class="rv-label">Pontedeume<br><span class="rv-km">28 km</span></div>
+        </div>
+        <div class="rv-line"></div>
+        <div class="rv-stop">
+          <div class="rv-dot"></div>
+          <div class="rv-label">Betanzos<br><span class="rv-km">20 km</span></div>
+        </div>
+        <div class="rv-line"></div>
+        <div class="rv-stop">
+          <div class="rv-dot"></div>
+          <div class="rv-label">San Paio<br><span class="rv-km">31 km</span></div>
+        </div>
+        <div class="rv-line"></div>
+        <div class="rv-stop">
+          <div class="rv-dot"></div>
+          <div class="rv-label">Sigüeiro<br><span class="rv-km">22 km</span></div>
+        </div>
+        <div class="rv-line"></div>
+        <div class="rv-stop">
+          <div class="rv-dot"></div>
+          <div class="rv-label"><strong>Santiago</strong><br><span class="rv-km">16 km</span></div>
+        </div>
+      </div>
+      <div style="font-family:var(--font-b);font-size:0.74rem;color:var(--gris);text-align:center;font-style:italic;">El punto de inicio y llegada son opcionales según traslados — adaptamos el itinerario a tu ritmo.</div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · </div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGINA 3: DÍA 1 + DÍA 2 -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Camino Inglés — Itinerario</div>
+    <div class="page-header-num">02</div>
+  </div>
+
+  <div class="day-page-header">
+    <div class="day-page-label">Día 1</div>
+    <div class="day-page-title">Llegada a Ferrol</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">Día de llegada</span>
+      <span class="day-meta-tag">Recepción y bienvenida</span>
+    </div>
+  </div>
+  <div class="day-description">
+    Puedes volar a Santiago de Compostela o A Coruña desde varios aeropuertos europeos. Desde ambos puntos hay varios autobuses diarios hasta Ferrol. La ciudad rebosa historia: abundantes hallazgos prehistóricos, su papel como base naval en diferentes conflictos históricos y una arquitectura que refleja esa profundidad temporal. El centro es un placer para pasear. La excelente gastronomía de mariscos y la hospitalidad de sus gentes hacen de Ferrol una de las joyas escondidas de España.
+  </div>
+  <div class="day-highlight">
+    <div class="day-highlight-icon">★</div>
+    <div class="day-highlight-text"><strong>No te pierdas:</strong> el barrio de A Magdalena con su arquitectura modernista y los mejores mariscos de la Ría de Ferrol en el Mercado de Ferrol. Tu credencial del peregrino y la concha de vieira te esperarán en el alojamiento.</div>
+  </div>
+  <div class="aloj-section">
+    <div class="aloj-label">Alojamientos representativos en Ferrol</div>
+    <div class="aloj-intro">Seleccionamos cuidadosamente los mejores alojamientos en cada etapa. El alojamiento concreto puede variar según disponibilidad, siempre manteniendo el estándar de calidad.</div>
+    <div class="aloj-grid">
+      <div class="aloj-card">
+        <img src="hotel-images/p3_img1_350x201.jpg" class="aloj-img" alt="Hotel Alda El Suizo">
+        <div class="aloj-name">Hotel Alda El Suizo</div>
+        <div class="aloj-type">Hotel</div>
+        <div class="aloj-desc">Reformado con mimo respetando su estética modernista: clásico pero actual. 32 habitaciones exteriores, muchas con balcón. Room service, baño privado, TV, minibar y wifi gratuito.</div>
+      </div>
+      <div class="aloj-card">
+        <img src="hotel-images/p3_img2_350x201.jpg" class="aloj-img" alt="Hotel Almirante">
+        <div class="aloj-name">Hotel Almirante</div>
+        <div class="aloj-type">Hotel 4★</div>
+        <div class="aloj-desc">Emblemático hotel 4 estrellas junto a la Plaza de España, a la entrada del barrio de A Magdalena. La mejor opción para hacer tu estancia en Ferrol inolvidable.</div>
+      </div>
+      <div class="aloj-card full">
+        <img src="hotel-images/p3_img3_350x201.jpg" class="aloj-img" alt="Hotel América">
+        <div class="aloj-name">Hotel América</div>
+        <div class="aloj-type">Hotel</div>
+        <div class="aloj-desc">Alojamiento pequeño y acogedor en las afueras de Ferrol. Ambiente tranquilo, ideal para descansar antes de comenzar el Camino.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin:0 40px;height:1px;background:#e0eeec;"></div>
+
+  <div class="day-page-header" style="background:linear-gradient(135deg,var(--azul) 0%,#6AAFB2 100%);margin:0;">
+    <div class="day-page-label">Día 2</div>
+    <div class="day-page-title">Ferrol → Pontedeume</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">28 km (ruta completa)</span>
+      <span class="day-meta-tag">15 km (con traslado opcional)</span>
+      <span class="day-meta-tag">Dificultad: fácil</span>
+    </div>
+  </div>
+  <div class="day-description">
+    Por la mañana, traslado opcional hasta Neda (acorta la etapa ~13km). La ruta te lleva hasta la costa gallega pasando por varias playas, con la Ría de Ferrol como telón de fondo, hasta llegar a la pequeña villa marinera de Pontedeume. Situada a orillas del río Eume, llegas al pintoresco pueblo cruzando el histórico Pont-de-Eume, el puente que da nombre a la localidad.
+  </div>
+  <div class="day-highlight">
+    <div class="day-highlight-icon">★</div>
+    <div class="day-highlight-text"><strong>No te pierdas:</strong> las vistas sobre la Ría de Ferrol desde los acantilados y el medieval Pontedeume con sus galerías de madera, el mercado semanal y la torre de los Andrade.</div>
+  </div>
+  <div class="aloj-section">
+    <div class="aloj-label">Alojamientos representativos en Pontedeume</div>
+    <div class="aloj-grid">
+      <div class="aloj-card">
+        <img src="hotel-images/p4_img1_350x200.jpg" class="aloj-img" alt="Hotel Camino do Eume">
+        <div class="aloj-name">Hotel Camino do Eume</div>
+        <div class="aloj-type">Hotel</div>
+        <div class="aloj-desc">Hermoso hotel recientemente restaurado en un edificio histórico del casco antiguo de Pontedeume con fachadas del s. XVII y XIX. Vistas a la Ría y jardín para relajarse tras la etapa.</div>
+      </div>
+      <div class="aloj-card">
+        <img src="hotel-images/p4_img2_350x200.jpg" class="aloj-img" alt="Balcón del Eume">
+        <div class="aloj-name">Balcón del Eume</div>
+        <div class="aloj-type">Hotel boutique</div>
+        <div class="aloj-desc">Pequeña y encantadora casa de huéspedes en las Fragas do Eume, en el Camino Inglés. El lugar ideal para descubrir el medieval Pontedeume y disfrutar de la playa de Cabañas.</div>
+      </div>
+      <div class="aloj-card full">
+        <img src="hotel-images/p4_img3_350x201.jpg" class="aloj-img" alt="Hotel Montebreamo">
+        <div class="aloj-name">Hotel Montebreamo</div>
+        <div class="aloj-type">Hotel rural</div>
+        <div class="aloj-desc">Casa de campo modernizada con 6 habitaciones espaciosas y camas muy cómodas. Situado en Puentedeume, a la orilla de la ría de A Coruña.</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · </div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGINA 4: DÍA 3 + DÍA 4 -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Camino Inglés — Itinerario</div>
+    <div class="page-header-num">03</div>
+  </div>
+
+  <div class="day-page-header">
+    <div class="day-page-label">Día 3</div>
+    <div class="day-page-title">Pontedeume → Betanzos</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">20 km</span>
+      <span class="day-meta-tag">Dificultad: fácil-media</span>
+      <span class="day-meta-tag">Desnivel: +487m / -475m</span>
+    </div>
+  </div>
+  <div class="day-description">
+    En esta etapa te rodearán las colinas verdes y aldeas rurales de Galicia, dejando atrás la costa y sus villas marineras. El Camino Inglés sigue siendo un camino tranquilo, sin masificaciones, donde disfrutar de la naturaleza gallega en plenitud. Puedes esperar algunos desniveles, pero serás recompensado con vistas espectaculares.
+  </div>
+  <div class="day-highlight">
+    <div class="day-highlight-icon">★</div>
+    <div class="day-highlight-text"><strong>No te pierdas:</strong> el casco histórico medieval de Betanzos, con sus iglesias góticas, sus plazas y la famosa tortilla de Betanzos — la más valorada de Galicia. Hito histórico del Camino Inglés.</div>
+  </div>
+  <div class="aloj-section">
+    <div class="aloj-label">Alojamientos representativos en Betanzos</div>
+    <div class="aloj-grid">
+      <div class="aloj-card">
+        <img src="hotel-images/p5_img1_350x201.jpg" class="aloj-img" alt="Hotel Geralos">
+        <div class="aloj-name">Hotel Geralos</div>
+        <div class="aloj-type">Hotel</div>
+        <div class="aloj-desc">20 habitaciones dobles decoradas con piedra y metal. Aire acondicionado, minibar, caja fuerte, wifi y TV. El hotel dispone de salón y cafetería.</div>
+      </div>
+      <div class="aloj-card">
+        <img src="hotel-images/p5_img2_350x200.jpg" class="aloj-img" alt="Hostal Pórtico">
+        <div class="aloj-name">Hostal Pórtico</div>
+        <div class="aloj-type">Hostal</div>
+        <div class="aloj-desc">En el corazón del casco histórico de Betanzos, resultado de la renovación de una casa antigua. Estilo contemporáneo que ofrece un ambiente de elegancia y confort.</div>
+      </div>
+      <div class="aloj-card full">
+        <img src="hotel-images/p5_img3_350x200.jpg" class="aloj-img" alt="Hotel Villa de Betanzos">
+        <div class="aloj-name">Hotel Villa de Betanzos</div>
+        <div class="aloj-type">Hotel histórico</div>
+        <div class="aloj-desc">Con más de 30 años de experiencia en el sector turístico, el hotel ocupa un edificio de 1914 considerado de interés histórico y monumental. Tradición y hospitalidad familiar.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin:0 40px;height:1px;background:#e0eeec;"></div>
+
+  <div class="day-page-header" style="background:linear-gradient(135deg,var(--azul) 0%,#6AAFB2 100%);margin:0;">
+    <div class="day-page-label">Día 4</div>
+    <div class="day-page-title">Betanzos → San Paio de Buscás</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">31 km (ruta completa)</span>
+      <span class="day-meta-tag">20 km (con traslado opcional)</span>
+      <span class="day-meta-tag">Hospital de Bruma</span>
+    </div>
+  </div>
+  <div class="day-description">
+    Traslado opcional a Presedo por la mañana (acorta la etapa ~11km). La ruta de hoy sube en su mayoría por un paisaje verde de praderas y campos, pasando numerosas granjas y aldeas gallegas. Pasarás por Hospital de Bruma, hito histórico del Camino Inglés donde confluyen las rutas de Ferrol y A Coruña.
+  </div>
+  <div class="day-highlight">
+    <div class="day-highlight-icon">★</div>
+    <div class="day-highlight-text"><strong>No te pierdas:</strong> el Hospital de Bruma, punto de confluencia de las dos ramas del Camino Inglés (Ferrol y A Coruña), con su capilla románica y el ambiente peregrino que se intensifica a partir de aquí.</div>
+  </div>
+  <div class="aloj-section">
+    <div class="aloj-label">Alojamientos representativos en San Paio de Buscás</div>
+    <div class="aloj-grid">
+      <div class="aloj-card">
+        <img src="hotel-images/p6_img1_350x201.jpg" class="aloj-img" alt="Casa Rural Doña María">
+        <div class="aloj-name">Casa Rural Doña María</div>
+        <div class="aloj-type">Casa rural / B&B</div>
+        <div class="aloj-desc">Casa de huéspedes con dos apartamentos tranquilos, zonas comunes, suelo radiante y wifi gratuito. Ambiente íntimo y rural.</div>
+      </div>
+      <div class="aloj-card">
+        <img src="hotel-images/p6_img2_350x201.jpg" class="aloj-img" alt="Hotel Casa Barreiro">
+        <div class="aloj-name">Hotel Casa Barreiro</div>
+        <div class="aloj-type">Hotel</div>
+        <div class="aloj-desc">Fundado en 1875 y completamente renovado en 2001. Habitaciones espaciosas y confortables con todas las comodidades para una estancia excelente.</div>
+      </div>
+      <div class="aloj-card full">
+        <img src="hotel-images/p6_img3_350x200.jpg" class="aloj-img" alt="Casa Rural Antón Veiras">
+        <div class="aloj-name">Casa Rural Antón Veiras</div>
+        <div class="aloj-type">Casa rural</div>
+        <div class="aloj-desc">Casa de campo de más de 250 años, un claro ejemplo de la arquitectura rural gallega. Piedra, arcilla, granito y madera crean una atmósfera acogedora en una finca de más de 11.000 m².</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · </div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGINA 5: DÍA 5 + DÍA 6 + DÍA 7 -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Camino Inglés — Itinerario</div>
+    <div class="page-header-num">04</div>
+  </div>
+
+  <div class="day-page-header">
+    <div class="day-page-label">Día 5</div>
+    <div class="day-page-title">San Paio de Buscás → Sigüeiro</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">17–22 km</span>
+      <span class="day-meta-tag">Bosques y caminos rurales</span>
+      <span class="day-meta-tag">Dificultad: fácil</span>
+    </div>
+  </div>
+  <div class="day-description">
+    Te espera uno de los paisajes más verdes de Galicia. La ruta discurre por pistas rurales y bosques, en su mayor parte cuesta abajo. Apenas hay aldeas en el camino, lo que permite disfrutar de la naturaleza a un ritmo pausado. Según disponibilidad, pernoctarás en Sigüeiro o Marantes.
+  </div>
+  <div class="day-highlight">
+    <div class="day-highlight-icon">★</div>
+    <div class="day-highlight-text"><strong>No te pierdas:</strong> el cruce del río Tambre, que marca la antesala de Santiago. Desde aquí, cada kilómetro es un paso más hacia la Catedral. El ambiente del Camino se transforma: la emoción del final está muy cerca.</div>
+  </div>
+  <div class="aloj-section">
+    <div class="aloj-label">Alojamientos representativos en Sigüeiro</div>
+    <div class="aloj-grid">
+      <div class="aloj-card">
+        <img src="hotel-images/p7_img1_350x200.jpg" class="aloj-img" alt="Siaba Pensión Boutique">
+        <div class="aloj-name">Siaba Pensión Boutique</div>
+        <div class="aloj-type">Pensión boutique</div>
+        <div class="aloj-desc">En el centro de Sigüeiro, junto al río Tambre. Habitaciones cómodas con todos los servicios de hotel, adaptadas a las necesidades de cada peregrino.</div>
+      </div>
+      <div class="aloj-card">
+        <img src="hotel-images/p7_img2_350x201.jpg" class="aloj-img" alt="Hotel San Vicente">
+        <div class="aloj-name">Hotel San Vicente</div>
+        <div class="aloj-type">Hotel</div>
+        <div class="aloj-desc">Habitaciones con baño privado, TV, caja fuerte, teléfono y aire acondicionado. Gran jardín con piscina, restaurante y aparcamiento exterior.</div>
+      </div>
+      <div class="aloj-card full">
+        <img src="hotel-images/p7_img3_350x201.jpg" class="aloj-img" alt="Albergue Camiño Real">
+        <div class="aloj-name">Albergue Camiño Real</div>
+        <div class="aloj-type">Albergue privado</div>
+        <div class="aloj-desc">Abierto en 2017 con el objetivo de ofrecer el mejor servicio al peregrino. Instalaciones amplias y cómodas en zona céntrica y tranquila, a pocos metros de cafés, restaurantes y farmacias.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-page-header" style="background:linear-gradient(135deg,var(--azul) 0%,#6AAFB2 100%);margin:0;">
+    <div class="day-page-label">Día 6</div>
+    <div class="day-page-title">Sigüeiro → Santiago de Compostela</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">11–16 km</span>
+      <span class="day-meta-tag">¡La llegada!</span>
+      <span class="day-meta-tag">Misa del Peregrino</span>
+    </div>
+  </div>
+  <div class="day-description">
+    Santiago de Compostela se acerca. La ruta pasa primero junto a una carretera, luego por pequeñas aldeas. Poco a poco te aproximas a la capital de Galicia: la emoción crece con cada kilómetro. Innumerables peregrinos han llegado antes que tú. Tómate un momento frente a la Catedral y disfruta del instante. La Misa del Peregrino al mediodía es imprescindible.
+  </div>
+  <div class="day-highlight">
+    <div class="day-highlight-icon">★</div>
+    <div class="day-highlight-text"><strong>El momento:</strong> visita la Oficina del Peregrino para recoger tu Compostela oficial. Luego el abrazo al Apóstol en la Catedral. Son solo unos metros que muchos peregrinos describen como los más emotivos de su vida.</div>
+  </div>
+  <div class="aloj-section">
+    <div class="aloj-label">Alojamientos representativos en Santiago de Compostela</div>
+    <div class="aloj-grid">
+      <div class="aloj-card">
+        <img src="hotel-images/p8_img1_350x200.jpg" class="aloj-img" alt="Hotel Altaïr">
+        <div class="aloj-name">Hotel Altaïr</div>
+        <div class="aloj-type">Hotel boutique</div>
+        <div class="aloj-desc">En la parte más tranquila del casco antiguo. Rodeado de los mejores restaurantes, tiendas y espacios de ocio. Arquitectura que equilibra tradición y modernidad.</div>
+      </div>
+      <div class="aloj-card">
+        <img src="hotel-images/p8_img2_350x200.jpg" class="aloj-img" alt="Hotel Lux Santiago">
+        <div class="aloj-name">Hotel Lux Santiago</div>
+        <div class="aloj-type">Hotel</div>
+        <div class="aloj-desc">En el centro de la capital gallega, a 800 metros de la Catedral. Ubicación inmejorable para explorar la ciudad en profundidad.</div>
+      </div>
+      <div class="aloj-card full">
+        <img src="hotel-images/p8_img3_350x201.jpg" class="aloj-img" alt="Hotel Boutique Capitol">
+        <div class="aloj-name">Hotel Boutique Capitol</div>
+        <div class="aloj-type">Hotel boutique</div>
+        <div class="aloj-desc">Experiencia de alojamiento única en el centro histórico. Habitaciones modernas con decoración elegante y ambiente acogedor. A solo 650 metros de la Catedral.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · </div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGINA 6: QUÉ INCLUYE + CUÁNDO IR -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Camino Inglés — Información</div>
+    <div class="page-header-num">05</div>
+  </div>
+  <div class="page-content">
+
+    <div class="section-label">Nuestro paquete</div>
+    <div class="section-h2">¿Qué incluye tu Camino?</div>
+    <div class="section-line"></div>
+
+    <div class="info-grid">
+      <div class="info-block">
+        <div class="info-block-title">Incluido en el precio</div>
+        <ul>
+          <li>Alojamiento en hoteles rurales y hostales con habitación privada y baño</li>
+          <li>Traslado de mochila cada día entre alojamientos (máx. 20 kg)</li>
+          <li>Credencial del peregrino y concha de vieira</li>
+          <li>Traslados opcionales en los días 2 y 4</li>
+          <li>Información de ruta detallada y tracks GPS</li>
+          <li>Apoyo telefónico 24h con nuestro equipo en Lugo</li>
+          <li>Desayuno continental en cada alojamiento</li>
+        </ul>
+      </div>
+      <div class="info-block">
+        <div class="info-block-title">No incluido</div>
+        <ul>
+          <li class="no">Vuelos y transporte hasta Ferrol</li>
+          <li class="no">Comidas (excepto desayuno)</li>
+          <li class="no">Seguro de viaje</li>
+          <li class="no">Equipamiento personal</li>
+          <li class="no">Noches adicionales</li>
+          <li class="no">Taxis o transporte público en ruta</li>
+          <li class="no">Actividades opcionales en Santiago</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:8px;">Precios</div>
+    <div class="section-h2" style="font-size:1.4rem;">Elige tu tipo de alojamiento</div>
+    <div class="section-line"></div>
+
+    <div class="price-cols">
+      <div class="price-col">
+        <div class="price-col-name">Albergue privado</div>
+        <div class="price-col-amount">349€</div>
+        <div class="price-col-per">por persona · 6 noches</div>
+        <div class="price-col-desc">Albergues privados seleccionados con camas confortables. Ideal para conocer otros peregrinos y compartir la experiencia.</div>
+      </div>
+      <div class="price-col featured">
+        <div class="price-col-badge">⭐ Más reservado</div>
+        <div class="price-col-name">Pensión privada</div>
+        <div class="price-col-amount">549€</div>
+        <div class="price-col-per">por persona · 6 noches</div>
+        <div class="price-col-desc">Habitación privada con baño en pensiones y casas rurales. Desayuno incluido. El equilibrio perfecto entre precio y confort.</div>
+      </div>
+      <div class="price-col">
+        <div class="price-col-name">Hotel 3★</div>
+        <div class="price-col-amount">749€</div>
+        <div class="price-col-per">por persona · 6 noches</div>
+        <div class="price-col-desc">Hoteles 3★ seleccionados con desayuno buffet y seguro de viaje incluido. La opción más cómoda para completar el Camino.</div>
+      </div>
+    </div>
+    <p style="font-family:var(--font-b);font-size:0.76rem;color:var(--gris);text-align:center;font-style:italic;">Reserva con solo el 30%. El resto 30 días antes de la salida. Cancelación gratuita hasta 21 días antes. Suplemento individual disponible.</p>
+
+    <div class="section-label" style="margin-top:18px;">Temporada</div>
+    <div class="section-h2" style="font-size:1.2rem;">¿Cuándo ir?</div>
+    <div class="section-line"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+      <div style="background:var(--crema);border-radius:10px;padding:14px;text-align:center;">
+        <div style="font-family:var(--font-h);font-weight:700;font-size:0.82rem;color:var(--azul-dark);margin-bottom:5px;">Primavera</div>
+        <div style="font-family:var(--font-b);font-size:0.68rem;color:var(--naranja);font-weight:700;margin-bottom:6px;">Abr – Jun ★★★★★</div>
+        <div style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.5;">Paisajes en flor, clima suave, menos gente. La mejor época.</div>
+      </div>
+      <div style="background:var(--crema);border-radius:10px;padding:14px;text-align:center;">
+        <div style="font-family:var(--font-h);font-weight:700;font-size:0.82rem;color:var(--azul-dark);margin-bottom:5px;">Verano</div>
+        <div style="font-family:var(--font-b);font-size:0.68rem;color:var(--naranja);font-weight:700;margin-bottom:6px;">Jul – Ago ★★★★</div>
+        <div style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.5;">El norte de España fresco. Más ambiente. Reserva con antelación.</div>
+      </div>
+      <div style="background:var(--crema);border-radius:10px;padding:14px;text-align:center;">
+        <div style="font-family:var(--font-h);font-weight:700;font-size:0.82rem;color:var(--azul-dark);margin-bottom:5px;">Otoño</div>
+        <div style="font-family:var(--font-b);font-size:0.68rem;color:var(--naranja);font-weight:700;margin-bottom:6px;">Sep – Oct ★★★★★</div>
+        <div style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.5;">Temperatura ideal, colores espectaculares, menos peregrinos.</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · </div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- PAGINA 7: PREGUNTAS FRECUENTES + RESERVA -->
+<!-- ============================================================ -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Camino Inglés — FAQ y Reserva</div>
+    <div class="page-header-num">06</div>
+  </div>
+  <div class="page-content">
+
+    <div class="section-label">Preguntas frecuentes</div>
+    <div class="section-h2">Todo lo que necesitas saber</div>
+    <div class="section-line"></div>
+
+    <div class="faq-item-print">
+      <div class="faq-q-print">¿Cómo llego a Ferrol?</div>
+      <div class="faq-a-print">Puedes volar a Santiago de Compostela o A Coruña. Desde ambos aeropuertos hay varios autobuses diarios hasta Ferrol. Desde A Coruña con Arriva y desde Santiago con Monbus. El trayecto dura entre 1h y 1h 20min. Nota: El aeropuerto de Santiago estará cerrado del 23 de abril al 27 de mayo de 2026 por obras.</div>
+    </div>
+    <div class="faq-item-print">
+      <div class="faq-q-print">¿Qué nivel de forma física necesito?</div>
+      <div class="faq-a-print">El Camino Inglés está clasificado como fácil-moderado. Las etapas diarias son de 12 a 21 km. La ruta está bien señalizada y te proporcionamos notas de ruta detalladas. Si no estás en forma óptima, el propio Camino te pondrá en forma en los primeros días.</div>
+    </div>
+    <div class="faq-item-print">
+      <div class="faq-q-print">¿Puedo obtener la Compostela?</div>
+      <div class="faq-a-print">Sí. El Camino Inglés desde Ferrol supera los 100km mínimos exigidos por la Catedral de Santiago. Solo tienes que sellar tu credencial al menos dos veces por etapa. Tu credencial y concha te esperarán en el primer alojamiento.</div>
+    </div>
+    <div class="faq-item-print">
+      <div class="faq-q-print">¿Con cuánta antelación debo reservar?</div>
+      <div class="faq-a-print">Recomendamos reservar con al menos 6 semanas de antelación. En temporada alta (julio-agosto) y puentes, antes. En temporada baja podemos organizar el Camino en menos de una semana. Consúltanos sin compromiso.</div>
+    </div>
+    <div class="faq-item-print">
+      <div class="faq-q-print">¿Puedo caminar con mi mochila grande?</div>
+      <div class="faq-a-print">Sí, aunque no lo recomendamos. El traslado de mochila está incluido en todos nuestros paquetes para que camines libre. Si prefieres llevarlo todo, podemos eliminar ese servicio y ajustar el precio.</div>
+    </div>
+    <div class="faq-item-print">
+      <div class="faq-q-print">¿Qué pasa si no puedo completar una etapa?</div>
+      <div class="faq-a-print">Nuestro equipo en Lugo está disponible por teléfono las 24h para ayudarte. Hay transporte público y taxis disponibles en toda la ruta. Siempre encontramos una solución.</div>
+    </div>
+
+    <div style="margin-top:24px;">
+      <div class="section-label">Cómo reservar</div>
+      <div class="section-h2" style="font-size:1.4rem;">Proceso de reserva con Easy Camino Santiago</div>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="booking-steps">
+      <div class="booking-step">
+        <div class="step-num">1</div>
+        <div class="step-title">Solicita tu presupuesto</div>
+        <div class="step-desc">Rellena el formulario online o escríbenos . Te respondemos en menos de 24h con tu presupuesto personalizado.</div>
+      </div>
+      <div class="booking-step">
+        <div class="step-num">2</div>
+        <div class="step-title">Confirmamos tu Camino</div>
+        <div class="step-desc">Comprobamos disponibilidad y reservamos todos tus alojamientos. Te enviamos confirmación completa en 5 días laborables.</div>
+      </div>
+      <div class="booking-step">
+        <div class="step-num">3</div>
+        <div class="step-title">¡A caminar!</div>
+        <div class="step-desc">Recibes toda la documentación, la credencial y los tracks GPS. Nuestro equipo te acompaña durante todo el Camino .</div>
+      </div>
+    </div>
+
+    <div class="contact-final">
+      <div class="contact-item">
+        <div class="contact-item-label">WhatsApp</div>
+        <div class="contact-item-val">+34 982 907 629</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Email</div>
+        <div class="contact-item-val">info@easycaminosantiago.com</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Web</div>
+        <div class="contact-item-val">easycaminosantiago.com</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label">Sede</div>
+        <div class="contact-item-val">Lugo, Galicia — España</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · </div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+</body>
+</html>

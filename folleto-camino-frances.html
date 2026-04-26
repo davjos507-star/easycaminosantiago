@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CERD8SRPBP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CERD8SRPBP');
+  </script>
+<meta charset="UTF-8">
+<meta name="theme-color" content="#56A1A4">
+    <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Folleto Camino Francés — Easy Camino Santiago</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--azul:#56A1A4;--azul-dark:#2D4A52;--naranja:#F3A949;--crema:#ECE7E2;--gris:#5a6b6a;--font-h:'Raleway',sans-serif;--font-b:'Lato',sans-serif;}
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:var(--font-b);color:var(--azul-dark);background:#f0f4f4;}
+  .print-bar{position:fixed;top:0;left:0;right:0;z-index:999;background:var(--azul);padding:12px 32px;display:flex;justify-content:space-between;align-items:center;}
+  .print-bar span{color:rgba(255,255,255,0.7);font-family:var(--font-b);font-size:0.9rem;}
+  .btn-print{background:var(--naranja);color:white;border:none;padding:10px 28px;border-radius:25px;font-family:var(--font-h);font-weight:700;font-size:0.95rem;cursor:pointer;}
+  .btn-print:hover{background:#d4882a;}
+  .page{width:210mm;min-height:297mm;margin:52px auto 20px;background:white;box-shadow:0 4px 30px rgba(0,0,0,0.15);position:relative;overflow:hidden;}
+  .cover{background: var(--azul);display:flex;flex-direction:column;}
+  .cover-top{background:linear-gradient(160deg,#2D4A52 0%,#56A1A4 50%,#2D4A52 100%);padding:48px 48px 40px;flex:1;display:flex;flex-direction:column;justify-content:space-between;min-height:180mm;}
+  .cover-logo{height:56px;width:auto;filter:brightness(0) invert(1);}
+  .cover-ruta-label{font-family:var(--font-b);font-size:0.8rem;font-weight:700;color:var(--naranja);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;}
+  .cover h1{font-family:var(--font-h);font-weight:800;font-size:3.4rem;color:white;line-height:1.05;margin-bottom:8px;}
+  .cover h1 em{color:var(--naranja);font-style:normal;}
+  .cover-subtitle{font-family:var(--font-b);color:rgba(255,255,255,0.75);font-size:1.05rem;line-height:1.6;max-width:340px;margin-bottom:36px;}
+  .cover-highlights{display:flex;flex-direction:column;gap:10px;}
+  .cover-highlight{display:flex;align-items:center;gap:12px;font-family:var(--font-b);color:white;font-size:0.88rem;}
+  .cover-highlight::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--naranja);flex-shrink:0;}
+  .cover-stats{background:var(--azul);padding:28px 48px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+  .cover-stat{text-align:center;padding:0 16px;border-right:1px solid rgba(255,255,255,0.12);}
+  .cover-stat:last-child{border-right:none;}
+  .cover-stat strong{display:block;font-family:var(--font-h);font-size:1.6rem;font-weight:800;color:var(--naranja);margin-bottom:4px;}
+  .cover-stat span{font-family:var(--font-b);font-size:0.72rem;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:0.5px;}
+  .cover-bottom{background:white;padding:24px 48px;display:flex;justify-content:space-between;align-items:center;}
+  .cover-precio-label{font-family:var(--font-b);font-size:0.75rem;color:var(--gris);text-transform:uppercase;letter-spacing:1px;}
+  .cover-precio-valor{font-family:var(--font-h);font-size:2rem;font-weight:800;color:var(--azul-dark);}
+  .cover-precio-valor span{font-size:0.9rem;font-weight:400;color:var(--gris);}
+  .cover-badge{background:var(--crema);border:1px solid rgba(86,161,164,0.2);padding:8px 18px;border-radius:20px;font-family:var(--font-b);font-size:0.8rem;color:var(--azul);font-weight:600;}
+  .page-header{background:var(--azul);padding:22px 40px;display:flex;justify-content:space-between;align-items:center;}
+  .page-header-logo{height:36px;filter:brightness(0) invert(1);}
+  .page-header-title{font-family:var(--font-h);font-weight:700;font-size:0.9rem;color:rgba(255,255,255,0.7);letter-spacing:1px;text-transform:uppercase;}
+  .page-header-num{font-family:var(--font-h);font-weight:800;font-size:1.1rem;color:var(--naranja);}
+  .page-content{padding:36px 40px;}
+  .section-label{font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:var(--naranja);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+  .section-h2{font-family:var(--font-h);font-weight:800;font-size:1.8rem;color:var(--azul-dark);margin-bottom:16px;line-height:1.2;}
+  .section-line{width:48px;height:4px;background:var(--naranja);border-radius:2px;margin-bottom:24px;}
+  .body-text{font-family:var(--font-b);font-size:0.88rem;color:var(--gris);line-height:1.75;margin-bottom:16px;}
+  .itinerary-overview{display:flex;flex-direction:column;gap:0;}
+  .day-row{display:flex;align-items:center;gap:0;border-bottom:1px solid #e0eeec;padding:12px 0;}
+  .day-row:last-child{border-bottom:none;}
+  .day-num{width:44px;height:44px;min-width:44px;border-radius:50%;background:var(--azul-dark);color:var(--naranja);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-weight:800;font-size:0.9rem;margin-right:18px;}
+  .day-info{flex:1;}
+  .day-title{font-family:var(--font-h);font-weight:700;font-size:0.9rem;color:var(--azul-dark);margin-bottom:3px;}
+  .day-desc{font-family:var(--font-b);font-size:0.76rem;color:var(--gris);}
+  .day-km{font-family:var(--font-h);font-weight:700;font-size:0.78rem;color:var(--azul);background:var(--crema);padding:4px 10px;border-radius:20px;border:1px solid rgba(86,161,164,0.15);white-space:nowrap;}
+  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;}
+  .info-block{background:var(--crema);border-radius:12px;padding:20px;}
+  .info-block-title{font-family:var(--font-h);font-weight:700;font-size:0.88rem;color:var(--azul-dark);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+  .info-block-title::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--naranja);flex-shrink:0;}
+  .info-block ul{list-style:none;}
+  .info-block ul li{font-family:var(--font-b);font-size:0.78rem;color:var(--gris);padding:5px 0;border-bottom:1px solid rgba(86,161,164,0.1);display:flex;gap:8px;align-items:flex-start;line-height:1.5;}
+  .info-block ul li:last-child{border-bottom:none;}
+  .info-block ul li::before{content:'✓';color:var(--azul);font-weight:bold;flex-shrink:0;}
+  .info-block ul li.no::before{content:'✗';color:#c0392b;}
+  .faq-item-print{margin-bottom:14px;}
+  .faq-q-print{font-family:var(--font-h);font-weight:700;font-size:0.85rem;color:var(--azul-dark);margin-bottom:5px;}
+  .faq-a-print{font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;}
+  .page-footer{background:var(--azul);padding:16px 40px;display:flex;justify-content:space-between;align-items:center;}
+  .footer-contact{font-family:var(--font-b);font-size:0.75rem;color:rgba(255,255,255,0.65);}
+  .footer-web{font-family:var(--font-h);font-weight:700;font-size:0.8rem;color:var(--naranja);}
+  .booking-steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:24px 0;}
+  .booking-step{background:var(--crema);border-radius:12px;padding:20px;text-align:center;}
+  .step-num{width:36px;height:36px;border-radius:50%;background:var(--azul-dark);color:var(--naranja);font-family:var(--font-h);font-weight:800;font-size:1rem;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
+  .step-title{font-family:var(--font-h);font-weight:700;font-size:0.88rem;color:var(--azul-dark);margin-bottom:8px;}
+  .step-desc{font-family:var(--font-b);font-size:0.76rem;color:var(--gris);line-height:1.6;}
+  .contact-final{background: linear-gradient(135deg, var(--azul) 0%, #6AAFB2 100%);border-radius:14px;padding:28px 32px;margin-top:24px;display:flex;justify-content:space-between;align-items:center;}
+  .contact-final-text h3{font-family:var(--font-h);font-weight:800;font-size:1.2rem;color:white;margin-bottom:6px;}
+  .contact-final-text p{font-family:var(--font-b);font-size:0.82rem;color:rgba(255,255,255,0.75);}
+  .contact-details{display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
+  .contact-item{font-family:var(--font-b);font-size:0.82rem;color:white;}
+  .contact-item strong{color:var(--naranja);}
+  @media print{.print-bar{display:none!important;}body{background:white;}.page{margin:0;box-shadow:none;page-break-after:always;width:100%;}.page:last-child{page-break-after:avoid;}}
+</style>
+</head>
+<body>
+
+<div class="print-bar">
+  <span>Easy Camino Santiago — Folleto Camino Francés</span>
+  <button class="btn-print" onclick="window.print()">⬇ Descargar PDF</button>
+</div>
+
+<!-- PORTADA -->
+<div class="page cover">
+  <div class="cover-top">
+    <div>
+      <div class="cover-ruta-label">Guía de viaje oficial</div>
+      <h1>Camino<br><em>Francés</em></h1>
+      <p class="cover-subtitle">780km de historia, espiritualidad y aventura desde los Pirineos hasta la Catedral de Santiago. La ruta clásica y más emblemática del mundo.</p>
+      <div class="cover-highlights">
+        <div class="cover-highlight">La ruta jacobea más famosa del mundo</div>
+        <div class="cover-highlight">33 etapas por Pamplona, Burgos, León y Galicia</div>
+        <div class="cover-highlight">Paisajes únicos: Pirineos, Meseta y Galicia</div>
+        <div class="cover-highlight">Todo organizado: alojamiento, mochila y apoyo 24h</div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-stats">
+    <div class="cover-stat"><strong>780 km</strong><span>Distancia total</span></div>
+    <div class="cover-stat"><strong>33</strong><span>Etapas</span></div>
+    <div class="cover-stat"><strong>34 noches</strong><span>Alojamiento</span></div>
+    <div class="cover-stat"><strong>Media</strong><span>Dificultad</span></div>
+  </div>
+  <div class="cover-bottom">
+    <div>
+      <div class="cover-precio-label">Precio desde</div>
+      <div class="cover-precio-valor">1.690€ <span>por persona</span></div>
+    </div>
+    <div class="cover-badge">La ruta clásica</div>
+  </div>
+</div>
+
+<!-- DESCRIPCIÓN + ITINERARIO RESUMEN -->
+<!-- ============================================================ -->
+<!-- PAGINA HISTORIA: EL CAMINO DE SANTIAGO -->
+<!-- ============================================================ -->
+<div class="page">
+  <!-- Cabecera historia -->
+  <div style="background:linear-gradient(135deg,var(--azul) 0%,#6AAFB2 100%);padding:32px 40px 28px;">
+    <div style="font-family:var(--font-b);font-size:0.7rem;font-weight:700;color:var(--naranja);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;">Historia y tradición</div>
+    <h2 style="font-family:var(--font-h);font-weight:900;font-size:2rem;color:white;line-height:1.15;margin-bottom:0;">El Camino de Santiago:<br><em style="font-style:normal;color:rgba(255,255,255,0.75);font-weight:400;font-size:1.1rem;">Mil años de fe, cultura y aventura humana</em></h2>
+  </div>
+
+  <div style="padding:26px 40px 20px;">
+
+    <!-- Cita destacada -->
+    <div style="border-left:4px solid var(--naranja);padding:12px 20px;margin-bottom:22px;background:rgba(240,161,69,0.06);border-radius:0 8px 8px 0;">
+      <p style="font-family:var(--font-h);font-size:1rem;font-style:italic;color:var(--azul-dark);line-height:1.5;margin:0;">"El Camino de Santiago es el único camino europeo declarado Patrimonio de la Humanidad por la UNESCO, en 1985. Cada año, más de 300.000 personas de todo el mundo recorren sus sendas."</p>
+    </div>
+
+    <!-- DOS COLUMNAS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:22px;">
+
+      <!-- Columna izquierda -->
+      <div>
+        <div style="font-family:var(--font-b);font-size:0.65rem;font-weight:700;color:var(--naranja);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;">¿Quién fue el Apóstol Santiago?</div>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin:0;">Santiago el Mayor, hijo de Zebedeo, fue uno de los primeros cuatro discípulos elegidos por Jesús, junto a Pedro, Andrés y Juan. Pescador del mar de Galilea, Jesús le apodó con su hermano "Hijos del Trueno" por su carácter apasionado y decidido.</p>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">Fue el primer apóstol mártir: el rey Herodes Agripa I lo mandó decapitar hacia el año 44 d.C. Según la tradición, sus discípulos trasladaron su cuerpo en barco hasta las costas de Galicia, donde fue sepultado en lo que hoy es Compostela.</p>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">En el siglo IX, el ermitaño Pelayo observó unas luces misteriosas sobre un campo. Al investigar, se descubrió una tumba que el obispo Teodomiro identificó como la del Apóstol. El rey Alfonso II mandó construir una iglesia sobre el sepulcro, germen de la actual Catedral.</p>
+      </div>
+
+      <!-- Columna derecha -->
+      <div>
+        <div style="font-family:var(--font-b);font-size:0.65rem;font-weight:700;color:var(--naranja);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;">El nacimiento de la peregrinación</div>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin:0;">La noticia del hallazgo se extendió por toda Europa y pronto comenzaron a llegar peregrinos de todos los rincones de la cristiandad. En el siglo X la peregrinación a Compostela era ya un hecho consolidado, rivalizando con los viajes a Roma y Jerusalén.</p>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">Los siglos XI y XII fueron su época de mayor esplendor. Reyes como Sancho III y Alfonso VI impulsaron la ruta, construyendo caminos, puentes y hospederías. Las órdenes religiosas de Cluny organizaron la infraestructura que haría famoso el Camino Francés.</p>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">El Camino atravesó épocas de decadencia —la Peste Negra, las guerras religiosas— pero siempre renació. En 1884, el Papa León XIII reafirmó la autenticidad de las reliquias, y el siglo XX trajo el mayor revival de la historia moderna.</p>
+      </div>
+
+    </div>
+
+    <!-- TIMELINE -->
+    <div style="margin-bottom:18px;">
+      <div style="font-family:var(--font-b);font-size:0.65rem;font-weight:700;color:var(--azul);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Cronología esencial</div>
+      <div style="display:flex;gap:0;align-items:flex-start;position:relative;">
+        <div style="position:absolute;top:10px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--azul),var(--naranja));opacity:0.25;"></div>
+        <!-- Hitos -->
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--azul);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--azul);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--azul);">s. I d.C.</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">Martirio y traslado de los restos de Santiago a Galicia</div>
+        </div>
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--azul);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--azul);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--azul);">834</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">Descubrimiento del sepulcro. Alfonso II manda construir la primera iglesia</div>
+        </div>
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--azul);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--azul);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--azul);">1122</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">El Papa Calixto II crea el Año Santo Compostelano</div>
+        </div>
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--naranja);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--naranja);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--naranja);">1985</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">La UNESCO declara el Camino Patrimonio de la Humanidad</div>
+        </div>
+        <div style="flex:1;text-align:center;position:relative;z-index:1;">
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--naranja);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--naranja);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--naranja);">Hoy</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">+300.000 peregrinos al año de más de 180 países</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRES BLOQUES INFERIORES -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+      <div style="background:var(--crema);border-radius:8px;padding:13px 14px;border-top:3px solid var(--azul);">
+        <div style="font-family:var(--font-h);font-weight:800;font-size:0.8rem;color:var(--azul-dark);margin-bottom:5px;">El Año Jacobeo</div>
+        <p style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.55;margin:0;">Se celebra cuando el 25 de julio —festividad del Apóstol— cae en domingo. El Papa Calixto II instituyó este privilegio en 1122. En Año Santo, la Puerta Santa de la Catedral se abre y los peregrinos pueden obtener la indulgencia plenaria.</p>
+      </div>
+      <div style="background:var(--crema);border-radius:8px;padding:13px 14px;border-top:3px solid var(--azul);">
+        <div style="font-family:var(--font-h);font-weight:800;font-size:0.8rem;color:var(--azul-dark);margin-bottom:5px;">La Compostela</div>
+        <p style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.55;margin:0;">Certificado oficial expedido por la Catedral. El nombre del peregrino se inscribe en latín, firmado por el Secretario del Cabildo. En 1985 se entregaron 2.491; hoy superan las 300.000 al año. Se obtiene recorriendo al menos 100 km a pie o 200 km en bici.</p>
+      </div>
+      <div style="background:var(--crema);border-radius:8px;padding:13px 14px;border-top:3px solid var(--naranja);">
+        <div style="font-family:var(--font-h);font-weight:800;font-size:0.8rem;color:var(--azul-dark);margin-bottom:5px;">La Bendición del Peregrino</div>
+        <p style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.55;margin:0;">Tradición medieval que se celebra en Roncesvalles al inicio del Camino Francés y en otras iglesias de la ruta. El clérigo reza para que el peregrino "emprenda el viaje y regrese sano y salvo con la ayuda de Dios". Un rito que une fe, historia y comunidad.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · Lugo, Galicia</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Camino Francés</div>
+    <div class="page-header-num">02</div>
+  </div>
+  <div class="page-content">
+    <div class="section-label">La ruta</div>
+    <div class="section-h2">El Camino de tu vida</div>
+    <div class="section-line"></div>
+    <p class="body-text">El Camino Francés es la ruta jacobea más famosa del mundo. Desde Saint-Jean-Pied-de-Port, al pie de los Pirineos franceses, hasta la Catedral de Santiago, este camino de 780 kilómetros atraviesa paisajes únicos, ciudades históricas y pueblos que han permanecido casi intactos durante siglos.</p>
+    <p class="body-text">A lo largo de sus 33 etapas, pasa por joyas como Pamplona, Logroño, Burgos y León. La famosa Meseta castellana ofrece kilómetros de silencio y reflexión. Desde Easy Camino Santiago organizamos todo: alojamientos noche a noche, traslado diario de mochila, credencial del peregrino y soporte 24h.</p>
+
+    <div class="section-label" style="margin-top:20px;">Itinerario</div>
+    <div class="section-h2" style="font-size:1.3rem;">Los 6 tramos principales del Camino Francés</div>
+    <div class="section-line"></div>
+    <div class="itinerary-overview">
+      <div class="day-row">
+        <div class="day-num">1</div>
+        <div class="day-info">
+          <div class="day-title">St Jean Pied de Port → Roncesvalles</div>
+          <div class="day-desc">El mítico cruce de los Pirineos · Col de Lepoeder · Inicio épico</div>
+        </div>
+        <div class="day-km">25 km</div>
+      </div>
+      <div class="day-row">
+        <div class="day-num">2</div>
+        <div class="day-info">
+          <div class="day-title">Pamplona → Logroño (Etapas 4–6)</div>
+          <div class="day-desc">Sanfermines · La Rioja · Alto del Perdón · Bodegas en Irache</div>
+        </div>
+        <div class="day-km">~90 km</div>
+      </div>
+      <div class="day-row">
+        <div class="day-num">3</div>
+        <div class="day-info">
+          <div class="day-title">Burgos (Etapas 11–12)</div>
+          <div class="day-desc">Catedral gótica · El Cid · Morcilla de Burgos</div>
+        </div>
+        <div class="day-km">~40 km</div>
+      </div>
+      <div class="day-row">
+        <div class="day-num">4</div>
+        <div class="day-info">
+          <div class="day-title">La Meseta Castellana (Etapas 13–20)</div>
+          <div class="day-desc">Kilómetros de silencio · Sahagún · Mansilla de las Mulas</div>
+        </div>
+        <div class="day-km">~200 km</div>
+      </div>
+      <div class="day-row">
+        <div class="day-num">5</div>
+        <div class="day-info">
+          <div class="day-title">León → O Cebreiro (Etapas 21–28)</div>
+          <div class="day-desc">Catedral de vidrieras · Castillo templario de Ponferrada · Bierzo</div>
+        </div>
+        <div class="day-km">~190 km</div>
+      </div>
+      <div class="day-row">
+        <div class="day-num">6</div>
+        <div class="day-info">
+          <div class="day-title">Sarria → Santiago de Compostela (Etapas 29–33)</div>
+          <div class="day-desc">Galicia auténtica · Monte do Gozo · Plaza del Obradoiro</div>
+        </div>
+        <div class="day-km">115 km</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · info@easycaminosantiago.com · +34 982 907 629</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+<!-- QUÉ INCLUYE + PRECIOS -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">Paquete todo incluido</div>
+    <div class="page-header-num">03</div>
+  </div>
+  <div class="page-content">
+    <div class="section-label">Qué incluye</div>
+    <div class="section-h2">Todo organizado para que solo camines</div>
+    <div class="section-line"></div>
+    <div class="info-grid">
+      <div class="info-block">
+        <div class="info-block-title">Incluye</div>
+        <ul>
+          <li>33 noches de alojamiento reservado</li>
+          <li>Traslado de mochila (32 etapas)</li>
+          <li>Credencial del peregrino</li>
+          <li>Itinerario detallado etapa a etapa</li>
+          <li>Apoyo telefónico 24h durante el Camino</li>
+          <li>Gestión de la Compostela</li>
+          <li>Seguro de viaje (paquetes pensión/hotel)</li>
+        </ul>
+      </div>
+      <div class="info-block">
+        <div class="info-block-title">No incluye</div>
+        <ul>
+          <li class="no">Vuelos o transporte hasta St Jean</li>
+          <li class="no">Comidas (excepto desayuno)</li>
+          <li class="no">Actividades opcionales</li>
+          <li class="no">Gastos personales</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-top:8px;">Precios</div>
+    <div class="section-h2" style="font-size:1.3rem;">Elige tu tipo de alojamiento</div>
+    <div class="section-line"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div style="background:var(--crema);border-radius:12px;padding:18px;border:1px solid rgba(86,161,164,0.15);">
+        <div style="font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Albergue privado</div>
+        <div style="font-family:var(--font-h);font-weight:800;font-size:1.9rem;color:var(--azul-dark);">1.690€</div>
+        <div style="font-family:var(--font-b);font-size:0.75rem;color:var(--gris);margin-bottom:10px;">por persona · 33 noches</div>
+        <div style="font-family:var(--font-b);font-size:0.76rem;color:var(--gris);">Albergues privados seleccionados. Ideal para conocer peregrinos de todo el mundo.</div>
+      </div>
+      <div style="background:var(--azul-dark);border-radius:12px;padding:18px;position:relative;">
+        <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--naranja);color:white;font-family:var(--font-b);font-size:0.68rem;font-weight:700;padding:3px 12px;border-radius:10px;white-space:nowrap;">⭐ Más reservado</div>
+        <div style="font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Pensión privada</div>
+        <div style="font-family:var(--font-h);font-weight:800;font-size:1.9rem;color:var(--naranja);">2.290€</div>
+        <div style="font-family:var(--font-b);font-size:0.75rem;color:rgba(255,255,255,0.65);margin-bottom:10px;">por persona · 33 noches</div>
+        <div style="font-family:var(--font-b);font-size:0.76rem;color:rgba(255,255,255,0.75);">Habitación privada. Seguro de viaje incluido. Descanso garantizado cada etapa.</div>
+      </div>
+      <div style="background:var(--crema);border-radius:12px;padding:18px;border:1px solid rgba(86,161,164,0.15);">
+        <div style="font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Hotel 3★</div>
+        <div style="font-family:var(--font-h);font-weight:800;font-size:1.9rem;color:var(--azul-dark);">2.990€</div>
+        <div style="font-family:var(--font-b);font-size:0.75rem;color:var(--gris);margin-bottom:10px;">por persona · 33 noches</div>
+        <div style="font-family:var(--font-b);font-size:0.76rem;color:var(--gris);">Hoteles 3★ seleccionados. Desayuno buffet y seguro premium incluido.</div>
+      </div>
+    </div>
+    <p style="font-family:var(--font-b);font-size:0.76rem;color:var(--gris);margin-top:12px;text-align:center;">Reserva con solo el 30%. Resto 30 días antes de la salida. Cancelación gratuita hasta 21 días antes.</p>
+
+    <div class="section-label" style="margin-top:20px;">Cómo reservar</div>
+    <div class="section-h2" style="font-size:1.3rem;">3 pasos para comenzar</div>
+    <div class="section-line"></div>
+    <div class="booking-steps">
+      <div class="booking-step">
+        <div class="step-num">1</div>
+        <div class="step-title">Contacta con nosotros</div>
+        <div class="step-desc">Escríbenos o usa el formulario web. Te respondemos en menos de 24h.</div>
+      </div>
+      <div class="booking-step">
+        <div class="step-num">2</div>
+        <div class="step-title">Presupuesto personalizado</div>
+        <div class="step-desc">Adaptado a tus fechas, personas y tipo de alojamiento.</div>
+      </div>
+      <div class="booking-step">
+        <div class="step-num">3</div>
+        <div class="step-title">Reserva y camina</div>
+        <div class="step-desc">Con el 30% confirmamos. El resto 30 días antes de salir.</div>
+      </div>
+    </div>
+    <div class="contact-final">
+      <div class="contact-final-text">
+        <h3>¿Listo para el Camino Francés?</h3>
+        <p>El viaje de tu vida empieza con una llamada o un mensaje.</p>
+      </div>
+      <div class="contact-details">
+        <div class="contact-item"></div>
+        <div class="contact-item"><strong>Email:</strong> info@easycaminosantiago.com</div>
+        <div class="contact-item"><strong>Web:</strong> easycaminosantiago.com</div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · info@easycaminosantiago.com · +34 982 907 629</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+</body>
+</html>

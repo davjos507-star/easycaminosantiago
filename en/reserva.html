@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CERD8SRPBP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CERD8SRPBP');
+  </script>
+<meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="apple-touch-icon" href="../favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#56A1A4">
+<title>Book your Camino de Santiago | Personalised Quote</title>
+<meta name="description" content="Book your Camino de Santiago with Easy Camino Santiago. Choose your route, accommodation and extras. Secure deposit via Stripe. Based in Lugo, Spain.">
+<link rel="canonical" href="https://easycaminosantiago.com/en/reserva.html">
+<link rel="alternate" hreflang="es" href="https://easycaminosantiago.com/reserva.html">
+<link rel="alternate" hreflang="en" href="https://easycaminosantiago.com/en/reserva.html">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;700;800;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23/build/css/intlTelInput.css">
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+:root {
+  --azul: #56A1A4;
+  --azul-dark: #2D4A52;
+  --naranja: #F3A949;
+  --crema: #ECE7E2;
+  --gris: #5a6b6a;
+  --bg: #f0f4f4;
+  --white: #ffffff;
+  --border: #d8e8e8;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dark); }
+
+/* NAV */
+.res-nav { background:var(--white); border-bottom:1px solid var(--border); padding:12px 32px; display:flex; align-items:center; justify-content:space-between; }
+.res-nav img { height:40px; width:auto; }
+.res-nav-lang { font-size:0.82rem; color:var(--gris); }
+.res-nav-lang a { color:var(--azul); text-decoration:none; font-weight:700; }
+
+/* PROGRESS BAR */
+.progress-bar { background:var(--white); border-bottom:1px solid var(--border); padding:0 32px; overflow:hidden; }
+.progress-steps { display:flex; max-width:1100px; margin:0 auto; }
+.ps { flex:1; display:flex; align-items:center; justify-content:center; gap:8px; padding:14px 8px; font-family:'Raleway',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#9ab5b6; cursor:default; position:relative; }
+.ps::after { content:''; position:absolute; right:-12px; top:0; bottom:0; width:24px; background:var(--white); clip-path:polygon(0 0,100% 50%,0 100%); z-index:2; }
+.ps:last-child::after { display:none; }
+.ps .ps-num { width:24px; height:24px; border-radius:50%; border:2px solid #c0d8d8; display:flex; align-items:center; justify-content:center; font-size:0.75rem; flex-shrink:0; }
+.ps.active { background:var(--azul); color:var(--white); }
+.ps.active::after { background:var(--azul); }
+.ps.active .ps-num { border-color:rgba(255,255,255,0.5); background:rgba(255,255,255,0.2); }
+.ps.done { background:#e8f4f4; color:var(--azul); }
+.ps.done::after { background:#e8f4f4; }
+.ps.done .ps-num { border-color:var(--azul); color:var(--azul); }
+
+/* PAGE TITLE */
+.page-title-bar { max-width:1100px; margin:28px auto 0; padding:0 20px; }
+.page-title-bar h1 { font-family:'Raleway',sans-serif; font-size:1.5rem; font-weight:900; color:var(--azul-dark); text-transform:uppercase; letter-spacing:1px; }
+.page-title-bar .pt-badge { display:inline-block; background:var(--azul); color:var(--white); font-size:0.72rem; font-weight:700; padding:4px 12px; border-radius:20px; margin-top:8px; }
+
+/* MAIN LAYOUT */
+.res-main { max-width:1100px; margin:24px auto 60px; padding:0 20px; display:grid; grid-template-columns:1fr 340px; gap:24px; align-items:start; }
+@media (max-width:768px) { .res-main { grid-template-columns:1fr; } .ps-label { display:none; } }
+
+/* CARD */
+.res-card { background:var(--white); border-radius:12px; padding:32px; margin-bottom:20px; }
+.res-card h2 { font-family:'Lato',sans-serif; font-size:1.2rem; font-weight:700; color:var(--azul-dark); margin-bottom:6px; }
+.res-card .card-sub { color:var(--gris); font-size:0.88rem; margin-bottom:24px; }
+
+/* STEP 1 */
+.date-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+.field-group { display:flex; flex-direction:column; gap:6px; }
+.field-group label { font-size:0.8rem; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:var(--gris); }
+.field-group input, .field-group select { padding:12px 14px; border:1.5px solid var(--border); border-radius:8px; font-size:0.92rem; font-family:'Lato',sans-serif; color:var(--azul-dark); background:var(--white); }
+.field-group input:focus, .field-group select:focus { outline:none; border-color:var(--azul); }
+.pax-row { display:flex; align-items:center; justify-content:space-between; padding:14px 0; border-bottom:1px solid var(--border); }
+.pax-row:first-child { border-top:1px solid var(--border); }
+.pax-label strong { display:block; font-size:0.92rem; }
+.pax-label span { font-size:0.78rem; color:var(--gris); }
+.pax-ctrl { display:flex; align-items:center; gap:14px; }
+.pax-btn { width:32px; height:32px; border-radius:50%; border:2px solid var(--azul); background:var(--white); color:var(--azul); font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1; }
+.pax-btn:hover { background:var(--azul); color:var(--white); }
+.pax-num { font-size:1.1rem; font-weight:700; min-width:20px; text-align:center; }
+.ruta-selector { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:20px; }
+.ruta-opt { border:2px solid var(--border); border-radius:8px; padding:12px; cursor:pointer; transition:all 0.2s; }
+.ruta-opt:hover, .ruta-opt.selected { border-color:var(--azul); background:#f0f9f9; }
+.ruta-opt .ro-name { font-weight:700; font-size:0.88rem; color:var(--azul-dark); }
+.ruta-opt .ro-km { font-size:0.75rem; color:var(--gris); }
+
+/* STEP 2 */
+.aloj-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+@media (max-width:600px) { .aloj-grid { grid-template-columns:1fr; } }
+.aloj-card { border:2px solid var(--border); border-radius:10px; padding:20px 16px; cursor:pointer; transition:all 0.2s; position:relative; text-align:center; }
+.aloj-card:hover, .aloj-card.selected { border-color:var(--azul); background:#f0f9f9; }
+.aloj-card.featured { border-color:var(--naranja); }
+.aloj-badge { position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--naranja); color:var(--white); font-size:0.68rem; font-weight:700; padding:3px 14px; border-radius:10px; white-space:nowrap; font-family:'Raleway',sans-serif; }
+.aloj-icon { font-size:2rem; margin-bottom:10px; }
+.aloj-name { font-family:'Raleway',sans-serif; font-weight:700; font-size:0.95rem; color:var(--azul-dark); margin-bottom:6px; }
+.aloj-price { font-size:1.6rem; font-weight:900; color:var(--azul); font-family:'Raleway',sans-serif; }
+.aloj-price span { font-size:0.8rem; color:var(--gris); font-weight:400; }
+.aloj-desc { font-size:0.78rem; color:var(--gris); margin-top:8px; line-height:1.5; }
+.aloj-na { opacity:0.4; cursor:not-allowed; }
+
+/* STEP 3 */
+.extra-row { display:flex; align-items:center; justify-content:space-between; padding:18px 0; border-bottom:1px solid var(--border); gap:16px; }
+.extra-row:first-child { border-top:1px solid var(--border); }
+.extra-info { flex:1; }
+.extra-info strong { display:block; font-size:0.95rem; margin-bottom:3px; }
+.extra-info span { font-size:0.8rem; color:var(--gris); }
+.extra-price { font-weight:700; color:var(--azul); font-size:0.9rem; min-width:80px; text-align:right; }
+.seguro-box { margin-top:20px; border:2px solid var(--border); border-radius:10px; padding:18px; display:flex; align-items:center; justify-content:space-between; gap:16px; cursor:pointer; transition:all 0.2s; }
+.seguro-box:hover, .seguro-box.selected { border-color:var(--azul); background:#f0f9f9; }
+.seguro-box input[type=checkbox] { width:20px; height:20px; accent-color:var(--azul); flex-shrink:0; cursor:pointer; }
+.seguro-info strong { display:block; font-size:0.92rem; margin-bottom:4px; }
+.seguro-info p { font-size:0.78rem; color:var(--gris); line-height:1.5; }
+.seguro-cost { font-weight:700; color:var(--azul); font-size:0.9rem; white-space:nowrap; }
+
+/* STEP 4 */
+.traveler-section { margin-bottom:28px; }
+.traveler-section h3 { font-size:0.95rem; font-weight:700; color:var(--azul-dark); margin-bottom:16px; padding-bottom:8px; border-bottom:2px solid var(--azul); }
+.form-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media (max-width:540px) { .form-grid-2 { grid-template-columns:1fr; } }
+.form-grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+@media (max-width:540px) { .form-grid-3 { grid-template-columns:1fr; } }
+.form-full { grid-column:1/-1; }
+.field-group textarea { padding:12px 14px; border:1.5px solid var(--border); border-radius:8px; font-size:0.88rem; font-family:'Lato',sans-serif; color:var(--azul-dark); resize:vertical; min-height:90px; }
+.field-group textarea:focus { outline:none; border-color:var(--azul); }
+.req { color:red; }
+.field-group .iti { width:100%; }
+.dob-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; }
+.dob-grid input { text-align:center; }
+.consent-box { margin-top:20px; padding:20px; background:#f8fbfb; border-radius:10px; border:1px solid var(--border); }
+.consent-box p { font-size:0.83rem; color:var(--gris); line-height:1.65; margin-bottom:14px; }
+.radio-opt { display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:0.85rem; cursor:pointer; }
+.radio-opt input { accent-color:var(--azul); width:16px; height:16px; }
+.check-opt { display:flex; align-items:flex-start; gap:10px; font-size:0.82rem; color:var(--gris); margin-top:14px; }
+.check-opt input { margin-top:3px; accent-color:var(--azul); width:16px; height:16px; flex-shrink:0; }
+.check-opt a { color:var(--azul); text-decoration:underline; }
+
+/* STEP 5 */
+.notice-box { background:#f0f9f9; border-left:4px solid var(--azul); border-radius:0 10px 10px 0; padding:16px 20px; margin-bottom:24px; font-size:0.85rem; color:var(--azul-dark); line-height:1.65; font-style:italic; }
+.pay-amount { margin-bottom:24px; }
+.pay-amount .pa-label { font-size:0.82rem; color:var(--gris); text-transform:uppercase; letter-spacing:1px; font-weight:700; margin-bottom:4px; }
+.pay-amount .pa-value { font-size:2.4rem; font-weight:900; font-family:'Raleway',sans-serif; color:var(--azul); }
+.pay-amount .pa-note { font-size:0.78rem; color:var(--gris); margin-top:4px; }
+.stripe-field { border:1.5px solid var(--border); border-radius:8px; padding:14px; margin-bottom:16px; background:var(--white); }
+.stripe-field:focus-within { border-color:var(--azul); }
+#stripe-error { color:#e53e3e; font-size:0.83rem; margin-top:8px; min-height:20px; }
+.cancel-policy { margin-top:24px; background:#f8fbfb; border-radius:10px; padding:20px; }
+.cancel-policy h4 { font-size:0.88rem; font-weight:700; color:var(--azul-dark); margin-bottom:12px; }
+.cancel-policy table { width:100%; border-collapse:collapse; font-size:0.78rem; }
+.cancel-policy td { padding:6px 8px; border-bottom:1px solid var(--border); }
+.cancel-policy td:first-child { color:var(--gris); }
+.cancel-policy td:last-child { font-weight:700; color:var(--azul-dark); text-align:right; }
+
+/* NAVIGATION BUTTONS */
+.step-nav { display:flex; justify-content:space-between; align-items:center; margin-top:8px; }
+.btn-back { background:none; border:2px solid var(--border); color:var(--gris); padding:13px 24px; border-radius:8px; font-family:'Raleway',sans-serif; font-weight:700; font-size:0.88rem; cursor:pointer; transition:all 0.2s; }
+.btn-back:hover { border-color:var(--azul); color:var(--azul); }
+.btn-next { background:var(--azul); color:var(--white); border:none; padding:14px 36px; border-radius:8px; font-family:'Raleway',sans-serif; font-weight:800; font-size:0.95rem; cursor:pointer; text-transform:uppercase; letter-spacing:1px; transition:filter 0.2s; }
+.btn-next:hover { filter:brightness(0.9); }
+.btn-pay { background:var(--naranja); color:var(--white); border:none; padding:16px 48px; border-radius:8px; font-family:'Raleway',sans-serif; font-weight:800; font-size:1rem; cursor:pointer; text-transform:uppercase; letter-spacing:1px; transition:filter 0.2s; width:100%; margin-top:8px; }
+.btn-pay:hover { filter:brightness(0.9); }
+.btn-pay:disabled { opacity:0.6; cursor:not-allowed; }
+
+/* SIDEBAR */
+.sidebar { position:sticky; top:80px; }
+.sidebar-photo { width:100%; height:200px; object-fit:cover; border-radius:12px 12px 0 0; display:block; }
+.sidebar-header { background:var(--azul-dark); color:var(--white); padding:14px 18px; border-radius:0; font-family:'Raleway',sans-serif; font-size:0.78rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; }
+.sidebar-body { background:var(--white); border-radius:0 0 12px 12px; padding:0; }
+.sb-section { padding:16px 18px; border-bottom:1px solid var(--border); }
+.sb-section h4 { font-size:0.82rem; font-weight:700; color:var(--azul-dark); margin-bottom:12px; }
+.sb-row { display:flex; justify-content:space-between; align-items:flex-start; font-size:0.82rem; margin-bottom:6px; gap:8px; }
+.sb-row .sb-key { color:var(--gris); flex:1; }
+.sb-row .sb-val { font-weight:700; color:var(--azul-dark); text-align:right; }
+.sb-total { display:flex; justify-content:space-between; font-size:1rem; font-weight:700; padding:18px; background:var(--white); border-radius:0 0 12px 12px; }
+.sb-total .total-amt { color:var(--azul); font-size:1.15rem; font-family:'Raleway',sans-serif; }
+.sb-deposit { padding:12px 18px; background:#f0f9f9; font-size:0.8rem; color:var(--gris); border-top:1px solid var(--border); border-radius:0 0 12px 12px; }
+.sb-deposit strong { color:var(--azul); }
+.help-box { background:var(--white); border-radius:12px; padding:20px; margin-top:16px; }
+.help-box h4 { font-size:0.92rem; font-weight:700; margin-bottom:8px; }
+.help-box p { font-size:0.8rem; color:var(--gris); line-height:1.6; }
+.help-box a { color:var(--azul); font-weight:700; }
+
+/* ITINERARY TOGGLE */
+.itin-toggle { display:flex; align-items:center; justify-content:space-between; padding:12px 18px; background:var(--azul); color:var(--white); cursor:pointer; font-size:0.82rem; font-weight:700; }
+.itin-toggle span { transition:transform 0.2s; }
+.itin-body { display:none; padding:14px 18px; font-size:0.78rem; border-bottom:1px solid var(--border); }
+.itin-body.open { display:block; }
+.itin-stat { display:flex; justify-content:space-between; padding:5px 0; border-bottom:1px solid #eef4f4; }
+.itin-stat:last-child { border:none; }
+.itin-stat .ik { color:var(--gris); font-style:italic; }
+.itin-stat .iv { font-weight:700; }
+
+/* FOOTER */
+.res-footer { background:var(--azul-dark); padding:20px 32px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+.res-footer p { color:rgba(255,255,255,0.55); font-size:0.78rem; }
+.res-footer a { color:var(--naranja); text-decoration:none; font-size:0.78rem; }
+.pay-logos { display:flex; gap:10px; align-items:center; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="res-nav">
+  <a href="../en/index.html"><img src="../easy-camino-santiago-logo.png" alt="Easy Camino Santiago"></a>
+  <span class="res-nav-lang"><a href="../reserva.html">ES</a> | EN</span>
+</nav>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar">
+  <div class="progress-steps">
+    <div class="ps active" id="ps1"><div class="ps-num">1</div><span class="ps-label">Who's going?</span></div>
+    <div class="ps" id="ps2"><div class="ps-num">2</div><span class="ps-label">Accommodation</span></div>
+    <div class="ps" id="ps3"><div class="ps-num">3</div><span class="ps-label">Options</span></div>
+    <div class="ps" id="ps4"><div class="ps-num">4</div><span class="ps-label">Your details</span></div>
+    <div class="ps" id="ps5"><div class="ps-num">5</div><span class="ps-label">Payment</span></div>
+  </div>
+</div>
+
+<!-- PAGE TITLE -->
+<div class="page-title-bar">
+  <h1 id="page-title">Book your Camino de Santiago</h1>
+  <div class="pt-badge" id="page-badge">—</div>
+</div>
+
+<!-- MAIN -->
+<div class="res-main">
+
+  <!-- LEFT COLUMN: steps -->
+  <div>
+
+    <!-- STEP 1: WHO'S GOING -->
+    <div class="res-card" id="step1">
+      <h2>Your trip dates</h2>
+      <p class="card-sub">Select when you would like to start your Camino.</p>
+
+      <!-- Ruta selector (hidden if ruta passed via URL) -->
+      <div id="ruta-selector-wrap" style="margin-bottom:24px;">
+        <div class="field-group" style="margin-bottom:12px;">
+          <label>Select your route</label>
+          <select id="ruta-select" onchange="onRutaChange()">
+            <option value="">— Choose a route —</option>
+            <option value="sarria">Camino from Sarria — 100 km</option>
+            <option value="ingles">English Way (Ferrol)</option>
+            <option value="portugues">Portuguese Way (Porto)</option>
+            <option value="frances">Full Camino Francés</option>
+            <option value="norte">Northern Way</option>
+            <option value="costa">Portuguese Coastal Way</option>
+            <option value="primitivo">Primitive Way</option>
+            <option value="finisterre">Way of Finisterre</option>
+            <option value="bicicleta">By Bicycle</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="date-grid">
+        <div class="field-group">
+          <label>Departure date <span class="req">*</span></label>
+          <input type="date" id="fecha-inicio" min="" onchange="onFechaChange()">
+        </div>
+        <div class="field-group">
+          <label>Estimated arrival in Santiago</label>
+          <input type="date" id="fecha-fin" readonly style="background:#f5fafa; color:var(--gris);">
+        </div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <p style="font-size:0.82rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">Who will be travelling?</p>
+        <div class="pax-row">
+          <div class="pax-label"><strong>Adults</strong><span>18 years and over</span></div>
+          <div class="pax-ctrl">
+            <button class="pax-btn" onclick="changePax('adultos',-1)">−</button>
+            <span class="pax-num" id="num-adultos">1</span>
+            <button class="pax-btn" onclick="changePax('adultos',1)">+</button>
+          </div>
+        </div>
+        <div class="pax-row">
+          <div class="pax-label"><strong>Children</strong><span>2 – 17 years</span></div>
+          <div class="pax-ctrl">
+            <button class="pax-btn" onclick="changePax('ninos',-1)">−</button>
+            <span class="pax-num" id="num-ninos">0</span>
+            <button class="pax-btn" onclick="changePax('ninos',1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-nav" style="margin-top:28px;">
+        <span></span>
+        <button class="btn-next" onclick="goStep(2)">Next: Choose accommodation →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: ACCOMMODATION -->
+    <div class="res-card" id="step2" style="display:none;">
+      <h2>Choose your accommodation</h2>
+      <p class="card-sub">Price per person · Includes all nights along the route.</p>
+      <div class="aloj-grid" id="aloj-grid">
+        <!-- populated by JS -->
+      </div>
+      <div class="step-nav" style="margin-top:28px;">
+        <button class="btn-back" onclick="goStep(1)">← Back</button>
+        <button class="btn-next" onclick="goStep(3)">Next: Options →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: OPTIONS -->
+    <div class="res-card" id="step3" style="display:none;">
+      <h2>Additional options</h2>
+      <p class="card-sub">Personalise your experience. You can leave everything at 0 if you don't need extras.</p>
+
+      <div class="extra-row">
+        <div class="extra-info">
+          <strong>Extra night before departure</strong>
+          <span>Accommodation the night before the Camino starts, in the departure city</span>
+        </div>
+        <div class="pax-ctrl">
+          <button class="pax-btn" onclick="changeExtra('pre',-1)">−</button>
+          <span class="pax-num" id="num-pre">0</span>
+          <button class="pax-btn" onclick="changeExtra('pre',1)">+</button>
+        </div>
+        <div class="extra-price" id="price-pre">0 €</div>
+      </div>
+
+      <div class="extra-row">
+        <div class="extra-info">
+          <strong>Extra night in Santiago</strong>
+          <span>Additional accommodation in Santiago de Compostela after reaching the Cathedral</span>
+        </div>
+        <div class="pax-ctrl">
+          <button class="pax-btn" onclick="changeExtra('post',-1)">−</button>
+          <span class="pax-num" id="num-post">0</span>
+          <button class="pax-btn" onclick="changeExtra('post',1)">+</button>
+        </div>
+        <div class="extra-price" id="price-post">0 €</div>
+      </div>
+
+      <div class="seguro-box" id="seguro-box" onclick="toggleSeguro()">
+        <input type="checkbox" id="seguro-check" onclick="event.stopPropagation(); toggleSeguro()">
+        <div class="seguro-info">
+          <strong>🛡️ Cancellation insurance</strong>
+          <p>With insurance: 100% refund if you cancel more than 30 days before · 80% less than 30 days.<br>Without insurance: 80% refund with +30 days · 50% between 15–30 days · 0% less than 15 days.</p>
+        </div>
+        <div class="seguro-cost" id="seguro-price">+ 5%</div>
+      </div>
+
+      <div class="step-nav" style="margin-top:28px;">
+        <button class="btn-back" onclick="goStep(2)">← Back</button>
+        <button class="btn-next" onclick="goStep(4)">Next: Your details →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4: TRAVELLER DETAILS -->
+    <div class="res-card" id="step4" style="display:none;">
+      <h2>Tell us about yourself</h2>
+      <p class="card-sub">Fields marked with <span class="req">*</span> are required.</p>
+
+      <div class="traveler-section">
+        <h3>👤 Lead traveller</h3>
+        <div class="form-grid-2" style="margin-bottom:14px;">
+          <div class="field-group">
+            <label>Title <span class="req">*</span></label>
+            <select id="v-titulo" required>
+              <option value="">— Select —</option>
+              <option>Mr.</option>
+              <option>Mrs.</option>
+              <option>Ms.</option>
+              <option>Dr.</option>
+            </select>
+          </div>
+          <div></div>
+        </div>
+        <div class="form-grid-2" style="margin-bottom:14px;">
+          <div class="field-group">
+            <label>First name <span class="req">*</span></label>
+            <input type="text" id="v-nombre" required>
+          </div>
+          <div class="field-group">
+            <label>Surname <span class="req">*</span></label>
+            <input type="text" id="v-apellido" required>
+          </div>
+        </div>
+        <div class="field-group" style="margin-bottom:14px;">
+          <label>Date of birth <span class="req">*</span></label>
+          <div class="dob-grid">
+            <input type="number" id="v-dob-d" placeholder="DD" min="1" max="31">
+            <input type="number" id="v-dob-m" placeholder="MM" min="1" max="12">
+            <input type="number" id="v-dob-y" placeholder="YYYY" min="1920" max="2010">
+          </div>
+        </div>
+      </div>
+
+      <div class="traveler-section">
+        <h3>📍 Address</h3>
+        <div class="field-group" style="margin-bottom:14px;">
+          <label>Street address <span class="req">*</span></label>
+          <input type="text" id="v-direccion" required>
+        </div>
+        <div class="form-grid-2" style="margin-bottom:14px;">
+          <div class="field-group">
+            <label>City / Town <span class="req">*</span></label>
+            <input type="text" id="v-ciudad" required>
+          </div>
+          <div class="field-group">
+            <label>County / State</label>
+            <input type="text" id="v-provincia">
+          </div>
+        </div>
+        <div class="form-grid-2" style="margin-bottom:14px;">
+          <div class="field-group">
+            <label>Postcode / ZIP</label>
+            <input type="text" id="v-cp">
+          </div>
+          <div class="field-group">
+            <label>Country <span class="req">*</span></label>
+            <select id="v-pais" required>
+              <option value="">— Country —</option>
+              <option>Spain</option><option>Portugal</option><option>France</option>
+              <option>Germany</option><option>United Kingdom</option><option>Ireland</option>
+              <option>Italy</option><option>United States</option><option>Canada</option>
+              <option>Australia</option><option>Argentina</option><option>Brazil</option>
+              <option>Mexico</option><option>Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="traveler-section">
+        <h3>📞 Contact</h3>
+        <div class="field-group" style="margin-bottom:14px;">
+          <label>Email address <span class="req">*</span></label>
+          <input type="email" id="v-email" required>
+        </div>
+        <div class="field-group" style="margin-bottom:14px;">
+          <label>Mobile phone <span class="req">*</span> <small style="font-weight:400;text-transform:none;letter-spacing:0;">(reachable before and during the trip)</small></label>
+          <input type="tel" id="v-tel" required>
+        </div>
+      </div>
+
+      <div class="traveler-section">
+        <h3>🎒 About your trip</h3>
+        <div class="field-group" style="margin-bottom:14px;">
+          <label>Are you flexible on room type?</label>
+          <textarea id="v-hab" placeholder="e.g. double or twin room is fine / single room only..."></textarea>
+        </div>
+        <div class="field-group" style="margin-bottom:14px;">
+          <label>Are you flexible on dates?</label>
+          <textarea id="v-fechas" placeholder="e.g. flexible ±2 days / I need to depart on that exact date..."></textarea>
+        </div>
+        <div class="field-group">
+          <label>Special requests</label>
+          <textarea id="v-especial" placeholder="Medical conditions, dietary requirements, reduced mobility, etc."></textarea>
+        </div>
+      </div>
+
+      <div class="consent-box">
+        <p>Receive news about adventures, hiking guides and destination inspiration by subscribing to our emails.</p>
+        <label class="radio-opt"><input type="radio" name="newsletter" value="si"> Yes, I would like to receive adventure news.</label>
+        <label class="radio-opt"><input type="radio" name="newsletter" value="no" checked> No, thank you.</label>
+        <div class="check-opt">
+          <input type="checkbox" id="v-terms" required>
+          <span>I have read and accept the <a href="../en/politica-reservas.html" target="_blank">Terms &amp; Conditions</a> and <a href="../en/politica-reservas.html" target="_blank">Privacy Policy</a> of Easy Camino Santiago.</span>
+        </div>
+      </div>
+
+      <div class="step-nav" style="margin-top:28px;">
+        <button class="btn-back" onclick="goStep(3)">← Back</button>
+        <button class="btn-next" onclick="goStep(5)">Next: Payment →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5: PAYMENT -->
+    <div class="res-card" id="step5" style="display:none;">
+      <h2>Complete your booking</h2>
+
+      <div class="notice-box">
+        This is a provisional booking. Once the deposit is received we will begin organising your trip, which can take 5 to 7 days. If we are unable to fulfil your dates or any aspect of the trip, we will contact you to discuss alternatives or issue a full refund.
+      </div>
+
+      <div class="pay-amount">
+        <div class="pa-label">Deposit to pay now</div>
+        <div class="pa-value" id="deposito-display">—</div>
+        <div class="pa-note" id="deposito-note"></div>
+      </div>
+
+      <div id="payment-form">
+        <div class="field-group" style="margin-bottom:14px;">
+          <label>Card number</label>
+          <div class="stripe-field" id="card-number-element"></div>
+        </div>
+        <div class="form-grid-2">
+          <div class="field-group">
+            <label>Expiry date</label>
+            <div class="stripe-field" id="card-expiry-element"></div>
+          </div>
+          <div class="field-group">
+            <label>Security code (CVC)</label>
+            <div class="stripe-field" id="card-cvc-element"></div>
+          </div>
+        </div>
+        <div id="stripe-error"></div>
+      </div>
+
+      <button class="btn-pay" id="btn-pay" onclick="procesarPago()">🔒 Pay deposit now</button>
+
+      <div class="cancel-policy">
+        <h4>📋 Cancellation policy</h4>
+        <table>
+          <tr><td>Without insurance — more than 30 days before</td><td>80% refund</td></tr>
+          <tr><td>Without insurance — 15 to 30 days before</td><td>50% refund</td></tr>
+          <tr><td>Without insurance — less than 15 days before</td><td>No refund</td></tr>
+          <tr><td>With insurance — more than 30 days before</td><td>100% refund</td></tr>
+          <tr><td>With insurance — less than 30 days before</td><td>80% refund</td></tr>
+        </table>
+        <p style="font-size:0.75rem;color:var(--gris);margin-top:10px;">Amendments: €60/person. Date change: €100/person. Must be communicated at least 72h in advance to info@easycaminosantiago.com</p>
+      </div>
+
+      <div class="step-nav" style="margin-top:28px;">
+        <button class="btn-back" onclick="goStep(4)">← Back</button>
+        <span></span>
+      </div>
+    </div>
+
+  </div><!-- /left -->
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <img class="sidebar-photo" id="sb-foto" src="../peregrina-camino-santiago-libertad-montana.jpg" alt="Camino de Santiago">
+    <div class="sidebar-header">My booking</div>
+    <div class="sidebar-body">
+
+      <div id="sb-ruta-info" class="sb-section">
+        <div class="sb-row"><span class="sb-key" id="sb-nombre">—</span></div>
+        <div class="sb-row"><span class="sb-key" id="sb-fechas-txt" style="color:var(--azul);font-size:0.8rem;">Select departure date</span></div>
+      </div>
+
+      <div class="itin-toggle" onclick="toggleItin()">
+        <span>View itinerary</span><span id="itin-arrow">▼</span>
+      </div>
+      <div class="itin-body" id="itin-body">
+        <div class="itin-stat"><span class="ik">Start</span><span class="iv" id="sb-inicio">—</span></div>
+        <div class="itin-stat"><span class="ik">End</span><span class="iv" id="sb-fin">—</span></div>
+        <div class="itin-stat"><span class="ik">Distance</span><span class="iv" id="sb-km">—</span></div>
+        <div class="itin-stat"><span class="ik">Duration</span><span class="iv" id="sb-dur">—</span></div>
+      </div>
+
+      <div class="sb-section" id="sb-cost-section">
+        <h4>Cost summary</h4>
+        <div class="sb-row"><span class="sb-key">Base package (<span id="sb-pax-txt">1 person</span>)</span><span class="sb-val" id="sb-base-price">—</span></div>
+        <div class="sb-row" id="sb-extras-row" style="display:none;"><span class="sb-key">Extras</span><span class="sb-val" id="sb-extras-price">—</span></div>
+        <div class="sb-row" id="sb-seguro-row" style="display:none;"><span class="sb-key">Cancellation insurance (5%)</span><span class="sb-val" id="sb-seguro-price">—</span></div>
+      </div>
+
+      <div class="sb-total">
+        <span>Total</span>
+        <span class="total-amt" id="sb-total">—</span>
+      </div>
+      <div class="sb-deposit">
+        Deposit (20%): <strong id="sb-deposito">—</strong> · Balance due on confirmation
+      </div>
+
+    </div>
+
+    <div class="help-box">
+      <h4>Have a question?</h4>
+      <p>You can add special requests in step 4. If you still need help, call us on <a href="tel:+34982907629">982 907 629</a> — Mon–Fri 9–19h.</p>
+    </div>
+  </div>
+
+</div><!-- /res-main -->
+
+<!-- NETLIFY FORM (hidden — detected at build time, submitted via JS) -->
+<form name="reserva" netlify netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="bot-field">
+  <input type="hidden" name="ruta">
+  <input type="hidden" name="fecha-inicio">
+  <input type="hidden" name="adultos">
+  <input type="hidden" name="ninos">
+  <input type="hidden" name="alojamiento">
+  <input type="hidden" name="nombre">
+  <input type="hidden" name="apellido">
+  <input type="hidden" name="email">
+  <input type="hidden" name="telefono">
+  <input type="hidden" name="total">
+  <input type="hidden" name="deposito">
+</form>
+
+<!-- FAQ -->
+<section class="faq-section" style="max-width:800px;margin:60px auto;padding:0 24px;">
+  <div class="section-title">
+    <h2>Frequently asked questions about booking the Camino</h2>
+    <div class="linea"></div>
+  </div>
+  <div class="faq">
+    <div class="faq-item">
+      <button class="faq-q" onclick="ecsFaqToggle(this)">How far in advance should I book the Camino?</button>
+      <div class="faq-a">We recommend booking at least 4 to 6 weeks in advance, especially if you are travelling during peak season (May, June, July or September). For groups or very specific dates, the sooner the better.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="ecsFaqToggle(this)">Can I customise the itinerary of my Camino?</button>
+      <div class="faq-a">Yes. All our packages can be adapted to your dates, pace and needs. You can choose the starting point, accommodation type, included services and trip duration.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="ecsFaqToggle(this)">What happens if I need to cancel my booking?</button>
+      <div class="faq-a">We have a flexible cancellation policy. We will provide you with the exact conditions when confirming your booking so you can plan with peace of mind.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="ecsFaqToggle(this)">How does luggage transfer work?</button>
+      <div class="faq-a">The luggage transfer service collects your bag each morning from your accommodation and delivers it to the next one. This means you can walk in complete freedom without any extra load.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="ecsFaqToggle(this)">Can I walk the Camino alone and still book an organised package?</button>
+      <div class="faq-a">Yes. Many of our clients travel solo and particularly appreciate having everything organised in advance. The package gives you full autonomy on the trail with the peace of mind that the logistics are taken care of.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="ecsFaqToggle(this)">How quickly will I receive my quote?</button>
+      <div class="faq-a">You will receive a personalised, no-obligation quote within 24 hours. Just send us your dates, the route you are interested in and the number of people.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="res-footer">
+  <p>© 2026 Easy Camino Santiago · <a href="../en/politica-reservas.html">Privacy policy</a> · <a href="../en/aviso-legal.html">Legal notice</a></p>
+  <div class="pay-logos">
+    <svg width="44" height="24" viewBox="0 0 44 24"><rect width="44" height="24" rx="4" fill="white" opacity="0.15"/><text x="22" y="16" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="11" fill="rgba(255,255,255,0.85)" letter-spacing="1">VISA</text></svg>
+    <svg width="40" height="24" viewBox="0 0 40 24"><rect width="40" height="24" rx="4" fill="white" opacity="0.1"/><circle cx="15" cy="12" r="8" fill="#EB001B" opacity="0.8"/><circle cx="25" cy="12" r="8" fill="#F79E1B" opacity="0.8"/></svg>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23/build/js/intlTelInput.min.js"></script>
+<script>
+// ─── STRIPE PUBLIC KEY ───────────────────────────────────────────────
+const STRIPE_PUBLIC_KEY = 'pk_live_51KHQyDLdy1SiD5iFtf5Vja5WbadI1LJeYXbzUzaL1K2pFV1s9YJg1Pi2UiWQ3scujJp5PEiMxCTRkuRQok3WKoQr00qHl6XbXK';
+// ────────────────────────────────────────────────────────────────────
+
+const RUTAS = {
+  sarria:    { nombre:'Camino from Sarria — 100 km', km:'115 km', etapas:'5 stages', noches:6, inicio:'Sarria', fin:'Santiago de Compostela', foto:'../downloaded_images/camino-sarria-senda-piedra-bosque-galicia.jpg', precios:{albergue:399,pension:549,hotel:749} },
+  ingles:    { nombre:'English Way (Ferrol)', km:'119 km', etapas:'6 stages', noches:6, inicio:'Ferrol', fin:'Santiago de Compostela', foto:'../ruta-images/camino-ingles-ferrol-ruta-rural-galicia.jpg', precios:{albergue:349,pension:499,hotel:699} },
+  portugues: { nombre:'Portuguese Way', km:'240 km', etapas:'12 stages', noches:12, inicio:'Porto', fin:'Santiago de Compostela', foto:'../ruta-images/camino-portugues-ruta-santiago.jpg', precios:{albergue:649,pension:849,hotel:null} },
+  frances:   { nombre:'Full Camino Francés', km:'780 km', etapas:'33 stages', noches:33, inicio:'Saint-Jean-Pied-de-Port', fin:'Santiago de Compostela', foto:'../downloaded_images/camino-frances-peregrino-mochila-concha.jpg', precios:{albergue:1690,pension:2290,hotel:2990} },
+  norte:     { nombre:'Northern Way', km:'820 km', etapas:'33 stages', noches:33, inicio:'Irún', fin:'Santiago de Compostela', foto:'../downloaded_images/camino-norte-peregrinos-sendero-montana.jpg', precios:{albergue:890,pension:1190,hotel:1590} },
+  costa:     { nombre:'Portuguese Coastal Way', km:'265 km', etapas:'13 stages', noches:13, inicio:'Porto', fin:'Santiago de Compostela', foto:'../downloaded_images/camino-portugues-costa-sendero-mar-galicia.jpg', precios:{albergue:699,pension:949,hotel:null} },
+  primitivo: { nombre:'Primitive Way', km:'320 km', etapas:'13 stages', noches:13, inicio:'Oviedo', fin:'Santiago de Compostela', foto:'../ruta-images/camino-primitivo-ruta-montaña.jpg', precios:{albergue:790,pension:1090,hotel:null} },
+  finisterre:{ nombre:'Way of Finisterre', km:'87 km', etapas:'3 stages', noches:3, inicio:'Santiago de Compostela', fin:'Fisterra', foto:'../downloaded_images/camino-finisterre-costa-galicia-rocas.jpg', precios:{albergue:249,pension:349,hotel:null} },
+  bicicleta: { nombre:'By Bicycle', km:'200+ km', etapas:'3–6 days', noches:5, inicio:'Variable', fin:'Santiago de Compostela', foto:'../downloaded_images/camino-santiago-peregrina-atardecer.jpg', precios:{albergue:349,pension:499,hotel:699} }
+};
+
+const EXTRA_PRECIO = { albergue:65, pension:85, hotel:110 };
+
+const state = {
+  step: 1, ruta: null, rutaData: null,
+  fechaInicio: '', adultos: 1, ninos: 0,
+  alojamiento: null,
+  extraPre: 0, extraPost: 0, seguro: false,
+  total: 0, deposito: 0,
+  stripeInstance: null, cardNumber: null, cardExpiry: null, cardCvc: null,
+  itiInit: false, stripeInit: false
+};
+
+// ─── INIT ───────────────────────────────────────────────────────────
+(function init(){
+  const params = new URLSearchParams(window.location.search);
+  const rutaKey = params.get('ruta');
+  if (rutaKey && RUTAS[rutaKey]) {
+    state.ruta = rutaKey;
+    state.rutaData = RUTAS[rutaKey];
+    document.getElementById('ruta-selector-wrap').style.display = 'none';
+    document.getElementById('ruta-select').value = rutaKey;
+  }
+  const today = new Date();
+  today.setDate(today.getDate() + 14);
+  document.getElementById('fecha-inicio').min = new Date().toISOString().split('T')[0];
+  updateSidebar();
+})();
+
+// ─── RUTA CHANGE ───
+function onRutaChange(){
+  const k = document.getElementById('ruta-select').value;
+  if (k && RUTAS[k]) { state.ruta = k; state.rutaData = RUTAS[k]; state.alojamiento = null; }
+  updateSidebar();
+}
+
+// ─── FECHA CHANGE ───
+function onFechaChange(){
+  state.fechaInicio = document.getElementById('fecha-inicio').value;
+  if (state.fechaInicio && state.rutaData) {
+    const d = new Date(state.fechaInicio);
+    d.setDate(d.getDate() + state.rutaData.noches);
+    document.getElementById('fecha-fin').value = d.toISOString().split('T')[0];
+    const opts = {day:'numeric',month:'long',year:'numeric'};
+    const ini = new Date(state.fechaInicio).toLocaleDateString('en-GB', opts);
+    const fin = d.toLocaleDateString('en-GB', opts);
+    document.getElementById('sb-fechas-txt').textContent = ini + ' — ' + fin;
+  }
+}
+
+// ─── PAX ───
+function changePax(type, delta){
+  if (type === 'adultos') {
+    state.adultos = Math.max(1, state.adultos + delta);
+    document.getElementById('num-adultos').textContent = state.adultos;
+  } else {
+    state.ninos = Math.max(0, state.ninos + delta);
+    document.getElementById('num-ninos').textContent = state.ninos;
+  }
+  updateSidebar();
+}
+
+// ─── ALOJAMIENTO ───
+function renderAloj(){
+  if (!state.rutaData) return;
+  const p = state.rutaData.precios;
+  const tipos = [
+    { key:'albergue', icon:'🏠', name:'Private Hostel', precio:p.albergue, desc:'Selected private hostels, bed in shared room', badge:false },
+    { key:'pension',  icon:'🛏', name:'Guesthouse / Private Room', precio:p.pension, desc:'Private room in guesthouses and rural houses', badge:true },
+    { key:'hotel',    icon:'⭐', name:'3★ Hotel', precio:p.hotel, desc:'Selected 3-star hotels along the route', badge:false }
+  ];
+  const grid = document.getElementById('aloj-grid');
+  grid.innerHTML = tipos.map(t => {
+    const na = t.precio === null;
+    return `<div class="aloj-card${t.badge?' featured':''}${na?' aloj-na':''}${state.alojamiento===t.key?' selected':''}" onclick="${na?'':'selectAloj(\''+t.key+'\')'}">
+      ${t.badge ? '<div class="aloj-badge">Most booked</div>' : ''}
+      <div class="aloj-icon">${t.icon}</div>
+      <div class="aloj-name">${t.name}</div>
+      <div class="aloj-price">${na ? 'On request' : t.precio+'€'}<span>${na ? '' : '/person'}</span></div>
+      <div class="aloj-desc">${t.desc}${na?' · Not available for this route':''}</div>
+    </div>`;
+  }).join('');
+}
+
+function selectAloj(key){
+  state.alojamiento = key;
+  document.querySelectorAll('.aloj-card').forEach(c => c.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+  updateSidebar();
+}
+
+// ─── EXTRAS ───
+function changeExtra(type, delta){
+  if (type === 'pre') {
+    state.extraPre = Math.max(0, state.extraPre + delta);
+    document.getElementById('num-pre').textContent = state.extraPre;
+  } else {
+    state.extraPost = Math.max(0, state.extraPost + delta);
+    document.getElementById('num-post').textContent = state.extraPost;
+  }
+  updateExtraPrices();
+  updateSidebar();
+}
+
+function updateExtraPrices(){
+  const ep = state.alojamiento ? EXTRA_PRECIO[state.alojamiento] : 65;
+  const pax = state.adultos + state.ninos;
+  document.getElementById('price-pre').textContent = (state.extraPre * ep * pax) + ' €';
+  document.getElementById('price-post').textContent = (state.extraPost * ep * pax) + ' €';
+}
+
+function toggleSeguro(){
+  state.seguro = !state.seguro;
+  document.getElementById('seguro-check').checked = state.seguro;
+  document.getElementById('seguro-box').classList.toggle('selected', state.seguro);
+  updateSidebar();
+}
+
+// ─── SIDEBAR UPDATE ───
+function updateSidebar(){
+  const r = state.rutaData;
+  if (!r) return;
+  document.getElementById('sb-foto').src = r.foto;
+  document.getElementById('sb-nombre').textContent = r.nombre;
+  document.getElementById('sb-inicio').textContent = r.inicio;
+  document.getElementById('sb-fin').textContent = r.fin;
+  document.getElementById('sb-km').textContent = r.km;
+  document.getElementById('sb-dur').textContent = r.noches + ' nights · ' + r.etapas;
+  document.getElementById('page-title').textContent = r.nombre.toUpperCase();
+  document.getElementById('page-badge').textContent = r.etapas + ' · ' + r.noches + ' nights';
+
+  const pax = state.adultos + state.ninos;
+  document.getElementById('sb-pax-txt').textContent = pax + (pax===1?' person':' people');
+
+  let total = 0;
+  if (state.alojamiento && r.precios[state.alojamiento]) {
+    const base = r.precios[state.alojamiento] * pax;
+    document.getElementById('sb-base-price').textContent = base + ' €';
+    total += base;
+  } else {
+    document.getElementById('sb-base-price').textContent = '—';
+  }
+
+  const ep = state.alojamiento ? EXTRA_PRECIO[state.alojamiento] : 65;
+  const extras = (state.extraPre + state.extraPost) * ep * pax;
+  if (extras > 0) {
+    document.getElementById('sb-extras-row').style.display = 'flex';
+    document.getElementById('sb-extras-price').textContent = extras + ' €';
+    total += extras;
+  } else {
+    document.getElementById('sb-extras-row').style.display = 'none';
+  }
+
+  if (state.seguro && total > 0) {
+    const seg = Math.round(total * 0.05);
+    document.getElementById('sb-seguro-row').style.display = 'flex';
+    document.getElementById('sb-seguro-price').textContent = seg + ' €';
+    document.getElementById('seguro-price').textContent = '+' + seg + ' €';
+    total += seg;
+  } else {
+    document.getElementById('sb-seguro-row').style.display = 'none';
+    document.getElementById('seguro-price').textContent = '+ 5%';
+  }
+
+  state.total = total;
+  state.deposito = total > 0 ? Math.max(100, Math.round(total * 0.2)) : 0;
+  document.getElementById('sb-total').textContent = total > 0 ? total + ' €' : '—';
+  document.getElementById('sb-deposito').textContent = state.deposito > 0 ? state.deposito + ' €' : '—';
+
+  if (state.step === 5) {
+    document.getElementById('deposito-display').textContent = state.deposito + ' €';
+    document.getElementById('deposito-note').textContent = '20% deposit · Total amount: ' + state.total + ' €';
+  }
+}
+
+// ─── NAVIGATION ───
+function goStep(n){
+  if (n > 1 && !state.ruta) { alert('Please select a route.'); return; }
+  if (n > 1 && !state.fechaInicio) { alert('Please select a departure date.'); return; }
+  if (n > 2 && !state.alojamiento) { alert('Please select an accommodation type.'); return; }
+  if (n === 5) {
+    const titulo = document.getElementById('v-titulo').value;
+    const nombre = document.getElementById('v-nombre').value.trim();
+    const apellido = document.getElementById('v-apellido').value.trim();
+    const email = document.getElementById('v-email').value.trim();
+    const terms = document.getElementById('v-terms').checked;
+    if (!titulo || !nombre || !apellido || !email) { alert('Please complete all required fields.'); return; }
+    if (!terms) { alert('You must accept the Terms & Conditions.'); return; }
+  }
+
+  document.getElementById('step'+state.step).style.display = 'none';
+  state.step = n;
+  document.getElementById('step'+n).style.display = 'block';
+
+  // Update progress bar
+  for (let i = 1; i <= 5; i++) {
+    const el = document.getElementById('ps'+i);
+    el.classList.remove('active','done');
+    if (i < n) el.classList.add('done');
+    if (i === n) el.classList.add('active');
+  }
+
+  if (n === 2) renderAloj();
+  if (n === 3) updateExtraPrices();
+  if (n === 5) submitNetlifyLead();
+  if (n === 4 && !state.itiInit) {
+    state.itiInit = true;
+    window.intlTelInput(document.getElementById('v-tel'), {
+      initialCountry:'gb',
+      preferredCountries:['gb','ie','us','ca','au','es','pt','fr','de','ar','br','mx'],
+      separateDialCode:true,
+      utilsScript:'https://cdn.jsdelivr.net/npm/intl-tel-input@23/build/js/utils.js'
+    });
+  }
+  if (n === 5) {
+    updateSidebar();
+    if (!state.stripeInit) initStripe();
+  }
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ─── ITINERARY TOGGLE ───
+function toggleItin(){
+  const body = document.getElementById('itin-body');
+  const arrow = document.getElementById('itin-arrow');
+  body.classList.toggle('open');
+  arrow.textContent = body.classList.contains('open') ? '▲' : '▼';
+}
+
+// ─── NETLIFY LEAD CAPTURE ───
+function submitNetlifyLead(){
+  try {
+    const form = document.querySelector('form[name="reserva"]');
+    const data = new FormData(form);
+    data.set('ruta', state.ruta || '');
+    data.set('fecha-inicio', state.fechaInicio || '');
+    data.set('adultos', state.adultos);
+    data.set('ninos', state.ninos);
+    data.set('alojamiento', state.alojamiento || '');
+    data.set('nombre', (document.getElementById('v-nombre').value || '') + ' ' + (document.getElementById('v-apellido').value || ''));
+    data.set('apellido', document.getElementById('v-apellido').value || '');
+    data.set('email', document.getElementById('v-email').value || '');
+    data.set('telefono', document.getElementById('v-tel').value || '');
+    data.set('total', state.total + ' €');
+    data.set('deposito', state.deposito + ' €');
+    fetch('/', { method:'POST', body: data });
+  } catch(e) {}
+}
+
+// ─── STRIPE ───
+function initStripe(){
+  if (!STRIPE_PUBLIC_KEY.startsWith('pk_')) { console.warn('Configure STRIPE_PUBLIC_KEY'); return; }
+  state.stripeInstance = Stripe(STRIPE_PUBLIC_KEY);
+  const elements = state.stripeInstance.elements();
+  const style = { base:{ fontFamily:"'Lato',sans-serif", fontSize:'15px', color:'#2D4A52', '::placeholder':{ color:'#9ab5b6' } } };
+  state.cardNumber = elements.create('cardNumber', {style});
+  state.cardExpiry = elements.create('cardExpiry', {style});
+  state.cardCvc   = elements.create('cardCvc', {style});
+  state.cardNumber.mount('#card-number-element');
+  state.cardExpiry.mount('#card-expiry-element');
+  state.cardCvc.mount('#card-cvc-element');
+  state.stripeInit = true;
+}
+
+async function procesarPago(){
+  const btn = document.getElementById('btn-pay');
+  const errEl = document.getElementById('stripe-error');
+  errEl.textContent = '';
+
+  if (!state.stripeInit || !state.stripeInstance) {
+    errEl.textContent = 'Error: Stripe is not configured. Please contact us by phone.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Processing...';
+
+  try {
+    const res = await fetch('/.netlify/functions/create-payment-intent', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        amount: state.deposito,
+        description: 'Deposit booking ' + (state.rutaData ? state.rutaData.nombre : '') + ' — Easy Camino Santiago',
+        metadata: {
+          ruta: state.ruta,
+          adultos: state.adultos,
+          ninos: state.ninos,
+          alojamiento: state.alojamiento,
+          fecha_inicio: state.fechaInicio,
+          nombre: document.getElementById('v-nombre').value + ' ' + document.getElementById('v-apellido').value,
+          email: document.getElementById('v-email').value,
+          total: state.total
+        }
+      })
+    });
+
+    const data = await res.json();
+    if (!data.clientSecret) throw new Error(data.error || 'Error creating payment');
+
+    const result = await state.stripeInstance.confirmCardPayment(data.clientSecret, {
+      payment_method: {
+        card: state.cardNumber,
+        billing_details: {
+          name: document.getElementById('v-nombre').value + ' ' + document.getElementById('v-apellido').value,
+          email: document.getElementById('v-email').value
+        }
+      }
+    });
+
+    if (result.error) {
+      errEl.textContent = result.error.message;
+      btn.disabled = false;
+      btn.textContent = '🔒 Pay deposit now';
+    } else {
+      window.location.href = '../en/gracias.html';
+    }
+  } catch(err) {
+    errEl.textContent = 'Error: ' + err.message;
+    btn.disabled = false;
+    btn.textContent = '🔒 Pay deposit now';
+  }
+}
+
+function ecsFaqToggle(btn){
+  const item = btn.parentElement;
+  item.classList.toggle('open');
+}
+</script>
+</body>
+</html>
