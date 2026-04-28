@@ -964,6 +964,7 @@ async function procesarPago(){
         generic_decline:     'Tarjeta denegada. Contacta con tu banco o usa otra tarjeta.',
       };
       errEl.textContent = errores[result.error.code] || 'No se ha podido completar el pago. Por favor, revisa los datos o usa otra tarjeta.';
+      console.error('[Stripe result.error]', result.error);
       state.cardNumber.clear();
       state.cardExpiry.clear();
       state.cardCvc.clear();
@@ -974,6 +975,7 @@ async function procesarPago(){
     }
   } catch(err) {
     errEl.textContent = 'No se ha podido completar el pago. Por favor, inténtalo de nuevo o contacta con nosotros.';
+    console.error('[procesarPago catch]', err);
     state.cardNumber.clear();
     state.cardExpiry.clear();
     state.cardCvc.clear();
