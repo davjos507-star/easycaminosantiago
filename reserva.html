@@ -953,14 +953,30 @@ async function procesarPago(){
     });
 
     if (result.error) {
-      errEl.textContent = result.error.message;
+      const errores = {
+        card_declined:       'Tarjeta denegada. Por favor, usa otra tarjeta o contacta con tu banco.',
+        insufficient_funds:  'Fondos insuficientes. Por favor, usa otra tarjeta.',
+        incorrect_cvc:       'Código de seguridad (CVC) incorrecto. Comprueba los datos e inténtalo de nuevo.',
+        expired_card:        'La tarjeta ha caducado. Por favor, usa otra tarjeta.',
+        incorrect_number:    'Número de tarjeta incorrecto. Comprueba los datos e inténtalo de nuevo.',
+        processing_error:    'Error al procesar el pago. Por favor, inténtalo de nuevo.',
+        do_not_honor:        'Pago no autorizado por el banco. Contacta con tu banco o usa otra tarjeta.',
+        generic_decline:     'Tarjeta denegada. Contacta con tu banco o usa otra tarjeta.',
+      };
+      errEl.textContent = errores[result.error.code] || 'No se ha podido completar el pago. Por favor, revisa los datos o usa otra tarjeta.';
+      state.cardNumber.clear();
+      state.cardExpiry.clear();
+      state.cardCvc.clear();
       btn.disabled = false;
       btn.textContent = '🔒 Pagar depósito ahora';
     } else {
       window.location.href = 'gracias.html';
     }
   } catch(err) {
-    errEl.textContent = 'Error: ' + err.message;
+    errEl.textContent = 'No se ha podido completar el pago. Por favor, inténtalo de nuevo o contacta con nosotros.';
+    state.cardNumber.clear();
+    state.cardExpiry.clear();
+    state.cardCvc.clear();
     btn.disabled = false;
     btn.textContent = '🔒 Pagar depósito ahora';
   }
