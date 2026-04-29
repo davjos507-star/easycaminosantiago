@@ -971,6 +971,24 @@ async function procesarPago(){
       btn.disabled = false;
       btn.textContent = '🔒 Pagar depósito ahora';
     } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
+      try {
+        fetch('/.netlify/functions/send-booking-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          keepalive: true,
+          body: JSON.stringify({
+            nombre: document.getElementById('v-nombre').value + ' ' + document.getElementById('v-apellido').value,
+            email: document.getElementById('v-email').value,
+            telefono: document.getElementById('v-tel').value,
+            ruta: state.rutaData ? state.rutaData.nombre : state.ruta,
+            fechaInicio: state.fechaInicio,
+            alojamiento: state.alojamiento,
+            deposito: state.deposito,
+            total: state.total,
+            paymentIntentId: result.paymentIntent.id
+          })
+        });
+      } catch (e) { /* no bloquea */ }
       window.location.href = 'gracias.html';
     } else {
       errEl.textContent = 'No se ha podido verificar el estado del pago. Por favor, contáctanos por teléfono.';
