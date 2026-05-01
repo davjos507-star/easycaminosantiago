@@ -730,3 +730,6 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
   .subnav-btn { padding: 7px 11px; font-size: 0.72rem; }
   .page-subnav { top: 60px; }
 }
+.whatsapp-float {
+  display: none !important;
+}
