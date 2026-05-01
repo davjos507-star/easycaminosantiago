@@ -86,47 +86,6 @@ strong { font-weight: 700; }
 .nav-dropdown-menu a:hover { background: var(--crema); color: var(--naranja) !important; }
 .nav-dropdown > a::after { content: ' ▾'; font-size: 0.7rem; }
 
-/* Mega menú escritorio */
-.nav-has-mega { position: static; }
-.nav-has-mega > a::after { content: ' ▾'; font-size: 0.7rem; }
-.nav-megamenu {
-  display: none; position: absolute; top: 100%; left: 0; right: 0;
-  background: white; border-top: 2px solid var(--azul-light);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.12); z-index: 1000;
-  padding: 28px 40px 24px;
-}
-.nav-has-mega:hover .nav-megamenu {
-  display: grid; grid-template-columns: 1fr 1fr 200px; gap: 32px;
-}
-.nav-mega-col { display: flex; flex-direction: column; gap: 4px; }
-.nav-mega-title {
-  font-family: var(--font-heading); font-size: 0.7rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 1px; color: #8FBECA;
-  margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--crema);
-}
-.nav-megamenu .nav-mega-col a {
-  display: block !important; padding: 6px 0 !important;
-  color: var(--azul-dark) !important; font-size: 0.87rem !important;
-  font-weight: 500; border-bottom: none !important; white-space: nowrap;
-  transition: color 0.15s;
-}
-.nav-megamenu .nav-mega-col a:hover { color: var(--naranja) !important; background: none !important; }
-.nav-mega-card {
-  display: flex !important; flex-direction: column; gap: 10px;
-  background: var(--crema) !important; border-radius: 12px; padding: 12px !important;
-}
-.nav-mega-card-img {
-  width: 100%; height: 80px; border-radius: 8px; background-color: var(--azul);
-  background: url('/img/camino-santiago-sarria-ruta.jpg') center/cover no-repeat;
-}
-.nav-mega-card-body { display: flex; flex-direction: column; gap: 6px; }
-.nav-mega-card-body strong { color: var(--azul-dark); font-size: 0.85rem; }
-.nav-mega-card-btn {
-  display: inline-block; background: var(--naranja); color: white !important;
-  font-size: 0.78rem; font-weight: 700; padding: 5px 12px;
-  border-radius: 20px; font-family: var(--font-heading);
-}
-
 /* Lang toggle */
 .lang-toggle { display: flex; gap: 4px; }
 .lang-btn {
@@ -664,7 +623,6 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
   .ecs-hero h1 { font-size: 1.6rem; }
   .ecs-nav ul { display: none; }
   .nav-hamburger { display: flex; }
-  .nav-megamenu { display: none !important; }
   .ecs-stats { gap: 28px; }
   .step:not(:last-child)::after { display: none; }
   .btn-secondary { margin-left: 0; margin-top: 12px; display: block; text-align: center; }
