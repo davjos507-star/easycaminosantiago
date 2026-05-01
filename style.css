@@ -732,4 +732,11 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
 }
 .whatsapp-float {
   display: none !important;
+}/* Ocultar botón WhatsApp temporalmente */
+a.whatsapp-float,
+.whatsapp-float {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
