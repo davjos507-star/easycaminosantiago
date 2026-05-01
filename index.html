@@ -171,7 +171,18 @@
 <div class="nav-mobile-overlay" id="nav-mobile">
   <button class="nav-mobile-close" onclick="ecsToggleNav()">✕</button>
   <a href="index.html"><span class="es-txt">Inicio</span><span class="en-txt" style="display:none">Home</span><span class="fr-txt" style="display:none">Accueil</span></a>
-  <a href="#ecs-rutas" onclick="ecsToggleNav()"><span class="es-txt">Caminos</span><span class="en-txt" style="display:none">Routes</span><span class="fr-txt" style="display:none">Itinéraires</span></a>
+  <button class="nav-mobile-sub-toggle" onclick="ecsMobileToggleCaminos(this)"><span class="es-txt">Caminos</span><span class="en-txt" style="display:none">Routes</span><span class="fr-txt" style="display:none">Itinéraires</span><span class="nav-mobile-sub-arrow">▼</span></button>
+  <div class="nav-mobile-submenu" id="nav-mobile-caminos">
+    <a href="camino-frances-sarria.html" class="nav-mobile-subroute" onclick="ecsToggleNav()">⭐ 100km desde Sarria</a>
+    <a href="camino-frances.html" class="nav-mobile-subroute" onclick="ecsToggleNav()">Camino Francés</a>
+    <a href="camino-portugues.html" class="nav-mobile-subroute" onclick="ecsToggleNav()">Camino Portugués</a>
+    <a href="camino-portugues-costa.html" class="nav-mobile-subroute" onclick="ecsToggleNav()">Portugués por la Costa</a>
+    <a href="camino-norte.html" class="nav-mobile-subroute" onclick="ecsToggleNav()">Camino del Norte</a>
+    <a href="camino-primitivo.html" class="nav-mobile-subroute" onclick="ecsToggleNav()">Camino Primitivo</a>
+    <a href="camino-ingles.html" class="nav-mobile-subroute" onclick="ecsToggleNav()">Camino Inglés</a>
+    <a href="camino-finisterre.html" class="nav-mobile-subroute" onclick="ecsToggleNav()">Camino de Finisterre</a>
+    <a href="camino-bicicleta.html" class="nav-mobile-subroute" onclick="ecsToggleNav()">En Bicicleta</a>
+  </div>
   <a href="blog.html">Blog</a>
   <a href="contacto.html"><span class="es-txt">Contacto</span><span class="en-txt" style="display:none">Contact</span><span class="fr-txt" style="display:none">Contact</span></a>
   <a href="#ecs-planifica" onclick="ecsToggleNav()" style="color:#F3A949;font-weight:bold"><span class="es-txt">→ Planifica tu Camino</span><span class="en-txt" style="display:none">→ Plan your Camino</span><span class="fr-txt" style="display:none">→ Planifiez votre Camino</span></a>
@@ -683,7 +694,15 @@ function ecsToggleLang(e){e.stopPropagation();document.getElementById('lang-drop
 document.addEventListener('click',function(e){var d=document.getElementById('lang-dropdown');if(d&&!d.contains(e.target))d.classList.remove('open');});
 document.addEventListener('DOMContentLoaded',function(){var saved=localStorage.getItem('ecsLang')||'es';ecsSetLang(saved);});
 
-function ecsToggleNav(){document.getElementById('nav-mobile').classList.toggle('open');}
+function ecsToggleNav(){
+  document.getElementById('nav-mobile').classList.toggle('open');
+  var cm=document.getElementById('nav-mobile-caminos');
+  if(cm){cm.classList.remove('open');var bt=cm.previousElementSibling;if(bt)bt.classList.remove('open');}
+}
+function ecsMobileToggleCaminos(btn){
+  document.getElementById('nav-mobile-caminos').classList.toggle('open');
+  btn.classList.toggle('open');
+}
 function ecsFiltrRutas(cat){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));event.currentTarget.classList.add('active');document.querySelectorAll('#ecs-cards-grid .card').forEach(c=>{c.style.display=c.getAttribute('data-cat')===cat?'':'none';});}
 function ecsHeroSubmit(e){e.preventDefault();var nombre=document.getElementById('hf-nombre').value.trim();var tel=window._itiHero ? window._itiHero.getNumber() : document.getElementById('hf-telefono').value.trim();var ruta=document.getElementById('hf-ruta').value;var fecha=document.getElementById('hf-fecha').value;fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({'form-name':'presupuesto',nombre:nombre,telefono:tel,ruta:ruta,fecha:fecha}).toString()});var msg=encodeURIComponent('Hola! 👋 Solicitud de presupuesto:\n• Nombre: '+nombre+'\n• Teléfono: '+tel+'\n• Camino: '+(ruta||'Sin especificar')+'\n• Fecha: '+(fecha||'Sin especificar'));window.open('tel:+34982907629?text='+msg,'_blank');}
 </script>

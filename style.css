@@ -161,6 +161,22 @@ strong { font-weight: 700; }
   position: absolute; top: 16px; right: 20px; background: none; border: none;
   font-size: 1.8rem; color: var(--azul-dark); cursor: pointer; line-height: 1;
 }
+.nav-mobile-sub-toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; background: none; border: none; border-bottom: 1px solid #ddeaec;
+  padding: 14px 0; color: var(--azul-dark); font-family: var(--font-body);
+  font-size: 1rem; font-weight: 600; cursor: pointer; text-align: left;
+}
+.nav-mobile-sub-arrow { font-size: 0.7rem; color: #8FBECA; transition: transform 0.2s; }
+.nav-mobile-sub-toggle.open .nav-mobile-sub-arrow { transform: rotate(180deg); }
+.nav-mobile-submenu { display: none; }
+.nav-mobile-submenu.open { display: block; }
+.nav-mobile-subroute {
+  display: block; padding: 9px 0 9px 14px; border-bottom: 1px solid #f0f5f5;
+  color: var(--azul-dark); font-family: var(--font-body); font-size: 0.88rem;
+  font-weight: 500; text-decoration: none;
+}
+.nav-mobile-subroute:hover { color: var(--naranja); }
 .nav-mobile-overlay .nav-mobile-route { padding: 8px 0; font-size: 0.9rem; }
 
 /* ====== HERO HOMEPAGE ====== */
