@@ -161,6 +161,7 @@ strong { font-weight: 700; }
   position: absolute; top: 16px; right: 20px; background: none; border: none;
   font-size: 1.8rem; color: var(--azul-dark); cursor: pointer; line-height: 1;
 }
+.nav-mobile-overlay .nav-mobile-route { padding: 8px 0; font-size: 0.9rem; }
 
 /* ====== HERO HOMEPAGE ====== */
 .ecs-hero {

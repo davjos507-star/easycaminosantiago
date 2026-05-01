@@ -152,17 +152,10 @@
       </button>
     </li>
     <li>
-      <div class="lang-dropdown" id="lang-dropdown">
-        <button class="lang-trigger" onclick="ecsToggleLang(event)">
-          <span id="lang-flag-current">🇪🇸</span>
-          <span id="lang-code-current">ES</span>
-          <span class="lang-arrow">▼</span>
-        </button>
-        <div class="lang-menu">
-          <button class="lang-option active" data-lang="es" onclick="ecsSetLang('es')"><span class="lang-flag">🇪🇸</span> Español</button>
-          <a class="lang-option" href="/en/"><span class="lang-flag">🇬🇧</span> English</a>
-          <button class="lang-option" data-lang="fr" onclick="ecsSetLang('fr')"><span class="lang-flag">🇫🇷</span> Français</button>
-        </div>
+      <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="es" onclick="ecsSetLang('es')">ES</button>
+        <a class="lang-btn" href="/en/">EN</a>
+        <button class="lang-btn" data-lang="fr" onclick="ecsSetLang('fr')">FR</button>
       </div>
     </li>
   </ul>
@@ -170,26 +163,28 @@
 </nav>
 <div class="nav-mobile-overlay" id="nav-mobile">
   <button class="nav-mobile-close" onclick="ecsToggleNav()">✕</button>
-  <a href="index.html">Inicio</a>
-  <a href="camino-frances-sarria.html">⭐ 100km desde Sarria</a>
-  <a href="camino-frances.html">Camino Francés</a>
-  <a href="camino-portugues.html">Camino Portugués</a>
-  <a href="camino-portugues-costa.html">Portugués por la Costa</a>
-  <a href="camino-norte.html">Camino del Norte</a>
-  <a href="camino-primitivo.html">Camino Primitivo</a>
-  <a href="camino-ingles.html">Camino Inglés</a>
-  <a href="camino-finisterre.html">Camino de Finisterre</a>
-  <a href="camino-bicicleta.html">En Bicicleta</a>
   <a href="blog.html">Blog</a>
   <a href="contacto.html">Contacto</a>
-  <a href="#ecs-planifica" style="color:#F3A949;font-weight:bold">→ Planifica tu Camino</a>
-  <div style="padding:16px 0 8px;border-top:1px solid #ddeaec;margin-top:4px;">
-    <p style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8FBECA;margin-bottom:10px;font-family:'Raleway',sans-serif;">Idioma / Language</p>
+  <a href="#ecs-planifica" onclick="ecsToggleNav()" style="color:#F3A949;font-weight:bold">→ Planifica tu Camino</a>
+  <div style="padding:12px 0 8px;border-top:1px solid #ddeaec;margin-top:4px;">
+    <p style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8FBECA;margin-bottom:8px;font-family:'Raleway',sans-serif;">Idioma / Language</p>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
       <button class="lang-btn active" data-lang="es" onclick="ecsSetLang('es');ecsToggleNav()" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;font-size:0.9rem;">🇪🇸 <span>Español</span></button>
       <a href="/en/" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;font-size:0.9rem;background:#f0f8f8;color:#2D4A52;text-decoration:none;font-family:'Raleway',sans-serif;">🇬🇧 <span>English</span></a>
       <button class="lang-btn" data-lang="fr" onclick="ecsSetLang('fr');ecsToggleNav()" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;font-size:0.9rem;">🇫🇷 <span>Français</span></button>
     </div>
+  </div>
+  <div style="padding:8px 0 0;border-top:1px solid #ddeaec;margin-top:4px;">
+    <p style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8FBECA;padding-top:8px;margin-bottom:4px;font-family:'Raleway',sans-serif;">Caminos</p>
+    <a href="camino-frances-sarria.html" class="nav-mobile-route">⭐ 100km desde Sarria</a>
+    <a href="camino-frances.html" class="nav-mobile-route">Camino Francés</a>
+    <a href="camino-portugues.html" class="nav-mobile-route">Camino Portugués</a>
+    <a href="camino-portugues-costa.html" class="nav-mobile-route">Portugués por la Costa</a>
+    <a href="camino-norte.html" class="nav-mobile-route">Camino del Norte</a>
+    <a href="camino-primitivo.html" class="nav-mobile-route">Camino Primitivo</a>
+    <a href="camino-ingles.html" class="nav-mobile-route">Camino Inglés</a>
+    <a href="camino-finisterre.html" class="nav-mobile-route">Camino de Finisterre</a>
+    <a href="camino-bicicleta.html" class="nav-mobile-route">En Bicicleta</a>
   </div>
 </div>
 
