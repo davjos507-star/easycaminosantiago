@@ -163,20 +163,20 @@ strong { font-weight: 700; }
 }
 .nav-mobile-sub-toggle {
   display: flex; align-items: center; justify-content: space-between;
-  width: 100%; background: none; border: none; border-bottom: 1px solid #e5eeee;
-  padding: 16px 0; color: var(--azul-dark); font-family: var(--font-body);
+  width: 100%; background: none; border: none; border-bottom: 1px solid #ddeaec;
+  padding: 14px 0; color: var(--azul-dark); font-family: var(--font-body);
   font-size: 1rem; font-weight: 600; cursor: pointer; text-align: left;
 }
-.nav-mobile-sub-arrow { font-size: 0.8rem; color: var(--azul); transition: transform 0.25s ease; }
+.nav-mobile-sub-arrow { font-size: 0.7rem; color: var(--azul); transition: transform 0.2s; }
 .nav-mobile-sub-toggle.open .nav-mobile-sub-arrow { transform: rotate(180deg); }
-.nav-mobile-submenu { overflow: hidden; max-height: 0; transition: max-height 0.3s ease; }
-.nav-mobile-submenu.open { max-height: 600px; }
-.nav-mobile-overlay .nav-mobile-subroute {
-  display: block; padding: 10px 0 10px 18px; border-bottom: 1px solid #f2f6f6;
-  color: var(--azul-dark); font-family: var(--font-body); font-size: 0.9rem;
+.nav-mobile-submenu { display: none; }
+.nav-mobile-submenu.open { display: block; }
+.nav-mobile-subroute {
+  display: block; padding: 9px 0 9px 14px; border-bottom: 1px solid #f0f5f5;
+  color: var(--azul-dark); font-family: var(--font-body); font-size: 0.88rem;
   font-weight: 500; text-decoration: none;
 }
-.nav-mobile-overlay .nav-mobile-subroute:hover { color: var(--naranja); }
+.nav-mobile-subroute:hover { color: var(--naranja); }
 .nav-mobile-overlay .nav-mobile-route { padding: 8px 0; font-size: 0.9rem; }
 
 /* ====== HERO HOMEPAGE ====== */
@@ -729,74 +729,4 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
   .subnav-tab { padding: 12px 10px; font-size: 0.75rem; }
   .subnav-btn { padding: 7px 11px; font-size: 0.72rem; }
   .page-subnav { top: 60px; }
-}
-.whatsapp-float {
-  display: none !important;
-}/* Ocultar botón WhatsApp temporalmente */
-a.whatsapp-float,
-.whatsapp-float {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
-/* ===== CAMINOS TOGGLE (fila principal) ===== */
-.nav-mobile-sub-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  width: 100%;
-  padding: 16px 0;
-
-  border-bottom: 1px solid #e3eeee;
-  color: var(--azul-dark);
-
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-/* Flecha */
-.nav-mobile-sub-arrow {
-  color: var(--azul);
-  font-size: 0.9rem;
-  transition: transform 0.25s ease;
-}
-
-.nav-mobile-sub-toggle.open .nav-mobile-sub-arrow {
-  transform: rotate(180deg);
-}
-
-/* Submenú */
-.nav-mobile-submenu {
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.35s ease;
-
-  background: #f7fbfb;
-  border-bottom: 1px solid #e3eeee;
-}
-
-.nav-mobile-submenu.open {
-  max-height: 700px;
-}
-
-/* Rutas */
-.nav-mobile-overlay .nav-mobile-subroute {
-  display: block;
-  padding: 12px 0 12px 22px;
-  font-size: 0.92rem;
-  font-weight: 500;
-
-  color: var(--azul-dark);
-  border-bottom: 1px solid #edf5f5;
-
-  transition: all 0.15s ease;
-}
-
-.nav-mobile-overlay .nav-mobile-subroute:hover {
-  background: #eef7f7;
-  padding-left: 26px;
-  color: var(--naranja);
 }
