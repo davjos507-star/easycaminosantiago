@@ -230,7 +230,7 @@ strong { font-weight: 700; }
 }
 .page-hero h1 em { color: var(--naranja); font-style: normal; }
 .page-hero p { color: rgba(255,255,255,0.85); font-family: var(--font-body); font-size: 1.05rem; line-height: 1.6; max-width: 620px; margin: 0 auto 24px; }
-.page-hero-badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.page-hero-badges, .hero-badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 .hero-badge {
   background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35);
   color: white; padding: 7px 16px; border-radius: 30px;
@@ -238,6 +238,21 @@ strong { font-weight: 700; }
   backdrop-filter: blur(4px);
 }
 .hero-badge.orange { background: var(--naranja); border-color: var(--naranja); }
+
+/* ====== GALLERY SLIDER ====== */
+.gallery-slider-wrap { position: relative; display: flex; align-items: center; gap: 12px; }
+.gallery-viewport { flex: 1; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.gallery-viewport::-webkit-scrollbar { display: none; }
+.gallery-track { display: flex; gap: 12px; padding: 4px 0; }
+.gallery-slide { flex: 0 0 260px; height: 180px; border-radius: 12px; overflow: hidden; }
+.gallery-slide img { width: 100%; height: 100%; object-fit: cover; display: block; scroll-snap-align: start; }
+.gallery-btn {
+  flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid #ddeaec; background: white; color: var(--azul-dark);
+  font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: background 0.2s;
+}
+.gallery-btn:hover { background: var(--azul); color: white; border-color: var(--azul); }
 
 /* ====== ROUTE STATS STRIP ====== */
 .route-strip {
