@@ -649,6 +649,7 @@ function ecsCloseFolleto(e){if(e.target===document.getElementById('ecs-folleto-o
 function ecsSubmitFolleto(){
   var n=document.getElementById('ecs-fl-nombre').value.trim();
   var em=document.getElementById('ecs-fl-email').value.trim();
+  var tel=document.getElementById('ecs-fl-tel').value.trim();
   var ch=document.getElementById('ecs-fl-check').checked;
   if(!n){alert('Por favor introduce tu nombre.');return;}
   if(!em||em.indexOf('@')===-1){alert('Por favor introduce un email v\u00e1lido.');return;}
