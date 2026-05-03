@@ -450,7 +450,7 @@ function ecsFaqToggle(el){el.parentElement.classList.toggle('open');}
 
 <script>
 var _ecsFolletoUrl='folleto-camino-finisterre.html';
-function ecsOpenFolleto(){var el=document.getElementById('ecs-folleto-overlay');el.style.display='flex';}
+function ecsOpenFolleto(){var el=document.getElementById('ecs-folleto-overlay');el.style.display='flex';if(typeof gtag==='function'){gtag('event','click_folleto',{ruta:window.location.pathname});}}
 function ecsCloseFolletoBtn(){document.getElementById('ecs-folleto-overlay').style.display='none';}
 function ecsCloseFolleto(e){if(e.target===document.getElementById('ecs-folleto-overlay'))document.getElementById('ecs-folleto-overlay').style.display='none';}
 function ecsSubmitFolleto(){

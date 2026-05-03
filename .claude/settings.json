@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:easycaminosantiago.com)",
+      "Bash(curl -s \"https://easycaminosantiago.com/camino-frances-sarria.html?v=900\")",
+      "Bash(curl -sI \"https://easycaminosantiago.com/camino-frances-sarria.html\")",
+      "Bash(curl -sI \"https://easycaminosantiago.com/downloaded_images/camino-sarria-senda-piedra-bosque-galicia.jpg\")",
+      "Bash(curl -s \"https://easycaminosantiago.com/style.css\")",
+      "Bash(curl -sI \"https://easycaminosantiago.com/camino-frances-sarria\")",
+      "Bash(curl -sI \"https://easycaminosantiago.com/camino-frances-sarria/\")"
+    ]
+  }
+}

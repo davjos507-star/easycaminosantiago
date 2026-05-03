@@ -624,6 +624,7 @@ function desbloquearFolleto() {
     document.getElementById('bloq-email').focus();
     return;
   }
+  if(typeof gtag==='function'){gtag('event','lead_folleto',{ruta:window.location.pathname});}
   fetch('/', {
     method: 'POST',
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},

@@ -26,6 +26,10 @@
         url('downloaded_images/camino-sarria-senda-piedra-bosque-galicia.jpg') center/cover no-repeat;
     }
     .page-hero-bg { display: none; }
+    .folleto-subnav-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .folleto-subnav-wrap .subnav-btn { width: 100%; text-align: center; }
+    .folleto-direct-link { font-size: 0.8rem; color: #6b7280; text-decoration: underline; }
+    .folleto-direct-link:hover { color: #104A52; }
   </style>
 
   <meta property="og:type" content="website">
@@ -250,7 +254,17 @@
     <div class="page-subnav-btns">
       <a href="#precios" class="subnav-btn">Ver precios</a>
       <button onclick="ecsOpenCallback()" class="subnav-btn">Te llamamos</button>
-      <a href="/folleto-camino-sarria.html" class="subnav-btn">Descargar folleto</a>
+      <div class="folleto-subnav-wrap">
+        <a href="/folleto-camino-sarria.html"
+           onclick="ecsOpenFolleto(); return false;"
+           class="subnav-btn">
+           📘 Ver etapas y precios
+        </a>
+        <a href="/folleto-camino-sarria.html"
+           class="folleto-direct-link">
+           Descargar sin dejar datos
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -733,13 +747,13 @@ function ecsFaqToggle(el){el.parentElement.classList.toggle('open');}
       <input type="checkbox" id="ecs-fl-check" style="margin-top:4px;flex-shrink:0;width:15px;height:15px;">
       <label for="ecs-fl-check" style="font-size:0.8rem;color:#5a6b6a;line-height:1.5;cursor:pointer;">Acepto la <a href="politica-reservas.html" style="color:#56A1A4;">pol&iacute;tica de privacidad</a> y el tratamiento de mis datos.</label>
     </div>
-    <button onclick="ecsSubmitFolleto()" style="width:100%;background:#F3A949;color:white;border:none;padding:15px;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;font-family:'Raleway',sans-serif;">&#x1F4D6; <span class="es-txt">Ver mi folleto</span><span class="en-txt" style="display:none">View my brochure</span></button>
+    <button onclick="ecsSubmitFolleto()" style="width:100%;background:#F3A949;color:white;border:none;padding:15px;border-radius:8px;font-weight:700;font-size:1rem;cursor:pointer;font-family:'Raleway',sans-serif;">&#x1F4D6; <span class="es-txt">Acceder al folleto completo</span><span class="en-txt" style="display:none">View my brochure</span></button>
   </div>
 </div>
 
 <script>
 var _ecsFolletoUrl='folleto-camino-sarria.html';
-function ecsOpenFolleto(){var el=document.getElementById('ecs-folleto-overlay');el.style.display='flex';}
+function ecsOpenFolleto(){var el=document.getElementById('ecs-folleto-overlay');el.style.display='flex';if(typeof gtag==='function'){gtag('event','click_folleto',{ruta:window.location.pathname});}}
 function ecsCloseFolletoBtn(){document.getElementById('ecs-folleto-overlay').style.display='none';}
 function ecsCloseFolleto(e){if(e.target===document.getElementById('ecs-folleto-overlay'))document.getElementById('ecs-folleto-overlay').style.display='none';}
 function ecsSubmitFolleto(){
@@ -749,6 +763,7 @@ function ecsSubmitFolleto(){
   if(!n){alert('Por favor introduce tu nombre.');return;}
   if(!em||em.indexOf('@')===-1){alert('Por favor introduce un email v\u00e1lido.');return;}
   if(!ch){alert('Debes aceptar la pol\u00edtica de privacidad.');return;}
+  if(typeof gtag==='function'){gtag('event','lead_folleto',{ruta:window.location.pathname});}
   fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({'form-name':'folleto',nombre:n,email:em,telefono:tel,ruta:_ecsFolletoUrl}).toString()});
   localStorage.setItem('ecs_folleto_nombre',n);
   localStorage.setItem('ecs_folleto_url',_ecsFolletoUrl);

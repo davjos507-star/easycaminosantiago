@@ -604,7 +604,7 @@ function ecsFaqToggle(el){el.parentElement.classList.toggle('open');}
 
 <script>
 var _ecsFolletoUrl='../folleto-camino-norte.html';
-function ecsOpenFolleto(){var el=document.getElementById('ecs-folleto-overlay');el.style.display='flex';}
+function ecsOpenFolleto(){var el=document.getElementById('ecs-folleto-overlay');el.style.display='flex';if(typeof gtag==='function'){gtag('event','click_folleto',{ruta:window.location.pathname});}}
 function ecsCloseFolletoBtn(){document.getElementById('ecs-folleto-overlay').style.display='none';}
 function ecsCloseFolleto(e){if(e.target===document.getElementById('ecs-folleto-overlay'))document.getElementById('ecs-folleto-overlay').style.display='none';}
 function ecsSubmitFolleto(){
@@ -615,6 +615,7 @@ function ecsSubmitFolleto(){
   if(!n){alert('Please enter your name.');return;}
   if(!em||em.indexOf('@')===-1){alert('Please enter a valid email address.');return;}
   if(!ch){alert('Please accept the privacy policy.');return;}
+  if(typeof gtag==='function'){gtag('event','lead_folleto',{ruta:window.location.pathname});}
   fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({'form-name':'folleto',nombre:n,email:em,telefono:tel,ruta:_ecsFolletoUrl}).toString()});
   localStorage.setItem('ecs_folleto_nombre',n);
   localStorage.setItem('ecs_folleto_url',_ecsFolletoUrl);
