@@ -725,7 +725,7 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 0;
   border: none;
   font-weight: 600;
 }
