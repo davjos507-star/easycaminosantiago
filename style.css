@@ -361,14 +361,19 @@ strong { font-weight: 700; }
 .pricing-section .section-subtitle { margin: 0 auto 28px; max-width: 740px; }
 .pricing-section .pricing-note { margin-top: 32px; }
 
-.btn-hero-primary,
+.btn-hero-primary {
+    background: white; color: var(--azul); padding: 16px 40px;
+    border-radius: 35px; font-size: 1.05rem; font-weight: bold;
+    text-decoration: none; font-family: var(--font-body);
+    transition: transform 0.2s, background 0.2s, color 0.2s; display: inline-block;
+  }
+  .btn-hero-primary:hover { transform: scale(1.04); background: var(--azul); color: white; }
   .btn-cta-primary {
     background: var(--naranja); color: white; padding: 16px 40px;
     border-radius: 35px; font-size: 1.05rem; font-weight: bold;
     text-decoration: none; font-family: var(--font-body);
     transition: transform 0.2s, background 0.2s; display: inline-block;
   }
-  .btn-hero-primary:hover,
   .btn-cta-primary:hover { transform: scale(1.04); background: var(--naranja-dark); }
   .btn-hero-secondary,
   .btn-cta-secondary {
@@ -731,6 +736,7 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
   position: sticky;
   top: 72px;
   z-index: 90;
+  margin-top: 6px;
 }
 .page-subnav-inner {
   max-width: 1100px;
@@ -802,7 +808,7 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
   .page-subnav-inner { padding: 0 12px; }
   .subnav-tab { padding: 12px 10px; font-size: 0.75rem; }
   .subnav-btn { padding: 7px 11px; font-size: 0.72rem; }
-  .page-subnav { top: 60px; }
+  .page-subnav { top: 60px; margin-top: 4px; }
   .page-subnav-btns {
     flex-wrap: nowrap;
     overflow-x: auto;
