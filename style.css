@@ -762,9 +762,11 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
 
 /* ====== RESPONSIVE ====== */
 @media (max-width: 768px) {
-  .mid-banner { height: 260px; }
-  .mid-banner-content h2 { font-size: 1.4rem; }
-  .mid-banner-content p { font-size: 0.95rem; margin-bottom: 20px; }
+  .mid-banner { height: 300px; align-items: flex-end; background-position: center center; }
+  .mid-banner::before { background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.68) 100%); }
+  .mid-banner-content { padding: 0 20px 36px; }
+  .mid-banner-content h2 { font-size: 1.45rem; }
+  .mid-banner-content p { font-size: 0.93rem; margin-bottom: 18px; }
   .why-inner { grid-template-columns: 1fr; gap: 32px; }
   .why-image { margin: 0 -20px; }
   .why-image img { height: 260px; border-radius: 14px; }
