@@ -61,8 +61,8 @@ strong { font-weight: 700; }
 .ecs-nav ul li a:hover { color: var(--naranja); }
 .btn-nav {
   background: var(--azul) !important; color: white !important;
-  padding: 10px 22px; border-radius: 25px; font-weight: bold !important;
-  white-space: nowrap; font-size: 0.92rem;
+  padding: 10px 22px; border-radius: 25px; font-weight: 700 !important;
+  font-family: var(--font-body); white-space: nowrap; font-size: 0.92rem;
   box-shadow: 0 3px 12px rgba(86,161,164,0.45);
 }
 .btn-nav:hover { background: var(--azul-dark) !important; box-shadow: 0 4px 18px rgba(86,161,164,0.6); }
@@ -277,8 +277,8 @@ strong { font-weight: 700; }
   color: white;
   border-radius: 999px;
   padding: 12px 20px;
-  font-family: var(--font-heading);
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-weight: 700;
   font-size: 0.9rem;
   text-decoration: none;
   display: inline-block;
@@ -808,7 +808,7 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
   flex-shrink: 0;
 }
 .subnav-btn {
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
   font-size: 0.8rem;
   font-weight: 700;
   padding: 8px 16px;
