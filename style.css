@@ -368,6 +368,8 @@ strong { font-weight: 700; }
     transition: transform 0.2s, background 0.2s, color 0.2s; display: inline-block;
   }
   .btn-hero-primary:hover { transform: scale(1.04); background: var(--azul); color: white; }
+.ecs-hero .btn-hero-primary { background: var(--azul); color: white; }
+.ecs-hero .btn-hero-primary:hover { background: var(--azul-dark); color: white; }
   .btn-cta-primary {
     background: var(--naranja); color: white; padding: 16px 40px;
     border-radius: 35px; font-size: 1.05rem; font-weight: bold;
