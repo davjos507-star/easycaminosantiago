@@ -195,6 +195,20 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
 .res-footer p { color:rgba(255,255,255,0.55); font-size:0.78rem; }
 .res-footer a { color:var(--naranja); text-decoration:none; font-size:0.78rem; }
 .pay-logos { display:flex; gap:10px; align-items:center; }
+/* FAQ */
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-q {
+  width: 100%; text-align: left; padding: 18px 0;
+  background: none; border: none; -webkit-appearance: none; appearance: none;
+  font-family: 'Lato', sans-serif; font-size: 1rem; font-weight: 700; color: var(--azul-dark);
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  margin-top: 16px; margin-bottom: 6px;
+}
+.faq-q:focus { outline: 2px solid var(--azul); outline-offset: 3px; }
+.faq-q::after { content: '▾'; font-size: 1.2rem; color: var(--azul); transition: transform 0.2s; flex-shrink: 0; }
+.faq-item.open .faq-q::after { transform: rotate(180deg); }
+.faq-a { display: none; padding: 0 0 18px; color: #5f6f73; font-family: 'Lato', sans-serif; font-size: 0.95rem; line-height: 1.6; margin-bottom: 12px; }
+.faq-item.open .faq-a { display: block; }
 </style>
 </head>
 <body>
