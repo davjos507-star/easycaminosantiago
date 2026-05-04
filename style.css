@@ -371,12 +371,12 @@ strong { font-weight: 700; }
 .ecs-hero .btn-hero-primary { background: var(--azul); color: white; }
 .ecs-hero .btn-hero-primary:hover { background: var(--azul-dark); color: white; }
   .btn-cta-primary {
-    background: var(--naranja); color: white; padding: 16px 40px;
+    background: var(--azul); color: white; padding: 16px 40px;
     border-radius: 35px; font-size: 1.05rem; font-weight: bold;
     text-decoration: none; font-family: var(--font-body);
     transition: transform 0.2s, background 0.2s; display: inline-block;
   }
-  .btn-cta-primary:hover { transform: scale(1.04); background: var(--naranja-dark); }
+  .btn-cta-primary:hover { transform: scale(1.04); background: var(--azul-dark); }
   .btn-hero-secondary,
   .btn-cta-secondary {
     background: transparent; color: white; padding: 14px 36px;
@@ -625,8 +625,8 @@ section { padding: 80px 40px; }
 .form-group select:focus,
 .form-group textarea:focus { border-color: var(--azul); }
 .form-group textarea { resize: vertical; min-height: 80px; }
-.btn-form { width: 100%; background: var(--naranja); color: white; padding: 16px; border: none; border-radius: 35px; font-size: 1.05rem; font-weight: bold; font-family: var(--font-body); cursor: pointer; transition: background 0.2s, transform 0.2s; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-.btn-form:hover { background: var(--naranja-dark); transform: scale(1.02); }
+.btn-form { width: 100%; background: var(--azul); color: white; padding: 16px; border: none; border-radius: 35px; font-size: 1.05rem; font-weight: bold; font-family: var(--font-body); cursor: pointer; transition: background 0.2s, transform 0.2s; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-form:hover { background: var(--azul-dark); transform: scale(1.02); }
 .form-nota { text-align: center; color: var(--gris); font-size: 0.82rem; font-family: var(--font-body); margin-top: 14px; }
 
 /* ====== TESTIMONIOS ====== */
