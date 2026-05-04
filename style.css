@@ -60,12 +60,12 @@ strong { font-weight: 700; }
 }
 .ecs-nav ul li a:hover { color: var(--naranja); }
 .btn-nav {
-  background: var(--naranja) !important; color: white !important;
+  background: var(--azul) !important; color: white !important;
   padding: 10px 22px; border-radius: 25px; font-weight: bold !important;
   white-space: nowrap; font-size: 0.92rem;
-  box-shadow: 0 3px 12px rgba(243,169,73,0.45);
+  box-shadow: 0 3px 12px rgba(86,161,164,0.45);
 }
-.btn-nav:hover { background: var(--naranja-dark) !important; box-shadow: 0 4px 18px rgba(243,169,73,0.6); }
+.btn-nav:hover { background: var(--azul-dark) !important; box-shadow: 0 4px 18px rgba(86,161,164,0.6); }
 .ecs-nav-logo { height: 52px; width: auto; display: block; mix-blend-mode: multiply; }
 
 /* Dropdown rutas */
@@ -680,8 +680,8 @@ section { padding: 80px 40px; }
 .hero-form-wrap input:focus,
 .hero-form-wrap select:focus { border-color: var(--naranja); }
 .hero-form-wrap select option { background: #2D4A52; color: white; }
-.hero-form-submit { width: 100%; background: var(--naranja); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 1rem; font-weight: bold; font-family: var(--font-body); cursor: pointer; transition: background 0.2s, transform 0.2s; }
-.hero-form-submit:hover { background: var(--naranja-dark); transform: scale(1.02); }
+.hero-form-submit { width: 100%; background: var(--azul); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 1rem; font-weight: bold; font-family: var(--font-body); cursor: pointer; transition: background 0.2s, transform 0.2s; }
+.hero-form-submit:hover { background: var(--azul-dark); transform: scale(1.02); }
 .hero-form-nota { text-align: center; color: rgba(255,255,255,0.45); font-size: 0.74rem; font-family: var(--font-body); margin-top: 10px; }
 
 /* ====== WHATSAPP FLOAT ====== */
@@ -714,8 +714,8 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
 #ecs-cb-privacy input { margin-top: 2px; flex-shrink: 0; accent-color: var(--azul); width: 15px; height: 15px; }
 #ecs-cb-privacy label { font-size: 0.75rem; color: var(--gris); font-family: var(--font-body); line-height: 1.4; }
 #ecs-cb-privacy label a { color: var(--azul); }
-#ecs-cb-submit { width: 100%; background: var(--naranja); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 1rem; font-weight: bold; font-family: var(--font-body); cursor: pointer; transition: background 0.2s; }
-#ecs-cb-submit:hover { background: var(--naranja-dark); }
+#ecs-cb-submit { width: 100%; background: var(--azul); color: white; border: none; padding: 14px; border-radius: 10px; font-size: 1rem; font-weight: bold; font-family: var(--font-body); cursor: pointer; transition: background 0.2s; }
+#ecs-cb-submit:hover { background: var(--azul-dark); }
 #ecs-cb-nota { text-align: center; color: #a0a0a0; font-size: 0.72rem; font-family: var(--font-body); margin-top: 12px; }
 
 /* ====== LEGAL PAGES ====== */
