@@ -740,8 +740,8 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
 /* ====== RESPONSIVE ====== */
 @media (max-width: 768px) {
   .why-inner { grid-template-columns: 1fr; gap: 32px; }
-  .why-image { margin: 0 -32px; }
-  .why-image img { height: 280px; border-radius: 12px; }
+  .why-image { margin: 0 -20px; }
+  .why-image img { height: 260px; border-radius: 14px; }
   .ecs-hero h1 { font-size: 1.6rem; }
   .ecs-nav ul { display: none; }
   .nav-hamburger { display: flex; }
