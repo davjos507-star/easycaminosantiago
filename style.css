@@ -565,13 +565,43 @@ section { padding: 80px 40px; }
 .faq { max-width: 800px; margin: 0 auto; }
 .faq-item { border-bottom: 1px solid #B5D5D8; }
 .faq-q {
-  width: 100%; text-align: left; padding: 18px 0; background: none; border: none;
-  font-family: var(--font-body); font-size: 1rem; font-weight: bold; color: var(--azul-dark);
-  cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  width: 100%;
+  text-align: left;
+  padding: 18px 0;
+  background: none;
+  border: none;
+  -webkit-appearance: none;
+  appearance: none;
+
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--azul-dark);
+
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+
+  margin-top: 16px;
+  margin-bottom: 6px;
+}
+.faq-q:focus {
+  outline: 2px solid var(--azul);
+  outline-offset: 3px;
 }
 .faq-q::after { content: '▾'; font-size: 1.2rem; color: var(--azul); transition: transform 0.2s; flex-shrink: 0; }
 .faq-item.open .faq-q::after { transform: rotate(180deg); }
-.faq-a { display: none; padding: 0 0 18px; color: var(--gris); font-family: var(--font-body); font-size: 0.92rem; line-height: 1.75; }
+.faq-a {
+  display: none;
+  padding: 0 0 18px;
+  color: #5f6f73;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
 .faq-item.open .faq-a { display: block; }
 
 /* ====== FORMULARIO ====== */
