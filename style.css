@@ -537,11 +537,11 @@ section { padding: 80px 40px; }
 
 /* ====== SERVICIOS ====== */
 .servicios { background: white; }
-.features { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 28px; max-width: 1050px; margin: 0 auto; }
-.feature { text-align: center; padding: 28px 18px; border-radius: 14px; background: white; border: 1px solid rgba(86,161,164,0.13); box-shadow: 0 2px 12px rgba(86,161,164,0.1); transition: transform 0.2s; }
+.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1050px; margin: 0 auto; }
+.feature { text-align: center; padding: 28px 18px; border-radius: 14px; background: #f0f7f8; border: 1px solid rgba(86,161,164,0.18); box-shadow: 0 2px 10px rgba(86,161,164,0.08); transition: transform 0.2s; }
 .feature:hover { transform: translateY(-4px); }
-.feature-icon-wrap { width: 68px; height: 68px; background: var(--azul); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
-.feature-icon-img { width: 32px; height: 32px; filter: brightness(0) invert(1); }
+.feature-icon-wrap { width: 48px; height: 48px; background: none; border-radius: 0; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+.feature-icon-img { width: 48px; height: 48px; filter: brightness(0) saturate(100%) invert(57%) sepia(20%) saturate(600%) hue-rotate(147deg) brightness(95%); }
 .feature h3 { color: var(--azul-dark); font-size: 1rem; margin-bottom: 8px; }
 .feature p { color: var(--gris); font-size: 0.88rem; font-family: var(--font-body); line-height: 1.6; }
 
@@ -781,6 +781,7 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
   .ecs-nav ul { display: none; }
   .nav-hamburger { display: flex; }
   .ecs-stats { gap: 28px; }
+  .features { grid-template-columns: 1fr; gap: 14px; }
   .pasos-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .paso-icon-wrap { width: 58px; height: 58px; }
   .paso-icon { width: 28px; height: 28px; }
