@@ -182,7 +182,7 @@ strong { font-weight: 700; }
 /* ====== HERO HOMEPAGE ====== */
 .ecs-hero {
   background: linear-gradient(rgba(0,0,0,0.42), rgba(0,0,0,0.42)),
-    url('peregrina-camino-santiago-libertad-montana.jpg') center/cover no-repeat;
+    url('/img/hero-home-camino-santiago-peregrinos-galicia-desktop.png') center/cover no-repeat;
   min-height: 90vh;
   display: flex; flex-direction: column; justify-content: center;
   align-items: center; text-align: center; padding: 100px 20px 60px;
@@ -190,7 +190,7 @@ strong { font-weight: 700; }
 @media (max-width: 768px) {
   .ecs-hero {
     background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
-      url('peregrina-camino-santiago-libertad-montana-mobile.jpg') center top/cover no-repeat;
+      url('/img/hero-home-camino-santiago-peregrinos-galicia-mobile.png') center top/cover no-repeat;
     min-height: unset;
     padding: 110px 20px 60px;
   }
