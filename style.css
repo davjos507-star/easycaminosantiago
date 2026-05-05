@@ -423,7 +423,7 @@ section { padding: 80px 40px; }
 .ver-mas-btn:hover { background: var(--azul); color: white; }
 
 /* ====== CARDS ====== */
-.rutas { background: var(--crema); }
+.rutas { background: white; }
 .ecs-cards {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
   gap: 28px; max-width: 1200px; margin: 0 auto;
@@ -555,7 +555,7 @@ section { padding: 80px 40px; }
 .pago-item .pago-icon svg { width: 22px; height: 22px; }
 
 /* ====== CÓMO FUNCIONA ====== */
-.como { background: var(--crema); }
+.como { background: white; }
 .pasos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; max-width: 1120px; margin: 0 auto; }
 .paso-card { background: white; border-radius: 16px; padding: 32px 20px 28px; text-align: center; box-shadow: 0 2px 18px rgba(86,161,164,0.09); border: 1px solid rgba(86,161,164,0.13); position: relative; }
 .paso-num-label { position: absolute; top: 14px; left: 18px; font-size: 0.68rem; font-weight: 800; color: var(--azul); letter-spacing: 1px; font-family: var(--font-body); opacity: 0.65; }
