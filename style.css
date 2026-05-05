@@ -540,8 +540,8 @@ section { padding: 80px 40px; }
 .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 28px; max-width: 1050px; margin: 0 auto; }
 .feature { text-align: center; padding: 28px 18px; border-radius: 14px; background: white; border: 1px solid rgba(86,161,164,0.13); box-shadow: 0 2px 12px rgba(86,161,164,0.1); transition: transform 0.2s; }
 .feature:hover { transform: translateY(-4px); }
-.feature-icon { color: var(--azul); margin-bottom: 14px; display: flex; justify-content: center; }
-.feature-icon svg { width: 52px; height: 52px; }
+.feature-icon-wrap { width: 68px; height: 68px; background: var(--azul); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+.feature-icon-img { width: 32px; height: 32px; filter: brightness(0) invert(1); }
 .feature h3 { color: var(--azul-dark); font-size: 1rem; margin-bottom: 8px; }
 .feature p { color: var(--gris); font-size: 0.88rem; font-family: var(--font-body); line-height: 1.6; }
 
