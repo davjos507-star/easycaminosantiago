@@ -538,7 +538,7 @@ section { padding: 80px 40px; }
 /* ====== SERVICIOS ====== */
 .servicios { background: white; }
 .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 28px; max-width: 1050px; margin: 0 auto; }
-.feature { text-align: center; padding: 28px 18px; border-radius: 14px; background: var(--crema); box-shadow: 0 2px 12px rgba(86,161,164,0.1); transition: transform 0.2s; }
+.feature { text-align: center; padding: 28px 18px; border-radius: 14px; background: white; border: 1px solid rgba(86,161,164,0.13); box-shadow: 0 2px 12px rgba(86,161,164,0.1); transition: transform 0.2s; }
 .feature:hover { transform: translateY(-4px); }
 .feature-icon { color: var(--azul); margin-bottom: 14px; display: flex; justify-content: center; }
 .feature-icon svg { width: 52px; height: 52px; }
@@ -610,8 +610,8 @@ section { padding: 80px 40px; }
 .faq-item.open .faq-a { display: block; }
 
 /* ====== FORMULARIO ====== */
-.form-section { background: white; }
-.form-container { max-width: 750px; margin: 0 auto; background: var(--crema); border-radius: 20px; padding: 44px; box-shadow: 0 6px 30px rgba(86,161,164,0.15); border: 1px solid #B5D5D8; }
+.form-section { background: #f0f7f8; }
+.form-container { max-width: 750px; margin: 0 auto; background: white; border-radius: 20px; padding: 44px; box-shadow: 0 6px 30px rgba(86,161,164,0.15); border: 1px solid #B5D5D8; }
 .form-container h3 { color: var(--azul-dark); font-size: 1.5rem; margin-bottom: 6px; text-align: center; }
 .form-sub { text-align: center; color: var(--gris); font-family: var(--font-body); font-size: 0.92rem; margin-bottom: 28px; }
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
