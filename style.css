@@ -656,6 +656,8 @@ section { padding: 80px 40px; }
 .cta-final h2, .cta-final p, .cta-final a { position: relative; z-index: 1; }
 .cta-final h2 { color: white; font-size: 2.3rem; margin-bottom: 14px; }
 .cta-final p { color: rgba(255,255,255,0.88); font-size: 1.1rem; font-family: var(--font-body); margin-bottom: 36px; max-width: 540px; margin-left: auto; margin-right: auto; }
+.cta-final .btn-primary { background: transparent; border: 2px solid white; color: white; }
+.cta-final .btn-primary:hover { background: white; color: var(--azul-dark); }
 
 /* ====== FOOTER ====== */
 .ecs-footer { background: var(--dark); color: #9ABCC4; padding: 50px 40px 28px; font-family: var(--font-body); font-size: 0.88rem; }
