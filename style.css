@@ -441,9 +441,10 @@ section { padding: 80px 40px; }
 }
 .card-body { padding: 22px; }
 .badge {
-  background: var(--naranja); color: white; font-size: 0.72rem; font-weight: bold;
+  background: rgba(86,161,164,0.1); color: var(--azul-dark); border: 1px solid rgba(86,161,164,0.3);
+  font-size: 0.72rem; font-weight: 700;
   padding: 3px 10px; border-radius: 12px; font-family: var(--font-body);
-  display: inline-block; margin-bottom: 10px; letter-spacing: 0.5px;
+  display: inline-block; margin-bottom: 10px; letter-spacing: 0.5px; cursor: default;
 }
 .card-body h3 { font-size: 1.2rem; color: var(--azul-dark); margin-bottom: 8px; }
 .card-body > p { color: var(--gris); font-size: 0.9rem; font-family: var(--font-body); line-height: 1.6; margin-bottom: 14px; }
