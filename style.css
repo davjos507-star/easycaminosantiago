@@ -762,11 +762,11 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
 
 /* ====== RESPONSIVE ====== */
 @media (max-width: 768px) {
-  .mid-banner { height: 300px; align-items: flex-end; background-position: center center; }
-  .mid-banner::before { background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.68) 100%); }
-  .mid-banner-content { padding: 0 20px 36px; }
-  .mid-banner-content h2 { font-size: 1.45rem; }
-  .mid-banner-content p { font-size: 0.93rem; margin-bottom: 18px; }
+  .mid-banner { height: auto; display: block; background-image: none; background-color: white; }
+  .mid-banner::before { position: relative; inset: auto; display: block; height: 240px; background: url('/img/camino-santiago-agencia-local-galicia-banner.jpg') center center / cover no-repeat; }
+  .mid-banner-content { position: static; padding: 24px 20px 28px; }
+  .mid-banner-content h2 { color: var(--azul-dark); font-size: 1.35rem; }
+  .mid-banner-content p { color: #5f6f73; font-size: 0.93rem; margin-bottom: 20px; }
   .why-inner { grid-template-columns: 1fr; gap: 32px; }
   .why-image { margin: 0 -20px; }
   .why-image img { height: 260px; border-radius: 14px; }
