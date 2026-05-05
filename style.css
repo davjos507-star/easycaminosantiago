@@ -651,7 +651,7 @@ section { padding: 80px 40px; }
 .pago-item .pago-icon { color: var(--azul); display: flex; }
 
 /* ====== CTA FINAL ====== */
-.cta-final { position: relative; overflow: hidden; background-image: url('/img/peregrina-camino-santiago-costa-mar-mochila.jpg'); background-size: cover; background-position: 30% center; text-align: center; padding: 110px 40px; }
+.cta-final { position: relative; overflow: hidden; background-image: url('/img/peregrina-camino-santiago-costa-mar-mochila.jpg'); background-size: cover; background-position: 60% center; text-align: center; padding: 110px 40px; }
 .cta-final::before { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(0,0,0,0.52), rgba(0,0,0,0.52)); }
 .cta-final h2, .cta-final p, .cta-final a { position: relative; z-index: 1; }
 .cta-final h2 { color: white; font-size: 2.3rem; margin-bottom: 14px; }
