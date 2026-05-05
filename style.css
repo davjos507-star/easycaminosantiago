@@ -559,10 +559,10 @@ section { padding: 80px 40px; }
 .como .section-title h2 { color: white; }
 .como .section-title p { color: rgba(255,255,255,0.82); }
 .como .section-title .linea { background: var(--naranja); }
-.como .paso-card { background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.18); box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+.como .paso-card { background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.22); box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
 .como .paso-card h4 { color: white; }
-.como .paso-card p { color: rgba(255,255,255,0.78); }
-.como .paso-icon-wrap { background: rgba(255,255,255,0.18); }
+.como .paso-card p { color: white; }
+.como .paso-icon-wrap { background: rgba(255,255,255,0.20); }
 .como .paso-card:not(:last-child)::after { color: rgba(255,255,255,0.5); }
 .pasos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; max-width: 1120px; margin: 0 auto; }
 .paso-card { background: white; border-radius: 16px; padding: 32px 20px 28px; text-align: center; box-shadow: 0 2px 18px rgba(86,161,164,0.09); border: 1px solid rgba(86,161,164,0.13); position: relative; }
