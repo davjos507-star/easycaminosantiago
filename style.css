@@ -783,7 +783,7 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
   .pasos-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .paso-icon-wrap { width: 58px; height: 58px; }
   .paso-icon { width: 28px; height: 28px; }
-  .paso-card { padding: 26px 14px 20px; }
+  .paso-card { padding: 26px 14px 20px; box-shadow: 0 4px 24px rgba(86,161,164,0.18); }
   .paso-card h4 { font-size: 0.9rem; }
   .btn-secondary { margin-left: 0; margin-top: 12px; display: block; text-align: center; }
   .form-grid { grid-template-columns: 1fr; }
