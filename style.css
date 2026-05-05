@@ -555,7 +555,7 @@ section { padding: 80px 40px; }
 .pago-item .pago-icon svg { width: 22px; height: 22px; }
 
 /* ====== CÓMO FUNCIONA ====== */
-.como { background: var(--azul-dark); }
+.como { background: var(--azul); }
 .como .section-title h2 { color: white; }
 .como .section-title p { color: rgba(255,255,255,0.82); }
 .como .section-title .linea { background: var(--naranja); }
