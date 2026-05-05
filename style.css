@@ -805,6 +805,7 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
   .hero-form-wrap { padding: 20px 16px 16px; margin-top: 20px; }
   .agente-txt { display: none; }
   section { padding: 60px 20px; }
+  .como { padding-top: 90px; }
   .ecs-nav { padding: 10px 16px; }
   .page-hero h1 { font-size: 1.8rem; }
   .page-hero { min-height: unset; padding: 110px 20px 60px; }
