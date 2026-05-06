@@ -542,6 +542,17 @@ section { padding: 80px 40px; }
 .feature:hover { transform: translateY(-4px); }
 .feature-icon-wrap { width: 48px; height: 48px; background: none; border-radius: 0; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
 .feature-icon-img { width: 48px; height: 48px; filter: brightness(0) saturate(100%) invert(57%) sepia(20%) saturate(600%) hue-rotate(147deg) brightness(95%); }
+/* Fix urgente: evitar que SVGs con dimensiones internas grandes rompan las tarjetas */
+.feature-card img, .feature-icon-img, .feature-icon-wrap img,
+.paso-card img, .pasos-grid img {
+  width: 48px !important;
+  height: 48px !important;
+  max-width: 48px !important;
+  max-height: 48px !important;
+  object-fit: contain !important;
+  display: block !important;
+  margin: 0 auto !important;
+}
 .feature h3 { color: var(--azul-dark); font-size: 1rem; margin-bottom: 8px; }
 .feature p { color: var(--gris); font-size: 0.88rem; font-family: var(--font-body); line-height: 1.6; }
 
