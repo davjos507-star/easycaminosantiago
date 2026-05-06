@@ -21,6 +21,7 @@
   --font-body:    'Lato', sans-serif;
 }
 
+html, body { overflow-x: hidden; }
 body { font-family: var(--font-body); color: var(--text); background: white; font-weight: 400; line-height: 1.6; }
 img { max-width: 100%; }
 a { text-decoration: none; }
