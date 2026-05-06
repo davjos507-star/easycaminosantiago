@@ -800,8 +800,20 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
   margin-bottom: 28px; line-height: 1.6;
 }
 
+/* ====== GRUPOS / ASOCIACIONES ====== */
+.grupos-section { background: #f0f7f8; padding: 72px 40px; }
+.grupos-editorial { max-width: 860px; margin: 0 auto; border-left: 4px solid var(--azul); padding-left: 28px; }
+.grupos-intro { font-size: 1.05rem; line-height: 1.8; color: #4b5b5a; margin-bottom: 28px; font-family: var(--font-body); }
+.grupos-features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 32px; }
+.grupos-feature { background: white; border-radius: 12px; padding: 20px 18px; border-top: 3px solid var(--naranja); }
+.grupos-feature strong { display: block; color: var(--azul-dark); font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 6px; }
+.grupos-feature p { color: #6b6b6b; font-size: 0.85rem; line-height: 1.6; margin: 0; }
+
 /* ====== RESPONSIVE ====== */
 @media (max-width: 768px) {
+  .grupos-section { padding: 48px 20px; }
+  .grupos-editorial { padding-left: 18px; }
+  .grupos-features { grid-template-columns: 1fr; }
   .mid-banner { height: auto; display: block; background-image: none; background-color: transparent; }
   .mid-banner::before { position: relative; inset: auto; display: block; height: 250px; background: url('/img/camino-santiago-agencia-local-galicia-banner.jpg') center center / cover no-repeat; }
   .mid-banner-content { position: relative; z-index: 1; margin: -30px 16px 0; background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.12); padding: 22px 20px 24px; }
