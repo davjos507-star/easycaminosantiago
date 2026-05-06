@@ -542,6 +542,8 @@ section { padding: 80px 40px; }
 .feature:hover { transform: translateY(-4px); }
 .feature-icon-wrap { width: 48px; height: 48px; background: none; border-radius: 0; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
 .feature-icon-img { width: 48px; height: 48px; filter: brightness(0) saturate(100%) invert(57%) sepia(20%) saturate(600%) hue-rotate(147deg) brightness(95%); }
+.feature-icon { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; margin: 0 auto 16px; }
+.feature-icon svg { width: 48px !important; height: 48px !important; max-width: 48px !important; max-height: 48px !important; }
 /* Regla defensiva global: iconos en secciones de servicios/tarjetas — máx 48px */
 .feature-icon-img,
 .feature-icon-wrap img,
