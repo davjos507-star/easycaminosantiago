@@ -14,44 +14,143 @@
     <link rel="icon" type="image/png" href="favicon.png">
   <link rel="apple-touch-icon" href="favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Camino de Santiago desde Sarria (100 km) | Precio y Organización</title>
-  <meta name="description" content="Organiza tu Camino de Santiago desde Sarria con alojamiento, transporte de equipaje y asistencia. Ruta de 100 km ideal para conseguir la Compostela. Solicita tu presupuesto en 24h.">
+  <title>Camino de Santiago desde Sarria: últimos 100 km | Precio y etapas</title>
+  <meta name="description" content="Organiza el Camino de Santiago desde Sarria hasta Santiago: últimos 100 km del Camino Francés, 5 o 6 etapas, alojamientos, traslado de mochila y asistencia.">
   <meta name="keywords" content="camino santiago desde sarria, ultimas 100km camino frances, camino santiago sarria precio, compostela sarria, camino frances sarria santiago, paquete sarria santiago">
   <link rel="stylesheet" href="style.css?v=20260506-2">
   <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <style>
-    .page-hero {
-      background:
-        linear-gradient(rgba(0,0,0,0.40) 0%, rgba(0,0,0,0.65) 100%),
-        url('downloaded_images/camino-sarria-senda-piedra-bosque-galicia.jpg') center/cover no-repeat;
-    }
     .page-hero-bg { display: none; }
-    .folleto-subnav-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
-    .folleto-subnav-wrap .subnav-btn { width: 100%; text-align: center; }
-    .folleto-direct-link { font-size: 0.8rem; color: #6b7280; text-decoration: underline; }
-    .folleto-direct-link:hover { color: #104A52; }
-</style>
+
+    /* ===== INTRO SECTION ===== */
+    .sarria-intro-section { background: white; padding: 64px 40px; }
+    .sarria-intro-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start; }
+    .sarria-desc h2 { font-family: 'Raleway',sans-serif; font-size: 1.8rem; font-weight: 800; color: #2D4A52; margin-bottom: 16px; line-height: 1.25; }
+    .sarria-desc p { font-size: 1rem; line-height: 1.8; color: #4b5b5a; margin-bottom: 14px; font-family: sans-serif; }
+    .sarria-desc-list { list-style: none; padding: 0; margin: 20px 0 0; }
+    .sarria-desc-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.93rem; color: #4b5b5a; margin-bottom: 9px; line-height: 1.5; font-family: sans-serif; }
+    .sarria-desc-list li::before { content: '✓'; color: #56A1A4; font-weight: 800; flex-shrink: 0; margin-top: 2px; }
+    .sarria-ficha { position: sticky; top: 80px; }
+    .sarria-ficha-card { background: white; border-radius: 18px; border: 1.5px solid rgba(86,161,164,0.25); box-shadow: 0 4px 28px rgba(86,161,164,0.13); overflow: hidden; }
+    .sarria-ficha-head { background: linear-gradient(135deg,#56A1A4,#2D4A52); padding: 20px 24px; }
+    .sarria-ficha-head p { font-family:'Raleway',sans-serif; font-size:0.62rem; font-weight:700; color:rgba(255,255,255,0.65); letter-spacing:2px; text-transform:uppercase; margin:0 0 4px; }
+    .sarria-ficha-head h3 { font-family:'Raleway',sans-serif; font-size:1.05rem; font-weight:800; color:white; margin:0; }
+    .sarria-ficha-rows { padding: 12px 24px 6px; }
+    .sarria-ficha-row { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid #f0f5f5; }
+    .sarria-ficha-row:last-child { border-bottom:none; }
+    .sarria-ficha-key { font-size:0.8rem; color:#6b7a7a; font-family:sans-serif; }
+    .sarria-ficha-val { font-size:0.85rem; color:#2D4A52; font-weight:700; font-family:'Raleway',sans-serif; }
+    .sarria-ficha-price-band { background:#f0f7f8; padding:14px 24px; text-align:center; border-top:1px solid rgba(86,161,164,0.15); }
+    .sarria-ficha-price-label { font-size:0.68rem; font-weight:700; color:#56A1A4; text-transform:uppercase; letter-spacing:1.5px; font-family:sans-serif; }
+    .sarria-ficha-price-num { font-family:'Raleway',sans-serif; font-size:2.3rem; font-weight:800; color:#2D4A52; line-height:1.1; }
+    .sarria-ficha-price-sub { font-size:0.76rem; color:#6b7a7a; font-family:sans-serif; margin-top:2px; }
+    .sarria-ficha-btns { padding:14px 24px 20px; display:flex; flex-direction:column; gap:9px; }
+    .sarria-fbt { display:block; text-align:center; padding:12px 20px; border-radius:10px; font-family:'Raleway',sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; text-decoration:none; border:none; line-height:1; transition:background 0.2s; }
+    .sarria-fbt-primary { background:#56A1A4; color:white; }
+    .sarria-fbt-primary:hover { background:#2D4A52; color:white; }
+    .sarria-fbt-outline { background:transparent; color:#56A1A4; border:2px solid #56A1A4 !important; }
+    .sarria-fbt-ghost { background:transparent; color:#56A1A4; font-size:0.8rem; font-weight:600; padding:8px 20px; }
+
+    /* ===== GALLERY SECTION ===== */
+    .sarria-gallery-section { background:#f0f7f8; padding:48px 40px; }
+    .sarria-gallery-section .section-title { margin-bottom:24px; }
+    .sarria-gallery-section .gallery-slide { flex:0 0 360px; height:240px; }
+
+    /* ===== MAP SECTION ===== */
+    .sarria-mapa-section { background:white; padding:64px 40px; }
+    .sarria-mapa-inner { max-width:1000px; margin:0 auto; }
+    .sarria-mapa-wrap { border-radius:14px; overflow:hidden; border:1.5px solid rgba(86,161,164,0.2); margin-bottom:24px; }
+    .sarria-route-stops { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:6px 0; }
+    .sarria-stop { display:flex; align-items:center; }
+    .sarria-stop-dot { background:#56A1A4; color:white; border-radius:20px; padding:5px 14px; font-size:0.76rem; font-weight:700; font-family:'Raleway',sans-serif; white-space:nowrap; }
+    .sarria-stop-final .sarria-stop-dot { background:#F3A949; color:#2D4A52; }
+    .sarria-stop-arrow { color:#56A1A4; font-size:1.1rem; margin:0 5px; line-height:1; }
+
+    /* ===== ALOJ SECTION ===== */
+    .sarria-aloj-section { background:#f0f7f8; padding:64px 40px; }
+    .sarria-aloj-grid { max-width:1000px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
+    .sarria-aloj-img { border-radius:18px; overflow:hidden; height:360px; }
+    .sarria-aloj-img img { width:100%; height:100%; object-fit:cover; display:block; }
+    .sarria-aloj-content h2 { font-family:'Raleway',sans-serif; font-size:1.6rem; font-weight:800; color:#2D4A52; margin-bottom:14px; line-height:1.25; }
+    .sarria-aloj-content p { font-size:0.93rem; line-height:1.75; color:#4b5b5a; margin-bottom:14px; font-family:sans-serif; }
+    .sarria-aloj-btn { display:inline-flex; align-items:center; gap:8px; background:transparent; color:#56A1A4; border:2px solid #56A1A4; padding:11px 22px; border-radius:10px; font-family:'Raleway',sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; text-decoration:none; }
+
+    /* ===== INFO ACCORDION ===== */
+    .sarria-info-section { background:white; padding:64px 40px; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width:860px) {
+      .sarria-intro-inner { grid-template-columns:1fr; }
+      .sarria-ficha { position:static; }
+      .sarria-gallery-section .gallery-slide { flex:0 0 280px; height:190px; }
+      .sarria-aloj-grid { grid-template-columns:1fr; }
+      .sarria-aloj-img { height:240px; }
+    }
+    @media (max-width:600px) {
+      .sarria-intro-section, .sarria-mapa-section, .sarria-aloj-section, .sarria-info-section { padding:48px 20px; }
+      .sarria-gallery-section { padding:36px 20px; }
+      .sarria-desc h2 { font-size:1.45rem; }
+      .sarria-aloj-content h2 { font-size:1.35rem; }
+    }
+
+    /* ===== PRICING COMPACT (sarria page override) ===== */
+    .pricing-card { padding: 24px 20px; }
+    .pricing-card .price { margin: 8px 0 2px; }
+    .pricing-card .price-sub { margin-bottom: 14px; }
+    .pricing-card ul { margin-bottom: 16px; }
+    .pricing-card ul li { padding: 5px 0; }
+
+    /* ===== LEAFLET MAP ===== */
+    #sarria-map { width:100%; height:380px; border-radius:14px; overflow:hidden; border:1.5px solid rgba(86,161,164,0.2); }
+    .leaflet-tooltip.ecs-tip { background:white; border:none; box-shadow:0 2px 8px rgba(0,0,0,0.18); font-family:'Raleway',sans-serif; font-size:0.78rem; font-weight:700; color:#2D4A52; padding:4px 10px; border-radius:6px; white-space:nowrap; }
+    .leaflet-tooltip.ecs-tip::before { display:none; }
+    @media (max-width:600px) { #sarria-map { height:280px; } }
+
+    /* ===== INFO TABS ===== */
+    .sarria-tab-nav { display:flex; overflow-x:auto; gap:0; border-bottom:2px solid #dde8e8; margin-bottom:28px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+    .sarria-tab-nav::-webkit-scrollbar { display:none; }
+    .sarria-tab-btn { flex-shrink:0; background:none; border:none; border-bottom:3px solid transparent; margin-bottom:-2px; padding:11px 16px; font-family:'Raleway',sans-serif; font-size:0.83rem; font-weight:700; color:#6b7a7a; cursor:pointer; white-space:nowrap; transition:color 0.2s,border-color 0.2s; }
+    .sarria-tab-btn:hover { color:#2D4A52; }
+    .sarria-tab-btn.active { color:#56A1A4; border-bottom-color:#56A1A4; }
+    .sarria-tab-panel { display:none; animation:ecsFadeIn 0.18s ease; }
+    .sarria-tab-panel.active { display:block; }
+    @keyframes ecsFadeIn { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:translateY(0); } }
+    .tab-h3 { font-family:'Raleway',sans-serif; font-size:1rem; font-weight:800; color:#2D4A52; margin:22px 0 8px; }
+    .tab-h3:first-child { margin-top:0; }
+    .tab-p { font-family:sans-serif; font-size:0.93rem; line-height:1.75; color:#4b5b5a; margin-bottom:12px; }
+    .tab-ul { list-style:none; padding:0; margin:0 0 16px; }
+    .tab-ul li { font-family:sans-serif; font-size:0.92rem; color:#4b5b5a; padding:6px 0; border-bottom:1px solid #f0f5f5; display:flex; gap:10px; align-items:flex-start; }
+    .tab-ul li::before { content:'✓'; color:#56A1A4; font-weight:700; flex-shrink:0; margin-top:2px; }
+    .tab-ul.excl li::before { content:'✗'; color:#c97070; }
+    .tab-badge { display:inline-flex; align-items:center; gap:5px; background:#EBF5F6; color:#2D4A52; padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:700; font-family:'Raleway',sans-serif; margin:0 6px 8px 0; }
+    .tab-badge.warn { background:#FFF4E5; color:#B35A00; }
+    .tab-level { display:flex; gap:4px; margin:6px 0 14px; }
+    .tab-level-dot { width:14px; height:14px; border-radius:50%; }
+    .tab-level-dot.on { background:#56A1A4; }
+    .tab-level-dot.off { background:#dde8e8; }
+  </style>
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Easy Camino Santiago">
   <meta property="og:locale" content="es_ES">
   <meta property="og:url" content="https://easycaminosantiago.com/camino-frances-sarria.html">
-  <meta property="og:title" content="Camino de Santiago desde Sarria (100 km) | Precio y Organización">
-  <meta property="og:description" content="Haz el Camino de Santiago desde Sarria con alojamiento, transporte de equipaje y asistencia. 100 km, ideal para principiantes. Presupuesto en 24h.">
+  <meta property="og:title" content="Camino de Santiago desde Sarria: últimos 100 km | Precio y etapas">
+  <meta property="og:description" content="Organiza el Camino de Santiago desde Sarria hasta Santiago: últimos 100 km del Camino Francés, 5 o 6 etapas, alojamientos, traslado de mochila y asistencia.">
   <meta property="og:image" content="https://easycaminosantiago.com/img/camino-santiago-sarria-og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Camino de Santiago desde Sarria (100 km) | Precio y Organización">
-  <meta name="twitter:description" content="Haz el Camino de Santiago desde Sarria con alojamiento, transporte de equipaje y asistencia. 100 km, ideal para principiantes. Presupuesto en 24h.">
+  <meta name="twitter:title" content="Camino de Santiago desde Sarria: últimos 100 km | Precio y etapas">
+  <meta name="twitter:description" content="Organiza el Camino de Santiago desde Sarria hasta Santiago: últimos 100 km del Camino Francés, 5 o 6 etapas, alojamientos, traslado de mochila y asistencia.">
   <meta name="twitter:image" content="https://easycaminosantiago.com/img/camino-santiago-sarria-og.jpg">
   <link rel="canonical" href="https://easycaminosantiago.com/camino-frances-sarria.html">
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
   "@type":"TouristTrip",
-  "name":"Últimas 100km del Camino de Santiago desde Sarria",
-  "description":"115km en 5-6 etapas desde Sarria hasta Santiago de Compostela. Compostela oficial garantizada.",
+  "name":"Camino de Santiago desde Sarria: últimos 100 km",
+  "description":"Organiza los últimos 100 km del Camino Francés desde Sarria hasta Santiago de Compostela en 5 o 6 etapas. Alojamientos, traslado de mochila y asistencia incluidos.",
   "url":"https://easycaminosantiago.com/camino-frances-sarria.html",
   "image":"https://easycaminosantiago.com/img/camino-santiago-sarria-og.jpg",
   "provider":{
@@ -123,9 +222,6 @@
 
 <script type="application/ld+json">
 {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://easycaminosantiago.com/"}, {"@type": "ListItem", "position": 2, "name": "Rutas", "item": "https://easycaminosantiago.com/index.html#ecs-rutas"}, {"@type": "ListItem", "position": 3, "name": "Camino desde Sarria", "item": "https://easycaminosantiago.com/camino-frances-sarria.html"}]}
-</script>
-<script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "TouristTrip", "name": "Camino de Santiago desde Sarria — Últimas 100 km", "description": "Haz las últimas 100 km del Camino de Santiago desde Sarria y consigue la Compostela. Paquetes con alojamiento, traslado de mochila y apoyo 24h.", "url": "https://easycaminosantiago.com/camino-frances-sarria.html", "touristType": "Peregrino", "itinerary": "Sarria → Portomarín → Palas de Rei → Arzúa → O Pedrouzo → Santiago de Compostela", "provider": {"@type": "TravelAgency", "name": "Easy Camino Santiago", "url": "https://easycaminosantiago.com", "telephone": "+34982907629", "address": {"@type": "PostalAddress", "addressLocality": "Lugo", "addressCountry": "ES"}}}
 </script>
 </head>
 <body>
@@ -218,7 +314,7 @@
   <img class="page-hero-bg" src="downloaded_images/camino-sarria-senda-piedra-bosque-galicia.jpg" alt="Senda gallega del Camino desde Sarria" loading="eager" style="display:none;">
   <div class="page-hero-content">
     <div class="breadcrumb"><a href="index.html"><span class="es-txt">Inicio</span><span class="en-txt" style="display:none">Home</span></a> › <a href="index.html#ecs-rutas">Rutas</a> › <span>Camino desde Sarria</span></div>
-    <h1><span class="es-txt">Camino de Santiago desde Sarria: las últimas 100 km</span><span class="en-txt" style="display:none">Camino de Santiago<br>from <em>Sarria</em> — 100 km</span></h1>
+    <h1><span class="es-txt">Camino de Santiago desde Sarria: últimos 100 km</span><span class="en-txt" style="display:none">Camino de Santiago<br>from <em>Sarria</em> — 100 km</span></h1>
     <p><span class="es-txt">Las últimas 100km del Camino Francés. El mínimo para obtener la Compostela oficial. Perfectas para familias, viajeros con tiempo limitado y quienes hacen el Camino por primera vez. <strong>Desde 399€ · 5 o 6 etapas · Sin cargar mochila</strong>. Si aún estás organizando tu viaje, te recomendamos leer <a href="blog-cuantos-dias-camino-sarria.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.5)">cuántos días se tarda desde Sarria hasta Santiago</a> y qué llevar en la <a href="blog-mochila-camino-santiago.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.5)">mochila del Camino de Santiago</a>. Y si quieres comparar opciones antes de decidirte, también puedes ver nuestro <a href="camino-portugues.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.5)">Camino Portugués organizado</a>.</span><span class="en-txt" style="display:none">The last 100km of the French Way. The minimum to obtain the official Compostela. Perfect for families, travellers with limited time and first-time pilgrims.</span></p>
     <div class="page-hero-badges">
       <span class="hero-badge orange">⭐ <span class="es-txt">Más vendida</span><span class="en-txt" style="display:none">Best seller</span></span>
@@ -243,109 +339,87 @@
 <div class="page-subnav" id="page-subnav">
   <div class="page-subnav-inner">
     <nav class="page-subnav-tabs" id="subnav-tabs">
-      <a href="#sec-descripcion" class="subnav-tab">Descripción</a>
-      <a href="#sec-itinerario" class="subnav-tab">Itinerario</a>
-      <a href="#precios" class="subnav-tab">Precios</a>
-      <a href="#sec-incluye" class="subnav-tab">¿Qué incluye?</a>
+      <a href="#sec-descripcion" class="subnav-tab" data-sec="sec-descripcion">Descripción</a>
+      <a href="#sec-itinerario" class="subnav-tab" data-sec="sec-itinerario">Itinerario</a>
+      <a href="#precios" class="subnav-tab" data-sec="precios">Precios</a>
+      <a href="#sec-info" class="subnav-tab" data-sec="sec-info">Más info</a>
     </nav>
     <div class="page-subnav-btns">
-      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-        <a href="#" onclick="ecsOpenFolleto(); return false;"
-           style="background:#56A1A4;color:white;padding:10px 18px;border-radius:8px;font-weight:700;text-decoration:none;font-family:'Raleway',sans-serif;">
-           Ver precios y etapas
-        </a>
-        <button onclick="ecsOpenCallback()"
-           style="background:transparent;color:#56A1A4;border:2px solid #56A1A4;padding:10px 16px;border-radius:8px;font-weight:600;font-family:'Raleway',sans-serif;cursor:pointer;">
-           Te llamamos
-        </button>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <a href="reserva.html?ruta=sarria" style="background:#56A1A4;color:white;padding:9px 16px;border-radius:8px;font-weight:700;text-decoration:none;font-family:'Raleway',sans-serif;font-size:0.85rem;">Seleccionar fecha</a>
+        <button onclick="ecsOpenCallback()" style="background:transparent;color:#56A1A4;border:2px solid #56A1A4;padding:9px 14px;border-radius:8px;font-weight:600;font-family:'Raleway',sans-serif;cursor:pointer;font-size:0.85rem;">Preguntar</button>
+        <a href="#" onclick="ecsOpenFolleto();return false;" style="color:#56A1A4;font-weight:600;font-family:'Raleway',sans-serif;font-size:0.82rem;text-decoration:underline;white-space:nowrap;">Folleto PDF</a>
       </div>
     </div>
   </div>
 </div>
 
-<!-- POR QUÉ DESDE SARRIA -->
-<section style="background:white;padding:80px 40px;">
-  <div style="max-width:900px;margin:0 auto;">
+<!-- INTRO SECTION -->
+<section class="sarria-intro-section" id="sec-descripcion">
+  <div class="sarria-intro-inner">
+    <div class="sarria-desc">
+      <h2><span class="es-txt">El Camino de Santiago desde Sarria: las últimas 100 km, sin preocupaciones</span><span class="en-txt" style="display:none">The Camino de Santiago from Sarria: the last 100 km, stress-free</span></h2>
+      <p><span class="es-txt">El tramo desde <strong>Sarria hasta Santiago de Compostela</strong> es el más popular del Camino Francés. Con 115 km, supera el mínimo exigido para obtener la <strong>Compostela oficial</strong> y puede completarse en <strong>5 o 6 etapas</strong> — perfecto para quienes disponen de una semana y quieren vivir el Camino de verdad.</span><span class="en-txt" style="display:none">The stretch from <strong>Sarria to Santiago de Compostela</strong> is the most popular section of the French Way. At 115 km, it exceeds the minimum for the <strong>official Compostela</strong> and can be completed in <strong>5 or 6 stages</strong> — perfect for those with a week to spare.</span></p>
+      <p><span class="es-txt">Nuestra agencia está en Lugo, a solo 20 minutos de Sarria. Conocemos cada alojamiento, cada aldea, cada restaurante del trayecto. Nos encargamos de todo — reservas, traslado de mochila, credencial, asistencia — para que tú solo tengas que caminar.</span><span class="en-txt" style="display:none">Our agency is based in Lugo, just 20 minutes from Sarria. We know every accommodation, every village, every restaurant along the way. We handle everything so all you have to do is walk.</span></p>
+      <ul class="sarria-desc-list">
+        <li><span class="es-txt">Compostela oficial garantizada (+100 km a pie)</span><span class="en-txt" style="display:none">Official Compostela guaranteed (+100 km on foot)</span></li>
+        <li><span class="es-txt">5 o 6 etapas — elige tu ritmo</span><span class="en-txt" style="display:none">5 or 6 stages — choose your pace</span></li>
+        <li><span class="es-txt">Traslado de mochila incluido — caminas libre</span><span class="en-txt" style="display:none">Luggage transfer included — walk free</span></li>
+        <li><span class="es-txt">Agencia local en Lugo, a 20 min de Sarria</span><span class="en-txt" style="display:none">Local agency in Lugo, 20 min from Sarria</span></li>
+        <li><span class="es-txt">Presupuesto personalizado en menos de 24h</span><span class="en-txt" style="display:none">Personalised quote in under 24h</span></li>
+      </ul>
+    </div>
+    <div class="sarria-ficha">
+      <div class="sarria-ficha-card">
+        <div class="sarria-ficha-head">
+          <p><span class="es-txt">Ficha de la ruta</span><span class="en-txt" style="display:none">Route details</span></p>
+          <h3><span class="es-txt">Camino desde Sarria</span><span class="en-txt" style="display:none">Camino from Sarria</span></h3>
+        </div>
+        <div class="sarria-ficha-rows">
+          <div class="sarria-ficha-row"><span class="sarria-ficha-key"><span class="es-txt">Distancia</span><span class="en-txt" style="display:none">Distance</span></span><span class="sarria-ficha-val">115 km</span></div>
+          <div class="sarria-ficha-row"><span class="sarria-ficha-key"><span class="es-txt">Etapas</span><span class="en-txt" style="display:none">Stages</span></span><span class="sarria-ficha-val"><span class="es-txt">5 (opción 6)</span><span class="en-txt" style="display:none">5 (option 6)</span></span></div>
+          <div class="sarria-ficha-row"><span class="sarria-ficha-key"><span class="es-txt">Noches</span><span class="en-txt" style="display:none">Nights</span></span><span class="sarria-ficha-val">6</span></div>
+          <div class="sarria-ficha-row"><span class="sarria-ficha-key"><span class="es-txt">Dificultad</span><span class="en-txt" style="display:none">Difficulty</span></span><span class="sarria-ficha-val"><span class="es-txt">Fácil / Moderada</span><span class="en-txt" style="display:none">Easy / Moderate</span></span></div>
+          <div class="sarria-ficha-row"><span class="sarria-ficha-key"><span class="es-txt">Salida</span><span class="en-txt" style="display:none">Start</span></span><span class="sarria-ficha-val">Sarria, Lugo</span></div>
+          <div class="sarria-ficha-row"><span class="sarria-ficha-key"><span class="es-txt">Llegada</span><span class="en-txt" style="display:none">End</span></span><span class="sarria-ficha-val">Santiago de Compostela</span></div>
+          <div class="sarria-ficha-row"><span class="sarria-ficha-key"><span class="es-txt">Disponibilidad</span><span class="en-txt" style="display:none">Availability</span></span><span class="sarria-ficha-val"><span class="es-txt">Todo el año</span><span class="en-txt" style="display:none">Year-round</span></span></div>
+        </div>
+        <div class="sarria-ficha-price-band">
+          <div class="sarria-ficha-price-label"><span class="es-txt">Desde</span><span class="en-txt" style="display:none">From</span></div>
+          <div class="sarria-ficha-price-num">399€</div>
+          <div class="sarria-ficha-price-sub"><span class="es-txt">por persona · todo incluido</span><span class="en-txt" style="display:none">per person · all inclusive</span></div>
+        </div>
+        <div class="sarria-ficha-btns">
+          <a href="reserva.html?ruta=sarria" class="sarria-fbt sarria-fbt-primary"><span class="es-txt">Solicitar presupuesto</span><span class="en-txt" style="display:none">Request a quote</span></a>
+          <button onclick="ecsOpenCallback()" class="sarria-fbt sarria-fbt-outline"><span class="es-txt">Te llamamos gratis</span><span class="en-txt" style="display:none">Free call back</span></button>
+          <a href="#" onclick="ecsOpenFolleto();return false;" class="sarria-fbt sarria-fbt-ghost"><span class="es-txt">Descargar folleto PDF</span><span class="en-txt" style="display:none">Download PDF brochure</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="sarria-gallery-section">
+  <div style="max-width:1000px;margin:0 auto;">
     <div class="section-title">
-      <h2><span class="es-txt">¿Por qué elegir el Camino desde Sarria?</span><span class="en-txt" style="display:none">Why choose the Camino from Sarria?</span></h2>
-      <p><span class="es-txt">La opción más inteligente para obtener la Compostela sin sacrificar la experiencia auténtica. Para la mayoría de peregrinos que hacen su primer Camino, este tramo ofrece la mejor relación entre tiempo, emoción y facilidad. Si además quieres calcular presupuesto antes de reservar, puedes consultar nuestra guía sobre <a href="blog-cuanto-cuesta-camino-santiago.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.5)">cuánto cuesta hacer el Camino de Santiago</a>.</span><span class="en-txt" style="display:none">The smartest option to obtain the Compostela without sacrificing the authentic experience.</span></p>
+      <h2><span class="es-txt">El Camino desde Sarria en imágenes</span><span class="en-txt" style="display:none">The Camino from Sarria in pictures</span></h2>
+      <p><span class="es-txt">Bosques gallegos, aldeas de piedra y la llegada a Santiago</span><span class="en-txt" style="display:none">Galician forests, stone villages and the arrival in Santiago</span></p>
       <div class="linea"></div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;">
-      <div style="padding:24px;background:#f0f7f8;border-radius:14px;border-left:4px solid #F3A949;">
-        <h3 style="color:#56A1A4;margin-bottom:10px;font-size:1rem;"><span class="es-txt">Compostela oficial garantizada</span><span class="en-txt" style="display:none">Official Compostela guaranteed</span></h3>
-        <p style="color:#6b6b6b;font-family:sans-serif;font-size:0.88rem;line-height:1.65;"><span class="es-txt">Los 115km desde Sarria superan el mínimo de 100km exigidos por la Catedral de Santiago para obtener la Compostela oficial.</span><span class="en-txt" style="display:none">The 115km from Sarria exceeds the 100km minimum required by the Cathedral of Santiago to obtain the official Compostela.</span></p>
+    <div class="gallery-slider-wrap">
+      <button class="gallery-btn" onclick="ecsGalleryScroll('sarria-gallery-vp',-1)" aria-label="Anterior">&#8249;</button>
+      <div class="gallery-viewport" id="sarria-gallery-vp">
+        <div class="gallery-track">
+          <div class="gallery-slide"><img src="img/camino-santiago-sarria-ruta.jpg" alt="Senda del Camino desde Sarria entre bosques gallegos" loading="lazy"></div>
+          <div class="gallery-slide"><img src="img/camino-sarria-galicia-aldea.jpg" alt="Aldea de piedra gallega en el Camino desde Sarria" loading="lazy"></div>
+          <div class="gallery-slide"><img src="img/camino-santiago-sarria-peregrina.jpg" alt="Peregrina caminando en el Camino de Santiago desde Sarria" loading="lazy"></div>
+          <div class="gallery-slide"><img src="img/camino-sarria-ultimas-100km-santiago.jpg" alt="Llegada a Santiago de Compostela tras las últimas 100km desde Sarria" loading="lazy"></div>
+        </div>
       </div>
-      <div style="padding:24px;background:#f0f7f8;border-radius:14px;border-left:4px solid #56A1A4;">
-        <h3 style="color:#56A1A4;margin-bottom:10px;font-size:1rem;"><span class="es-txt">Salida desde Lugo — ventaja única</span><span class="en-txt" style="display:none">Departure from Lugo — unique advantage</span></h3>
-        <p style="color:#6b6b6b;font-family:sans-serif;font-size:0.88rem;line-height:1.65;"><span class="es-txt">Nuestra agencia está en Lugo, a solo 20 minutos de Sarria. Conocemos cada alojamiento, cada etapa y cada restaurante del trayecto.</span><span class="en-txt" style="display:none">Our agency is based in Lugo, just 20 minutes from Sarria. We know every accommodation, every stage and every restaurant along the way.</span></p>
-      </div>
-      <div style="padding:24px;background:#f0f7f8;border-radius:14px;border-left:4px solid #56A1A4;">
-        <h3 style="color:#56A1A4;margin-bottom:10px;font-size:1rem;"><span class="es-txt">Ideal para familias y principiantes</span><span class="en-txt" style="display:none">Ideal for families and beginners</span></h3>
-        <p style="color:#6b6b6b;font-family:sans-serif;font-size:0.88rem;line-height:1.65;"><span class="es-txt">Etapas de entre 18 y 25km, bien señalizadas, con mucha infraestructura y paisajes de bosque gallego espectaculares.</span><span class="en-txt" style="display:none">Stages of 18 to 25km, well signposted, with excellent infrastructure and spectacular Galician forest landscapes.</span></p>
-      </div>
-      <div style="padding:24px;background:#f0f7f8;border-radius:14px;border-left:4px solid #F3A949;">
-        <h3 style="color:#56A1A4;margin-bottom:10px;font-size:1rem;"><span class="es-txt">Se hace en 5-6 días</span><span class="en-txt" style="display:none">Completed in 5-6 days</span></h3>
-        <p style="color:#6b6b6b;font-family:sans-serif;font-size:0.88rem;line-height:1.65;"><span class="es-txt">Compatible con vacaciones cortas. Puedes hacer el Camino en una semana laboral y regresar a casa con la Compostela en la mano.</span><span class="en-txt" style="display:none">Compatible with a short holiday. You can complete the Camino in a working week and return home with the Compostela in hand.</span></p>
-      </div>
-      <div style="padding:24px;background:#f0f7f8;border-radius:14px;border-left:4px solid #56A1A4;">
-        <h3 style="color:#56A1A4;margin-bottom:10px;font-size:1rem;"><span class="es-txt">Paisajes de Galicia auténticos</span><span class="en-txt" style="display:none">Authentic Galician landscapes</span></h3>
-        <p style="color:#6b6b6b;font-family:sans-serif;font-size:0.88rem;line-height:1.65;"><span class="es-txt">Robledales centenarios, aldeas de piedra, cruceiros medievales y el emblemático Camino de Santiago en su tramo más pintoresco.</span><span class="en-txt" style="display:none">Ancient oak forests, stone villages, medieval cruceiros and the iconic Camino de Santiago at its most scenic stretch.</span></p>
-      </div>
-      <div style="padding:24px;background:#f0f7f8;border-radius:14px;border-left:4px solid #F3A949;">
-        <h3 style="color:#56A1A4;margin-bottom:10px;font-size:1rem;"><span class="es-txt">El mejor precio/experiencia</span><span class="en-txt" style="display:none">Best value for the experience</span></h3>
-        <p style="color:#6b6b6b;font-family:sans-serif;font-size:0.88rem;line-height:1.65;"><span class="es-txt">Desde 399€ por persona con todo incluido. Una experiencia transformadora a un precio accesible, perfectamente organizada.</span><span class="en-txt" style="display:none">From €399 per person, all inclusive. A life-changing experience at an accessible price, perfectly organised.</span></p>
-      </div>
+      <button class="gallery-btn" onclick="ecsGalleryScroll('sarria-gallery-vp',1)" aria-label="Siguiente">&#8250;</button>
     </div>
   </div>
-</section>
-
-<section style="max-width:900px;margin:0 auto 32px;padding:0 20px;font-family:sans-serif;color:#2D4A52;">
-  <h2 style="font-family:'Raleway',sans-serif;font-size:2rem;line-height:1.2;margin-bottom:18px;"><span class="es-txt">Precio del Camino de Santiago desde Sarria</span><span class="en-txt" style="display:none">Cost of the Camino de Santiago from Sarria</span></h2>
-  <p style="font-size:1rem;line-height:1.8;color:#4b5b5a;margin-bottom:16px;">
-    <span class="es-txt">El <strong>precio del Camino de Santiago desde Sarria</strong> depende del tipo de alojamiento y de los servicios incluidos. Nuestros <strong>paquetes organizados</strong> comienzan desde <strong>399€ por persona</strong> e incluyen <strong>alojamiento, transporte de equipaje, credencial del peregrino y asistencia</strong> durante todo el recorrido.</span><span class="en-txt" style="display:none">The <strong>price of the Camino de Santiago from Sarria</strong> depends on the type of accommodation and services included. Our <strong>organised packages</strong> start from <strong>€399 per person</strong> and include <strong>accommodation, luggage transfer, pilgrim passport and support</strong> throughout the route.</span>
-  </p>
-  <p style="font-size:1rem;line-height:1.8;color:#4b5b5a;margin-bottom:16px;">
-    <span class="es-txt">Este tramo del <strong>Camino Francés desde Sarria</strong> es una de las opciones más accesibles para conseguir la <strong>Compostela</strong>, combinando comodidad y una duración ideal de <strong>5 o 6 etapas</strong>.</span><span class="en-txt" style="display:none">This stretch of the <strong>French Way from Sarria</strong> is one of the most accessible options for obtaining the <strong>Compostela</strong>, combining comfort and an ideal duration of <strong>5 or 6 stages</strong>.</span>
-  </p>
-  <p style="font-size:1rem;line-height:1.8;color:#4b5b5a;">
-    <span class="es-txt">Si quieres ver un desglose completo de gastos, puedes consultar nuestra guía sobre <a href="/blog-cuanto-cuesta-camino-santiago.html" style="color:#56A1A4;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.45);">cuánto cuesta hacer el Camino de Santiago</a>.</span><span class="en-txt" style="display:none">For a full cost breakdown, see our guide on <a href="/blog-cuanto-cuesta-camino-santiago.html" style="color:#56A1A4;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.45);">how much it costs to do the Camino de Santiago</a>.</span>
-  </p>
-</section>
-
-<section style="max-width:900px;margin:0 auto 56px;padding:0 20px;">
-  <div style="background:#f0f7f8;border:1px solid rgba(86,161,164,0.18);border-radius:18px;padding:32px 28px;">
-    <h2 style="font-family:'Raleway',sans-serif;font-size:2rem;line-height:1.2;color:#2D4A52;margin-bottom:18px;"><span class="es-txt">¿Es para ti el Camino de Santiago desde Sarria?</span><span class="en-txt" style="display:none">Is the Camino de Santiago from Sarria right for you?</span></h2>
-    <p style="font-family:sans-serif;font-size:1rem;line-height:1.8;color:#4b5b5a;margin-bottom:22px;">
-      <span class="es-txt">El <strong>Camino de Santiago desde Sarria</strong> es la opción perfecta si buscas una experiencia auténtica del Camino sin necesidad de disponer de varias semanas.</span><span class="en-txt" style="display:none">The <strong>Camino de Santiago from Sarria</strong> is the perfect option if you want an authentic Camino experience without needing several weeks.</span>
-    </p>
-    <ul style="margin:0 0 22px 0;padding-left:0;list-style:none;font-family:sans-serif;font-size:1rem;line-height:1.9;color:#4b5b5a;">
-      <li><span class="es-txt">✔️ Ideal si es tu primera vez en el Camino de Santiago</span><span class="en-txt" style="display:none">✔️ Ideal if it's your first time on the Camino de Santiago</span></li>
-      <li><span class="es-txt">✔️ Perfecto si dispones de 5 o 6 días</span><span class="en-txt" style="display:none">✔️ Perfect if you have 5 or 6 days available</span></li>
-      <li><span class="es-txt">✔️ Recomendado si quieres conseguir la Compostela</span><span class="en-txt" style="display:none">✔️ Recommended if you want to obtain the Compostela</span></li>
-      <li><span class="es-txt">✔️ Buena opción si prefieres comodidad con servicios organizados</span><span class="en-txt" style="display:none">✔️ A great choice if you prefer comfort with organised services</span></li>
-    </ul>
-    <p style="font-family:sans-serif;font-size:1rem;line-height:1.8;color:#4b5b5a;margin-bottom:20px;">
-      <span class="es-txt">Si quieres preparar mejor tu experiencia, te recomendamos leer nuestra guía para <a href="/blog-camino-santiago-principiantes.html" style="color:#56A1A4;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.45);">hacer el Camino de Santiago por primera vez</a>.</span><span class="en-txt" style="display:none">To prepare better for your experience, we recommend reading our guide to <a href="/blog-camino-santiago-principiantes.html" style="color:#56A1A4;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.45);">doing the Camino de Santiago for the first time</a>.</span>
-    </p>
-    <p style="font-family:sans-serif;font-size:1rem;line-height:1.8;color:#4b5b5a;margin-bottom:20px;">
-      <span class="es-txt">Si buscas otras rutas más largas o diferentes, puedes ver también el <a href="/camino-portugues.html" style="color:#56A1A4;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.45);">Camino Portugués</a> o el <a href="/camino-ingles.html" style="color:#56A1A4;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.45);">Camino Inglés</a>.</span><span class="en-txt" style="display:none">If you are looking for longer or different routes, you can also explore the <a href="/camino-portugues.html" style="color:#56A1A4;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.45);">Portuguese Way</a> or the <a href="/camino-ingles.html" style="color:#56A1A4;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.45);">English Way</a>.</span>
-    </p>
-    <a href="reserva.html?ruta=sarria" class="btn-primary"><span class="es-txt">Solicita tu presupuesto en 24h</span><span class="en-txt" style="display:none">Request your quote in 24h</span></a>
-  </div>
-</section>
-
-<section style="max-width:900px;margin:0 auto 40px;padding:0 20px;font-family:sans-serif;color:#2D4A52;">
-  <h2 style="font-family:'Raleway',sans-serif;font-size:2rem;line-height:1.2;margin-bottom:18px;"><span class="es-txt">¿Cuántos días se tarda en hacer el Camino desde Sarria?</span><span class="en-txt" style="display:none">How many days does the Camino from Sarria take?</span></h2>
-  <p style="font-size:1rem;line-height:1.8;color:#4b5b5a;margin-bottom:16px;">
-    <span class="es-txt">El Camino de Santiago desde Sarria se completa normalmente en <strong>5 o 6 días</strong>, dependiendo del ritmo de cada peregrino. La distancia total es de unos 100 km, lo que permite obtener la Compostela al llegar a Santiago.</span><span class="en-txt" style="display:none">The Camino de Santiago from Sarria is typically completed in <strong>5 or 6 days</strong>, depending on each pilgrim's pace. The total distance is around 100 km, which allows you to obtain the Compostela on arrival in Santiago.</span>
-  </p>
-  <p style="font-size:1rem;line-height:1.8;color:#4b5b5a;margin-bottom:16px;">
-    <span class="es-txt">Las etapas están bien señalizadas y cuentan con numerosos servicios, lo que convierte este tramo del Camino Francés en una de las opciones más accesibles para todo tipo de peregrinos.</span><span class="en-txt" style="display:none">The stages are well signposted and have plentiful services, making this stretch of the French Way one of the most accessible options for all types of pilgrims.</span>
-  </p>
-  <p style="font-size:1rem;line-height:1.8;color:#4b5b5a;">
-    <span class="es-txt">Si quieres ver una planificación completa, puedes consultar nuestra guía sobre <a href="/blog-cuantos-dias-camino-sarria.html" style="color:#56A1A4;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.45);">cuántos días se necesitan para hacer el Camino desde Sarria</a>.</span><span class="en-txt" style="display:none">For a full planning guide, see our article on <a href="/blog-cuantos-dias-camino-sarria.html" style="color:#56A1A4;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.45);">how many days you need for the Camino from Sarria</a>.</span>
-  </p>
 </section>
 
 <!-- ITINERARIO -->
@@ -427,53 +501,59 @@
   </div>
 </section>
 
-<!-- TRUST SIGNALS -->
-<section style="background:#2D4A52;padding:36px 24px;">
-  <div style="max-width:960px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;text-align:center;">
-    <div>
-      <div style="color:#F3A949;font-size:1.8rem;font-weight:800;font-family:'Raleway',sans-serif;">+500</div>
-      <div style="color:rgba(255,255,255,0.85);font-size:0.88rem;margin-top:4px;"><span class="es-txt">Peregrinos organizados</span><span class="en-txt" style="display:none">Pilgrims organised</span></div>
+<!-- MAPA -->
+<section class="sarria-mapa-section">
+  <div class="sarria-mapa-inner">
+    <div class="section-title">
+      <h2><span class="es-txt">La ruta: Sarria → Santiago de Compostela</span><span class="en-txt" style="display:none">The route: Sarria → Santiago de Compostela</span></h2>
+      <p><span class="es-txt">115 km a través de la Galicia más auténtica</span><span class="en-txt" style="display:none">115 km through the most authentic Galicia</span></p>
+      <div class="linea"></div>
     </div>
-    <div>
-      <div style="color:#F3A949;font-size:1.8rem;font-weight:800;font-family:'Raleway',sans-serif;">&lt;24h</div>
-      <div style="color:rgba(255,255,255,0.85);font-size:0.88rem;margin-top:4px;"><span class="es-txt">Respuesta garantizada</span><span class="en-txt" style="display:none">Guaranteed response</span></div>
-    </div>
-    <div>
-      <div style="color:#F3A949;font-size:1.8rem;font-weight:800;font-family:'Raleway',sans-serif;">100%</div>
-      <div style="color:rgba(255,255,255,0.85);font-size:0.88rem;margin-top:4px;"><span class="es-txt">Cancelación flexible</span><span class="en-txt" style="display:none">Flexible cancellation</span></div>
-    </div>
-    <div>
-      <div style="color:#F3A949;font-size:1.8rem;font-weight:800;font-family:'Raleway',sans-serif;">Lugo</div>
-      <div style="color:rgba(255,255,255,0.85);font-size:0.88rem;margin-top:4px;"><span class="es-txt">Agencia local especializada</span><span class="en-txt" style="display:none">Specialist local agency</span></div>
-    </div>
+    <div id="sarria-map"></div>
+    <p style="text-align:center;font-family:sans-serif;font-size:0.78rem;color:#6b7a7a;margin:14px 0 0;"><span class="es-txt">115 km · 5 etapas · todo señalizado con flechas amarillas y vieiras · <a href="https://www.openstreetmap.org" target="_blank" rel="noopener" style="color:inherit;">© OpenStreetMap</a></span><span class="en-txt" style="display:none">115 km · 5 stages · waymarked with yellow arrows and scallop shells · <a href="https://www.openstreetmap.org" target="_blank" rel="noopener" style="color:inherit;">© OpenStreetMap</a></span></p>
   </div>
 </section>
 
-<!-- GRUPOS / ASOCIACIONES / AYUNTAMIENTOS -->
-<section class="grupos-section" id="sec-grupos">
-  <div style="max-width:960px;margin:0 auto;">
-    <div class="section-title">
-      <h2><span class="es-txt">Camino de Santiago para grupos privados</span><span class="en-txt" style="display:none">Camino de Santiago for private groups</span></h2>
-      <p><span class="es-txt">Organizamos el Camino desde Sarria para familias, amigos y pequeños grupos que quieren vivir la experiencia con todo preparado: alojamientos, traslado de equipaje, asistencia y fechas a medida.</span><span class="en-txt" style="display:none">We organise the Camino from Sarria for families, friends and small groups who want the full experience taken care of: accommodation, luggage transfer, support and custom dates.</span></p>
-      <div class="linea"></div>
-    </div>
-    <div class="grupos-editorial">
-      <p class="grupos-intro"><span class="es-txt">Si viajáis en grupo, adaptamos el ritmo, el tipo de alojamiento y los servicios al perfil de los peregrinos. Desde 6 personas podemos preparar una propuesta personalizada con precio especial por persona.</span><span class="en-txt" style="display:none">If you are travelling as a group, we adapt the pace, accommodation type and services to your pilgrims' profile. From 6 people we can prepare a personalised proposal with a special per-person price.</span></p>
-      <div class="grupos-features">
-        <div class="grupos-feature">
-          <strong><span class="es-txt">Precio especial para grupos</span><span class="en-txt" style="display:none">Special group price</span></strong>
-          <p><span class="es-txt">A partir de 6 personas podemos preparar una propuesta ajustada al número de peregrinos, fechas y tipo de alojamiento.</span><span class="en-txt" style="display:none">From 6 people we can prepare a proposal tailored to the number of pilgrims, dates and accommodation type.</span></p>
-        </div>
-        <div class="grupos-feature">
-          <strong><span class="es-txt">Organización local en Galicia</span><span class="en-txt" style="display:none">Local organisation in Galicia</span></strong>
-          <p><span class="es-txt">Te ayudamos con alojamientos, etapas, traslado de equipaje, asistencia y detalles prácticos antes y durante el Camino.</span><span class="en-txt" style="display:none">We help with accommodation, stages, luggage transfer, support and practical details before and during the Camino.</span></p>
-        </div>
-        <div class="grupos-feature">
-          <strong><span class="es-txt">Fechas y ritmo a medida</span><span class="en-txt" style="display:none">Custom dates and pace</span></strong>
-          <p><span class="es-txt">Elegid la fecha de salida, el número de etapas y el nivel de comodidad. Adaptamos el Camino al grupo, no al revés.</span><span class="en-txt" style="display:none">Choose your departure date, number of stages and comfort level. We adapt the Camino to the group, not the other way around.</span></p>
-        </div>
+<!-- MID BANNER -->
+<section class="mid-banner">
+  <div class="mid-banner-content">
+    <h2><span class="es-txt">El Camino, sin preocupaciones</span><span class="en-txt" style="display:none">The Camino, stress-free</span></h2>
+    <p><span class="es-txt">Nos encargamos de todo: alojamientos, traslado de mochila, credencial y asistencia. Tú solo camina.</span><span class="en-txt" style="display:none">We handle everything: accommodation, luggage transfer, pilgrim passport and support. You just walk.</span></p>
+    <a href="reserva.html?ruta=sarria" class="btn-primary"><span class="es-txt">Solicitar presupuesto</span><span class="en-txt" style="display:none">Request a quote</span></a>
+  </div>
+</section>
+
+<!-- VALORES -->
+<section class="testimonios ecs-section" style="padding:64px 40px;">
+  <div class="section-title">
+    <h2><span class="es-txt">Lo que buscamos para cada peregrino</span><span class="en-txt" style="display:none">What we aim to give every pilgrim</span></h2>
+    <p><span class="es-txt">Los principios que guían cada Camino que organizamos desde Sarria</span><span class="en-txt" style="display:none">The principles behind every Camino we organise from Sarria</span></p>
+    <div class="linea"></div>
+  </div>
+  <div class="testi-grid">
+    <div class="testi">
+      <div class="stars" style="font-size:1.8rem;">🎒</div>
+      <p><span class="es-txt">"Que al salir a caminar, el peregrino ya no tenga que pensar en la mochila ni en dónde dormir. Que toda la energía y la atención vayan al Camino."</span><span class="en-txt" style="display:none">"That when you set off each morning, you don't have to think about your bag or where you're sleeping. All your energy goes to the Camino itself."</span></p>
+      <div class="testi-autor">
+        <div class="avatar" style="background:#56A1A4;font-size:1rem;">✓</div>
+        <div><strong><span class="es-txt">Sin preocupaciones logísticas</span><span class="en-txt" style="display:none">Logistics taken care of</span></strong><small><span class="es-txt">Alojamiento, mochila y documentación gestionados</span><span class="en-txt" style="display:none">Accommodation, luggage and documents handled</span></small></div>
       </div>
-      <a href="reserva.html?ruta=sarria&amp;tipo=grupo" class="btn-primary"><span class="es-txt">Solicitar presupuesto para grupo</span><span class="en-txt" style="display:none">Request group quote</span></a>
+    </div>
+    <div class="testi">
+      <div class="stars" style="font-size:1.8rem;">🏡</div>
+      <p><span class="es-txt">"Alojamientos con carácter, bien ubicados en cada etapa. No hoteles de paso, sino lugares donde el cuerpo pueda recuperarse de verdad antes del día siguiente."</span><span class="en-txt" style="display:none">"Accommodation with character, well-placed at each stage — not transit hotels, but places where you can genuinely rest and recover for the next day."</span></p>
+      <div class="testi-autor">
+        <div class="avatar" style="background:#56A1A4;font-size:1rem;">✓</div>
+        <div><strong><span class="es-txt">Descanso real en cada etapa</span><span class="en-txt" style="display:none">Real rest at every stage</span></strong><small><span class="es-txt">Pensiones, hostales y casas rurales seleccionados</span><span class="en-txt" style="display:none">Selected guesthouses, hostels and rural houses</span></small></div>
+      </div>
+    </div>
+    <div class="testi">
+      <div class="stars" style="font-size:1.8rem;">📞</div>
+      <p><span class="es-txt">"Que si surge cualquier imprevisto en el camino — una lesión, un cambio de plan — haya alguien disponible al otro lado del teléfono para resolverlo."</span><span class="en-txt" style="display:none">"That if anything unexpected happens — an injury, a change of plan — there's someone available at the other end of the phone to sort it out."</span></p>
+      <div class="testi-autor">
+        <div class="avatar" style="background:#56A1A4;font-size:1rem;">✓</div>
+        <div><strong><span class="es-txt">Asistencia real durante el Camino</span><span class="en-txt" style="display:none">Real support during the Camino</span></strong><small><span class="es-txt">Equipo disponible por teléfono en todo el recorrido</span><span class="en-txt" style="display:none">Team available by phone throughout your route</span></small></div>
+      </div>
     </div>
   </div>
 </section>
@@ -492,194 +572,251 @@
     </a>
   </div>
   <div class="pricing-grid">
-    <div class="pricing-card">
-      <h3><span class="es-txt">Albergue privado</span><span class="en-txt" style="display:none">Private Hostel</span></h3>
-      <div class="price">399€</div>
-      <div class="price-sub"><span class="es-txt">por persona · 6 noches</span><span class="en-txt" style="display:none">per person · 6 nights</span></div>
-      <ul>
-        <li><span class="es-txt">6 noches en albergues privados seleccionados</span><span class="en-txt" style="display:none">6 nights in selected private hostels</span></li>
-        <li><span class="es-txt">Desayuno incluido cada día</span><span class="en-txt" style="display:none">Breakfast included daily</span></li>
-        <li><span class="es-txt">Traslado de mochila (5 traslados)</span><span class="en-txt" style="display:none">Luggage transfer (5 transfers)</span></li>
-        <li><span class="es-txt">Credencial del peregrino</span><span class="en-txt" style="display:none">Pilgrim passport</span></li>
-        <li><span class="es-txt">Itinerario etapa por etapa</span><span class="en-txt" style="display:none">Stage-by-stage itinerary</span></li>
-        <li><span class="es-txt">Apoyo telefónico 24h</span><span class="en-txt" style="display:none">24h phone support</span></li>
-        <li><span class="es-txt">Gestión Compostela incluida</span><span class="en-txt" style="display:none">Compostela paperwork included</span></li>
-      </ul>
-      <a href="reserva.html?ruta=sarria" class="btn-primary"><span class="es-txt">Reservar este paquete</span><span class="en-txt" style="display:none">Book this package</span></a>
-    </div>
     <div class="pricing-card featured">
       <div class="pricing-popular">⭐ <span class="es-txt">Más reservado</span><span class="en-txt" style="display:none">Most booked</span></div>
-      <h3><span class="es-txt">Pensión · Baño Privado</span><span class="en-txt" style="display:none">Guesthouse · En-suite</span></h3>
+      <h3 style="text-align:center;"><span style="display:inline-flex;align-items:center;gap:6px;flex-wrap:nowrap;"><span class="es-txt">Habitación privada estándar</span><span class="en-txt" style="display:none">Standard private room</span><button onclick="ecsOpenAloj()" aria-label="Ver tipos de alojamiento" style="cursor:pointer;color:var(--azul);background:rgba(79,111,115,0.10);border:1.5px solid var(--azul);width:22px;height:22px;min-width:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;line-height:1;opacity:1;flex-shrink:0;padding:0;">ⓘ</button></span></h3>
       <div class="price">549€</div>
       <div class="price-sub"><span class="es-txt">por persona · 6 noches</span><span class="en-txt" style="display:none">per person · 6 nights</span></div>
       <ul>
-        <li><span class="es-txt">6 noches en pensiones con habitación privada</span><span class="en-txt" style="display:none">6 nights in guesthouses with private room</span></li>
-        <li><span class="es-txt">Desayuno incluido cada día</span><span class="en-txt" style="display:none">Breakfast included daily</span></li>
-        <li><span class="es-txt">Traslado de mochila (5 traslados)</span><span class="en-txt" style="display:none">Luggage transfer (5 transfers)</span></li>
+        <li><span class="es-txt">Pensiones, hostales y alojamientos locales seleccionados</span><span class="en-txt" style="display:none">Selected guesthouses, hostels and local accommodation</span></li>
+        <li><span class="es-txt">Habitación privada</span><span class="en-txt" style="display:none">Private room</span></li>
+        <li><span class="es-txt">Baño privado según disponibilidad</span><span class="en-txt" style="display:none">En-suite bathroom subject to availability</span></li>
+        <li><span class="es-txt">Desayuno incluido</span><span class="en-txt" style="display:none">Breakfast included</span></li>
+        <li><span class="es-txt">Traslado de equipaje</span><span class="en-txt" style="display:none">Luggage transfer</span></li>
         <li><span class="es-txt">Credencial del peregrino</span><span class="en-txt" style="display:none">Pilgrim passport</span></li>
         <li><span class="es-txt">Itinerario personalizado</span><span class="en-txt" style="display:none">Personalised itinerary</span></li>
-        <li><span class="es-txt">Apoyo telefónico 24h</span><span class="en-txt" style="display:none">24h phone support</span></li>
-        <li><span class="es-txt">Gestión Compostela incluida</span><span class="en-txt" style="display:none">Compostela paperwork included</span></li>
-        <li><span class="es-txt">Seguro de viaje básico</span><span class="en-txt" style="display:none">Basic travel insurance</span></li>
+        <li><span class="es-txt">Asistencia durante el Camino</span><span class="en-txt" style="display:none">Support during the Camino</span></li>
       </ul>
       <a href="reserva.html?ruta=sarria" class="btn-primary"><span class="es-txt">Reservar este paquete</span><span class="en-txt" style="display:none">Book this package</span></a>
     </div>
-      <div class="pricing-card">
-        <div class="pricing-card-header">
-          <h3><span class="es-txt">Hotel y Casa Rural</span><span class="en-txt" style="display:none">Hotel &amp; Casa Rural</span></h3>
-          <div class="pricing-price" style="font-size:1.4rem;"><span class="es-txt">A consultar</span><span class="en-txt" style="display:none">Price on request</span></div>
-          <p><span class="es-txt">Hoteles y casas rurales con encanto seleccionados en las principales etapas del recorrido</span><span class="en-txt" style="display:none">Hotels and charming rural houses along the main stages</span></p>
-        </div>
-        <ul class="pricing-features">
-          <li><span class="es-txt">Noches en hotel o casa rural seleccionados</span><span class="en-txt" style="display:none">Nights in selected hotel or rural house</span></li>
-          <li><span class="es-txt">Traslado de mochila cada etapa</span><span class="en-txt" style="display:none">Luggage transfer each stage</span></li>
-          <li><span class="es-txt">Credencial del peregrino</span><span class="en-txt" style="display:none">Pilgrim passport</span></li>
-          <li><span class="es-txt">Itinerario premium detallado</span><span class="en-txt" style="display:none">Detailed premium itinerary</span></li>
-          <li><span class="es-txt">Apoyo telefónico 24h prioritario</span><span class="en-txt" style="display:none">Priority 24h phone support</span></li>
-          <li><span class="es-txt">Seguro de viaje premium incluido</span><span class="en-txt" style="display:none">Premium travel insurance included</span></li>
-        </ul>
-        <a href="reserva.html" class="btn-pricing" style="background:#2D4A52;"><span class="es-txt">Solicitar precio</span><span class="en-txt" style="display:none">Request price</span></a>
-      </div>
-    
     <div class="pricing-card">
-      <h3><span class="es-txt">Hotel 3★</span><span class="en-txt" style="display:none">3★ Hotel</span></h3>
-      <div class="price">749€</div>
-      <div class="price-sub"><span class="es-txt">por persona · 6 noches</span><span class="en-txt" style="display:none">per person · 6 nights</span></div>
+      <h3><span class="es-txt">Alojamiento superior</span><span class="en-txt" style="display:none">Superior accommodation</span></h3>
+      <div class="price" style="font-size:1.6rem;"><span class="es-txt">A consultar</span><span class="en-txt" style="display:none">Price on request</span></div>
+      <div class="price-sub"><span class="es-txt">presupuesto personalizado</span><span class="en-txt" style="display:none">personalised quote</span></div>
       <ul>
-        <li><span class="es-txt">6 noches en hoteles 3★ seleccionados</span><span class="en-txt" style="display:none">6 nights in selected 3★ hotels</span></li>
-        <li><span class="es-txt">Desayuno buffet incluido</span><span class="en-txt" style="display:none">Buffet breakfast included</span></li>
-        <li><span class="es-txt">Traslado de mochila (5 traslados)</span><span class="en-txt" style="display:none">Luggage transfer (5 transfers)</span></li>
-        <li><span class="es-txt">Credencial del peregrino</span><span class="en-txt" style="display:none">Pilgrim passport</span></li>
+        <li><span class="es-txt">Casas rurales, hoteles familiares y alojamientos con encanto según disponibilidad</span><span class="en-txt" style="display:none">Rural houses, family hotels and charming accommodation subject to availability</span></li>
+        <li><span class="es-txt">Habitación privada</span><span class="en-txt" style="display:none">Private room</span></li>
+        <li><span class="es-txt">Baño privado según disponibilidad</span><span class="en-txt" style="display:none">En-suite bathroom subject to availability</span></li>
+        <li><span class="es-txt">Desayuno incluido</span><span class="en-txt" style="display:none">Breakfast included</span></li>
+        <li><span class="es-txt">Traslado de equipaje</span><span class="en-txt" style="display:none">Luggage transfer</span></li>
         <li><span class="es-txt">Itinerario personalizado</span><span class="en-txt" style="display:none">Personalised itinerary</span></li>
-        <li><span class="es-txt">Apoyo telefónico 24h</span><span class="en-txt" style="display:none">24h phone support</span></li>
-        <li><span class="es-txt">Gestión Compostela incluida</span><span class="en-txt" style="display:none">Compostela paperwork included</span></li>
-        <li><span class="es-txt">Seguro de viaje completo</span><span class="en-txt" style="display:none">Full travel insurance</span></li>
+        <li><span class="es-txt">Asistencia prioritaria</span><span class="en-txt" style="display:none">Priority support</span></li>
       </ul>
-      <a href="reserva.html?ruta=sarria" class="btn-primary"><span class="es-txt">Reservar este paquete</span><span class="en-txt" style="display:none">Book this package</span></a>
+      <a href="reserva.html?ruta=sarria" class="btn-pricing"><span class="es-txt">Solicitar precio</span><span class="en-txt" style="display:none">Request price</span></a>
+    </div>
+    <div class="pricing-card">
+      <h3><span class="es-txt">Grupos privados</span><span class="en-txt" style="display:none">Private groups</span></h3>
+      <div class="price" style="font-size:1.4rem;line-height:1.3;"><span class="es-txt">Presupuesto personalizado</span><span class="en-txt" style="display:none">Personalised quote</span></div>
+      <div class="price-sub"><span class="es-txt">desde 6 personas</span><span class="en-txt" style="display:none">from 6 people</span></div>
+      <ul>
+        <li><span class="es-txt">Para familias, amigos y pequeños grupos</span><span class="en-txt" style="display:none">For families, friends and small groups</span></li>
+        <li><span class="es-txt">Fechas y ritmo a medida</span><span class="en-txt" style="display:none">Custom dates and pace</span></li>
+        <li><span class="es-txt">Alojamientos adaptados al grupo</span><span class="en-txt" style="display:none">Accommodation adapted to the group</span></li>
+        <li><span class="es-txt">Traslado de equipaje</span><span class="en-txt" style="display:none">Luggage transfer</span></li>
+        <li><span class="es-txt">Asistencia durante el Camino</span><span class="en-txt" style="display:none">Support during the Camino</span></li>
+        <li><span class="es-txt">Precio especial por persona</span><span class="en-txt" style="display:none">Special per-person price</span></li>
+      </ul>
+      <a href="reserva.html?ruta=sarria&amp;tipo=grupo" class="btn-pricing"><span class="es-txt">Solicitar presupuesto para grupo</span><span class="en-txt" style="display:none">Request group quote</span></a>
     </div>
   </div>
   <div style="text-align:center;margin-top:32px;font-family:sans-serif;color:#6b6b6b;font-size:0.88rem;">
-    <p><span class="es-txt">✓ Precios por persona · ✓ Suplemento individual consultar · ✓ Grupos de 6+ personas: precio especial. Si quieres saber cuál es la temporada más recomendable para hacer esta ruta, revisa también nuestra guía sobre la <a href="blog-mejor-epoca-camino-santiago.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.5)">mejor época para hacer el Camino de Santiago</a>.</span><span class="en-txt" style="display:none">✓ Prices per person · ✓ Single supplement on request · ✓ Groups of 6+: special price. If you want to know the best time of year for this route, check our guide on the <a href="blog-mejor-epoca-camino-santiago.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.5)">best time to do the Camino de Santiago</a>.</span></p>
+    <p><span class="es-txt">Trabajamos con pensiones, hostales, casas rurales y pequeños hoteles seleccionados en cada etapa del Camino. Priorizamos habitación privada, baño privado, buena ubicación y descanso, siempre según disponibilidad.</span><span class="en-txt" style="display:none">We work with selected guesthouses, hostels, rural houses and small hotels at each stage of the Camino. We prioritise private rooms, en-suite bathrooms, good location and rest, always subject to availability.</span></p>
+    <p style="margin-top:12px;"><span class="es-txt">✓ Precios por persona · ✓ Suplemento individual consultar · ✓ Grupos de 6+ personas: precio especial. Si quieres saber cuál es la temporada más recomendable para hacer esta ruta, revisa también nuestra guía sobre la <a href="blog-mejor-epoca-camino-santiago.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.5)">mejor época para hacer el Camino de Santiago</a>.</span><span class="en-txt" style="display:none">✓ Prices per person · ✓ Single supplement on request · ✓ Groups of 6+: special price. If you want to know the best time of year for this route, check our guide on the <a href="blog-mejor-epoca-camino-santiago.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.5)">best time to do the Camino de Santiago</a>.</span></p>
     <p style="margin-top:8px;"><span class="es-txt"><strong>Reserva con solo el 30%.</strong> Resto 30 días antes de la salida. Cancelación gratuita hasta 21 días antes.</span><span class="en-txt" style="display:none"><strong>Book with just 30%.</strong> Balance due 30 days before departure. Free cancellation up to 21 days before.</span></p>
   </div>
 </section>
 
-<!-- QUÉ INCLUYE -->
-<section class="pkg-section">
-  <div class="section-title">
-    <h2><span class="es-txt">¿Qué incluye tu Camino?</span><span class="en-txt" style="display:none">What's included in your Camino?</span></h2>
-    <p><span class="es-txt">Todo lo que necesitas para completar el Camino sin preocupaciones.</span><span class="en-txt" style="display:none">Everything you need to complete the Camino without worries.</span></p>
-    <div class="linea"></div>
-  </div>
-  <div class="pkg-grid">
-    <div class="pkg-item">
-      <div class="pkg-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9M5 10.5V20h5v-5h4v5h5V10.5"/></svg>
-      </div>
-      <strong class="pkg-title"><span class="es-txt">Alojamiento seleccionado</span><span class="en-txt" style="display:none">Selected accommodation</span></strong>
-      <p class="pkg-desc"><span class="es-txt">Albergues, pensiones u hoteles reservados en cada etapa. Todo confirmado antes de tu salida.</span><span class="en-txt" style="display:none">Hostels, guesthouses or hotels booked at each stage. Everything confirmed before you set off.</span></p>
+<!-- ALOJAMIENTO -->
+<section class="sarria-aloj-section">
+  <div class="sarria-aloj-grid">
+    <div class="sarria-aloj-img">
+      <img src="img/camino-sarria-premium-compostela.jpg" alt="Alojamiento seleccionado en el Camino desde Sarria hasta Santiago" loading="lazy">
     </div>
-    <div class="pkg-item">
-      <div class="pkg-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M8 8V5a2 2 0 012-2h4a2 2 0 012 2v3M12 13v3"/></svg>
-      </div>
-      <strong class="pkg-title"><span class="es-txt">Traslado de equipaje</span><span class="en-txt" style="display:none">Luggage transfer</span></strong>
-      <p class="pkg-desc"><span class="es-txt">Tu mochila viaja al siguiente alojamiento cada día. Caminas libre con solo una pequeña mochila de día.</span><span class="en-txt" style="display:none">Your bag travels to the next accommodation daily. Walk freely with just a small day pack.</span></p>
-    </div>
-    <div class="pkg-item">
-      <div class="pkg-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 9h1a3 3 0 010 6h-1M3 9h14v8a4 4 0 01-4 4H7a4 4 0 01-4-4V9z"/><path d="M8 1v4M12 1v4"/></svg>
-      </div>
-      <strong class="pkg-title"><span class="es-txt">Desayuno incluido</span><span class="en-txt" style="display:none">Breakfast included</span></strong>
-      <p class="pkg-desc"><span class="es-txt">Desayuno cada mañana en tu alojamiento. Empieza cada etapa con energía sin perder tiempo buscando café.</span><span class="en-txt" style="display:none">Breakfast every morning at your accommodation. Start each stage with energy, no need to search for a café.</span></p>
-    </div>
-    <div class="pkg-item">
-      <div class="pkg-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M8 17h8M8 14h5"/></svg>
-      </div>
-      <strong class="pkg-title"><span class="es-txt">Credencial del peregrino</span><span class="en-txt" style="display:none">Pilgrim passport</span></strong>
-      <p class="pkg-desc"><span class="es-txt">Te la enviamos antes de salir. Consigue los sellos en cada etapa y obtén tu Compostela oficial en Santiago.</span><span class="en-txt" style="display:none">We post it before you depart. Collect stamps at each stage and earn your official Compostela.</span></p>
-    </div>
-    <div class="pkg-item">
-      <div class="pkg-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3,6 9,3 15,6 21,3 21,18 15,21 9,18 3,21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
-      </div>
-      <strong class="pkg-title"><span class="es-txt">Itinerario personalizado</span><span class="en-txt" style="display:none">Personalised itinerary</span></strong>
-      <p class="pkg-desc"><span class="es-txt">Documento con etapas, distancias, dónde comer y dónde sellar la credencial. Adaptado a tu ritmo.</span><span class="en-txt" style="display:none">Document with stages, distances, where to eat and where to stamp. Adapted to your pace.</span></p>
-    </div>
-    <div class="pkg-item">
-      <div class="pkg-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.6 19.79 19.79 0 01.1 1 2 2 0 012.11 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
-      </div>
-      <strong class="pkg-title"><span class="es-txt">Asistencia durante el Camino</span><span class="en-txt" style="display:none">Support during the Camino</span></strong>
-      <p class="pkg-desc"><span class="es-txt">Nuestro equipo disponible por teléfono durante todo el recorrido. Cualquier imprevisto, resuelto.</span><span class="en-txt" style="display:none">Our team available by phone throughout your route. Any unexpected issue, sorted.</span></p>
-    </div>
-  </div>
-  <div class="pkg-note">
-    <p><span class="es-txt"><strong>No incluye:</strong> vuelos, transporte hasta Sarria, comidas no indicadas y actividades opcionales. Si lo necesitas, podemos ayudarte a organizar traslados privados hasta el punto de inicio.</span><span class="en-txt" style="display:none"><strong>Not included:</strong> flights, transport to Sarria, meals not specified and optional activities. If you need it, we can help arrange private transfers to the starting point.</span></p>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq-section">
-  <div class="section-title">
-    <h2><span class="es-txt">Preguntas frecuentes — Camino desde Sarria</span><span class="en-txt" style="display:none">FAQ — Camino from Sarria</span></h2>
-    <p><span class="es-txt">Todo lo que necesitas saber antes de hacer el Camino</span><span class="en-txt" style="display:none">Everything you need to know before walking the Camino</span></p>
-    <div class="linea"></div>
-  </div>
-  <div class="faq">
-    <div class="faq-item">
-      <button class="faq-q" onclick="ecsFaqToggle(this)"><span class="es-txt">¿Cuántos kilómetros hay desde Sarria hasta Santiago?</span><span class="en-txt" style="display:none">How many kilometres from Sarria to Santiago?</span></button>
-      <div class="faq-a"><span class="es-txt">Desde Sarria hasta Santiago hay algo más de 100 kilómetros, por lo que esta ruta cumple con la distancia mínima exigida para obtener la Compostela oficial. Por eso es una de las opciones más elegidas por quienes quieren vivir la experiencia del Camino en pocos días y llegar a la Catedral con credencial completa.</span><span class="en-txt" style="display:none">The distance from Sarria to Santiago is just over 100 kilometres, which meets the minimum required to receive the official Compostela. That is why it is one of the most popular options for those who want the full Camino experience in just a few days and arrive at the Cathedral with a completed passport.</span></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="ecsFaqToggle(this)"><span class="es-txt">¿Cuántos días se tarda en hacer el Camino desde Sarria?</span><span class="en-txt" style="display:none">How many days does the Camino from Sarria take?</span></button>
-      <div class="faq-a"><span class="es-txt">Lo más habitual es hacer el Camino desde Sarria en 5 o 6 etapas, aunque el itinerario puede adaptarse según tu ritmo, tu forma física o el tipo de viaje que quieras hacer. Algunas personas prefieren caminar más cada día para reducir noches, mientras que otras añaden una etapa extra para ir con más calma.</span><span class="en-txt" style="display:none">Most people complete the Camino from Sarria in 5 or 6 stages, although the itinerary can be adjusted to suit your pace, fitness level, or the type of trip you want. Some prefer to walk further each day to reduce nights, while others add an extra stage to take it more slowly.</span></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="ecsFaqToggle(this)"><span class="es-txt">¿Es difícil el Camino de Santiago desde Sarria?</span><span class="en-txt" style="display:none">Is the Camino de Santiago from Sarria difficult?</span></button>
-      <div class="faq-a"><span class="es-txt">El Camino desde Sarria tiene una dificultad fácil o moderada. Es una ruta muy adecuada para principiantes, parejas, grupos de amigos e incluso muchas familias, siempre que se tenga una preparación mínima para caminar varios días seguidos. Además, es uno de los tramos con mejor infraestructura, servicios y señalización.</span><span class="en-txt" style="display:none">The Camino from Sarria is rated easy to moderate. It is a very suitable route for beginners, couples, groups of friends and many families, provided you have a basic level of fitness for walking several days in a row. It is also one of the best-served sections in terms of infrastructure, services and signage.</span></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="ecsFaqToggle(this)"><span class="es-txt">¿Se puede conseguir la Compostela saliendo desde Sarria?</span><span class="en-txt" style="display:none">Can you get the Compostela starting from Sarria?</span></button>
-      <div class="faq-a"><span class="es-txt">Sí. Saliendo desde Sarria puedes conseguir la Compostela siempre que completes el recorrido a pie y selles correctamente tu credencial durante el camino. Al superar los 100 kilómetros mínimos, esta ruta cumple con el requisito oficial establecido por la Catedral de Santiago.</span><span class="en-txt" style="display:none">Yes. Starting from Sarria you can earn the Compostela as long as you complete the route on foot and stamp your pilgrim passport correctly along the way. Covering more than the 100-kilometre minimum, this route meets the official requirement set by the Cathedral of Santiago.</span></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="ecsFaqToggle(this)"><span class="es-txt">¿Qué incluye un Camino organizado desde Sarria?</span><span class="en-txt" style="display:none">What does an organised Camino from Sarria include?</span></button>
-      <div class="faq-a"><span class="es-txt">Un Camino organizado desde Sarria suele incluir alojamiento ya reservado, traslado diario de mochila entre etapas, documentación del viaje y asistencia antes y durante la ruta. Según el tipo de paquete, también puede incluir desayunos, seguro, traslados adicionales o noches extra en Santiago.</span><span class="en-txt" style="display:none">An organised Camino from Sarria typically includes pre-booked accommodation, daily luggage transfer between stages, trip documentation and support before and during the route. Depending on the package, it may also include breakfasts, insurance, additional transfers or extra nights in Santiago.</span></div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="ecsFaqToggle(this)"><span class="es-txt">¿Por qué elegir el Camino desde Sarria?</span><span class="en-txt" style="display:none">Why choose the Camino from Sarria?</span></button>
-      <div class="faq-a"><span class="es-txt">El Camino desde Sarria es la opción ideal para quienes buscan una experiencia auténtica del Camino de Santiago en menos tiempo. Permite conseguir la Compostela, tiene etapas accesibles, un ambiente peregrino muy vivo y una excelente combinación de naturaleza, pueblos gallegos y patrimonio histórico. Por eso es una de las rutas más recomendadas para quienes hacen el Camino por primera vez.</span><span class="en-txt" style="display:none">The Camino from Sarria is the ideal option for those seeking an authentic Camino de Santiago experience in less time. It qualifies for the Compostela, has accessible stages, a lively pilgrim atmosphere and an excellent combination of nature, Galician villages and historic heritage. That is why it is one of the most recommended routes for first-time pilgrims.</span></div>
+    <div class="sarria-aloj-content">
+      <h2><span class="es-txt">Alojamiento seleccionado con cuidado</span><span class="en-txt" style="display:none">Carefully selected accommodation</span></h2>
+      <p><span class="es-txt">Trabajamos con <strong>pensiones, hostales, casas rurales y pequeños hoteles</strong> en cada etapa del Camino. Priorizamos habitación privada, descanso real, buena ubicación y baño privado según disponibilidad. Nada de albergues de literas si no es lo que buscas.</span><span class="en-txt" style="display:none">We work with <strong>guesthouses, hostels, rural houses and small hotels</strong> at each stage of the Camino. We prioritise private rooms, genuine rest, good location and en-suite bathrooms subject to availability.</span></p>
+      <button onclick="ecsOpenAloj()" class="sarria-aloj-btn"><span class="es-txt">Ver tipos de alojamiento</span><span class="en-txt" style="display:none">View accommodation types</span></button>
     </div>
   </div>
 </section>
 
+<!-- INFO TABS -->
+<section class="sarria-info-section" id="sec-info">
+  <div style="max-width:900px;margin:0 auto;">
+    <div class="section-title">
+      <h2><span class="es-txt">Información del viaje</span><span class="en-txt" style="display:none">Trip information</span></h2>
+      <p><span class="es-txt">Todo lo que necesitas saber antes de hacer el Camino desde Sarria</span><span class="en-txt" style="display:none">Everything you need to know before walking the Camino from Sarria</span></p>
+      <div class="linea"></div>
+    </div>
+    <div class="sarria-tabs-wrap">
+      <!-- TAB NAV -->
+      <div class="sarria-tab-nav" role="tablist">
+        <button class="sarria-tab-btn active" onclick="ecsTab(this,'sit-1')" role="tab"><span class="es-txt">¿Es para mí?</span><span class="en-txt" style="display:none">Is it for me?</span></button>
+        <button class="sarria-tab-btn" onclick="ecsTab(this,'sit-2')" role="tab"><span class="es-txt">Actividad</span><span class="en-txt" style="display:none">Activity</span></button>
+        <button class="sarria-tab-btn" onclick="ecsTab(this,'sit-3')" role="tab"><span class="es-txt">Alojamiento</span><span class="en-txt" style="display:none">Accommodation</span></button>
+        <button class="sarria-tab-btn" onclick="ecsTab(this,'sit-4')" role="tab"><span class="es-txt">Incluye</span><span class="en-txt" style="display:none">Included</span></button>
+        <button class="sarria-tab-btn" onclick="ecsTab(this,'sit-5')" role="tab"><span class="es-txt">No incluye</span><span class="en-txt" style="display:none">Not included</span></button>
+        <button class="sarria-tab-btn" onclick="ecsTab(this,'sit-6')" role="tab"><span class="es-txt">Traslados</span><span class="en-txt" style="display:none">Travel</span></button>
+        <button class="sarria-tab-btn" onclick="ecsTab(this,'sit-7')" role="tab"><span class="es-txt">Equipaje</span><span class="en-txt" style="display:none">Luggage</span></button>
+        <button class="sarria-tab-btn" onclick="ecsTab(this,'sit-8')" role="tab">Compostela</button>
+        <button class="sarria-tab-btn" onclick="ecsTab(this,'sit-9')" role="tab">FAQ</button>
+      </div>
 
-<!-- BLOG RELACIONADO -->
-<section style="background:white;padding:60px 24px;">
-  <div class="ecs-container">
-    <h2 style="text-align:center;color:#2D4A52;margin-bottom:8px;font-size:1.6rem;"><span class="es-txt">Artículos que te ayudarán a preparar tu Camino</span><span class="en-txt" style="display:none">Articles to help you prepare your Camino</span></h2>
-    <p style="text-align:center;color:#5a6b6a;margin-bottom:40px;"><span class="es-txt">Guías prácticas para planificar cada detalle antes de salir</span><span class="en-txt" style="display:none">Practical guides to plan every detail before you go</span></p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;max-width:960px;margin:0 auto;">
-      <a href="blog-mochila-camino-santiago.html" style="background:white;border-radius:12px;padding:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,0.07);display:block;transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
-        <span style="display:inline-block;background:#EBF5F6;color:#56A1A4;font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.04em;"><span class="es-txt">Preparación</span><span class="en-txt" style="display:none">Preparation</span></span>
-        <h3 style="color:#2D4A52;font-size:1rem;margin-bottom:8px;line-height:1.4;"><span class="es-txt">Qué llevar en la mochila del Camino de Santiago</span><span class="en-txt" style="display:none">What to pack for the Camino de Santiago</span></h3>
-        <p style="color:#5a6b6a;font-size:0.88rem;line-height:1.6;margin-bottom:12px;"><span class="es-txt">La lista definitiva: ropa técnica, calzado, botiquín y lo que no necesitas llevar.</span><span class="en-txt" style="display:none">The definitive list: technical clothing, footwear, first-aid kit and what you don't need.</span></p>
-        <span style="color:#56A1A4;font-size:0.85rem;font-weight:700;"><span class="es-txt">Leer más →</span><span class="en-txt" style="display:none">Read more →</span></span>
-      </a>
-      <a href="blog-cuanto-cuesta-camino-santiago.html" style="background:white;border-radius:12px;padding:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,0.07);display:block;transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
-        <span style="display:inline-block;background:#EBF5F6;color:#56A1A4;font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.04em;"><span class="es-txt">Presupuesto</span><span class="en-txt" style="display:none">Budget</span></span>
-        <h3 style="color:#2D4A52;font-size:1rem;margin-bottom:8px;line-height:1.4;"><span class="es-txt">¿Cuánto cuesta hacer el Camino de Santiago?</span><span class="en-txt" style="display:none">How much does the Camino de Santiago cost?</span></h3>
-        <p style="color:#5a6b6a;font-size:0.88rem;line-height:1.6;margin-bottom:12px;"><span class="es-txt">Desglose real de gastos: alojamiento, comida, transporte y extras. Desde 35€/día.</span><span class="en-txt" style="display:none">A real breakdown of costs: accommodation, food, transport and extras. From €35/day.</span></p>
-        <span style="color:#56A1A4;font-size:0.85rem;font-weight:700;"><span class="es-txt">Leer más →</span><span class="en-txt" style="display:none">Read more →</span></span>
-      </a>
-      <a href="blog-mejor-epoca-camino-santiago.html" style="background:white;border-radius:12px;padding:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,0.07);display:block;transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
-        <span style="display:inline-block;background:#EBF5F6;color:#56A1A4;font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.04em;"><span class="es-txt">Planificación</span><span class="en-txt" style="display:none">Planning</span></span>
-        <h3 style="color:#2D4A52;font-size:1rem;margin-bottom:8px;line-height:1.4;"><span class="es-txt">La mejor época para hacer el Camino de Santiago</span><span class="en-txt" style="display:none">The best time to do the Camino de Santiago</span></h3>
-        <p style="color:#5a6b6a;font-size:0.88rem;line-height:1.6;margin-bottom:12px;"><span class="es-txt">Mayo, junio y septiembre concentran el 60% de peregrinos. Descubre qué mes es mejor para ti.</span><span class="en-txt" style="display:none">May, June and September account for 60% of pilgrims. Find out which month suits you best.</span></p>
-        <span style="color:#56A1A4;font-size:0.85rem;font-weight:700;"><span class="es-txt">Leer más →</span><span class="en-txt" style="display:none">Read more →</span></span>
-      </a>
+      <!-- TAB 1: ¿Es para mí? -->
+      <div id="sit-1" class="sarria-tab-panel active" role="tabpanel">
+        <p class="tab-p"><span class="es-txt">El Camino desde Sarria es ideal si buscas una experiencia auténtica en pocos días, con la Compostela al final. Es accesible para la mayoría de personas con una forma física básica.</span><span class="en-txt" style="display:none">The Camino from Sarria is ideal if you want an authentic experience in just a few days, with the Compostela at the end. It's accessible for most people with a basic level of fitness.</span></p>
+        <p class="tab-h3"><span class="es-txt">✓ Perfecta para ti si…</span><span class="en-txt" style="display:none">✓ Great for you if…</span></p>
+        <ul class="tab-ul">
+          <li><span class="es-txt">Es tu primera vez haciendo el Camino de Santiago</span><span class="en-txt" style="display:none">It's your first time walking the Camino de Santiago</span></li>
+          <li><span class="es-txt">Dispones de 5 a 7 días disponibles</span><span class="en-txt" style="display:none">You have 5 to 7 days available</span></li>
+          <li><span class="es-txt">Quieres la Compostela oficial (cubrimos los 100 km mínimos exigidos)</span><span class="en-txt" style="display:none">You want the official Compostela (we cover the required 100 km minimum)</span></li>
+          <li><span class="es-txt">Viajas en pareja, con amigos, en familia o solo</span><span class="en-txt" style="display:none">You're travelling as a couple, with friends, family or solo</span></li>
+          <li><span class="es-txt">Prefieres tenerlo todo organizado sin preocuparte de logística</span><span class="en-txt" style="display:none">You prefer to have everything organised without worrying about logistics</span></li>
+          <li><span class="es-txt">Buscas paisajes gallegos auténticos: bosques de robles, aldeas de piedra, río Miño</span><span class="en-txt" style="display:none">You're looking for authentic Galician landscapes: oak forests, stone villages, the Miño river</span></li>
+          <li><span class="es-txt">Familias con niños de 10+ años activos</span><span class="en-txt" style="display:none">Families with active children aged 10+</span></li>
+        </ul>
+        <p class="tab-h3"><span class="es-txt">✗ Puede que prefieras otra ruta si…</span><span class="en-txt" style="display:none">✗ You might prefer another route if…</span></p>
+        <ul class="tab-ul excl">
+          <li><span class="es-txt">Quieres cruzar España entera a pie — el <a href="camino-frances.html" style="color:#56A1A4;">Camino Francés completo desde Saint-Jean-Pied-de-Port</a> es tu ruta</span><span class="en-txt" style="display:none">You want to cross all of Spain on foot — the <a href="camino-frances.html" style="color:#56A1A4;">full French Way from Saint-Jean-Pied-de-Port</a> is your route</span></li>
+          <li><span class="es-txt">Buscas una experiencia más solitaria y tranquila — el Camino Primitivo o del Norte tienen menos afluencia</span><span class="en-txt" style="display:none">You want a quieter, more solitary experience — the Primitive or Northern routes have fewer pilgrims</span></li>
+        </ul>
+      </div>
+
+      <!-- TAB 2: Actividad -->
+      <div id="sit-2" class="sarria-tab-panel" role="tabpanel">
+        <span class="tab-badge"><span class="es-txt">Dificultad: Fácil / Moderada</span><span class="en-txt" style="display:none">Difficulty: Easy / Moderate</span></span>
+        <span class="tab-badge"><span class="es-txt">18–28 km/etapa</span><span class="en-txt" style="display:none">18–28 km/stage</span></span>
+        <div class="tab-level">
+          <div class="tab-level-dot on"></div><div class="tab-level-dot on"></div><div class="tab-level-dot off"></div><div class="tab-level-dot off"></div><div class="tab-level-dot off"></div>
+        </div>
+        <p class="tab-h3"><span class="es-txt">Terreno</span><span class="en-txt" style="display:none">Terrain</span></p>
+        <ul class="tab-ul">
+          <li><span class="es-txt">Caminos de tierra y piedra entre robledales y eucaliptos</span><span class="en-txt" style="display:none">Dirt and stone paths through oak and eucalyptus forests</span></li>
+          <li><span class="es-txt">Aldeas de piedra y pistas rurales en buen estado</span><span class="en-txt" style="display:none">Stone villages and well-maintained rural tracks</span></li>
+          <li><span class="es-txt">Sin grandes puertos de montaña ni desniveles técnicos</span><span class="en-txt" style="display:none">No major mountain passes or technical elevation changes</span></li>
+          <li><span class="es-txt">El tramo más exigente: Sarria → Portomarín (subidas y bajadas a orillas del Miño)</span><span class="en-txt" style="display:none">The most demanding stretch: Sarria → Portomarín (hills along the Miño river)</span></li>
+        </ul>
+        <p class="tab-h3"><span class="es-txt">Preparación recomendada</span><span class="en-txt" style="display:none">Recommended preparation</span></p>
+        <p class="tab-p"><span class="es-txt">Caminar 30–60 minutos al día durante 2–3 semanas antes de la salida es suficiente para la mayoría de personas. Si llevas meses sin hacer ejercicio, empieza antes. El terreno no es técnico, pero las piernas y los pies sí acusan las etapas consecutivas.</span><span class="en-txt" style="display:none">Walking 30–60 minutes a day for 2–3 weeks before departure is enough for most people. If you haven't exercised in months, start earlier. The terrain isn't technical, but consecutive days of walking do take a toll on legs and feet.</span></p>
+      </div>
+
+      <!-- TAB 3: Alojamiento -->
+      <div id="sit-3" class="sarria-tab-panel" role="tabpanel">
+        <p class="tab-p"><span class="es-txt">Todos los alojamientos están reservados antes de tu salida. Trabajamos con establecimientos seleccionados en cada etapa, priorizando comodidad, ubicación y descanso real.</span><span class="en-txt" style="display:none">All accommodation is booked before your departure. We work with selected properties at each stage, prioritising comfort, location and genuine rest.</span></p>
+        <ul class="tab-ul">
+          <li><span class="es-txt">Pensiones, hostales, casas rurales y pequeños hoteles — todos seleccionados</span><span class="en-txt" style="display:none">Guesthouses, hostels, rural houses and small hotels — all carefully selected</span></li>
+          <li><span class="es-txt">Habitación privada prioritaria en todas las etapas</span><span class="en-txt" style="display:none">Private room prioritised at every stage</span></li>
+          <li><span class="es-txt">Baño privado según disponibilidad (no garantizado en todas las noches)</span><span class="en-txt" style="display:none">En-suite bathroom subject to availability (not guaranteed every night)</span></li>
+          <li><span class="es-txt">Desayuno incluido cada mañana</span><span class="en-txt" style="display:none">Breakfast included every morning</span></li>
+        </ul>
+        <p class="tab-h3"><span class="es-txt">Comidas</span><span class="en-txt" style="display:none">Meals</span></p>
+        <p class="tab-p"><span class="es-txt">El desayuno está incluido. El almuerzo y la cena no están incluidos — a lo largo del Camino hay bares, cafeterías y restaurantes en casi todos los pueblos donde puedes comer sin problema. El menú del día ronda los 10–15 €.</span><span class="en-txt" style="display:none">Breakfast is included. Lunch and dinner are not included — along the Camino there are cafés, bars and restaurants in almost every village. A set menu (menú del día) usually costs €10–15.</span></p>
+      </div>
+
+      <!-- TAB 4: Incluye -->
+      <div id="sit-4" class="sarria-tab-panel" role="tabpanel">
+        <ul class="tab-ul">
+          <li><span class="es-txt">Alojamiento reservado en todas las etapas (habitación privada)</span><span class="en-txt" style="display:none">Pre-booked accommodation at every stage (private room)</span></li>
+          <li><span class="es-txt">Traslado diario de mochila de un alojamiento al siguiente</span><span class="en-txt" style="display:none">Daily luggage transfer between accommodations</span></li>
+          <li><span class="es-txt">Desayuno incluido en cada etapa</span><span class="en-txt" style="display:none">Breakfast at every stage</span></li>
+          <li><span class="es-txt">Credencial del peregrino (enviada antes de la salida)</span><span class="en-txt" style="display:none">Pilgrim passport (sent before departure)</span></li>
+          <li><span class="es-txt">Itinerario detallado: etapas, km, dónde comer, dónde sellar</span><span class="en-txt" style="display:none">Detailed itinerary: stages, km, where to eat, where to stamp</span></li>
+          <li><span class="es-txt">Atención personalizada antes del Camino (dudas, logística, adaptaciones)</span><span class="en-txt" style="display:none">Personalised support before the Camino (questions, logistics, adjustments)</span></li>
+          <li><span class="es-txt">Asistencia telefónica durante todo el recorrido</span><span class="en-txt" style="display:none">Phone support throughout the entire route</span></li>
+        </ul>
+      </div>
+
+      <!-- TAB 5: No incluye -->
+      <div id="sit-5" class="sarria-tab-panel" role="tabpanel">
+        <ul class="tab-ul excl">
+          <li><span class="es-txt">Vuelos o transporte entre tu ciudad y Sarria</span><span class="en-txt" style="display:none">Flights or transport between your city and Sarria</span></li>
+          <li><span class="es-txt">Traslado de vuelta desde Santiago de Compostela</span><span class="en-txt" style="display:none">Return transfer from Santiago de Compostela</span></li>
+          <li><span class="es-txt">Comidas del mediodía y cenas</span><span class="en-txt" style="display:none">Lunches and dinners</span></li>
+          <li><span class="es-txt">Bebidas fuera del desayuno</span><span class="en-txt" style="display:none">Drinks outside of breakfast</span></li>
+          <li><span class="es-txt">Seguro de viaje y cancelación (recomendamos contratarlo)</span><span class="en-txt" style="display:none">Travel and cancellation insurance (we recommend taking one out)</span></li>
+          <li><span class="es-txt">Actividades opcionales (visitas, excursiones)</span><span class="en-txt" style="display:none">Optional activities (visits, excursions)</span></li>
+        </ul>
+        <p class="tab-p" style="font-size:0.85rem;color:#6b7a7a;"><span class="es-txt">Si necesitas ayuda para organizar traslados hasta Sarria o desde Santiago, consúltanos — podemos orientarte.</span><span class="en-txt" style="display:none">If you need help arranging transfers to Sarria or from Santiago, just ask — we can point you in the right direction.</span></p>
+      </div>
+
+      <!-- TAB 6: Traslados -->
+      <div id="sit-6" class="sarria-tab-panel" role="tabpanel">
+        <p class="tab-h3"><span class="es-txt">Cómo llegar a Sarria</span><span class="en-txt" style="display:none">Getting to Sarria</span></p>
+        <ul class="tab-ul">
+          <li><span class="es-txt"><strong>Tren:</strong> Renfe conecta Sarria con Madrid (vía Lugo) y con A Coruña. Busca en renfe.com</span><span class="en-txt" style="display:none"><strong>Train:</strong> Renfe connects Sarria with Madrid (via Lugo) and A Coruña. Search at renfe.com</span></li>
+          <li><span class="es-txt"><strong>Autobús:</strong> Líneas desde Santiago de Compostela, Lugo y otras ciudades gallegas (ALSA, Monbus)</span><span class="en-txt" style="display:none"><strong>Bus:</strong> Routes from Santiago de Compostela, Lugo and other Galician cities (ALSA, Monbus)</span></li>
+          <li><span class="es-txt"><strong>Coche:</strong> Sarria se encuentra a ~1h de Santiago y ~45min de Lugo por autopista</span><span class="en-txt" style="display:none"><strong>Car:</strong> Sarria is ~1h from Santiago and ~45min from Lugo on the motorway</span></li>
+        </ul>
+        <p class="tab-h3"><span class="es-txt">Cómo volver desde Santiago</span><span class="en-txt" style="display:none">Getting home from Santiago</span></p>
+        <ul class="tab-ul">
+          <li><span class="es-txt"><strong>Tren:</strong> Renfe conecta Santiago con Madrid (AVE/Media Distancia), A Coruña y Vigo</span><span class="en-txt" style="display:none"><strong>Train:</strong> Renfe connects Santiago with Madrid (AVE/regional), A Coruña and Vigo</span></li>
+          <li><span class="es-txt"><strong>Vuelo:</strong> El aeropuerto de Santiago de Compostela (SCQ) tiene vuelos directos a principales ciudades españolas y europeas</span><span class="en-txt" style="display:none"><strong>Flight:</strong> Santiago de Compostela Airport (SCQ) has direct flights to major Spanish and European cities</span></li>
+          <li><span class="es-txt"><strong>Autobús:</strong> ALSA y Flixbus conectan Santiago con muchas ciudades de España</span><span class="en-txt" style="display:none"><strong>Bus:</strong> ALSA and Flixbus connect Santiago with many Spanish cities</span></li>
+        </ul>
+      </div>
+
+      <!-- TAB 7: Equipaje -->
+      <div id="sit-7" class="sarria-tab-panel" role="tabpanel">
+        <span class="tab-badge"><span class="es-txt">Traslado de mochila incluido</span><span class="en-txt" style="display:none">Luggage transfer included</span></span>
+        <p class="tab-p" style="margin-top:12px;"><span class="es-txt">El servicio de traslado de equipaje recoge tu mochila principal en el alojamiento cada mañana y la lleva al alojamiento de la etapa siguiente. Tú caminas con solo una pequeña mochila de día, lo que hace la experiencia mucho más cómoda.</span><span class="en-txt" style="display:none">The luggage transfer service collects your main bag from your accommodation each morning and delivers it to your next night's stop. You walk with just a small day pack — this makes the experience much more comfortable.</span></p>
+        <p class="tab-h3"><span class="es-txt">Recomendaciones de equipaje</span><span class="en-txt" style="display:none">Luggage recommendations</span></p>
+        <ul class="tab-ul">
+          <li><span class="es-txt">Mochila principal (40–55 L): para trasladar entre etapas — máx. 15 kg</span><span class="en-txt" style="display:none">Main bag (40–55 L): transferred between stages — max. 15 kg</span></li>
+          <li><span class="es-txt">Mochila de día (10–15 L): para llevar mientras caminas con lo esencial</span><span class="en-txt" style="display:none">Day pack (10–15 L): carry while walking with just the essentials</span></li>
+          <li><span class="es-txt">Ropa técnica o transpirable (no de algodón) para 3–4 días + lavado</span><span class="en-txt" style="display:none">Technical or breathable clothing (not cotton) for 3–4 days + washing</span></li>
+          <li><span class="es-txt">Botas de montaña ya usadas y rodadas — nunca estrenadas en el Camino</span><span class="en-txt" style="display:none">Already broken-in hiking boots — never wear new ones on the Camino</span></li>
+          <li><span class="es-txt">Chubasquero o poncho (Galicia puede ser lluviosa en cualquier época)</span><span class="en-txt" style="display:none">Waterproof jacket or poncho (Galicia can be rainy at any time of year)</span></li>
+          <li><span class="es-txt">Botiquín básico: tiritas, vaselina, esparadrapo para ampollas</span><span class="en-txt" style="display:none">Basic first aid: plasters, petroleum jelly, blister tape</span></li>
+        </ul>
+        <p class="tab-p" style="font-size:0.85rem;color:#6b7a7a;"><span class="es-txt">Recibirás una lista de equipaje detallada junto al itinerario personalizado antes de la salida.</span><span class="en-txt" style="display:none">You'll receive a detailed packing list alongside your personalised itinerary before departure.</span></p>
+      </div>
+
+      <!-- TAB 8: Compostela -->
+      <div id="sit-8" class="sarria-tab-panel" role="tabpanel">
+        <p class="tab-p"><span class="es-txt">La Compostela es el certificado oficial que acredita haber completado el Camino de Santiago. Para obtenerla desde Sarria hay que cubrir los 100 km mínimos a pie y sellar correctamente la credencial.</span><span class="en-txt" style="display:none">The Compostela is the official certificate that proves you have completed the Camino de Santiago. To receive it from Sarria you must cover the 100 km minimum on foot and stamp your credential correctly.</span></p>
+        <p class="tab-h3"><span class="es-txt">La Credencial del Peregrino</span><span class="en-txt" style="display:none">The Pilgrim Passport</span></p>
+        <ul class="tab-ul">
+          <li><span class="es-txt">Te la enviamos antes de la salida con tu documentación de viaje</span><span class="en-txt" style="display:none">We send it to you before departure with your travel documents</span></li>
+          <li><span class="es-txt">Sella al menos <strong>2 veces al día</strong> en cada etapa: albergues, iglesias, bares, oficinas de turismo</span><span class="en-txt" style="display:none">Stamp it at least <strong>twice a day</strong> at each stage: hostels, churches, bars, tourist offices</span></li>
+          <li><span class="es-txt">Los últimos 100 km exigen al menos 2 sellos diarios para validar el recorrido</span><span class="en-txt" style="display:none">The last 100 km require at least 2 daily stamps to validate the route</span></li>
+        </ul>
+        <p class="tab-h3"><span class="es-txt">Al llegar a Santiago</span><span class="en-txt" style="display:none">On arrival in Santiago</span></p>
+        <ul class="tab-ul">
+          <li><span class="es-txt">Presenta tu credencial con todos los sellos en la <strong>Oficina del Peregrino</strong> (junto a la Catedral)</span><span class="en-txt" style="display:none">Present your stamped credential at the <strong>Pilgrim's Office</strong> (next to the Cathedral)</span></li>
+          <li><span class="es-txt">Si vienes a pie, recibirás la Compostela — el certificado en latín con tu nombre</span><span class="en-txt" style="display:none">If you walked, you'll receive the Compostela — the Latin certificate with your name</span></li>
+          <li><span class="es-txt">Puedes solicitar también la <em>Distancia</em> (certificado de km recorridos) y la <em>Fisterrana</em> si continúas hasta Fisterra</span><span class="en-txt" style="display:none">You can also request the <em>Distancia</em> (km certificate) and the <em>Fisterrana</em> if you continue to Finisterre</span></li>
+        </ul>
+      </div>
+
+      <!-- TAB 9: FAQ -->
+      <div id="sit-9" class="sarria-tab-panel" role="tabpanel">
+        <div class="faq">
+          <div class="faq-item">
+            <button class="faq-q" onclick="ecsFaqToggle(this)"><span class="es-txt">¿Cuántos kilómetros hay desde Sarria hasta Santiago?</span><span class="en-txt" style="display:none">How many kilometres from Sarria to Santiago?</span></button>
+            <div class="faq-a"><span class="es-txt">Unos <strong>115 km</strong> en total — superando el mínimo de 100 km exigido por la Oficina del Peregrino para la Compostela oficial. Es la distancia perfecta para completar el Camino en una semana.</span><span class="en-txt" style="display:none">Around <strong>115 km</strong> in total — exceeding the 100 km minimum required by the Pilgrim's Office for the official Compostela. It's the perfect distance to complete the Camino in a week.</span></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="ecsFaqToggle(this)"><span class="es-txt">¿Cuántos días se tarda?</span><span class="en-txt" style="display:none">How many days does it take?</span></button>
+            <div class="faq-a"><span class="es-txt">Lo más habitual es <strong>5 etapas</strong> (18–28 km/día). También ofrecemos la opción de 6 etapas para un ritmo más tranquilo, ideal para familias o personas con menos forma física.</span><span class="en-txt" style="display:none">The most common is <strong>5 stages</strong> (18–28 km/day). We also offer a 6-stage option for a more relaxed pace, ideal for families or less fit pilgrims.</span></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="ecsFaqToggle(this)"><span class="es-txt">¿Es difícil?</span><span class="en-txt" style="display:none">Is it difficult?</span></button>
+            <div class="faq-a"><span class="es-txt">Dificultad <strong>fácil a moderada</strong>. Sin puertos de montaña ni etapas técnicas. Con preparación mínima (caminar 30–60 min/día durante unas semanas), la mayoría de personas lo completa sin problema.</span><span class="en-txt" style="display:none">Rated <strong>easy to moderate</strong>. No mountain passes or technical stages. With minimal preparation (walking 30–60 min/day for a few weeks), most people complete it comfortably.</span></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="ecsFaqToggle(this)"><span class="es-txt">¿Se puede conseguir la Compostela desde Sarria?</span><span class="en-txt" style="display:none">Can you get the Compostela from Sarria?</span></button>
+            <div class="faq-a"><span class="es-txt">Sí. Cubrimos más de 100 km hasta Santiago — el mínimo exigido. Es fundamental sellar la credencial al menos <strong>2 veces al día</strong> en cada etapa para que sea válida.</span><span class="en-txt" style="display:none">Yes. We cover more than 100 km to Santiago — the required minimum. It's essential to stamp your credential at least <strong>twice a day</strong> at each stage for it to be valid.</span></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="ecsFaqToggle(this)"><span class="es-txt">¿Cuándo es la mejor época para hacer el Camino desde Sarria?</span><span class="en-txt" style="display:none">What's the best time to walk the Camino from Sarria?</span></button>
+            <div class="faq-a"><span class="es-txt">Se puede hacer <strong>todo el año</strong>. Mayo, junio y septiembre concentran el mayor número de peregrinos. Julio y agosto son los meses más cálidos y concurridos. En invierno hay menos peregrinos pero el clima gallego puede ser lluvioso — lleva siempre chubasquero.</span><span class="en-txt" style="display:none">It can be walked <strong>all year round</strong>. May, June and September see the most pilgrims. July and August are the warmest and busiest months. In winter there are fewer pilgrims but Galician weather can be rainy — always bring a waterproof.</span></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="ecsFaqToggle(this)"><span class="es-txt">¿Cómo organizar el Camino para un grupo privado?</span><span class="en-txt" style="display:none">How to organise a private group Camino?</span></button>
+            <div class="faq-a"><span class="es-txt">A partir de <strong>6 personas</strong> preparamos un presupuesto personalizado con precio especial por persona. Podemos adaptar fechas, ritmo, tipo de alojamiento y servicios. <a href="reserva.html?ruta=sarria&amp;tipo=grupo" style="color:#56A1A4;">Pedir presupuesto para grupo →</a></span><span class="en-txt" style="display:none">From <strong>6 people</strong> we prepare a personalised quote with a special per-person price. We can adapt dates, pace, accommodation type and services. <a href="reserva.html?ruta=sarria&amp;tipo=grupo" style="color:#56A1A4;">Request group quote →</a></span></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -788,6 +925,8 @@ function ecsSetLang(lang){document.querySelectorAll('.lang-btn').forEach(b=>b.cl
 document.addEventListener('DOMContentLoaded',function(){var saved=localStorage.getItem('ecsLang')||'es';ecsSetLang(saved);});
 function ecsToggleNav(){document.getElementById('nav-mobile').classList.toggle('open');}
 function ecsFaqToggle(el){el.parentElement.classList.toggle('open');}
+function ecsGalleryScroll(id,dir){var vp=document.getElementById(id);if(!vp)return;vp.scrollBy({left:dir*360,behavior:'smooth'});}
+function ecsTab(btn,id){var wrap=btn.closest('.sarria-tabs-wrap');wrap.querySelectorAll('.sarria-tab-btn').forEach(function(b){b.classList.remove('active');});wrap.querySelectorAll('.sarria-tab-panel').forEach(function(p){p.classList.remove('active');});btn.classList.add('active');document.getElementById(id).classList.add('active');}
 </script>
 
 <!-- FOLLETO MODAL -->
@@ -818,6 +957,7 @@ function ecsCloseFolleto(e){if(e.target===document.getElementById('ecs-folleto-o
 function ecsSubmitFolleto(){
   var n=document.getElementById('ecs-fl-nombre').value.trim();
   var em=document.getElementById('ecs-fl-email').value.trim();
+  var tel=document.getElementById('ecs-fl-tel').value.trim();
   var ch=document.getElementById('ecs-fl-check').checked;
   if(!n){alert('Por favor introduce tu nombre.');return;}
   if(!em||em.indexOf('@')===-1){alert('Por favor introduce un email v\u00e1lido.');return;}
@@ -953,6 +1093,33 @@ function ecsSubmitFolleto(){
 <script>
 function ecsOpenAloj(){var el=document.getElementById('ecs-aloj-overlay');el.style.display='flex';document.body.style.overflow='hidden';}
 function ecsCloseAloj(e){if(!e||e.target===document.getElementById('ecs-aloj-overlay')){document.getElementById('ecs-aloj-overlay').style.display='none';document.body.style.overflow='';}}
+</script>
+
+<!-- LEAFLET MAP INIT -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function(){
+  if(!document.getElementById('sarria-map')||typeof L==='undefined')return;
+  var map=L.map('sarria-map',{scrollWheelZoom:false,zoomControl:true}).setView([42.865,-7.9],9);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
+    attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains:'abcd',maxZoom:18
+  }).addTo(map);
+  var route=[[42.7836,-7.2742],[42.7839,-7.3003],[42.7793,-7.3891],[42.8085,-7.6162],[42.8307,-7.7195],[42.8726,-7.8711],[42.9119,-8.0110],[42.9271,-8.1629],[42.9123,-8.2899],[42.9026,-8.3541],[42.8928,-8.4389],[42.8805,-8.5457]];
+  L.polyline(route,{color:'#56A1A4',weight:4,opacity:0.85}).addTo(map);
+  var stops=[
+    {n:'Sarria',c:[42.7836,-7.2742],col:'#2D4A52'},
+    {n:'Portomarín',c:[42.8085,-7.6162],col:'#56A1A4'},
+    {n:'Palas de Rei',c:[42.8726,-7.8711],col:'#56A1A4'},
+    {n:'Arzúa',c:[42.9271,-8.1629],col:'#56A1A4'},
+    {n:'O Pedrouzo',c:[42.9026,-8.3541],col:'#56A1A4'},
+    {n:'Santiago',c:[42.8805,-8.5457],col:'#F3A949'}
+  ];
+  stops.forEach(function(s){
+    var ico=L.divIcon({className:'',html:'<div style="background:'+s.col+';width:16px;height:16px;border-radius:50%;border:2.5px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);"></div>',iconSize:[16,16],iconAnchor:[8,8]});
+    L.marker(s.c,{icon:ico}).addTo(map).bindTooltip(s.n,{permanent:true,className:'ecs-tip',direction:'top',offset:[0,-12]});
+  });
+})();
 </script>
 </body>
 </html>
