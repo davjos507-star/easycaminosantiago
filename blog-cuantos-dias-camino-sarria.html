@@ -52,6 +52,21 @@
     .stages-table td:first-child { font-weight: 600; color: #2D4A52; }
     .article-body a { color: #56A1A4; text-decoration: none; border-bottom: 1px solid rgba(86,161,164,0.4); }
     .article-body a:hover { color: #104A52; border-bottom-color: #104A52; }
+
+    /* routes slider */
+    .ecs-slider-outer{position:relative;padding:0 52px;overflow:hidden;}
+    .ecs-slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;gap:20px;padding-bottom:8px;scrollbar-width:none;}
+    .ecs-slider::-webkit-scrollbar{display:none;}
+    .ecs-slider .card{flex:0 0 calc((100% - 40px) / 3);min-width:0;scroll-snap-align:start;margin:0;display:flex;flex-direction:column;}
+    .ecs-slider .card-body{display:flex;flex-direction:column;flex:1;}
+    .ecs-slider .card-footer{margin-top:auto;}
+    .ecs-slider .card-img{height:200px;object-fit:cover;width:100%;}
+    .ecs-arrow{position:absolute;top:42%;transform:translateY(-50%);background:#2D4A52;color:#fff;border:none;border-radius:50%;width:42px;height:42px;font-size:1.6rem;line-height:42px;text-align:center;cursor:pointer;z-index:10;padding:0;transition:background 0.2s;}
+    .ecs-arrow:hover{background:#56A1A4;}
+    .ecs-arrow-prev{left:4px;}
+    .ecs-arrow-next{right:4px;}
+    @media(max-width:1024px){.ecs-slider .card{flex:0 0 calc((100% - 20px) / 2);}}
+    @media(max-width:768px){.ecs-arrow{display:none;}.ecs-slider-outer{overflow:hidden;padding:0;}.ecs-slider{gap:16px;padding:0 18px 10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}.ecs-slider .card{flex:0 0 88%;max-width:88%;min-width:88%;display:flex;flex-direction:column;scroll-snap-align:start;}.ecs-slider .card-body{display:flex;flex-direction:column;flex:1;}.ecs-slider .card-footer{margin-top:auto;}.ecs-slider .card-img{width:100%;height:190px;object-fit:cover;}}
     @media (max-width: 768px) {
       .article-hero { padding: 50px 20px 36px; }
       .article-hero h1 { font-size: 1.6rem; }
@@ -210,41 +225,61 @@
 
 <!-- RUTAS RELACIONADAS -->
 <section style="background:#F8FAFB;padding:60px 24px;">
-  <div style="max-width:900px;margin:0 auto;">
-    <h2 style="text-align:center;color:#2D4A52;margin-bottom:8px;font-size:1.5rem;"><span class="es-txt">Rutas que puedes organizar con nosotros</span><span class="en-txt" style="display:none">Routes you can organise with us</span></h2>
-    <p style="text-align:center;color:#5a6b6a;margin-bottom:36px;"><span class="es-txt">Elige tu Camino y te enviamos presupuesto en menos de 24h</span><span class="en-txt" style="display:none">Choose your Camino and we'll send you a quote in under 24h</span></p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;">
-      <a href="camino-frances-sarria.html" style="background:white;border-radius:10px;padding:18px;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,0.07);text-align:center;display:block;">
-        <div style="font-size:1.6rem;margin-bottom:8px;">⭐</div>
-        <strong style="color:#2D4A52;font-size:0.9rem;display:block;margin-bottom:4px;"><span class="es-txt">Últimas 100 km desde Sarria</span><span class="en-txt" style="display:none">Last 100 km from Sarria</span></strong>
-        <span style="color:#56A1A4;font-size:0.8rem;"><span class="es-txt">115 km · 5-6 días</span><span class="en-txt" style="display:none">115 km · 5-6 days</span></span>
-      </a>
-      <a href="camino-portugues.html" style="background:white;border-radius:10px;padding:18px;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,0.07);text-align:center;display:block;">
-        <div style="font-size:1.6rem;margin-bottom:8px;">🇵🇹</div>
-        <strong style="color:#2D4A52;font-size:0.9rem;display:block;margin-bottom:4px;">Camino Portugués</strong>
-        <span style="color:#56A1A4;font-size:0.8rem;"><span class="es-txt">240 km · 10-12 días</span><span class="en-txt" style="display:none">240 km · 10-12 days</span></span>
-      </a>
-      <a href="camino-frances.html" style="background:white;border-radius:10px;padding:18px;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,0.07);text-align:center;display:block;">
-        <div style="font-size:1.6rem;margin-bottom:8px;">🏔️</div>
-        <strong style="color:#2D4A52;font-size:0.9rem;display:block;margin-bottom:4px;">Camino Francés</strong>
-        <span style="color:#56A1A4;font-size:0.8rem;"><span class="es-txt">780 km · 30-35 días</span><span class="en-txt" style="display:none">780 km · 30-35 days</span></span>
-      </a>
-      <a href="camino-ingles.html" style="background:white;border-radius:10px;padding:18px;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,0.07);text-align:center;display:block;">
-        <div style="font-size:1.6rem;margin-bottom:8px;">⚓</div>
-        <strong style="color:#2D4A52;font-size:0.9rem;display:block;margin-bottom:4px;">Camino Inglés</strong>
-        <span style="color:#56A1A4;font-size:0.8rem;"><span class="es-txt">119 km · 5-6 días</span><span class="en-txt" style="display:none">119 km · 5-6 days</span></span>
-      </a>
-      <a href="camino-norte.html" style="background:white;border-radius:10px;padding:18px;text-decoration:none;box-shadow:0 2px 10px rgba(0,0,0,0.07);text-align:center;display:block;">
-        <div style="font-size:1.6rem;margin-bottom:8px;">🌊</div>
-        <strong style="color:#2D4A52;font-size:0.9rem;display:block;margin-bottom:4px;">Camino del Norte</strong>
-        <span style="color:#56A1A4;font-size:0.8rem;"><span class="es-txt">830 km · 33-38 días</span><span class="en-txt" style="display:none">830 km · 33-38 days</span></span>
-      </a>
-      <a href="reserva.html" style="background:#104A52;border-radius:10px;padding:18px;text-decoration:none;text-align:center;display:block;">
-        <div style="font-size:1.6rem;margin-bottom:8px;">📋</div>
-        <strong style="color:white;font-size:0.9rem;display:block;margin-bottom:4px;"><span class="es-txt">Solicitar presupuesto</span><span class="en-txt" style="display:none">Request a quote</span></strong>
-        <span style="color:rgba(255,255,255,0.85);font-size:0.8rem;"><span class="es-txt">Gratis · Respuesta en 24h</span><span class="en-txt" style="display:none">Free · Reply within 24h</span></span>
-      </a>
+  <div style="max-width:1060px;margin:0 auto;">
+    <h2 style="text-align:center;color:#2D4A52;margin-bottom:8px;font-size:1.5rem;font-family:'Raleway',sans-serif;"><span class="es-txt">Rutas que puedes organizar con nosotros</span><span class="en-txt" style="display:none">Routes you can organise with us</span></h2>
+    <p style="text-align:center;color:#5a6b6a;margin-bottom:36px;font-family:sans-serif;"><span class="es-txt">Elige tu Camino y te enviamos presupuesto en menos de 24h</span><span class="en-txt" style="display:none">Choose your Camino and we'll send you a quote in less than 24h</span></p>
+    <div class="ecs-slider-outer">
+      <button class="ecs-arrow ecs-arrow-next" onclick="var s=document.getElementById('ecs-routes-slider');s.scrollBy({left:s.offsetWidth,behavior:'smooth'})" aria-label="Siguiente">&#8250;</button>
+      <button class="ecs-arrow ecs-arrow-prev" onclick="var s=document.getElementById('ecs-routes-slider');s.scrollBy({left:-s.offsetWidth,behavior:'smooth'})" aria-label="Anterior">&#8249;</button>
+      <div class="ecs-slider" id="ecs-routes-slider">
+      <div class="card">
+        <img class="card-img" src="img/camino-santiago-sarria-ruta.jpg" alt="Camino desde Sarria" loading="lazy">
+        <div class="card-body">
+          <span class="badge">⭐ <span class="es-txt">MÁS VENDIDA</span><span class="en-txt" style="display:none">BEST SELLER</span></span>
+          <h3><span class="es-txt">Últimas 100km – Desde Sarria</span><span class="en-txt" style="display:none">Last 100km – From Sarria</span></h3>
+          <div class="card-meta"><span><strong>115 km</strong></span><span><strong>5-6 <span class="es-txt">días</span><span class="en-txt" style="display:none">days</span></strong></span><span><strong><span class="es-txt">Fácil</span><span class="en-txt" style="display:none">Easy</span></strong></span></div>
+          <div class="card-footer"><div class="precio-desde">399€ <small><span class="es-txt">/pers.</span><span class="en-txt" style="display:none">/p.p.</span></small></div><a href="camino-frances-sarria.html" class="btn-card"><span class="es-txt">Ver paquete</span><span class="en-txt" style="display:none">View package</span></a></div>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img" src="img/camino-portugues-desde-porto.jpg" alt="Camino Portugués" loading="lazy">
+        <div class="card-body">
+          <span class="badge"><span class="es-txt">RECOMENDADO</span><span class="en-txt" style="display:none">RECOMMENDED</span></span>
+          <h3><span class="es-txt">Camino Portugués</span><span class="en-txt" style="display:none">Portuguese Camino</span></h3>
+          <div class="card-meta"><span><strong>240 km</strong></span><span><strong>12 <span class="es-txt">etapas</span><span class="en-txt" style="display:none">stages</span></strong></span><span><strong><span class="es-txt">Fácil</span><span class="en-txt" style="display:none">Easy</span></strong></span></div>
+          <div class="card-footer"><div class="precio-desde">649€ <small><span class="es-txt">/pers.</span><span class="en-txt" style="display:none">/p.p.</span></small></div><a href="camino-portugues.html" class="btn-card"><span class="es-txt">Ver paquete</span><span class="en-txt" style="display:none">View package</span></a></div>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img" src="img/camino-frances-desde-saint-jean.jpg" alt="Camino Francés" loading="lazy">
+        <div class="card-body">
+          <span class="badge"><span class="es-txt">LA CLÁSICA</span><span class="en-txt" style="display:none">THE CLASSIC</span></span>
+          <h3><span class="es-txt">Camino Francés</span><span class="en-txt" style="display:none">French Camino</span></h3>
+          <div class="card-meta"><span><strong>780 km</strong></span><span><strong>33 <span class="es-txt">etapas</span><span class="en-txt" style="display:none">stages</span></strong></span><span><strong><span class="es-txt">Medio</span><span class="en-txt" style="display:none">Medium</span></strong></span></div>
+          <div class="card-footer"><div class="precio-desde">1.690€ <small><span class="es-txt">/pers.</span><span class="en-txt" style="display:none">/p.p.</span></small></div><a href="camino-frances.html" class="btn-card"><span class="es-txt">Ver paquete</span><span class="en-txt" style="display:none">View package</span></a></div>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img" src="ruta-images/camino-ingles-ferrol-ruta-rural-galicia.jpg" alt="Camino Inglés" loading="lazy">
+        <div class="card-body">
+          <span class="badge"><span class="es-txt">CORTO Y ESPECIAL</span><span class="en-txt" style="display:none">SHORT &amp; SPECIAL</span></span>
+          <h3><span class="es-txt">Camino Inglés</span><span class="en-txt" style="display:none">English Camino</span></h3>
+          <div class="card-meta"><span><strong>119 km</strong></span><span><strong>6 <span class="es-txt">etapas</span><span class="en-txt" style="display:none">stages</span></strong></span><span><strong><span class="es-txt">Fácil</span><span class="en-txt" style="display:none">Easy</span></strong></span></div>
+          <div class="card-footer"><div class="precio-desde">349€ <small><span class="es-txt">/pers.</span><span class="en-txt" style="display:none">/p.p.</span></small></div><a href="camino-ingles.html" class="btn-card"><span class="es-txt">Ver paquete</span><span class="en-txt" style="display:none">View package</span></a></div>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img" src="ruta-images/camino-norte-mochilas-peregrinos.jpg" alt="Camino del Norte" loading="lazy">
+        <div class="card-body">
+          <span class="badge"><span class="es-txt">COSTA CANTÁBRICA</span><span class="en-txt" style="display:none">CANTABRIAN COAST</span></span>
+          <h3><span class="es-txt">Camino del Norte</span><span class="en-txt" style="display:none">Northern Camino</span></h3>
+          <div class="card-meta"><span><strong>820 km</strong></span><span><strong>33 <span class="es-txt">etapas</span><span class="en-txt" style="display:none">stages</span></strong></span><span><strong><span class="es-txt">Medio-alto</span><span class="en-txt" style="display:none">Medium-high</span></strong></span></div>
+          <div class="card-footer"><div class="precio-desde">890€ <small><span class="es-txt">/pers.</span><span class="en-txt" style="display:none">/p.p.</span></small></div><a href="camino-norte.html" class="btn-card"><span class="es-txt">Ver paquete</span><span class="en-txt" style="display:none">View package</span></a></div>
+        </div>
+      </div>
+      </div>
     </div>
+    <p style="text-align:center;margin-top:32px;"><a href="reserva.html" style="background:#56A1A4;color:white;padding:12px 28px;border-radius:10px;font-family:'Raleway',sans-serif;font-weight:700;text-decoration:none;font-size:0.9rem;display:inline-block;"><span class="es-txt">Solicitar presupuesto gratis →</span><span class="en-txt" style="display:none">Request a free quote →</span></a></p>
   </div>
 </section>
 
