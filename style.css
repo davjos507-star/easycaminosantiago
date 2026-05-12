@@ -128,20 +128,20 @@ strong { font-weight: 700; }
 /* Agente button */
 .btn-agente {
   display: flex; align-items: center; gap: 8px; text-decoration: none; cursor: pointer;
-  background: transparent; border: none;
-  border-radius: 50px; padding: 4px 8px 4px 4px; transition: background 0.2s;
+  background: transparent; border: 2px solid #56A1A4;
+  border-radius: 50px; padding: 4px 8px 4px 4px; transition: background 0.2s, border-color 0.2s;
 }
-.btn-agente:hover { background: var(--crema); }
+.btn-agente:hover { background: rgba(86,161,164,.10); border-color: #56A1A4; }
 .agente-avatar {
   width: 38px; height: 38px; border-radius: 50%;
-  border: 2px solid var(--azul); flex-shrink: 0; background: var(--azul);
+  border: 2px solid #56A1A4; flex-shrink: 0; background: #56A1A4;
   display: flex; align-items: center; justify-content: center; overflow: hidden;
 }
 .agente-avatar img { width: 100%; height: 100%; object-fit: cover; }
 .agente-avatar svg { width: 22px; height: 22px; fill: white; }
 .agente-txt { line-height: 1.25; }
 .agente-txt strong { display: block; color: var(--azul-dark); font-size: 0.78rem; font-family: var(--font-body); }
-.agente-txt span { color: var(--azul); font-size: 0.7rem; font-family: var(--font-heading); font-weight: 700; }
+.agente-txt span { color: #56A1A4; font-size: 0.7rem; font-family: var(--font-heading); font-weight: 700; }
 
 /* Hamburger mobile */
 .nav-hamburger {
