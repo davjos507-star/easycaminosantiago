@@ -347,11 +347,9 @@
       <a href="#sec-info" class="subnav-tab" data-sec="sec-info">Más info</a>
     </nav>
     <div class="page-subnav-btns">
-      <div style="display:flex;gap:8px;align-items:center;">
-        <a href="reserva.html?ruta=sarria" style="background:#56A1A4;color:white;padding:9px 16px;border-radius:8px;font-weight:700;text-decoration:none;font-family:'Raleway',sans-serif;font-size:0.85rem;">Seleccionar fecha</a>
-        <button onclick="ecsOpenCallback()" style="background:transparent;color:#56A1A4;border:2px solid #56A1A4;padding:9px 14px;border-radius:8px;font-weight:600;font-family:'Raleway',sans-serif;cursor:pointer;font-size:0.85rem;">Preguntar</button>
-        <a href="#" onclick="ecsOpenFolleto();return false;" style="color:#56A1A4;font-weight:600;font-family:'Raleway',sans-serif;font-size:0.82rem;text-decoration:underline;white-space:nowrap;">Folleto PDF</a>
-      </div>
+      <a href="reserva.html?ruta=sarria" class="subnav-btn subnav-btn-primary"><span class="es-txt">Seleccionar fecha</span><span class="en-txt" style="display:none">Select date</span></a>
+      <button onclick="ecsOpenCallback()" class="subnav-btn subnav-btn-primary"><span class="es-txt">Preguntar</span><span class="en-txt" style="display:none">Ask us</span></button>
+      <button onclick="ecsOpenFolleto()" class="subnav-btn subnav-btn-primary"><span class="es-txt">Folleto PDF</span><span class="en-txt" style="display:none">Brochure</span></button>
     </div>
   </div>
 </div>
