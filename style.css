@@ -997,3 +997,46 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
     white-space: nowrap;
   }
 }
+
+/* ====== SARRIA PAGE — hero overrides (alta especificidad) ====== */
+body.sarria-page .page-hero-content {
+  max-width: 720px;
+}
+body.sarria-page .page-hero p {
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+body.sarria-page .page-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+@media (max-width: 768px) {
+  body.sarria-page .page-hero {
+    min-height: 620px;
+  }
+  body.sarria-page .page-hero-content {
+    max-width: 330px;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  body.sarria-page .page-hero h1 {
+    font-size: 1.45rem;
+    line-height: 1.15;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  body.sarria-page .page-hero p {
+    font-size: .95rem;
+    line-height: 1.45;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  body.sarria-page .page-hero-img {
+    object-position: 55% center;
+  }
+}

@@ -17,11 +17,18 @@
   <title>Camino de Santiago desde Sarria: últimos 100 km | Precio y etapas</title>
   <meta name="description" content="Organiza el Camino de Santiago desde Sarria hasta Santiago: últimos 100 km del Camino Francés, 5 o 6 etapas, alojamientos, traslado de mochila y asistencia.">
   <meta name="keywords" content="camino santiago desde sarria, ultimas 100km camino frances, camino santiago sarria precio, compostela sarria, camino frances sarria santiago, paquete sarria santiago">
-  <link rel="stylesheet" href="style.css?v=20260506-2">
+  <link rel="stylesheet" href="style.css?v=20260512">
   <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <style>
-    .page-hero-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+    .page-hero-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center center; z-index:0; }
+    .page-hero::before { background:linear-gradient(rgba(0,0,0,.42),rgba(0,0,0,.50)); }
+    @media(max-width:768px){
+      .page-hero-img { object-position:55% center; }
+      .page-hero::before { background:linear-gradient(rgba(0,0,0,.48),rgba(0,0,0,.58)); }
+      .page-hero h1 { font-size:1.45rem !important; }
+      .page-hero p { font-size:0.95rem !important; }
+    }
 
     /* ===== INTRO SECTION ===== */
     .sarria-intro-section { background: white; padding: 64px 40px; }
@@ -225,7 +232,7 @@
 {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://easycaminosantiago.com/"}, {"@type": "ListItem", "position": 2, "name": "Rutas", "item": "https://easycaminosantiago.com/index.html#ecs-rutas"}, {"@type": "ListItem", "position": 3, "name": "Camino desde Sarria", "item": "https://easycaminosantiago.com/camino-frances-sarria.html"}]}
 </script>
 </head>
-<body>
+<body class="sarria-page">
 
 <!-- POPUP CALLBACK -->
 <div id="ecs-callback-overlay" onclick="ecsCloseCallback(event)">
@@ -315,7 +322,7 @@
   <div class="page-hero-content">
     <div class="breadcrumb"><a href="index.html"><span class="es-txt">Inicio</span><span class="en-txt" style="display:none">Home</span></a> › <a href="index.html#ecs-rutas">Rutas</a> › <span>Camino desde Sarria</span></div>
     <h1><span class="es-txt">Camino de Santiago desde Sarria: últimos 100 km</span><span class="en-txt" style="display:none">Camino de Santiago<br>from <em>Sarria</em> — 100 km</span></h1>
-    <p><span class="es-txt">Las últimas 100km del Camino Francés. El mínimo para obtener la Compostela oficial. Perfectas para familias, viajeros con tiempo limitado y quienes hacen el Camino por primera vez. <strong>Desde 399€ · 5 o 6 etapas · Sin cargar mochila</strong>. Si aún estás organizando tu viaje, te recomendamos leer <a href="blog-cuantos-dias-camino-sarria.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.5)">cuántos días se tarda desde Sarria hasta Santiago</a> y qué llevar en la <a href="blog-mochila-camino-santiago.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.5)">mochila del Camino de Santiago</a>. Y si quieres comparar opciones antes de decidirte, también puedes ver nuestro <a href="camino-portugues.html" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(86,161,164,0.5)">Camino Portugués organizado</a>.</span><span class="en-txt" style="display:none">The last 100km of the French Way. The minimum to obtain the official Compostela. Perfect for families, travellers with limited time and first-time pilgrims.</span></p>
+    <p><span class="es-txt">Camina hasta Santiago con alojamiento, equipaje y asistencia organizados.</span><span class="en-txt" style="display:none">Walk to Santiago with accommodation, luggage transfer and assistance organised.</span></p>
     <div class="page-hero-badges">
       <span class="hero-badge orange">⭐ <span class="es-txt">Más vendida</span><span class="en-txt" style="display:none">Best seller</span></span>
       <span class="hero-badge"><span class="es-txt">Desde</span><span class="en-txt" style="display:none">From</span> 399€/pers</span>
