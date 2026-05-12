@@ -970,14 +970,22 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
   border: 2px solid transparent;
   box-sizing: border-box;
 }
-.subnav-btn-primary,
-.subnav-btn-outline {
-  background: #2D4A52;
+.subnav-btn-primary {
+  background: #56A1A4;
   color: #fff !important;
-  border-color: #2D4A52;
-  box-shadow: none;
+  border-color: #56A1A4;
 }
-.subnav-btn-primary:hover,
+.subnav-btn-primary:hover {
+  background: #2D4A52;
+  border-color: #2D4A52;
+  color: #fff !important;
+  transform: translateY(-1px);
+}
+.subnav-btn-outline {
+  background: transparent;
+  color: #56A1A4 !important;
+  border-color: #56A1A4;
+}
 .subnav-btn-outline:hover {
   background: #56A1A4;
   border-color: #56A1A4;
