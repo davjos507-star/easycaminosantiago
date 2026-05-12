@@ -1040,3 +1040,19 @@ body.sarria-page .page-hero-img {
     object-position: 55% center;
   }
 }
+body.sarria-page .btn-hero-primary {
+  background: #fff;
+  color: #56A1A4;
+  border: 2px solid #fff;
+  transition: all .25s ease;
+}
+body.sarria-page .btn-hero-primary:hover {
+  background: #56A1A4;
+  color: #fff;
+  border-color: #56A1A4;
+  transform: translateY(-2px);
+}
+body.sarria-page .btn-hero-primary:focus-visible {
+  outline: 3px solid rgba(86,161,164,.35);
+  outline-offset: 3px;
+}
