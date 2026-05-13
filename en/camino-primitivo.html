@@ -17,9 +17,17 @@
   <title>Primitive Way from Oviedo | Original Camino de Santiago | Easy Camino Santiago</title>
   <meta name="description" content="Organise the Primitive Way from Oviedo — the world's oldest Camino. 320km of demanding, spectacular mountain route. Packages from €790 with accommodation and luggage transfer.">
   <meta name="keywords" content="primitive way camino santiago, camino primitivo english, original camino oviedo, organised primitive way">
-  <link rel="stylesheet" href="../style.css?v=20260506-2">
+  <link rel="stylesheet" href="../style.css?v=20260512">
   <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-  <style>.page-hero { background: linear-gradient(160deg, #56A1A4 0%, #6AAFB2 40%, #3F8A8D 100%); }</style>
+  <style>
+    .page-hero-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center center; z-index:0; }
+    .page-hero::before { background:linear-gradient(rgba(0,0,0,.42),rgba(0,0,0,.50)); }
+    @media(max-width:768px){
+      .page-hero::before { background:linear-gradient(rgba(0,0,0,.48),rgba(0,0,0,.58)); }
+      .page-hero h1 { font-size:1.45rem !important; }
+      .page-hero p { font-size:0.95rem !important; }
+    }
+  </style>
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Easy Camino Santiago">
@@ -167,18 +175,10 @@
 
 <!-- PAGE HERO -->
 <section class="page-hero">
-  <img class="page-hero-bg" src="../ruta-images/camino-primitivo-ruta-montaña.jpg" alt="Primitive Way" loading="eager">
+  <img class="page-hero-img" src="../ruta-images/camino-primitivo-ruta-montaña.jpg" alt="Primitive Way mountain landscape" width="800" height="800" loading="eager" fetchpriority="high">
   <div class="page-hero-content">
-    <nav class="breadcrumb"><a href="../en/index.html">Home</a> › <a href="#">Routes</a> › Primitive Way</nav>
     <h1>Primitive Way — <em>The Original Camino</em></h1>
     <p>The oldest route in the history of the world, first walked by King Alfonso II of Asturias in 829. 320km from Oviedo through the mountains of Asturias and Galicia, with a rugged and imposing landscape that makes every step worthwhile.</p>
-    <div class="page-hero-badges">
-      <span class="hero-badge">The oldest</span>
-      <span class="hero-badge">320 km</span>
-      <span class="hero-badge">13 stages</span>
-      <span class="hero-badge">Hard</span>
-      <span class="hero-badge">From 790€</span>
-    </div>
     <div class="hero-cta-group">
       <a href="../en/reserva.html" class="btn-hero-primary">Request a quote</a>
     </div>

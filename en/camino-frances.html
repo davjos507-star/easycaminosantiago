@@ -17,9 +17,17 @@
   <title>Full French Way | Organised Camino de Santiago | Easy Camino Santiago</title>
   <meta name="description" content="Walk the full French Way with a specialist agency: 780km, 33 stages, accommodation, luggage transfer and 24h support included. Free quote in 24h.">
   <meta name="keywords" content="french way camino de santiago, camino frances organised, camino from saint jean, full camino de santiago 780km, camino frances agency">
-  <link rel="stylesheet" href="../style.css?v=20260506-2">
+  <link rel="stylesheet" href="../style.css?v=20260512">
   <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-  <style>.page-hero { background: linear-gradient(160deg, #56A1A4 0%, #6AAFB2 40%, #3F8A8D 100%); }</style>
+  <style>
+    .page-hero-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center center; z-index:0; }
+    .page-hero::before { background:linear-gradient(rgba(0,0,0,.42),rgba(0,0,0,.50)); }
+    @media(max-width:768px){
+      .page-hero::before { background:linear-gradient(rgba(0,0,0,.48),rgba(0,0,0,.58)); }
+      .page-hero h1 { font-size:1.45rem !important; }
+      .page-hero p { font-size:0.95rem !important; }
+    }
+  </style>
 
   <link rel="alternate" hreflang="es" href="https://easycaminosantiago.com/camino-frances.html">
   <link rel="alternate" hreflang="en" href="https://easycaminosantiago.com/en/camino-frances.html">
@@ -222,17 +230,10 @@
 
 <!-- PAGE HERO -->
 <section class="page-hero">
-  <img class="page-hero-bg" src="../downloaded_images/camino-frances-peregrino-mochila-concha.jpg" alt="Pilgrim on the French Way" loading="eager">
+  <img class="page-hero-img" src="../downloaded_images/camino-frances-peregrino-mochila-concha.jpg" alt="Pilgrim on the French Way" width="1920" height="1081" loading="eager" fetchpriority="high">
   <div class="page-hero-content">
     <h1>French Way — <em>The Classic Route</em></h1>
     <p>780km of history, spirituality and adventure from the Pyrenees to Santiago Cathedral. The most iconic Camino route.</p>
-    <div class="hero-badges">
-      <span class="badge">The classic</span>
-      <span class="badge">780 km</span>
-      <span class="badge">33 stages</span>
-      <span class="badge">Medium level</span>
-      <span class="badge badge-price">From 1,690€</span>
-    </div>
     <div class="hero-cta-group">
       <a href="../en/reserva.html" class="btn-hero-primary">Request a quote</a>
     </div>
