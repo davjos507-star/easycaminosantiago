@@ -349,8 +349,8 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
       <div class="seguro-box" id="seguro-box" onclick="toggleSeguro()">
         <input type="checkbox" id="seguro-check" onclick="event.stopPropagation(); toggleSeguro()">
         <div class="seguro-info">
-          <strong>🛡️ Seguro de cancelación</strong>
-          <p>Con seguro: reembolso del 100% si cancelas con más de 30 días · 80% menos de 30 días.<br>Sin seguro: 80% reembolso con +30 días · 50% entre 15–30 días · 0% menos de 15 días.</p>
+          <strong>🛡️ Protección de cancelación</strong>
+          <p>Con protección: reembolso del 100% si cancelas con más de 30 días · 80% con menos de 30 días.<br>Sin protección: 80% de reembolso con más de 30 días · 50% entre 15–30 días · 0% con menos de 15 días.</p>
         </div>
         <div class="seguro-cost" id="seguro-price">+ 5%</div>
       </div>
@@ -517,11 +517,11 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
       <div class="cancel-policy">
         <h4>📋 Condiciones de cancelación</h4>
         <table>
-          <tr><td>Sin seguro — más de 30 días antes</td><td>80% reembolso</td></tr>
-          <tr><td>Sin seguro — 15 a 30 días antes</td><td>50% reembolso</td></tr>
-          <tr><td>Sin seguro — menos de 15 días antes</td><td>Sin reembolso</td></tr>
-          <tr><td>Con seguro — más de 30 días antes</td><td>100% reembolso</td></tr>
-          <tr><td>Con seguro — menos de 30 días antes</td><td>80% reembolso</td></tr>
+          <tr><td>Sin protección — más de 30 días antes</td><td>80% reembolso</td></tr>
+          <tr><td>Sin protección — 15 a 30 días antes</td><td>50% reembolso</td></tr>
+          <tr><td>Sin protección — menos de 15 días antes</td><td>Sin reembolso</td></tr>
+          <tr><td>Con protección — más de 30 días antes</td><td>100% reembolso</td></tr>
+          <tr><td>Con protección — menos de 30 días antes</td><td>80% reembolso</td></tr>
         </table>
         <p style="font-size:0.75rem;color:var(--gris);margin-top:10px;">Modificaciones: 60 €/persona. Cambio de fecha: 100 €/persona. Comunicar con al menos 72h de antelación a info@easycaminosantiago.com</p>
       </div>
@@ -559,7 +559,7 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
         <h4>Resumen de costes</h4>
         <div class="sb-row"><span class="sb-key">Paquete base (<span id="sb-pax-txt">1 persona</span>)</span><span class="sb-val" id="sb-base-price">—</span></div>
         <div class="sb-row" id="sb-extras-row" style="display:none;"><span class="sb-key">Extras</span><span class="sb-val" id="sb-extras-price">—</span></div>
-        <div class="sb-row" id="sb-seguro-row" style="display:none;"><span class="sb-key">Seguro cancelación (5%)</span><span class="sb-val" id="sb-seguro-price">—</span></div>
+        <div class="sb-row" id="sb-seguro-row" style="display:none;"><span class="sb-key">Protección cancelación (5%)</span><span class="sb-val" id="sb-seguro-price">—</span></div>
       </div>
 
       <div class="sb-total">
@@ -613,7 +613,7 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="ecsFaqToggle(this)">¿Qué pasa si tengo que cancelar mi reserva?</button>
-      <div class="faq-a">Disponemos de una política de cancelación flexible. Te informamos de las condiciones exactas al confirmar tu reserva para que puedas planificar sin preocupaciones.</div>
+      <div class="faq-a">Sin protección de cancelación: 80% de reembolso si cancelas con más de 30 días de antelación, 50% entre 15 y 30 días, sin reembolso con menos de 15 días. Añadiendo la protección de cancelación (5% del total): 100% de reembolso con más de 30 días, 80% con menos de 30 días. Consulta nuestra <a href="politica-cancelacion.html" style="color:var(--azul);text-decoration:underline;">política de cancelación completa</a>.</div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="ecsFaqToggle(this)">¿Cómo funciona el traslado de mochila?</button>

@@ -72,10 +72,10 @@ strong { font-weight: 700; }
 /* Dropdown rutas */
 .nav-dropdown { position: relative; }
 .nav-dropdown-menu {
-  display: none; position: absolute; top: calc(100% + 10px); left: 50%;
+  display: none; position: absolute; top: 100%; left: 50%;
   transform: translateX(-50%); background: white; border-radius: 12px;
   box-shadow: 0 8px 30px rgba(0,0,0,0.15); min-width: 240px;
-  padding: 8px 0; z-index: 1000; border: 1px solid rgba(86,161,164,0.25);
+  padding: 10px 0 8px; z-index: 1000; border: 1px solid rgba(86,161,164,0.25);
 }
 .nav-dropdown:hover .nav-dropdown-menu { display: block; }
 .nav-dropdown-menu a {
