@@ -136,6 +136,20 @@
     .tab-level-dot { width:14px; height:14px; border-radius:50%; }
     .tab-level-dot.on { background:#56A1A4; }
     .tab-level-dot.off { background:#dde8e8; }
+
+    /* ── MAPA HIGHLIGHTS ── */
+    .mapa-hl { display:flex; margin-top:14px; border:1px solid rgba(86,161,164,0.18); border-radius:10px; overflow:hidden; background:#F7FBFB; }
+    .mh-item { flex:1; display:flex; flex-direction:column; align-items:center; text-align:center; padding:14px 8px 12px; border-right:1px solid rgba(86,161,164,0.12); }
+    .mh-item:last-child { border-right:none; }
+    .mh-item svg { margin-bottom:7px; }
+    .mh-item strong { font-size:0.88rem; font-weight:800; color:#2D4A52; font-family:'Raleway',sans-serif; line-height:1.2; display:block; }
+    .mh-item small { font-size:0.63rem; color:#7a9090; text-transform:uppercase; letter-spacing:0.07em; margin-top:3px; display:block; }
+    @media (max-width:520px) {
+      .mapa-hl { flex-wrap:wrap; }
+      .mh-item { min-width:50%; box-sizing:border-box; border-bottom:1px solid rgba(86,161,164,0.12); }
+      .mh-item:nth-child(even) { border-right:none; }
+      .mh-item:nth-last-child(-n+2) { border-bottom:none; }
+    }
   </style>
 
   <meta property="og:type" content="website">
@@ -517,6 +531,47 @@
       <div class="linea"></div>
     </div>
     <div id="sarria-map"></div>
+
+    <div class="mapa-hl">
+      <div class="mh-item">
+        <svg width="24" height="14" viewBox="0 0 26 14" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round">
+          <line x1="1" y1="7" x2="25" y2="7"/>
+          <circle cx="1" cy="7" r="2.2"/>
+          <circle cx="7" cy="7" r="1.6"/>
+          <circle cx="13" cy="7" r="1.6"/>
+          <circle cx="19" cy="7" r="1.6"/>
+          <circle cx="25" cy="7" r="2.2"/>
+        </svg>
+        <strong>115 km</strong>
+        <small><span class="es-txt">Distancia total</span><span class="en-txt" style="display:none">Total distance</span></small>
+      </div>
+      <div class="mh-item">
+        <svg width="20" height="20" viewBox="0 0 22 22" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="16" height="15" rx="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="6" y1="2" x2="6" y2="6"/>
+          <line x1="3" y1="10" x2="19" y2="10"/>
+        </svg>
+        <strong><span class="es-txt">5 etapas</span><span class="en-txt" style="display:none">5 stages</span></strong>
+        <small><span class="es-txt">Recomendadas</span><span class="en-txt" style="display:none">Recommended</span></small>
+      </div>
+      <div class="mh-item">
+        <svg width="20" height="20" viewBox="0 0 22 22" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3,11 9,17 19,6"/>
+        </svg>
+        <strong><span class="es-txt">Señalizado</span><span class="en-txt" style="display:none">Waymarked</span></strong>
+        <small><span class="es-txt">Flechas amarillas</span><span class="en-txt" style="display:none">Yellow arrows</span></small>
+      </div>
+      <div class="mh-item">
+        <svg width="18" height="20" viewBox="0 0 18 22" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 2C5.7 2 3 4.7 3 8c0 4.5 6 13 6 13s6-8.5 6-13c0-3.3-2.7-6-6-6z"/>
+          <circle cx="9" cy="8" r="2"/>
+        </svg>
+        <strong>Sarria → Santiago</strong>
+        <small><span class="es-txt">Inicio y llegada</span><span class="en-txt" style="display:none">Start &amp; finish</span></small>
+      </div>
+    </div>
+
     <p style="text-align:center;font-family:sans-serif;font-size:0.78rem;color:#6b7a7a;margin:14px 0 0;"><span class="es-txt">115 km · 5 etapas · todo señalizado con flechas amarillas y vieiras · <a href="https://www.openstreetmap.org" target="_blank" rel="noopener" style="color:inherit;">© OpenStreetMap</a></span><span class="en-txt" style="display:none">115 km · 5 stages · waymarked with yellow arrows and scallop shells · <a href="https://www.openstreetmap.org" target="_blank" rel="noopener" style="color:inherit;">© OpenStreetMap</a></span></p>
   </div>
 </section>
