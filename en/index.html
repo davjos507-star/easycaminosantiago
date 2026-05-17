@@ -430,11 +430,27 @@
     <p>4 steps and your Camino is ready. No complications.</p>
     <div class="linea"></div>
   </div>
-  <div class="steps">
-    <div class="step"><div class="step-num">1</div><h4>Choose your route</h4><p>Select route, dates and preferred accommodation type.</p></div>
-    <div class="step"><div class="step-num">2</div><h4>We contact you</h4><p>In less than 24h Sara calls you to fine-tune all the details.</p></div>
-    <div class="step"><div class="step-num">3</div><h4>Confirm &amp; pay</h4><p>Just 30% to book. Receive all documentation by email.</p></div>
-    <div class="step"><div class="step-num">4</div><h4>Start walking!</h4><p>We handle everything. You enjoy every stage.</p></div>
+  <div class="pasos-grid">
+    <div class="paso-card">
+      <div class="paso-icon-wrap"><img src="../iconos/itinerary-icon.svg" alt="" class="paso-icon"></div>
+      <h4>Choose dates &amp; pilgrims</h4>
+      <p>Tell us your route, dates and how many people are travelling.</p>
+    </div>
+    <div class="paso-card">
+      <div class="paso-icon-wrap"><img src="../iconos/presupuesto-icon.svg" alt="" class="paso-icon"></div>
+      <h4>Receive your personalised quote</h4>
+      <p>We send you a detailed quote in less than 24 hours.</p>
+    </div>
+    <div class="paso-card">
+      <div class="paso-icon-wrap"><img src="../iconos/servicios-icon.svg" alt="" class="paso-icon"></div>
+      <h4>Confirm your booking</h4>
+      <p>Just 30% deposit. All documentation sent to you.</p>
+    </div>
+    <div class="paso-card">
+      <div class="paso-icon-wrap"><img src="../iconos/person-hiking-icon.svg" alt="" class="paso-icon"></div>
+      <h4>Walk with everything arranged</h4>
+      <p>We handle everything. You enjoy every step.</p>
+    </div>
   </div>
 </section>
 
@@ -600,7 +616,7 @@
 function ecsFaqToggle(btn){btn.closest('.faq-item').classList.toggle('open');}
 function ecsOpenCallback(){document.getElementById('ecs-callback-overlay').classList.add('open');}
 function ecsCloseCallback(e){if(!e||e.target===document.getElementById('ecs-callback-overlay')||e.currentTarget===document.getElementById('ecs-callback-close')){document.getElementById('ecs-callback-overlay').classList.remove('open');}}
-function ecsCbSubmit(){var tel=window._itiCb?window._itiCb.getNumber():document.getElementById('ecs-cb-tel').value.trim();var check=document.getElementById('ecs-cb-check').checked;if(!tel){alert('Please enter your phone number.');return;}if(!check){alert('Please accept the privacy policy.');return;}fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({'form-name':'llamada',telefono:tel,pagina:window.location.pathname}).toString()});window.open('tel:+34982907629','_blank');document.getElementById('ecs-callback-overlay').classList.remove('open');}
+function ecsCbSubmit(){var btn=document.getElementById('ecs-cb-submit');if(btn.disabled)return;var tel=window._itiCb?window._itiCb.getNumber():document.getElementById('ecs-cb-tel').value.trim();var check=document.getElementById('ecs-cb-check').checked;if(!tel){alert('Please enter your phone number.');return;}if(!check){alert('Please accept the privacy policy.');return;}btn.disabled=true;fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({'form-name':'llamada',telefono:tel,pagina:window.location.pathname}).toString()});document.getElementById('ecs-callback-body').innerHTML='<div style="text-align:center;padding:28px 0 20px;"><div style="font-size:2.5rem;margin-bottom:14px;">✅</div><p style="font-family:\'Raleway\',sans-serif;font-weight:700;font-size:1.05rem;color:#2D4A52;margin-bottom:8px;">Request sent</p><p style="font-family:\'Lato\',sans-serif;font-size:0.88rem;color:#4F6F73;line-height:1.65;">We\'ll call you as soon as possible at<br><strong>'+tel+'</strong><br><span style="font-size:0.8rem;opacity:0.8;">No obligation. No spam.</span></p></div>';}
 function ecsToggleNav(){document.getElementById('nav-mobile').classList.toggle('open');}
 function ecsFiltrRutas(cat){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));event.currentTarget.classList.add('active');document.querySelectorAll('#ecs-cards-grid .card').forEach(c=>{c.style.display=c.getAttribute('data-cat')===cat?'':'none';});}
 document.addEventListener('click',function(e){var d=document.getElementById('lang-dropdown');if(d&&!d.contains(e.target))d.classList.remove('open');});
