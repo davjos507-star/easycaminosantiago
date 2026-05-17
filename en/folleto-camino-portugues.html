@@ -11,149 +11,223 @@
   </script>
 <meta charset="UTF-8">
 <meta name="theme-color" content="#56A1A4">
-  <link rel="icon" type="image/png" href="../favicon.png">
-  <link rel="apple-touch-icon" href="../favicon.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portuguese Way Brochure — Easy Camino Santiago</title>
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="apple-touch-icon" href="../favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portuguese Camino Brochure — Easy Camino Santiago</title>
 <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-  :root{--azul:#56A1A4;--azul-dark:#2D4A52;--naranja:#F3A949;--crema:#ECE7E2;--gris:#5a6b6a;--font-h:'Raleway',sans-serif;--font-b:'Lato',sans-serif;}
+  :root { --azul:#56A1A4; --azul-dark:#2D4A52; --naranja:#F3A949; --crema:#D8E8E8; --gris:#4F6F73; --font-h:'Raleway',sans-serif; --font-b:'Lato',sans-serif; }
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
   body{font-family:var(--font-b);color:var(--azul-dark);background:#f0f4f4;}
   .print-bar{position:fixed;top:0;left:0;right:0;z-index:999;background:var(--azul);padding:12px 32px;display:flex;justify-content:space-between;align-items:center;}
-  .print-bar span{color:rgba(255,255,255,0.7);font-family:var(--font-b);font-size:0.9rem;}
+  .print-bar span{color:rgba(255,255,255,0.9);font-family:var(--font-b);font-size:0.9rem;}
   .btn-print{background:var(--naranja);color:white;border:none;padding:10px 28px;border-radius:25px;font-family:var(--font-h);font-weight:700;font-size:0.95rem;cursor:pointer;}
   .btn-print:hover{background:#d4882a;}
   .page{width:210mm;min-height:297mm;margin:52px auto 20px;background:white;box-shadow:0 4px 30px rgba(0,0,0,0.15);position:relative;overflow:hidden;}
   .cover{background: var(--azul);display:flex;flex-direction:column;}
-  .cover-top{background:linear-gradient(160deg,#2D4A52 0%,#56A1A4 50%,#2D4A52 100%);padding:48px 48px 40px;flex:1;display:flex;flex-direction:column;justify-content:space-between;min-height:180mm;}
-  .cover-ruta-label{font-family:var(--font-b);font-size:0.8rem;font-weight:700;color:var(--naranja);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;}
-  .cover h1{font-family:var(--font-h);font-weight:800;font-size:3.2rem;color:white;line-height:1.05;margin-bottom:8px;}
-  .cover h1 em{color:var(--naranja);font-style:normal;}
-  .cover-subtitle{font-family:var(--font-b);color:rgba(255,255,255,0.75);font-size:1.05rem;line-height:1.6;max-width:340px;margin-bottom:36px;}
+  .cover-top{background:linear-gradient(160deg,#2D4A52 0%,#56A1A4 50%,#2D4A52 100%);padding:36px 48px 32px;flex:1;display:flex;flex-direction:column;justify-content:flex-start;gap:20px;}
+  .cover-logo{height:auto;max-width:130px;display:block;filter:brightness(0) invert(1);}
+  .cover-banner-wrap{position:relative;}
+  .cover-logo-over{position:absolute;bottom:10px;left:24px;height:auto;max-width:160px;display:block;filter:brightness(0) invert(1) drop-shadow(0 2px 10px rgba(0,0,0,0.85));}
+  .print-hero-img{width:100%;display:block;object-fit:cover;}
+  .cover-ruta-label{font-family:var(--font-b);font-size:0.8rem;font-weight:700;color:rgba(255,255,255,0.9);letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;}
+  .cover h1{font-family:var(--font-h);font-weight:800;font-size:3.4rem;color:white;line-height:1.05;margin-bottom:8px;}
+  .cover h1 em{color:var(--azul);font-style:normal;}
+  .cover-subtitle{font-family:var(--font-b);color:rgba(255,255,255,0.92);font-size:1.05rem;line-height:1.6;max-width:340px;margin-bottom:36px;}
   .cover-highlights{display:flex;flex-direction:column;gap:10px;}
   .cover-highlight{display:flex;align-items:center;gap:12px;font-family:var(--font-b);color:white;font-size:0.88rem;}
   .cover-highlight::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--naranja);flex-shrink:0;}
   .cover-stats{background:var(--azul);padding:28px 48px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
   .cover-stat{text-align:center;padding:0 16px;border-right:1px solid rgba(255,255,255,0.12);}
   .cover-stat:last-child{border-right:none;}
-  .cover-stat strong{display:block;font-family:var(--font-h);font-size:1.6rem;font-weight:800;color:var(--naranja);margin-bottom:4px;}
-  .cover-stat span{font-family:var(--font-b);font-size:0.72rem;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:0.5px;}
+  .cover-stat strong{display:block;font-family:var(--font-h);font-size:1.6rem;font-weight:800;color:white;margin-bottom:4px;}
+  .cover-stat span{font-family:var(--font-b);font-size:0.72rem;color:rgba(255,255,255,0.9);text-transform:uppercase;letter-spacing:0.5px;}
   .cover-bottom{background:white;padding:24px 48px;display:flex;justify-content:space-between;align-items:center;}
   .cover-precio-label{font-family:var(--font-b);font-size:0.75rem;color:var(--gris);text-transform:uppercase;letter-spacing:1px;}
   .cover-precio-valor{font-family:var(--font-h);font-size:2rem;font-weight:800;color:var(--azul-dark);}
   .cover-precio-valor span{font-size:0.9rem;font-weight:400;color:var(--gris);}
   .cover-badge{background:var(--crema);border:1px solid rgba(86,161,164,0.2);padding:8px 18px;border-radius:20px;font-family:var(--font-b);font-size:0.8rem;color:var(--azul);font-weight:600;}
   .page-header{background:var(--azul);padding:22px 40px;display:flex;justify-content:space-between;align-items:center;}
-  .page-header-title{font-family:var(--font-h);font-weight:700;font-size:0.9rem;color:rgba(255,255,255,0.7);letter-spacing:1px;text-transform:uppercase;}
-  .page-header-num{font-family:var(--font-h);font-weight:800;font-size:1.1rem;color:var(--naranja);}
+  .page-header-logo{height:36px;filter:brightness(0) invert(1);}
+  .page-header-title{font-family:var(--font-h);font-weight:700;font-size:0.9rem;color:rgba(255,255,255,0.9);letter-spacing:1px;text-transform:uppercase;}
+  .page-header-num{font-family:var(--font-h);font-weight:800;font-size:1.1rem;color:white;}
   .page-content{padding:36px 40px;}
-  .section-label{font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:var(--naranja);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+  .section-label{font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:var(--azul);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
   .section-h2{font-family:var(--font-h);font-weight:800;font-size:1.8rem;color:var(--azul-dark);margin-bottom:16px;line-height:1.2;}
-  .section-line{width:48px;height:4px;background:var(--naranja);border-radius:2px;margin-bottom:24px;}
+  .section-line{width:48px;height:4px;background:var(--azul);border-radius:2px;margin-bottom:24px;}
   .body-text{font-family:var(--font-b);font-size:0.88rem;color:var(--gris);line-height:1.75;margin-bottom:16px;}
   .itinerary-overview{display:flex;flex-direction:column;gap:0;}
-  .day-row{display:flex;align-items:center;gap:0;border-bottom:1px solid #e0eeec;padding:12px 0;}
+  .day-row{display:flex;align-items:center;gap:0;border-bottom:1px solid #e0eeec;padding:14px 0;}
   .day-row:last-child{border-bottom:none;}
-  .day-num{width:44px;height:44px;min-width:44px;border-radius:50%;background:var(--azul-dark);color:var(--naranja);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-weight:800;font-size:0.9rem;margin-right:18px;}
+  .day-num{width:44px;height:44px;min-width:44px;border-radius:50%;background:var(--azul-dark);color:white;display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-weight:800;font-size:1rem;margin-right:18px;}
   .day-info{flex:1;}
-  .day-title{font-family:var(--font-h);font-weight:700;font-size:0.9rem;color:var(--azul-dark);margin-bottom:3px;}
-  .day-desc{font-family:var(--font-b);font-size:0.76rem;color:var(--gris);}
-  .day-km{font-family:var(--font-h);font-weight:700;font-size:0.78rem;color:var(--azul);background:var(--crema);padding:4px 10px;border-radius:20px;border:1px solid rgba(86,161,164,0.15);white-space:nowrap;}
+  .day-title{font-family:var(--font-h);font-weight:700;font-size:0.92rem;color:var(--azul-dark);margin-bottom:3px;}
+  .day-desc{font-family:var(--font-b);font-size:0.78rem;color:var(--gris);}
+  .day-km{font-family:var(--font-h);font-weight:700;font-size:0.8rem;color:var(--azul);background:var(--crema);padding:4px 12px;border-radius:20px;border:1px solid rgba(86,161,164,0.15);}
+  .day-page-header{background: linear-gradient(135deg, var(--azul) 0%, #6AAFB2 100%);padding:28px 40px 24px;}
+  .day-page-label{font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.92);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;}
+  .day-page-title{font-family:var(--font-h);font-weight:800;font-size:1.5rem;color:white;line-height:1.2;}
+  .day-page-meta{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;}
+  .day-meta-tag{font-family:var(--font-b);font-size:0.75rem;font-weight:600;color:white;background:rgba(255,255,255,0.15);padding:4px 12px;border-radius:20px;border:1px solid rgba(255,255,255,0.25);}
+  .day-description{padding:24px 40px 20px;font-family:var(--font-b);font-size:0.86rem;color:var(--gris);line-height:1.75;border-bottom:2px solid var(--crema);}
+  .aloj-section{padding:20px 40px;}
+  .aloj-label{font-family:var(--font-b);font-size:0.7rem;font-weight:700;color:var(--azul);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
+  .aloj-intro{font-family:var(--font-b);font-size:0.78rem;color:var(--gris);font-style:italic;margin-bottom:16px;line-height:1.6;}
+  .aloj-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .aloj-card{background:var(--crema);border-radius:10px;padding:14px 16px;border-left:3px solid var(--azul);}
+  .aloj-card.full{grid-column:1/-1;}
+  .aloj-name{font-family:var(--font-h);font-weight:700;font-size:0.88rem;color:var(--azul-dark);margin-bottom:4px;}
+  .aloj-type{display:inline-block;font-family:var(--font-b);font-size:0.68rem;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
+  .aloj-desc{font-family:var(--font-b);font-size:0.76rem;color:var(--gris);line-height:1.6;}
   .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;}
   .info-block{background:var(--crema);border-radius:12px;padding:20px;}
   .info-block-title{font-family:var(--font-h);font-weight:700;font-size:0.88rem;color:var(--azul-dark);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
-  .info-block-title::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--naranja);flex-shrink:0;}
+  .info-block-title::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--azul);flex-shrink:0;}
   .info-block ul{list-style:none;}
   .info-block ul li{font-family:var(--font-b);font-size:0.78rem;color:var(--gris);padding:5px 0;border-bottom:1px solid rgba(86,161,164,0.1);display:flex;gap:8px;align-items:flex-start;line-height:1.5;}
   .info-block ul li:last-child{border-bottom:none;}
   .info-block ul li::before{content:'✓';color:var(--azul);font-weight:bold;flex-shrink:0;}
-  .booking-steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:20px 0;}
-  .booking-step{background:var(--crema);border-radius:12px;padding:18px;text-align:center;}
-  .step-num{width:36px;height:36px;border-radius:50%;background:var(--azul-dark);color:var(--naranja);font-family:var(--font-h);font-weight:800;font-size:1rem;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
-  .step-title{font-family:var(--font-h);font-weight:700;font-size:0.85rem;color:var(--azul-dark);margin-bottom:6px;}
-  .step-desc{font-family:var(--font-b);font-size:0.74rem;color:var(--gris);line-height:1.6;}
-  .contact-final{background: linear-gradient(135deg, var(--azul) 0%, #6AAFB2 100%);border-radius:14px;padding:24px 32px;margin-top:20px;display:flex;justify-content:space-between;align-items:center;}
-  .contact-final-text h3{font-family:var(--font-h);font-weight:800;font-size:1.1rem;color:white;margin-bottom:6px;}
-  .contact-final-text p{font-family:var(--font-b);font-size:0.8rem;color:rgba(255,255,255,0.75);}
-  .contact-details{display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
-  .contact-item{font-family:var(--font-b);font-size:0.8rem;color:white;}
-  .contact-item strong{color:var(--naranja);}
+  .info-block ul li.no::before{content:'✗';color:#c0392b;}
+  .faq-item-print{margin-bottom:14px;}
+  .faq-q-print{font-family:var(--font-h);font-weight:700;font-size:0.85rem;color:var(--azul-dark);margin-bottom:5px;}
+  .faq-a-print{font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;}
   .page-footer{background:var(--azul);padding:16px 40px;display:flex;justify-content:space-between;align-items:center;}
-  .footer-contact{font-family:var(--font-b);font-size:0.75rem;color:rgba(255,255,255,0.65);}
-  .footer-web{font-family:var(--font-h);font-weight:700;font-size:0.8rem;color:var(--naranja);}
-  @media print{.print-bar{display:none!important;}body{background:white;}.page{margin:0;box-shadow:none;page-break-after:always;width:100%;}.page:last-child{page-break-after:avoid;}}
+  .footer-contact{font-family:var(--font-b);font-size:0.75rem;color:rgba(255,255,255,0.9);}
+  .footer-web{font-family:var(--font-h);font-weight:700;font-size:0.8rem;color:rgba(255,255,255,0.9);}
+  .booking-steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:24px 0;}
+  .booking-step{background:var(--crema);border-radius:12px;padding:20px;text-align:center;}
+  .step-num{width:36px;height:36px;border-radius:50%;background:var(--azul-dark);color:white;font-family:var(--font-h);font-weight:800;font-size:1rem;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
+  .step-title{font-family:var(--font-h);font-weight:700;font-size:0.88rem;color:var(--azul-dark);margin-bottom:8px;}
+  .step-desc{font-family:var(--font-b);font-size:0.76rem;color:var(--gris);line-height:1.6;}
+  .contact-final{background: linear-gradient(135deg, var(--azul) 0%, #6AAFB2 100%);border-radius:14px;padding:28px 32px;margin-top:24px;display:flex;justify-content:space-between;align-items:center;}
+  .contact-final-text h3{font-family:var(--font-h);font-weight:800;font-size:1.2rem;color:white;margin-bottom:6px;}
+  .contact-final-text p{font-family:var(--font-b);font-size:0.82rem;color:rgba(255,255,255,0.92);}
+  .contact-details{display:flex;flex-direction:column;gap:8px;align-items:flex-end;}
+  .contact-item{font-family:var(--font-b);font-size:0.82rem;color:white;}
+  .contact-item strong{color:rgba(255,255,255,0.85);}
+  .aloj-grid-v2{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .aloj-card-v2{background:var(--crema);border-radius:10px;overflow:hidden;display:flex;flex-direction:row;border:1px solid rgba(86,161,164,0.15);}
+  .aloj-card-v2.full{grid-column:1/-1;}
+  .aloj-card-v2-img{width:30mm;min-width:30mm;height:30mm;object-fit:cover;display:block;flex-shrink:0;}
+  .aloj-card-v2-body{padding:10px 14px;flex:1;border-left:3px solid var(--azul);display:flex;flex-direction:column;justify-content:center;}
+  @page { size: A4 portrait; margin: 0; }
+  @media print {
+    .print-bar{display:none!important;}
+    body{background:white;}
+    .page{margin:0;box-shadow:none;page-break-after:always;break-after:page;width:100%;min-height:0;}
+    .page:last-child{page-break-after:avoid;break-after:avoid;}
+    #bloqueo-overlay{display:none!important;}
+    .page-content{padding:20px 40px;}
+    .day-page-header{padding:14px 40px 12px;}
+    .day-description{padding:12px 40px 10px;}
+    .aloj-section{padding:8px 40px 6px;}
+    .aloj-card{padding:10px 12px;}
+    .aloj-grid{gap:8px;}
+    .aloj-grid-v2{gap:6px;}
+    .aloj-card-v2-img{width:28mm;min-width:28mm;height:28mm;}
+    .aloj-card-v2-body{padding:8px 12px;}
+    .section-h2{margin-bottom:10px;}
+    .section-line{margin-bottom:14px;}
+    .body-text{margin-bottom:8px;}
+    .day-row{padding:9px 0;}
+    .info-grid{gap:12px;margin-bottom:12px;}
+    .info-block{padding:12px;}
+    .faq-item-print{margin-bottom:8px;}
+    .booking-steps{gap:10px;margin:12px 0;}
+    .booking-step{padding:12px;}
+    .contact-final{padding:14px 20px;margin-top:12px;}
+  }
+  #contenido-bloqueado{position:relative;}
+  #bloqueo-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0.97) 30%);display:flex;justify-content:center;align-items:flex-start;padding-top:60px;}
+  .bloqueo-box{background:white;padding:32px 28px;border-radius:16px;text-align:center;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(45,74,82,0.18);border:1px solid rgba(86,161,164,0.15);}
+  .bloqueo-box h3{font-family:var(--font-h);font-weight:800;font-size:1.2rem;color:var(--azul-dark);margin-bottom:10px;}
+  .bloqueo-box p{font-family:var(--font-b);font-size:0.88rem;color:var(--gris);margin-bottom:18px;line-height:1.5;}
+  .bloqueo-box input{display:block;width:100%;padding:12px 14px;border:1px solid #ddeaec;border-radius:8px;font-family:var(--font-b);font-size:0.9rem;margin-bottom:10px;color:var(--azul-dark);outline:none;box-sizing:border-box;}
+  .bloqueo-box input:focus{border-color:var(--azul);}
+  .bloqueo-box .bloq-btn{width:100%;background:#104A52;color:white;border:none;padding:14px;border-radius:8px;font-family:var(--font-h);font-weight:700;font-size:1rem;cursor:pointer;margin-top:4px;}
+  .bloqueo-box .bloq-btn:hover{background:#0a3038;}
+  @media(max-width:700px){.bloqueo-box{padding:24px 18px;}}
 </style>
 </head>
 <body>
 
 <div class="print-bar">
-  <span>Easy Camino Santiago — Portuguese Way Brochure</span>
+  <span>Easy Camino Santiago — Portuguese Camino Brochure from Porto</span>
   <button class="btn-print" onclick="window.print()">⬇ Download PDF</button>
 </div>
 
-<!-- COVER -->
+<!-- PAGE 1: COVER -->
 <div class="page cover">
+  <div class="cover-banner-wrap">
+    <img src="../img/folletos/peregrina-camino-santiago-costa-mar-mochila.jpg" alt="" class="print-hero-img" style="height:42mm;object-position:center 40%;">
+    <img src="../easy-camino-santiago-logo.png" alt="Easy Camino Santiago" class="cover-logo-over">
+  </div>
   <div class="cover-top">
     <div>
       <div class="cover-ruta-label">Official travel guide</div>
-      <h1>Portuguese<br><em>Way</em><br>from Porto</h1>
-      <p class="cover-subtitle">240km of history and beauty from the vibrant city of Porto to the Cathedral of Santiago. Less crowded than the Francés, with medieval cities and the charm of Portugal.</p>
+      <h1>Portuguese<br><em>Camino</em><br>from Porto</h1>
+      <p class="cover-subtitle">Approx. 240 km of history and beauty from the vibrant city of Porto to the Cathedral of Santiago. The world's fastest-growing pilgrimage route.</p>
       <div class="cover-highlights">
         <div class="cover-highlight">The world's fastest-growing Camino route</div>
-        <div class="cover-highlight">Barcelos, Ponte de Lima, Tui and Pontevedra</div>
-        <div class="cover-highlight">Exciting border crossing on the River Miño</div>
-        <div class="cover-highlight">Perfect for first-time pilgrims</div>
+        <div class="cover-highlight">12–14 stages through Portugal and Galicia: Barcelos, Ponte de Lima, Tui, Pontevedra</div>
+        <div class="cover-highlight">Historic border crossing over the river Miño (Valença → Tui)</div>
+        <div class="cover-highlight">Everything arranged: accommodation, luggage transfer and 24h support</div>
       </div>
     </div>
   </div>
   <div class="cover-stats">
-    <div class="cover-stat"><strong>240 km</strong><span>Total distance</span></div>
-    <div class="cover-stat"><strong>12</strong><span>Stages</span></div>
-    <div class="cover-stat"><strong>12 nights</strong><span>Accommodation</span></div>
-    <div class="cover-stat"><strong>Easy</strong><span>Difficulty</span></div>
+    <div class="cover-stat"><strong>~240 km</strong><span>Total distance</span></div>
+    <div class="cover-stat"><strong>12–14</strong><span>Stages</span></div>
+    <div class="cover-stat"><strong>12–14 nights</strong><span>Accommodation</span></div>
+    <div class="cover-stat"><strong>Moderate</strong><span>Difficulty</span></div>
   </div>
   <div class="cover-bottom">
     <div>
       <div class="cover-precio-label">Price from</div>
-      <div class="cover-precio-valor">649€ <span>per person</span></div>
+      <div class="cover-precio-valor">€649 <span>per person</span></div>
     </div>
-    <div class="cover-badge">Recommended · All year</div>
+    <div class="cover-badge">Recommended · Year-round</div>
   </div>
 </div>
 
-<!-- HISTORY PAGE -->
+<!-- PAGE 2: HISTORY OF THE CAMINO DE SANTIAGO [FIXED] -->
 <div class="page">
-  <div style="background:linear-gradient(135deg,var(--azul) 0%,#6AAFB2 100%);padding:32px 40px 28px;">
-    <div style="font-family:var(--font-b);font-size:0.7rem;font-weight:700;color:var(--naranja);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;">History &amp; tradition</div>
-    <h2 style="font-family:var(--font-h);font-weight:900;font-size:2rem;color:white;line-height:1.15;margin-bottom:0;">The Camino de Santiago:<br><em style="font-style:normal;color:rgba(255,255,255,0.75);font-weight:400;font-size:1.1rem;">A thousand years of faith, culture and human adventure</em></h2>
+  <div style="background:linear-gradient(135deg,var(--azul) 0%,#6AAFB2 100%);padding:20px 40px 16px;">
+    <div style="font-family:var(--font-b);font-size:0.7rem;font-weight:700;color:rgba(255,255,255,0.9);letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;">History &amp; Tradition</div>
+    <h2 style="font-family:var(--font-h);font-weight:900;font-size:2rem;color:white;line-height:1.15;margin-bottom:0;">The Camino de Santiago:<br><em style="font-style:normal;color:rgba(255,255,255,0.92);font-weight:400;font-size:1.1rem;">A thousand years of faith, culture and human adventure</em></h2>
   </div>
-  <div style="padding:26px 40px 20px;">
-    <div style="border-left:4px solid var(--naranja);padding:12px 20px;margin-bottom:22px;background:rgba(240,161,69,0.06);border-radius:0 8px 8px 0;">
-      <p style="font-family:var(--font-h);font-size:1rem;font-style:italic;color:var(--azul-dark);line-height:1.5;margin:0;">"The Camino de Santiago is the only European route declared a UNESCO World Heritage Site, in 1985. Every year, more than 300,000 people from around the world walk its paths."</p>
+
+  <div style="padding:14px 40px 10px;">
+
+    <div style="border-left:4px solid var(--azul);padding:10px 16px;margin-bottom:12px;background:rgba(86,161,164,0.12);border-radius:0 8px 8px 0;">
+      <p style="font-family:var(--font-h);font-size:1rem;font-style:italic;color:var(--azul-dark);line-height:1.5;margin:0;">"The Camino de Santiago is the only European pilgrimage route declared a UNESCO World Heritage Site, in 1985. Each year, more than 300,000 people from all over the world walk its paths."</p>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:22px;">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px;">
+
       <div>
-        <div style="font-family:var(--font-b);font-size:0.65rem;font-weight:700;color:var(--naranja);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;">Who was the Apostle James?</div>
-        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin:0;">James the Greater, son of Zebedee, was one of the first four disciples chosen by Jesus, together with Peter, Andrew and John. A fisherman from the Sea of Galilee, Jesus nicknamed him and his brother "Sons of Thunder" for their passionate and determined character.</p>
-        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">He was the first apostle to be martyred: King Herod Agrippa I ordered his beheading around 44 AD. According to tradition, his disciples carried his body by ship to the shores of Galicia, where he was buried in what is now Compostela.</p>
-        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">In the 9th century, the hermit Pelayo observed mysterious lights over a field. Upon investigation, a tomb was discovered which Bishop Teodomiro identified as that of the Apostle. King Alfonso II ordered a church to be built over the tomb, the seed of today's Cathedral.</p>
+        <div style="font-family:var(--font-b);font-size:0.65rem;font-weight:700;color:var(--azul);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;">Who was the Apostle James?</div>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin:0;">James the Greater was one of Jesus' first disciples and the first apostle to be martyred: King Herod had him beheaded around 44 AD. According to tradition, his disciples carried his body to the shores of Galicia.</p>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.6;margin-top:5px;">In the 9th century, the discovery of his tomb gave rise to centuries of pilgrimage. King Alfonso II ordered a church to be built on the site — the seed of today's Cathedral of Santiago.</p>
       </div>
+
       <div>
-        <div style="font-family:var(--font-b);font-size:0.65rem;font-weight:700;color:var(--naranja);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;">The birth of the pilgrimage</div>
-        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin:0;">News of the discovery spread across Europe and pilgrims soon began arriving from all corners of Christendom. By the 10th century, pilgrimage to Compostela was firmly established, rivalling journeys to Rome and Jerusalem.</p>
-        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">The 11th and 12th centuries were its golden age. Kings such as Sancho III and Alfonso VI promoted the route, building roads, bridges and hostels. The Cluniac religious orders organised the infrastructure that would make the Camino Francés famous.</p>
-        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin-top:8px;">The Camino went through periods of decline — the Black Death, religious wars — but always revived. In 1884, Pope Leo XIII reaffirmed the authenticity of the relics, and the 20th century brought the greatest revival in modern history.</p>
+        <div style="font-family:var(--font-b);font-size:0.65rem;font-weight:700;color:var(--azul);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:6px;">The birth of pilgrimage</div>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.65;margin:0;">The news spread across Europe and pilgrimage to Compostela soon rivalled Rome and Jerusalem. The 11th and 12th centuries were its golden age: kings and religious orders built roads, bridges and hospices.</p>
+        <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);line-height:1.6;margin-top:5px;">The Camino survived the Black Death and centuries of decline. Its great revival came in the 20th century, and today more than 300,000 people a year walk its paths from more than 180 countries.</p>
       </div>
+
     </div>
-    <div style="margin-bottom:18px;">
-      <div style="font-family:var(--font-b);font-size:0.65rem;font-weight:700;color:var(--azul);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">Key milestones</div>
+
+    <div style="margin-bottom:10px;">
+      <div style="font-family:var(--font-b);font-size:0.65rem;font-weight:700;color:var(--azul);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">Essential timeline</div>
       <div style="display:flex;gap:0;align-items:flex-start;position:relative;">
         <div style="position:absolute;top:10px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--azul),var(--naranja));opacity:0.25;"></div>
         <div style="flex:1;text-align:center;position:relative;z-index:1;">
           <div style="width:20px;height:20px;border-radius:50%;background:var(--azul);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--azul);"></div>
           <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--azul);">1st c. AD</div>
-          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">Martyrdom and transfer of James's remains to Galicia</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">Martyrdom of James and transfer of his remains to Galicia</div>
         </div>
         <div style="flex:1;text-align:center;position:relative;z-index:1;">
           <div style="width:20px;height:20px;border-radius:50%;background:var(--azul);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--azul);"></div>
@@ -163,150 +237,405 @@
         <div style="flex:1;text-align:center;position:relative;z-index:1;">
           <div style="width:20px;height:20px;border-radius:50%;background:var(--azul);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--azul);"></div>
           <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--azul);">1122</div>
-          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">Pope Callixtus II creates the Holy Compostelan Year</div>
+          <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">Pope Calixtus II establishes the Holy Compostelan Year</div>
         </div>
         <div style="flex:1;text-align:center;position:relative;z-index:1;">
-          <div style="width:20px;height:20px;border-radius:50%;background:var(--naranja);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--naranja);"></div>
-          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--naranja);">1985</div>
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--azul);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--azul);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--azul);">1985</div>
           <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">UNESCO declares the Camino a World Heritage Site</div>
         </div>
         <div style="flex:1;text-align:center;position:relative;z-index:1;">
-          <div style="width:20px;height:20px;border-radius:50%;background:var(--naranja);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--naranja);"></div>
-          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--naranja);">Today</div>
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--azul);margin:0 auto 6px;border:3px solid white;box-shadow:0 0 0 2px var(--azul);"></div>
+          <div style="font-family:var(--font-h);font-weight:800;font-size:0.68rem;color:var(--azul);">Today</div>
           <div style="font-family:var(--font-b);font-size:0.62rem;color:var(--gris);line-height:1.3;margin-top:2px;">+300,000 pilgrims a year from more than 180 countries</div>
         </div>
       </div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
-      <div style="background:var(--crema);border-radius:8px;padding:13px 14px;border-top:3px solid var(--azul);">
-        <div style="font-family:var(--font-h);font-weight:800;font-size:0.8rem;color:var(--azul-dark);margin-bottom:5px;">The Holy Year</div>
-        <p style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.55;margin:0;">Celebrated when 25 July — the Apostle's feast day — falls on a Sunday. Pope Callixtus II established this privilege in 1122. During a Holy Year, the Holy Door of the Cathedral opens and pilgrims can obtain a plenary indulgence.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+      <div style="background:var(--crema);border-radius:8px;padding:10px 12px;border-top:3px solid var(--azul);">
+        <div style="font-family:var(--font-h);font-weight:800;font-size:0.8rem;color:var(--azul-dark);margin-bottom:4px;">The Holy Year</div>
+        <p style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.55;margin:0;">Celebrated when 25 July — the Feast of the Apostle — falls on a Sunday. In a Holy Year, the Holy Door of the Cathedral opens and pilgrims may receive plenary indulgence.</p>
       </div>
-      <div style="background:var(--crema);border-radius:8px;padding:13px 14px;border-top:3px solid var(--azul);">
-        <div style="font-family:var(--font-h);font-weight:800;font-size:0.8rem;color:var(--azul-dark);margin-bottom:5px;">The Compostela</div>
-        <p style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.55;margin:0;">Official certificate issued by the Cathedral. The pilgrim's name is inscribed in Latin, signed by the Secretary of the Chapter. In 1985, 2,491 were issued; today more than 300,000 are awarded each year. Obtained by walking at least 100 km on foot or 200 km by bicycle.</p>
+      <div style="background:var(--crema);border-radius:8px;padding:10px 12px;border-top:3px solid var(--azul);">
+        <div style="font-family:var(--font-h);font-weight:800;font-size:0.8rem;color:var(--azul-dark);margin-bottom:4px;">The Compostela</div>
+        <p style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.55;margin:0;">The official certificate issued by the Cathedral, with the pilgrim's name inscribed in Latin. Awarded for walking at least 100 km or cycling 200 km. Today over 300,000 are issued each year.</p>
       </div>
-      <div style="background:var(--crema);border-radius:8px;padding:13px 14px;border-top:3px solid var(--naranja);">
-        <div style="font-family:var(--font-h);font-weight:800;font-size:0.8rem;color:var(--azul-dark);margin-bottom:5px;">The Pilgrim's Blessing</div>
-        <p style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.55;margin:0;">A medieval tradition celebrated in Roncesvalles at the start of the Camino Francés and in other churches along the route. The clergyman prays that the pilgrim "undertakes the journey and returns safe and well with God's help". A rite that unites faith, history and community.</p>
+      <div style="background:var(--crema);border-radius:8px;padding:10px 12px;border-top:3px solid var(--azul);">
+        <div style="font-family:var(--font-h);font-weight:800;font-size:0.8rem;color:var(--azul-dark);margin-bottom:4px;">The Pilgrim's Blessing</div>
+        <p style="font-family:var(--font-b);font-size:0.72rem;color:var(--gris);line-height:1.55;margin:0;">A medieval tradition celebrated in various churches along the route before departure. A rite that unites faith, history and the pilgrim community across the centuries.</p>
       </div>
     </div>
+
   </div>
+
   <div class="page-footer">
     <div class="footer-contact">Easy Camino Santiago · Lugo, Galicia</div>
     <div class="footer-web">easycaminosantiago.com</div>
   </div>
 </div>
 
-<!-- ROUTE + PACKAGE PAGE -->
+
+<!-- PAGE 3: ROUTE DESCRIPTION + ITINERARY OVERVIEW -->
 <div class="page">
   <div class="page-header">
-    <div class="page-header-title">Portuguese Way</div>
+    <div class="page-header-title">Portuguese Camino from Porto</div>
     <div class="page-header-num">02</div>
   </div>
   <div class="page-content">
     <div class="section-label">The route</div>
-    <div class="section-h2">The Portuguese charm to Compostela</div>
+    <div class="section-h2">The Portuguese charm all the way to Compostela</div>
     <div class="section-line"></div>
-    <p class="body-text">The Portuguese Way is the second most popular Jacobean route and the fastest-growing. From Porto, a UNESCO World Heritage City, it winds through historic towns, medieval bridges and unique landscapes. With 240km and 12 stages, it is ideal for those with two weeks who seek an authentic experience without the physical demands of the Camino Francés.</p>
-    <p class="body-text">The border crossing over the Tui–Valença bridge is one of the most exciting moments. Once in Galicia, the stone paths and cruceiros bring you closer to Santiago kilometre by kilometre.</p>
+    <p class="body-text">The Portuguese Camino is the world's fastest-growing pilgrimage route. Approx. 240 km from Porto Cathedral through the green interior of Portugal, crossing the river Miño at Tui and into Galicia all the way to the Plaza del Obradoiro. Barcelos, Ponte de Lima and Pontevedra are just some of the places that will define the journey.</p>
+    <p class="body-text">Ideal for those looking to experience authentic Portugal on foot and discover two cultures in a single trip. Our agency in Lugo knows every accommodation and every stretch of the route, offering an experience organised for your complete peace of mind.</p>
 
-    <div class="section-label" style="margin-top:20px;">Itinerary</div>
-    <div class="section-h2" style="font-size:1.3rem;">Main stages of the Portuguese Way</div>
+    <div class="section-label" style="margin-top:24px;">Itinerary</div>
+    <div class="section-h2" style="font-size:1.3rem;">Overview — 12–14 stages across 5 segments</div>
     <div class="section-line"></div>
     <div class="itinerary-overview">
       <div class="day-row">
-        <div class="day-num">1</div>
+        <div class="day-num" style="font-size:0.75rem;">1–2</div>
         <div class="day-info">
-          <div class="day-title">Porto → Vilarinho</div>
-          <div class="day-desc">Porto Cathedral · River Douro · Vineyards and peaceful villages</div>
+          <div class="day-title">Porto → Barcelos</div>
+          <div class="day-desc">Starting at Porto Cathedral · Atlantic coastline · Cruz de Barcelos and its medieval fair</div>
         </div>
-        <div class="day-km">26 km</div>
-      </div>
-      <div class="day-row">
-        <div class="day-num">2</div>
-        <div class="day-info">
-          <div class="day-title">Barcelos</div>
-          <div class="day-desc">Capital of the Portuguese cockerel · Medieval market · Gothic bridge</div>
-        </div>
-        <div class="day-km">~30 km</div>
+        <div class="day-km">55 km</div>
       </div>
       <div class="day-row">
         <div class="day-num">3</div>
         <div class="day-info">
-          <div class="day-title">Ponte de Lima</div>
-          <div class="day-desc">Best European Destination · Roman bridge · Minho cuisine</div>
+          <div class="day-title">Barcelos → Ponte de Lima</div>
+          <div class="day-desc">Vinho verde vineyards · Portugal's oldest town · Roman bridge over the river Lima</div>
         </div>
-        <div class="day-km">~32 km</div>
+        <div class="day-km">32 km</div>
       </div>
       <div class="day-row">
-        <div class="day-num">4</div>
+        <div class="day-num" style="font-size:0.75rem;">4–5</div>
         <div class="day-info">
-          <div class="day-title">Valença → Tui (Border crossing)</div>
-          <div class="day-desc">Iron bridge over the Miño · Entering Galicia</div>
+          <div class="day-title">Ponte de Lima → Tui</div>
+          <div class="day-desc">Alto do Portela · Fortified Valença · Historic border crossing over the river Miño into Galicia</div>
         </div>
-        <div class="day-km">13 km</div>
+        <div class="day-km">60 km</div>
       </div>
       <div class="day-row">
-        <div class="day-num">5</div>
+        <div class="day-num" style="font-size:0.75rem;">6–7</div>
         <div class="day-info">
-          <div class="day-title">Redondela → Santiago (Final 3 stages)</div>
-          <div class="day-desc">Viaduct · Pontevedra · Padrón · Obradoiro Square</div>
+          <div class="day-title">Tui → Pontevedra</div>
+          <div class="day-desc">Redondela and the Vigo estuary · Galician granaries and stone crosses · Pontevedra's medieval old town</div>
         </div>
-        <div class="day-km">75 km</div>
+        <div class="day-km">42 km</div>
+      </div>
+      <div class="day-row">
+        <div class="day-num" style="font-size:0.72rem;">8–12</div>
+        <div class="day-info">
+          <div class="day-title">Pontevedra → Santiago de Compostela</div>
+          <div class="day-desc">Caldas de Reis · Padrón · Monte do Gozo · Plaza del Obradoiro · Pilgrim Mass</div>
+        </div>
+        <div class="day-km">65 km</div>
       </div>
     </div>
+    <p style="font-family:var(--font-b);font-size:0.78rem;color:var(--gris);margin-top:16px;font-style:italic;">We adapt the itinerary to your pace. A 14-stage option is available for a more relaxed rhythm, ideal for your first long Camino.</p>
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · info@easycaminosantiago.com · +34 982 907 629</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
 
-    <div class="info-grid" style="margin-top:24px;">
+<!-- PAGE 4: STAGES 1–2 (PORTO + BARCELOS) -->
+<div class="page">
+  <div class="day-page-header">
+    <div class="day-page-label">Stages 1–2</div>
+    <div class="day-page-title">Porto → Barcelos</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">55 km</span>
+      <span class="day-meta-tag">+480m / -460m</span>
+      <span class="day-meta-tag">2 days</span>
+    </div>
+  </div>
+  <div class="day-description">Starting at Porto's Cathedral through the UNESCO World Heritage historic centre. The stage follows the Atlantic coastline before heading into the green Minho interior, culminating in Barcelos and its legendary Cruz — one of Portugal's most iconic symbols.</div>
+  <div class="aloj-section">
+    <div class="aloj-label">Accommodation in Porto</div>
+    <div class="aloj-grid-v2">
+      <div class="aloj-card-v2">
+        <img src="../img/folletos/hotel-images/p5_img1_350x201.jpg" alt="" class="aloj-card-v2-img" style="object-position:center 40%;">
+        <div class="aloj-card-v2-body">
+          <div class="aloj-name">Selected guesthouse in Porto</div>
+          <div class="aloj-type">Guesthouse · Private room</div>
+          <div class="aloj-desc">Historic centre of Porto. Home-made breakfast included. The ideal start to the Portuguese Camino.</div>
+        </div>
+      </div>
+      <div class="aloj-card-v2">
+        <img src="../img/folletos/hotel-images/p5_img2_350x200.jpg" alt="" class="aloj-card-v2-img" style="object-position:center 40%;">
+        <div class="aloj-card-v2-body">
+          <div class="aloj-name">Selected hostel in Porto</div>
+          <div class="aloj-type">Private hostel</div>
+          <div class="aloj-desc">A leading hostel for pilgrims in Porto. Lively community, full amenities and a central location to start the route.</div>
+        </div>
+      </div>
+      <div class="aloj-card-v2 full">
+        <img src="../img/folletos/hotel-images/p5_img3_350x200.jpg" alt="" class="aloj-card-v2-img" style="object-position:center 50%;">
+        <div class="aloj-card-v2-body">
+          <div class="aloj-name">Selected hotel in Porto</div>
+          <div class="aloj-type">3★ Hotel</div>
+          <div class="aloj-desc">Historic hotel in the heart of Porto. Classic elegance, buffet breakfast and an ideal base for exploring the city before setting off on the Camino.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-page-header" style="margin-top:4px;">
+    <div class="day-page-label">Stage 3</div>
+    <div class="day-page-title">Barcelos → Ponte de Lima</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">32 km</span>
+      <span class="day-meta-tag">+380m / -360m</span>
+      <span class="day-meta-tag">8–9 hours</span>
+    </div>
+  </div>
+  <div class="day-description">Walking through vinho verde vineyards, medieval mills and granite villages — one of the most beautiful stages on the route. At the end, Ponte de Lima — Portugal's oldest town — with its magnificent Roman bridge over the river Lima.</div>
+  <div class="aloj-section">
+    <div class="aloj-label">Accommodation in Barcelos</div>
+    <div class="aloj-grid-v2">
+      <div class="aloj-card-v2">
+        <img src="../img/folletos/hotel-images/p7_img1_350x200.jpg" alt="" class="aloj-card-v2-img" style="object-position:center 50%;">
+        <div class="aloj-card-v2-body">
+          <div class="aloj-name">Selected rural house in Barcelos</div>
+          <div class="aloj-type">Rural house</div>
+          <div class="aloj-desc">Charming Minho-style house in the heart of Barcelos. Garden with vine and breakfast with local farm produce.</div>
+        </div>
+      </div>
+      <div class="aloj-card-v2">
+        <img src="../img/folletos/hotel-images/p7_img2_350x201.jpg" alt="" class="aloj-card-v2-img" style="object-position:center 40%;">
+        <div class="aloj-card-v2-body">
+          <div class="aloj-name">Selected hotel in Barcelos</div>
+          <div class="aloj-type">3★ Hotel</div>
+          <div class="aloj-desc">Highly rated by pilgrims in Barcelos. Own restaurant with Minho cuisine and comfortable rooms to recharge for the next stage.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · info@easycaminosantiago.com · +34 982 907 629</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+<div id="contenido-bloqueado">
+<div id="bloqueo-overlay">
+  <div class="bloqueo-box">
+    <h3>Access the full brochure</h3>
+    <p>Access the complete itinerary, accommodation options and Portuguese Camino guide.</p>
+    <input type="text" id="bloq-nombre" placeholder="Your name" autocomplete="name">
+    <input type="email" id="bloq-email" placeholder="Your email" autocomplete="email">
+    <button class="bloq-btn" onclick="desbloquearFolleto()">Access the full brochure</button>
+  </div>
+</div>
+
+<!-- PAGE 5: STAGES 3–5 (PONTE DE LIMA, TUI, SANTIAGO) -->
+<div class="page">
+  <div class="day-page-header">
+    <div class="day-page-label">Stages 4–5</div>
+    <div class="day-page-title">Ponte de Lima → Tui</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">60 km</span>
+      <span class="day-meta-tag">+560m / -540m</span>
+      <span class="day-meta-tag">2 days</span>
+    </div>
+  </div>
+  <div class="day-description">Ascending the Alto do Portela with views over the Minho Valley. In Valença, the fortified walls announce the border: cross the bridge over the river Miño into Tui and enter Galicia. One of the most memorable moments of the route.</div>
+  <div class="aloj-section" style="padding-bottom:8px;">
+    <div class="aloj-label">Accommodation in Ponte de Lima</div>
+    <div class="aloj-grid-v2">
+      <div class="aloj-card-v2">
+        <img src="../img/folletos/hotel-images/p6_img3_350x200.jpg" alt="" class="aloj-card-v2-img" style="object-position:center 45%;">
+        <div class="aloj-card-v2-body">
+          <div class="aloj-name">Selected rural house in Ponte de Lima</div>
+          <div class="aloj-type">Rural house</div>
+          <div class="aloj-desc">Historic quinta with its own vineyards on the banks of the Lima. Authentic Minho atmosphere and house vinho verde.</div>
+        </div>
+      </div>
+      <div class="aloj-card-v2">
+        <img src="../img/folletos/hotel-images/p7_img3_350x201.jpg" alt="" class="aloj-card-v2-img" style="object-position:center 50%;">
+        <div class="aloj-card-v2-body">
+          <div class="aloj-name">Selected hotel in Ponte de Lima</div>
+          <div class="aloj-type">3★ Hotel</div>
+          <div class="aloj-desc">The finest hotel in Ponte de Lima. Terrace overlooking the Roman bridge and top-level Minho gastronomy.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-page-header">
+    <div class="day-page-label">Stages 6–7</div>
+    <div class="day-page-title">Tui → Pontevedra</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">42 km</span>
+      <span class="day-meta-tag">+420m / -400m</span>
+      <span class="day-meta-tag">2 days</span>
+    </div>
+  </div>
+  <div class="day-description">Galicia welcomes you with granaries, stone crosses and eucalyptus forests. Redondela and its railway viaducts over the Vigo estuary precede the arrival in Pontevedra, with its beautiful pedestrianised medieval old town.</div>
+  <div class="aloj-section" style="padding-bottom:8px;">
+    <div class="aloj-label">Accommodation in Tui</div>
+    <div class="aloj-grid-v2">
+      <div class="aloj-card-v2 full">
+        <img src="../img/folletos/hotel-images/p6_img1_350x201.jpg" alt="" class="aloj-card-v2-img" style="object-position:center 40%;">
+        <div class="aloj-card-v2-body">
+          <div class="aloj-name">Selected accommodation in Tui</div>
+          <div class="aloj-type">Hostel · Hotel</div>
+          <div class="aloj-desc">Crossing the Miño marks the entry into Galicia and the Spanish stretch of the Portuguese Camino. Tui offers excellent hostels and hotels for pilgrims who have just completed the Portuguese leg. A night full of border emotion.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="day-page-header">
+    <div class="day-page-label">Stages 8–12 — Arrival</div>
+    <div class="day-page-title">Pontevedra → Santiago de Compostela</div>
+    <div class="day-page-meta">
+      <span class="day-meta-tag">65 km</span>
+      <span class="day-meta-tag">+380m / -360m</span>
+      <span class="day-meta-tag">4–5 days</span>
+    </div>
+  </div>
+  <div class="day-description">Caldas de Reis and its thermal springs. Padrón, where legend places the arrival of the Apostle. And finally the Plaza del Obradoiro: the Pilgrim Mass and the embrace of the Apostle close a journey you will never forget.</div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · info@easycaminosantiago.com · +34 982 907 629</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+<!-- PAGE 6: WHAT'S INCLUDED + PRICES -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">What your package includes</div>
+    <div class="page-header-num">05</div>
+  </div>
+  <div class="page-content">
+    <div class="section-label">What your experience includes</div>
+    <div class="section-h2">A carefully curated service</div>
+    <div class="section-line"></div>
+    <div class="info-grid">
       <div class="info-block">
         <div class="info-block-title">Included</div>
         <ul>
-          <li>12 nights' accommodation booked</li>
-          <li>Luggage transfer every stage</li>
-          <li>Pilgrim's credential</li>
-          <li>Detailed itinerary</li>
-          <li>24h telephone support</li>
-          <li>Compostela certificate management</li>
-          <li>Travel insurance (guesthouse/hotel packages)</li>
+          <li>12–14 nights' accommodation reserved</li>
+          <li>Breakfast included every day</li>
+          <li>Luggage transfer (all stages)</li>
+          <li>Pilgrim credential</li>
+          <li>Stage-by-stage itinerary</li>
+          <li>24h phone support during the Camino</li>
+          <li>Compostela processing</li>
+          <li>Basic travel insurance included (guesthouse/hotel packages)</li>
         </ul>
       </div>
       <div class="info-block">
-        <div class="info-block-title">Prices</div>
+        <div class="info-block-title">Not included</div>
         <ul>
-          <li>Private hostel: from 649€/person</li>
-          <li>Guesthouse / private room: from 849€/person</li>
-          <li>3★ Hotel: from 1,190€/person</li>
+          <li class="no">Flights or transport to Porto</li>
+          <li class="no">Meals (except breakfast)</li>
+          <li class="no">Optional activities in Porto or Santiago</li>
+          <li class="no">Personal expenses</li>
         </ul>
         <div style="margin-top:12px;font-family:var(--font-b);font-size:0.76rem;color:var(--azul);background:rgba(86,161,164,0.08);padding:10px;border-radius:8px;">
-          Book with 30%. See cancellation terms at easycaminosantiago.com
+          We can advise on flights and transport to Porto at no additional cost.
         </div>
       </div>
     </div>
 
+    <div class="section-label" style="margin-top:8px;">Prices</div>
+    <div class="section-h2" style="font-size:1.3rem;">Choose your accommodation type</div>
+    <div class="section-line"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+      <div style="background:var(--crema);border-radius:12px;padding:14px;border:1px solid rgba(86,161,164,0.15);">
+        <div style="font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Private hostel</div>
+        <div style="font-family:var(--font-h);font-weight:800;font-size:1.8rem;color:var(--azul-dark);"><span style="font-size:0.85rem;font-weight:400;">from </span>€649</div>
+        <div style="font-family:var(--font-b);font-size:0.75rem;color:var(--gris);margin-bottom:8px;">per person · 12–14 nights</div>
+        <div style="font-family:var(--font-b);font-size:0.76rem;color:var(--gris);">Carefully selected private hostels in Portugal and Galicia. Ideal for meeting fellow pilgrims from around the world.</div>
+      </div>
+      <div style="background:var(--azul-dark);border-radius:12px;padding:14px;">
+        <div style="font-family:var(--font-b);font-size:0.6rem;font-weight:700;color:var(--azul);text-transform:uppercase;letter-spacing:2px;margin-bottom:5px;">Most popular</div>
+        <div style="font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.9);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Private guesthouse</div>
+        <div style="font-family:var(--font-h);font-weight:800;font-size:1.8rem;color:white;"><span style="font-size:0.85rem;font-weight:400;">from </span>€849</div>
+        <div style="font-family:var(--font-b);font-size:0.75rem;color:rgba(255,255,255,0.9);margin-bottom:8px;">per person · 12–14 nights</div>
+        <div style="font-family:var(--font-b);font-size:0.76rem;color:rgba(255,255,255,0.92);">Private room in selected guesthouses and rural houses. Comfort and rest after every stage.</div>
+      </div>
+      <div style="background:var(--crema);border-radius:12px;padding:14px;border:1px solid rgba(86,161,164,0.15);">
+        <div style="font-family:var(--font-b);font-size:0.72rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">3★ Hotel</div>
+        <div style="font-family:var(--font-h);font-weight:800;font-size:1.8rem;color:var(--azul-dark);"><span style="font-size:0.85rem;font-weight:400;">from </span>€1,190</div>
+        <div style="font-family:var(--font-b);font-size:0.75rem;color:var(--gris);margin-bottom:8px;">per person · 12–14 nights</div>
+        <div style="font-family:var(--font-b);font-size:0.76rem;color:var(--gris);">Selected 3★ hotels. Buffet breakfast, basic travel insurance included and premium service.</div>
+      </div>
+    </div>
+    <p style="font-family:var(--font-b);font-size:0.76rem;color:var(--gris);margin-top:12px;text-align:center;">30% deposit secures your booking. Balance due 30 days before departure. Full cancellation policy at easycaminosantiago.com</p>
+  </div>
+  <div class="page-footer">
+    <div class="footer-contact">Easy Camino Santiago · info@easycaminosantiago.com · +34 982 907 629</div>
+    <div class="footer-web">easycaminosantiago.com</div>
+  </div>
+</div>
+
+<!-- PAGE 7: FAQ + BOOKING + CONTACT -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-header-title">FAQs and booking</div>
+    <div class="page-header-num">06</div>
+  </div>
+  <div class="page-content">
+    <div class="section-label">FAQ</div>
+    <div class="section-h2">Frequently asked questions</div>
+    <div class="section-line"></div>
+
+    <div class="faq-item-print">
+      <div class="faq-q-print">What fitness level do I need for the Portuguese Camino?</div>
+      <div class="faq-a-print">Moderate fitness required. Stages range from 24 to 33 km with some elevation gain. We recommend prior hiking experience with walks of 12–15 km. Suitable for pilgrims with good physical condition and a background in walking.</div>
+    </div>
+    <div class="faq-item-print">
+      <div class="faq-q-print">Do I need a visa or passport to cross from Portugal to Spain?</div>
+      <div class="faq-a-print">No visa is required. Portugal and Spain are both members of the Schengen Area and the European Union. Your standard ID card or passport is all you need to cross the border at the Valença–Tui bridge — no formalities.</div>
+    </div>
+    <div class="faq-item-print">
+      <div class="faq-q-print">Is luggage transfer included?</div>
+      <div class="faq-a-print">Yes, in all packages. Your main rucksack travels each morning to the next accommodation while you walk with a small daypack. We manage the service across both countries.</div>
+    </div>
+    <div class="faq-item-print">
+      <div class="faq-q-print">When is the best time to walk the Portuguese Camino?</div>
+      <div class="faq-a-print">Year-round, though spring (March–June) and autumn (September–November) are the most pleasant seasons. Summers are drier but warmer. Winter offers spectacular scenery with fewer pilgrims on the path.</div>
+    </div>
+    <div class="faq-item-print">
+      <div class="faq-q-print">How far in advance should I book?</div>
+      <div class="faq-a-print">We recommend 4–6 weeks for mid-season, and 2–3 months for Easter and bank holiday weekends. In low season we can often organise everything in under a week.</div>
+    </div>
+
+    <div class="section-label" style="margin-top:24px;">How to book</div>
+    <div class="section-h2" style="font-size:1.3rem;">3 steps to your Camino</div>
+    <div class="section-line"></div>
     <div class="booking-steps">
       <div class="booking-step">
         <div class="step-num">1</div>
         <div class="step-title">Contact us</div>
-        <div class="step-desc">Write to us or use the form. We reply within 24h.</div>
+        <div class="step-desc">Write to us or fill in the form on our website. We'll get back to you within 24 hours.</div>
       </div>
       <div class="booking-step">
         <div class="step-num">2</div>
-        <div class="step-title">Quote</div>
-        <div class="step-desc">Personalised to your dates and preferences.</div>
+        <div class="step-title">Personalised quote</div>
+        <div class="step-desc">We'll send you a tailored quote based on your dates, group size and preferred accommodation type.</div>
       </div>
       <div class="booking-step">
         <div class="step-num">3</div>
-        <div class="step-title">Walk!</div>
-        <div class="step-desc">With 30% we book everything. Balance 30 days before.</div>
+        <div class="step-title">Book and enjoy</div>
+        <div class="step-desc">A 30% deposit confirms your Camino. The balance is due 30 days before departure. Time to walk!</div>
       </div>
     </div>
+
     <div class="contact-final">
       <div class="contact-final-text">
         <h3>Ready to discover Portugal on foot?</h3>
-        <p>The Portuguese Way awaits. Free quote, no obligation.</p>
+        <p>Request your free quote. Our team will get back to you as soon as possible.</p>
       </div>
       <div class="contact-details">
-        <div class="contact-item"></div>
+        <div class="contact-item"><strong>Email:</strong> info@easycaminosantiago.com</div>
         <div class="contact-item"><strong>Web:</strong> easycaminosantiago.com</div>
       </div>
     </div>
@@ -316,6 +645,44 @@
     <div class="footer-web">easycaminosantiago.com</div>
   </div>
 </div>
+
+</div><!-- /contenido-bloqueado -->
+
+<form name="folleto-portugues-en" data-netlify="true" hidden>
+  <input type="text" name="nombre">
+  <input type="email" name="email">
+  <input type="hidden" name="ruta" value="brochure-camino-portugues-en">
+</form>
+
+<script>
+function desbloquearFolleto() {
+  var nombre = document.getElementById('bloq-nombre').value.trim();
+  var email = document.getElementById('bloq-email').value.trim();
+  if (!nombre) {
+    document.getElementById('bloq-nombre').focus();
+    return;
+  }
+  if (!email || !email.includes('@')) {
+    document.getElementById('bloq-email').focus();
+    return;
+  }
+  if(typeof gtag==='function'){gtag('event','lead_folleto',{ruta:window.location.pathname});}
+  fetch('/', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: 'form-name=folleto-portugues-en&nombre=' + encodeURIComponent(nombre) + '&email=' + encodeURIComponent(email) + '&ruta=brochure-camino-portugues-en'
+  });
+  localStorage.setItem('folleto_unlock', 'true');
+  document.getElementById('bloqueo-overlay').style.display = 'none';
+}
+
+(function() {
+  if (localStorage.getItem('folleto_unlock') === 'true') {
+    var overlay = document.getElementById('bloqueo-overlay');
+    if (overlay) overlay.style.display = 'none';
+  }
+})();
+</script>
 
 </body>
 </html>
