@@ -81,68 +81,63 @@
    style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;background:#25d366;color:#fff;border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.2);font-size:1.6rem;text-decoration:none;"
    aria-label="Contact via WhatsApp">💬</a>
 
-<!-- NAVBAR -->
-<nav class="ecs-nav">
-  <a href="../en/"><img src="../easy-camino-santiago-logo.png" alt="Easy Camino Santiago" class="ecs-nav-logo"></a>
-  <ul>
-    <li class="nav-dropdown">
-      <a href="#">Routes</a>
-      <div class="nav-dropdown-menu">
-        <a href="../en/camino-frances.html">French Way</a>
-        <a href="../en/camino-frances-sarria.html">⭐ Last 100km from Sarria</a>
-        <a href="../en/camino-portugues.html">Portuguese Way</a>
-        <a href="../en/camino-portugues-costa.html">Portuguese Coastal Way</a>
-        <a href="../en/camino-norte.html">Northern Way</a>
-        <a href="../en/camino-finisterre.html">Way of Finisterre</a>
-        <a href="../en/camino-ingles.html">English Way</a>
-        <a href="../en/camino-primitivo.html">Primitive Way</a>
-        <a href="../en/camino-bicicleta.html">By Bicycle</a>
-      </div>
-    </li>
-    <li><a href="../en/#ecs-servicios">Services</a></li>
-    <li><a href="../en/#ecs-como">How it works</a></li>
-    <li><a href="../en/blog.html" style="color:#56A1A4;font-weight:700;">Blog</a></li>
-    <li><a href="../en/contacto.html">Contact</a></li>
-    <li><a href="../en/reserva.html" class="btn-nav">Book now</a></li>
-    <li>
-      <div class="lang-dropdown" id="lang-dropdown">
-        <button class="lang-trigger" onclick="document.getElementById('lang-dropdown').classList.toggle('open');event.stopPropagation()">
-          <span>🇬🇧</span>
-          <span>EN</span>
-          <span class="lang-arrow">▼</span>
-        </button>
-        <div class="lang-menu">
-          <a class="lang-option" href="../blog-mochila-camino-santiago.html"><span class="lang-flag">🇪🇸</span> Español</a>
-          <a class="lang-option active" href="../en/blog-mochila-camino-santiago.html"><span class="lang-flag">🇬🇧</span> English</a>
+<!-- ── NAVBAR ── -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="../en/index.html" class="nav-logo">
+      <img src="../easy-camino-santiago-logo.png" alt="Easy Camino Santiago" height="48">
+    </a>
+    <ul class="nav-links">
+      <li class="dropdown">
+        <a href="#" class="dropbtn">Routes ▾</a>
+        <div class="dropdown-content">
+          <a href="../en/camino-frances.html">French Way (Full)</a>
+          <a href="../en/camino-frances-sarria.html">Last 100km from Sarria</a>
+          <a href="../en/camino-portugues.html">Portuguese Way from Porto</a>
+          <a href="../en/camino-portugues-costa.html">Portuguese Coastal Way</a>
+          <a href="../en/camino-ingles.html">English Way from Ferrol</a>
+          <a href="../en/camino-norte.html">Northern Way</a>
+          <a href="../en/camino-primitivo.html">Primitive Way</a>
+          <a href="../en/camino-finisterre.html">Way of Finisterre</a>
+          <a href="../en/camino-bicicleta.html">Camino by Bike</a>
         </div>
+      </li>
+      <li><a href="../en/blog.html">Blog</a></li>
+      <li><a href="../en/contacto.html">Contact</a></li>
+      <li><a href="../en/reserva.html" class="btn-nav">Book now</a></li>
+    </ul>
+    <div class="lang-dropdown" id="lang-dropdown">
+      <button class="lang-trigger" onclick="document.getElementById('lang-dropdown').classList.toggle('open');event.stopPropagation()">
+        <span>🇬🇧</span><span>EN</span><span class="lang-arrow">▼</span>
+      </button>
+      <div class="lang-menu">
+        <a class="lang-option" href="../blog-mochila-camino-santiago.html"><span class="lang-flag">🇪🇸</span> Español</a>
+        <a class="lang-option active" href="../en/blog-mochila-camino-santiago.html"><span class="lang-flag">🇬🇧</span> English</a>
       </div>
-    </li>
-  </ul>
-  <button class="nav-hamburger" onclick="ecsToggleNav()"><span></span><span></span><span></span></button>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">&#9776;</button>
+  </div>
 </nav>
 
-<!-- MOBILE NAV -->
-<div class="nav-mobile-overlay" id="nav-mobile">
-  <button class="nav-mobile-close" onclick="ecsToggleNav()">✕</button>
-  <a href="../en/">Home</a>
-  <a href="../en/camino-frances-sarria.html">⭐ Last 100km from Sarria</a>
-  <a href="../en/camino-frances.html">French Way</a>
-  <a href="../en/camino-portugues.html">Portuguese Way</a>
-  <a href="../en/camino-norte.html">Northern Way</a>
-  <a href="../en/camino-primitivo.html">Primitive Way</a>
-  <a href="../en/camino-ingles.html">English Way</a>
-  <a href="../en/camino-finisterre.html">Way of Finisterre</a>
-  <a href="../en/camino-bicicleta.html">By Bicycle</a>
-  <a href="../en/blog.html" style="color:#56A1A4;font-weight:700;">Blog</a>
-  <a href="../en/contacto.html">Contact</a>
-  <a href="../en/reserva.html" style="color:#F3A949;font-weight:bold">→ Book now</a>
-  <div style="padding:16px 0 8px;border-top:1px solid #ddeaec;margin-top:4px;">
-    <p style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#8FBECA;margin-bottom:10px;font-family:'Raleway',sans-serif;">Language</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-      <a href="../blog-mochila-camino-santiago.html" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;font-size:0.9rem;background:#f0f8f8;color:#2D4A52;text-decoration:none;font-family:'Raleway',sans-serif;">🇪🇸 <span>Español</span></a>
-      <a href="../en/blog-mochila-camino-santiago.html" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;font-size:0.9rem;background:linear-gradient(135deg,#56A1A4,#2D4A52);color:white;text-decoration:none;font-family:'Raleway',sans-serif;font-weight:700;">🇬🇧 <span>English</span></a>
-    </div>
-  </div>
+<!-- ── MOBILE NAV ── -->
+<div class="mobile-nav" id="mobile-nav">
+  <button class="mobile-nav-close" id="mobile-nav-close" aria-label="Close menu">×</button>
+  <ul>
+    <li><strong>Routes</strong></li>
+    <li><a href="../en/camino-frances.html">French Way (Full)</a></li>
+    <li><a href="../en/camino-frances-sarria.html">Last 100km from Sarria</a></li>
+    <li><a href="../en/camino-portugues.html">Portuguese Way from Porto</a></li>
+    <li><a href="../en/camino-portugues-costa.html">Portuguese Coastal Way</a></li>
+    <li><a href="../en/camino-ingles.html">English Way from Ferrol</a></li>
+    <li><a href="../en/camino-norte.html">Northern Way</a></li>
+    <li><a href="../en/camino-primitivo.html">Primitive Way</a></li>
+    <li><a href="../en/camino-finisterre.html">Way of Finisterre</a></li>
+    <li><a href="../en/camino-bicicleta.html">Camino by Bike</a></li>
+    <li><a href="../en/blog.html">Blog</a></li>
+    <li><a href="../en/contacto.html">Contact</a></li>
+    <li><a href="../en/reserva.html" class="btn-nav">Book now</a></li>
+    <li style="margin-top:1rem;"><a href="../blog-mochila-camino-santiago.html">🇪🇸 Español</a></li>
+  </ul>
 </div>
 
 <!-- ── ARTICLE HERO ── -->
@@ -389,8 +384,15 @@
 
 <!-- ── SCRIPTS ── -->
 <script>
-  function ecsToggleNav(){document.getElementById('nav-mobile').classList.toggle('open');}
-  document.addEventListener('click',function(e){var dd=document.getElementById('lang-dropdown');if(dd&&!dd.contains(e.target))dd.classList.remove('open');});
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobile-nav');
+  const mobileNavClose = document.getElementById('mobile-nav-close');
+  if(hamburger) hamburger.addEventListener('click', () => mobileNav.classList.toggle('open'));
+  if(mobileNavClose) mobileNavClose.addEventListener('click', () => mobileNav.classList.remove('open'));
+  document.addEventListener('click', function(e){
+    var dd = document.getElementById('lang-dropdown');
+    if(dd && !dd.contains(e.target)) dd.classList.remove('open');
+  });
 </script>
 
 </body>
