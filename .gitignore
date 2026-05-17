@@ -1,0 +1,8 @@
+# Backups locales
+*.bak
+backup-*/
+
+# Sistema
+.DS_Store
+downloaded_images/.DS_Store
+img/.DS_Store
