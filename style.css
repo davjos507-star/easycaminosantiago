@@ -139,7 +139,7 @@ strong { font-weight: 700; }
 }
 .agente-avatar img { width: 100%; height: 100%; object-fit: cover; }
 .agente-avatar svg { width: 22px; height: 22px; fill: white; }
-.agente-txt { line-height: 1.25; }
+.agente-txt { line-height: 1.25; display: flex; flex-direction: column; }
 .agente-txt strong { display: block; color: var(--azul-dark); font-size: 0.78rem; font-family: var(--font-body); }
 .agente-txt span { color: #56A1A4; font-size: 0.7rem; font-family: var(--font-heading); font-weight: 700; }
 
@@ -394,7 +394,7 @@ strong { font-weight: 700; }
   background: var(--azul); display: flex; justify-content: center;
   gap: 60px; padding: 28px 40px; flex-wrap: wrap;
 }
-.stat { text-align: center; }
+.stat { text-align: center; display: flex; flex-direction: column; align-items: center; }
 .stat strong { display: block; color: var(--naranja); font-size: 2rem; font-family: var(--font-body); }
 .stat span { color: rgba(255,255,255,0.8); font-size: 0.88rem; font-family: var(--font-body); }
 
