@@ -269,6 +269,7 @@ strong { font-weight: 700; }
 .route-strip-item strong {
   display: block; color: var(--naranja);
   font-size: 1.5rem; font-family: var(--font-body); font-weight: 800;
+  white-space: nowrap;
 }
 .route-strip-item span { color: rgba(255,255,255,0.8); font-size: 0.8rem; font-family: var(--font-body); }
 
