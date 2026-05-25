@@ -1008,6 +1008,11 @@ body:has(.nav-mobile-overlay.open) .whatsapp-float { display: none; }
     white-space: nowrap;
   }
 }
+@media (max-width: 480px) {
+  .page-subnav-inner { flex-wrap: wrap; padding-bottom: 6px; }
+  .page-subnav-tabs { flex: 1 1 100%; }
+  .page-subnav-btns { width: 100%; justify-content: stretch; }
+}
 
 /* ====== SARRIA PAGE — hero overrides (alta especificidad) ====== */
 body.sarria-page .page-hero-content {
