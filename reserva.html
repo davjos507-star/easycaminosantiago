@@ -161,6 +161,25 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
 .btn-pay:hover { filter:brightness(0.9); }
 .btn-pay:disabled { opacity:0.6; cursor:not-allowed; }
 
+/* PAYMENT METHOD SELECTOR */
+.pay-method-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px; }
+.pay-method-opt { border:2px solid var(--border); border-radius:10px; padding:18px 16px; cursor:pointer; text-align:center; transition:all 0.2s; }
+.pay-method-opt:hover, .pay-method-opt.pm-selected { border-color:var(--azul); background:#f0f9f9; }
+.pay-method-opt .pm-icon { font-size:1.8rem; margin-bottom:8px; }
+.pay-method-opt .pm-name { font-family:'Raleway',sans-serif; font-weight:700; font-size:0.9rem; color:var(--azul-dark); }
+.pay-method-opt .pm-desc { font-size:0.75rem; color:var(--gris); margin-top:4px; }
+/* BANK TRANSFER */
+.transfer-box { background:#f0f9f9; border:2px solid var(--azul); border-radius:10px; padding:24px; margin-bottom:20px; }
+.transfer-box h3 { font-family:'Raleway',sans-serif; font-size:1rem; font-weight:700; color:var(--azul-dark); margin-bottom:16px; }
+.transfer-row { display:flex; justify-content:space-between; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--border); gap:16px; }
+.transfer-row:last-of-type { border-bottom:none; padding-bottom:0; }
+.transfer-key { font-size:0.78rem; color:var(--gris); font-weight:700; text-transform:uppercase; letter-spacing:0.5px; flex-shrink:0; min-width:90px; }
+.transfer-val { font-size:0.88rem; color:var(--azul-dark); font-weight:700; text-align:right; word-break:break-all; }
+.transfer-notice { margin-top:16px; padding:14px; background:var(--white); border-radius:8px; font-size:0.83rem; color:var(--gris); line-height:1.65; border:1px solid var(--border); }
+.btn-transfer { background:var(--azul); color:var(--white); border:none; padding:16px 48px; border-radius:8px; font-family:'Raleway',sans-serif; font-weight:800; font-size:1rem; cursor:pointer; text-transform:uppercase; letter-spacing:1px; transition:filter 0.2s; width:100%; margin-top:8px; }
+.btn-transfer:hover { filter:brightness(0.9); }
+.btn-transfer:disabled { opacity:0.6; cursor:not-allowed; }
+
 /* SIDEBAR */
 .sidebar { position:sticky; top:80px; }
 .sidebar-photo { width:100%; height:200px; object-fit:cover; border-radius:12px 12px 0 0; display:block; }
@@ -261,6 +280,7 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
             <option value="primitivo">Camino Primitivo</option>
             <option value="finisterre">Camino a Finisterre</option>
             <option value="bicicleta">En Bicicleta</option>
+            <option value="cf37">Camino Francés 37 días — habitación individual</option>
           </select>
         </div>
       </div>
@@ -276,7 +296,7 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
         </div>
       </div>
 
-      <div style="margin-top:20px;">
+      <div id="pax-section" style="margin-top:20px;">
         <p style="font-size:0.82rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">¿Quién va a ir?</p>
         <div class="pax-row">
           <div class="pax-label"><strong>Adultos</strong><span>Mayores de 18 años</span></div>
@@ -294,6 +314,9 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
             <button class="pax-btn" onclick="changePax('ninos',1)">+</button>
           </div>
         </div>
+      </div>
+      <div id="cf37-pax-info" style="display:none; margin-top:20px; padding:14px 0; border-top:1px solid var(--border); border-bottom:1px solid var(--border); font-size:0.88rem; color:var(--azul-dark);">
+        <strong>2 adultos</strong> <span style="color:var(--gris);">— incluido en el presupuesto</span>
       </div>
 
       <div class="step-nav" style="margin-top:28px;">
@@ -320,7 +343,7 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
       <h2>Opciones adicionales</h2>
       <p class="card-sub">Personaliza tu experiencia. Puedes dejar todo en 0 si no necesitas extras.</p>
 
-      <div class="extra-row">
+      <div class="extra-row" id="extra-pre-row">
         <div class="extra-info">
           <strong>Noche extra antes de salir</strong>
           <span>Alojamiento la noche anterior al inicio del Camino en la ciudad de salida</span>
@@ -333,7 +356,7 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
         <div class="extra-price" id="price-pre">0 €</div>
       </div>
 
-      <div class="extra-row">
+      <div class="extra-row" id="extra-post-row">
         <div class="extra-info">
           <strong>Noche extra en Santiago</strong>
           <span>Alojamiento adicional en Santiago de Compostela tras llegar a la Catedral</span>
@@ -464,6 +487,18 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
         </div>
       </div>
 
+      <div class="traveler-section" id="cf37-fields" style="display:none;">
+        <h3>🗂️ Datos del presupuesto</h3>
+        <div class="field-group" style="margin-bottom:14px;">
+          <label>Referencia presupuesto</label>
+          <input type="text" id="v-referencia" placeholder="CF37-IND-7700">
+        </div>
+        <div class="field-group">
+          <label>Observaciones <small style="font-weight:400;text-transform:none;letter-spacing:0;">(opcional)</small></label>
+          <textarea id="v-observaciones" placeholder="Cualquier detalle adicional sobre tu reserva..."></textarea>
+        </div>
+      </div>
+
       <div class="consent-box">
         <p>Recibe noticias sobre aventuras, guías de senderismo e inspiración para tus destinos suscribiéndote a nuestros correos electrónicos.</p>
         <label class="radio-opt"><input type="radio" name="newsletter" value="si"> Sí, me gustaría recibir noticias de aventuras.</label>
@@ -494,25 +529,57 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
         <div class="pa-note" id="deposito-note"></div>
       </div>
 
-      <div id="payment-form">
-        <div class="field-group" style="margin-bottom:14px;">
-          <label>Número de tarjeta</label>
-          <div class="stripe-field" id="card-number-element"></div>
+      <p style="font-size:0.8rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">Método de pago</p>
+      <div class="pay-method-grid">
+        <div class="pay-method-opt pm-selected" id="pm-tarjeta" onclick="selectMetodoPago('tarjeta')">
+          <div class="pm-icon">💳</div>
+          <div class="pm-name">Tarjeta bancaria</div>
+          <div class="pm-desc">Pago seguro con Stripe</div>
         </div>
-        <div class="form-grid-2">
-          <div class="field-group">
-            <label>Fecha de caducidad</label>
-            <div class="stripe-field" id="card-expiry-element"></div>
-          </div>
-          <div class="field-group">
-            <label>Código de seguridad (CVC)</label>
-            <div class="stripe-field" id="card-cvc-element"></div>
-          </div>
+        <div class="pay-method-opt" id="pm-transferencia" onclick="selectMetodoPago('transferencia')">
+          <div class="pm-icon">🏦</div>
+          <div class="pm-name">Transferencia bancaria</div>
+          <div class="pm-desc">Santander · Sin comisiones</div>
         </div>
-        <div id="stripe-error"></div>
       </div>
 
-      <button class="btn-pay" id="btn-pay" onclick="procesarPago()">🔒 Pagar depósito ahora</button>
+      <!-- STRIPE -->
+      <div id="stripe-section">
+        <div id="payment-form">
+          <div class="field-group" style="margin-bottom:14px;">
+            <label>Número de tarjeta</label>
+            <div class="stripe-field" id="card-number-element"></div>
+          </div>
+          <div class="form-grid-2">
+            <div class="field-group">
+              <label>Fecha de caducidad</label>
+              <div class="stripe-field" id="card-expiry-element"></div>
+            </div>
+            <div class="field-group">
+              <label>Código de seguridad (CVC)</label>
+              <div class="stripe-field" id="card-cvc-element"></div>
+            </div>
+          </div>
+          <div id="stripe-error"></div>
+        </div>
+        <button class="btn-pay" id="btn-pay" onclick="procesarPago()">🔒 Pagar depósito ahora</button>
+      </div>
+
+      <!-- TRANSFERENCIA BANCARIA -->
+      <div id="transfer-section" style="display:none;">
+        <div class="transfer-box">
+          <h3>Datos para la transferencia</h3>
+          <div class="transfer-row"><span class="transfer-key">Banco</span><span class="transfer-val">Santander</span></div>
+          <div class="transfer-row"><span class="transfer-key">Titular</span><span class="transfer-val">Bibiana Campos Seijo</span></div>
+          <div class="transfer-row"><span class="transfer-key">IBAN</span><span class="transfer-val">ES07 0049 7686 0229 1002 9850</span></div>
+          <div class="transfer-row"><span class="transfer-key">Importe</span><span class="transfer-val" id="transfer-importe">—</span></div>
+          <div class="transfer-row"><span class="transfer-key">Concepto</span><span class="transfer-val" id="transfer-concepto">—</span></div>
+          <div class="transfer-notice">
+            Una vez realizada la transferencia, por favor envíe el justificante de pago a <strong>info@easycaminosantiago.com</strong> indicando su número de reserva. La reserva quedará pendiente de confirmación hasta que recibamos y verifiquemos el pago.
+          </div>
+        </div>
+        <button class="btn-transfer" id="btn-transfer" onclick="confirmarTransferencia()">✉️ Confirmar reserva por transferencia</button>
+      </div>
 
       <div class="cancel-policy">
         <h4>📋 Condiciones de cancelación</h4>
@@ -594,6 +661,9 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
   <input type="hidden" name="telefono">
   <input type="hidden" name="total">
   <input type="hidden" name="deposito">
+  <input type="hidden" name="referencia">
+  <input type="hidden" name="observaciones">
+  <input type="hidden" name="metodo-pago">
 </form>
 
 <!-- FAQ -->
@@ -655,7 +725,8 @@ const RUTAS = {
   costa:     { nombre:'Camino Portugués Costa', km:'265 km', etapas:'13 etapas', noches:13, inicio:'Porto', fin:'Santiago de Compostela', foto:'downloaded_images/camino-portugues-costa-sendero-mar-galicia.jpg', precios:{albergue:699,pension:949,hotel:null} },
   primitivo: { nombre:'Camino Primitivo', km:'320 km', etapas:'13 etapas', noches:13, inicio:'Oviedo', fin:'Santiago de Compostela', foto:'ruta-images/camino-primitivo-ruta-montaña.jpg', precios:{albergue:790,pension:1090,hotel:null} },
   finisterre:{ nombre:'Camino a Finisterre', km:'87 km', etapas:'3 etapas', noches:3, inicio:'Santiago de Compostela', fin:'Fisterra', foto:'downloaded_images/camino-finisterre-costa-galicia-rocas.jpg', precios:{albergue:249,pension:349,hotel:null} },
-  bicicleta: { nombre:'En Bicicleta', km:'200+ km', etapas:'3–6 días', noches:5, inicio:'Variable', fin:'Santiago de Compostela', foto:'downloaded_images/camino-santiago-peregrina-atardecer.jpg', precios:{albergue:349,pension:499,hotel:699} }
+  bicicleta: { nombre:'En Bicicleta', km:'200+ km', etapas:'3–6 días', noches:5, inicio:'Variable', fin:'Santiago de Compostela', foto:'downloaded_images/camino-santiago-peregrina-atardecer.jpg', precios:{albergue:349,pension:499,hotel:699} },
+  cf37:      { nombre:'Camino Francés 37 días — hab. individual', km:'780 km', etapas:'37 días', noches:36, inicio:'Saint-Jean-Pied-de-Port', fin:'Santiago de Compostela', foto:'downloaded_images/camino-frances-peregrino-mochila-concha.jpg', precios:{albergue:null,pension:null,hotel:null}, precioFijo:7700 }
 };
 
 const EXTRA_PRECIO = { albergue:65, pension:85, hotel:110 };
@@ -666,6 +737,7 @@ const state = {
   alojamiento: null,
   extraPre: 0, extraPost: 0, seguro: false,
   total: 0, deposito: 0,
+  metodoPago: 'tarjeta', reservaRef: null,
   stripeInstance: null, cardNumber: null, cardExpiry: null, cardCvc: null,
   itiInit: false, stripeInit: false
 };
@@ -679,6 +751,12 @@ const state = {
     state.rutaData = RUTAS[rutaKey];
     document.getElementById('ruta-selector-wrap').style.display = 'none';
     document.getElementById('ruta-select').value = rutaKey;
+    if (RUTAS[rutaKey].precioFijo) {
+      state.alojamiento = 'fijo';
+      state.adultos = 2;
+      document.getElementById('num-adultos').textContent = 2;
+      updateCf37UI();
+    }
   }
   const today = new Date();
   today.setDate(today.getDate() + 14);
@@ -689,8 +767,37 @@ const state = {
 // ─── RUTA CHANGE ───
 function onRutaChange(){
   const k = document.getElementById('ruta-select').value;
-  if (k && RUTAS[k]) { state.ruta = k; state.rutaData = RUTAS[k]; state.alojamiento = null; }
+  if (k && RUTAS[k]) {
+    state.ruta = k;
+    state.rutaData = RUTAS[k];
+    state.alojamiento = RUTAS[k].precioFijo ? 'fijo' : null;
+    if (RUTAS[k].precioFijo) {
+      state.adultos = 2;
+      document.getElementById('num-adultos').textContent = 2;
+    }
+  }
+  updateCf37UI();
   updateSidebar();
+}
+
+function updateCf37UI(){
+  const isCf37 = state.ruta === 'cf37';
+  const paxSection = document.getElementById('pax-section');
+  const cf37PaxInfo = document.getElementById('cf37-pax-info');
+  const extraPreRow = document.getElementById('extra-pre-row');
+  const extraPostRow = document.getElementById('extra-post-row');
+  const cf37Fields = document.getElementById('cf37-fields');
+  if (paxSection) paxSection.style.display = isCf37 ? 'none' : '';
+  if (cf37PaxInfo) cf37PaxInfo.style.display = isCf37 ? 'block' : 'none';
+  if (extraPreRow) extraPreRow.style.display = isCf37 ? 'none' : '';
+  if (extraPostRow) extraPostRow.style.display = isCf37 ? 'none' : '';
+  if (cf37Fields) {
+    cf37Fields.style.display = isCf37 ? 'block' : 'none';
+    if (isCf37) {
+      const refEl = document.getElementById('v-referencia');
+      if (refEl && !refEl.value) refEl.value = 'CF37-IND-7700';
+    }
+  }
 }
 
 // ─── FECHA CHANGE ───
@@ -873,7 +980,7 @@ function goStep(n){
   }
   if (n === 5) {
     updateSidebar();
-    if (!state.stripeInit) initStripe();
+    selectMetodoPago(state.metodoPago);
   }
   window.scrollTo({top:0, behavior:'smooth'});
 }
@@ -884,6 +991,49 @@ function toggleItin(){
   const arrow = document.getElementById('itin-arrow');
   body.classList.toggle('open');
   arrow.textContent = body.classList.contains('open') ? '▲' : '▼';
+}
+
+// ─── MÉTODO DE PAGO ───
+function selectMetodoPago(method){
+  state.metodoPago = method;
+  document.getElementById('pm-tarjeta').classList.toggle('pm-selected', method === 'tarjeta');
+  document.getElementById('pm-transferencia').classList.toggle('pm-selected', method === 'transferencia');
+  document.getElementById('stripe-section').style.display = method === 'tarjeta' ? '' : 'none';
+  document.getElementById('transfer-section').style.display = method === 'transferencia' ? '' : 'none';
+  if (method === 'tarjeta' && !state.stripeInit) initStripe();
+  if (method === 'transferencia') {
+    if (!state.reservaRef) {
+      state.reservaRef = 'ECS-' + (state.ruta || 'REF').toUpperCase() + '-' + Date.now().toString().slice(-6);
+    }
+    const nombre = ((document.getElementById('v-nombre').value || '') + ' ' + (document.getElementById('v-apellido').value || '')).trim();
+    document.getElementById('transfer-concepto').textContent = state.reservaRef + (nombre ? ' · ' + nombre : '');
+    document.getElementById('transfer-importe').textContent = (state.deposito > 0 ? state.deposito + ' €' : '—') + '  (depósito 20%)';
+  }
+}
+
+async function confirmarTransferencia(){
+  const btn = document.getElementById('btn-transfer');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  try {
+    const form = document.querySelector('form[name="reserva"]');
+    const data = new FormData(form);
+    data.set('ruta', state.ruta || '');
+    data.set('fecha-inicio', state.fechaInicio || '');
+    data.set('adultos', state.adultos);
+    data.set('ninos', state.ninos);
+    data.set('alojamiento', state.alojamiento || '');
+    data.set('nombre', ((document.getElementById('v-nombre').value || '') + ' ' + (document.getElementById('v-apellido').value || '')).trim());
+    data.set('apellido', document.getElementById('v-apellido').value || '');
+    data.set('email', document.getElementById('v-email').value || '');
+    data.set('telefono', document.getElementById('v-tel').value || '');
+    data.set('total', state.total + ' €');
+    data.set('deposito', state.deposito + ' €');
+    data.set('metodo-pago', 'Transferencia bancaria');
+    data.set('referencia', state.reservaRef || '');
+    await fetch('/', { method:'POST', body: data });
+  } catch(e) {}
+  window.location.href = 'gracias.html';
 }
 
 // ─── NETLIFY LEAD CAPTURE ───
@@ -902,6 +1052,7 @@ function submitNetlifyLead(){
     data.set('telefono', document.getElementById('v-tel').value || '');
     data.set('total', state.total + ' €');
     data.set('deposito', state.deposito + ' €');
+    data.set('metodo-pago', state.metodoPago === 'transferencia' ? 'Transferencia bancaria' : 'Tarjeta bancaria');
     fetch('/', { method:'POST', body: data });
   } catch(e) {}
 }
