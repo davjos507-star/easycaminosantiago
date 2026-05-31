@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sarria a Santiago — Itinerario Camino Francés — Easy Camino Santiago</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Raleway:wght@300;400;500;600;700;800&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --turq:        #56A1A4;
+      --turq-light:  #8dc5c8;
+      --turq-bg:     #edf7f7;
+      --azul:        #2D4A52;
+      --azul-light:  #4a6b75;
+      --cinza:       #6b7c7e;
+      --cinza-light: #9ab0b2;
+      --cinza-bg:    #f5f8f8;
+      --borda:       #deeaeb;
+      --branco:      #ffffff;
+      --ff-titulo:   'Playfair Display', Georgia, serif;
+      --ff-label:    'Raleway', sans-serif;
+      --ff-corpo:    'Lato', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body { background: #dde5e6; font-family: var(--ff-corpo); color: var(--azul); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+    /* PAGE SHELL */
+    .page { width: 210mm; min-height: 297mm; background: var(--branco); margin: 20px auto; box-shadow: 0 6px 48px rgba(0,0,0,0.13); position: relative; overflow: hidden; }
+
+    /* COVER */
+    .cover { background: var(--azul); display: flex; flex-direction: column; }
+    .cover-top { padding: 38px 48px 0; display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 2; }
+    .cover-wordmark { font-family: var(--ff-label); font-size: 0.62rem; font-weight: 800; letter-spacing: 3.5px; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    .cover-wordmark span { color: var(--turq); }
+    .cover-tagline { font-family: var(--ff-label); font-size: 0.58rem; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.28); text-align: right; }
+    .cover-hero { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 68px 48px 44px; position: relative; z-index: 2; }
+    .cover-overline { font-family: var(--ff-label); font-size: 0.6rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--turq); margin-bottom: 16px; }
+    .cover-title { font-family: var(--ff-titulo); font-size: 3.2rem; font-weight: 700; color: var(--branco); line-height: 1.07; margin-bottom: 14px; }
+    .cover-subtitle { font-family: var(--ff-titulo); font-size: 1.45rem; font-weight: 400; font-style: italic; color: var(--turq-light); margin-bottom: 52px; }
+    .cover-rule { width: 44px; height: 2px; background: var(--turq); margin-bottom: 44px; }
+    .cover-client-label { font-family: var(--ff-label); font-size: 0.56rem; font-weight: 700; letter-spacing: 3.5px; text-transform: uppercase; color: rgba(255,255,255,0.32); margin-bottom: 6px; }
+    .cover-client-name { font-family: var(--ff-titulo); font-size: 1.3rem; font-weight: 600; color: var(--branco); margin-bottom: 6px; }
+    .cover-dates { font-family: var(--ff-label); font-size: 0.78rem; font-weight: 400; color: rgba(255,255,255,0.6); letter-spacing: 0.5px; }
+    .cover-footer { padding: 24px 48px; border-top: 1px solid rgba(255,255,255,0.07); display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 2; }
+    .cover-footer-txt { font-family: var(--ff-label); font-size: 0.56rem; color: rgba(255,255,255,0.25); letter-spacing: 1px; text-transform: uppercase; }
+    .cover-ref { font-family: var(--ff-label); font-size: 0.56rem; color: var(--turq); letter-spacing: 2px; text-transform: uppercase; }
+    .cover-accent { position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--turq) 0%, var(--turq-light) 100%); }
+    .deco-ring { position: absolute; border-radius: 50%; border: 1px solid rgba(86,161,164,0.10); pointer-events: none; }
+
+    /* INNER PAGE CHROME */
+    .ph { padding: 26px 48px 18px; border-bottom: 1px solid var(--borda); display: flex; justify-content: space-between; align-items: center; }
+    .ph-logo { font-family: var(--ff-label); font-size: 0.56rem; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--turq); }
+    .ph-chapter { font-family: var(--ff-label); font-size: 0.56rem; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--cinza-light); }
+    .pc { padding: 38px 48px 44px; }
+    .page-accent { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--turq), var(--turq-light)); }
+
+    /* TYPOGRAPHY */
+    .overline { font-family: var(--ff-label); font-size: 0.58rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--turq); margin-bottom: 10px; }
+    .ch-title { font-family: var(--ff-titulo); font-size: 1.95rem; font-weight: 700; color: var(--azul); line-height: 1.12; margin-bottom: 6px; }
+    .ch-sub { font-family: var(--ff-titulo); font-size: 0.95rem; font-style: italic; color: var(--cinza); margin-bottom: 0; }
+    .rule { width: 34px; height: 2px; background: var(--turq); margin: 22px 0 28px; }
+    .body-p { font-family: var(--ff-corpo); font-size: 0.855rem; font-weight: 300; line-height: 1.85; color: var(--cinza); }
+    .body-p + .body-p { margin-top: 14px; }
+
+    /* WELCOME LETTER */
+    .letter-salutation { font-family: var(--ff-titulo); font-size: 1.1rem; font-weight: 600; color: var(--azul); margin-bottom: 22px; }
+    .letter-sig { margin-top: 36px; }
+    .sig-farewell { font-family: var(--ff-titulo); font-size: 0.95rem; font-style: italic; color: var(--cinza); margin-bottom: 14px; }
+    .sig-name { font-family: var(--ff-label); font-size: 0.78rem; font-weight: 700; color: var(--azul); letter-spacing: 0.5px; }
+    .sig-title { font-family: var(--ff-label); font-size: 0.65rem; font-weight: 400; color: var(--cinza-light); margin-top: 3px; }
+    .letter-stamp { position: absolute; right: 48px; bottom: 44px; width: 76px; height: 76px; border-radius: 50%; border: 1.5px solid var(--borda); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; }
+    .stamp-top { font-family: var(--ff-label); font-size: 0.4rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--turq); text-align: center; line-height: 1.4; }
+    .stamp-year { font-family: var(--ff-titulo); font-size: 1.05rem; font-weight: 700; color: var(--azul); }
+
+    /* SUMMARY */
+    .map-wrap { background: var(--cinza-bg); border-radius: 10px; padding: 20px 16px 14px; margin-bottom: 26px; }
+    .map-label { font-family: var(--ff-label); font-size: 0.56rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--cinza-light); margin-bottom: 12px; }
+    .facts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 26px; }
+    .fact-card { background: var(--cinza-bg); border: 1px solid var(--borda); border-radius: 8px; padding: 16px 16px 14px; }
+    .fact-icon { width: 18px; height: 18px; color: var(--turq); margin-bottom: 8px; }
+    .fact-lbl { font-family: var(--ff-label); font-size: 0.54rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--cinza-light); margin-bottom: 4px; }
+    .fact-val { font-family: var(--ff-titulo); font-size: 1.05rem; font-weight: 700; color: var(--azul); line-height: 1.2; }
+    .fact-val small { font-family: var(--ff-label); font-size: 0.65rem; font-weight: 400; color: var(--cinza); }
+    .inc-label { font-family: var(--ff-label); font-size: 0.56rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--cinza-light); margin-bottom: 12px; }
+    .inc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .inc-item { display: flex; align-items: center; gap: 9px; padding: 9px 13px; background: var(--turq-bg); border-radius: 6px; font-family: var(--ff-corpo); font-size: 0.76rem; font-weight: 400; color: var(--azul); }
+    .inc-item svg { color: var(--turq); flex-shrink: 0; }
+
+    /* DAY CARDS */
+    .region-banner { background: var(--azul); padding: 0 48px; height: 50px; display: flex; align-items: center; justify-content: space-between; }
+    .rb-name { font-family: var(--ff-label); font-size: 0.62rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--branco); }
+    .rb-meta { font-family: var(--ff-label); font-size: 0.58rem; font-weight: 500; color: var(--turq-light); letter-spacing: 1px; }
+    .day-cards-wrap { padding: 0 48px 28px; }
+    .day-card { border: 1px solid var(--borda); border-radius: 10px; padding: 18px 20px 16px; margin-top: 18px; background: var(--branco); break-inside: avoid; }
+    .dc-head { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+    .dc-num { font-family: var(--ff-label); font-size: 0.56rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--branco); background: var(--azul); padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+    .dc-date { font-family: var(--ff-label); font-size: 0.68rem; font-weight: 500; color: var(--cinza-light); }
+    .dc-badge { margin-left: auto; font-family: var(--ff-label); font-size: 0.56rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; }
+    .b-confortavel { background: #e8f5e9; color: #2e7d32; }
+    .b-moderada { background: #fff8e1; color: #bf6000; }
+    .b-exigente { background: #fce4ec; color: #b71c1c; }
+    .b-emotiva { background: #ede7f6; color: #4a148c; }
+    .dc-desc { font-family: var(--ff-corpo); font-size: 0.77rem; font-weight: 300; line-height: 1.78; color: var(--cinza); margin-bottom: 11px; }
+    .dc-inc { display: flex; gap: 14px; flex-wrap: wrap; }
+    .dc-inc-item { display: flex; align-items: center; gap: 5px; font-family: var(--ff-label); font-size: 0.56rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--turq); }
+    .day-card.dc-arrival { background: var(--azul); border-color: var(--azul); }
+    .dc-arrival .dc-num { background: rgba(255,255,255,0.15); }
+    .dc-arrival .dc-date { color: rgba(255,255,255,0.5); }
+    .dc-arrival .dc-desc { color: rgba(255,255,255,0.65); }
+    .dc-arrival .dc-inc-item { color: var(--turq-light); }
+
+    /* KEY INFO STRIP */
+    .dc-keyinfo { padding: 6px 14px 7px; background: var(--cinza-bg); border-bottom: 1px solid var(--borda); }
+    .dc-ki-route { display: flex; align-items: flex-end; gap: 8px; margin-bottom: 5px; }
+    .dc-ki-place { flex: 1; min-width: 0; }
+    .dc-ki-place-label { font-family: var(--ff-label); font-size: 0.47rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--cinza-light); margin-bottom: 1px; }
+    .dc-ki-place-name { font-family: var(--ff-label); font-size: 0.75rem; font-weight: 700; color: var(--azul); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .dc-ki-arrow { color: var(--turq); font-size: 1rem; flex-shrink: 0; padding-bottom: 1px; align-self: center; }
+    .dc-ki-metrics { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0; border-top: 1px dashed var(--borda); padding-top: 4px; }
+    .dc-ki-m { display: flex; flex-direction: column; padding-right: 8px; border-right: 1px solid var(--borda); }
+    .dc-ki-m:last-child { border-right: none; padding-right: 0; }
+    .dc-ki-m-label { font-family: var(--ff-label); font-size: 0.45rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cinza-light); }
+    .dc-ki-m-val { font-family: var(--ff-corpo); font-size: 0.72rem; font-weight: 700; color: var(--azul); line-height: 1.3; }
+    .dc-ki-m-val.km { color: var(--turq); }
+
+    /* ARRIVAL KEYINFO OVERRIDES */
+    .dc-arrival .dc-keyinfo { background: rgba(255,255,255,0.08); border-bottom-color: rgba(255,255,255,0.12); }
+    .dc-arrival .dc-ki-place-label { color: rgba(255,255,255,0.4); }
+    .dc-arrival .dc-ki-place-name { color: var(--branco); }
+    .dc-arrival .dc-ki-arrow { color: var(--turq-light); }
+    .dc-arrival .dc-ki-m-label { color: rgba(255,255,255,0.4); }
+    .dc-arrival .dc-ki-m-val { color: var(--branco); }
+    .dc-arrival .dc-ki-m-val.km { color: var(--turq-light); }
+    .dc-arrival .dc-ki-metrics { border-top-color: rgba(255,255,255,0.12); }
+
+    /* VALE A PENA / NO TE PIERDAS */
+    .dc-vale-pena { margin-top: 7px; padding: 6px 10px; background: var(--turq-bg); border-radius: 5px; border-left: 3px solid var(--turq); }
+    .dc-vale-pena-label { font-family: var(--ff-label); font-size: 0.54rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--turq); margin-bottom: 2px; }
+    .dc-vale-pena-text { font-family: var(--ff-corpo); font-size: 0.7rem; color: var(--azul-light); line-height: 1.45; font-style: italic; }
+    .dc-naoperca { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--borda); }
+    .dc-naoperca-label { font-family: var(--ff-label); font-size: 0.58rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--turq); margin-bottom: 5px; }
+    .dc-naoperca-list { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 14px; }
+    .dc-naoperca-item { font-family: var(--ff-corpo); font-size: 0.7rem; color: var(--cinza); line-height: 1.45; padding-left: 9px; position: relative; }
+    .dc-naoperca-item::before { content: '·'; position: absolute; left: 0; color: var(--turq); font-weight: 700; }
+
+    /* ARRIVAL OVERRIDES */
+    .dc-arrival .dc-naoperca { border-top-color: rgba(255,255,255,0.12); }
+    .dc-arrival .dc-naoperca-label { color: var(--turq-light); }
+    .dc-arrival .dc-naoperca-item { color: rgba(255,255,255,0.65); }
+    .dc-arrival .dc-naoperca-item::before { color: var(--turq-light); }
+    .dc-arrival .dc-vale-pena { background: rgba(86,161,164,0.15); border-left-color: var(--turq-light); }
+    .dc-arrival .dc-vale-pena-label { color: var(--turq-light); }
+    .dc-arrival .dc-vale-pena-text { color: rgba(255,255,255,0.8); }
+
+    /* SERVICES */
+    .service-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+    .service-card { background: var(--cinza-bg); border: 1px solid var(--borda); border-radius: 8px; padding: 14px 16px; border-top: 3px solid var(--turq); }
+    .service-card.wide { grid-column: 1 / -1; }
+    .sc-icon { width: 28px; height: 28px; background: var(--turq); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--branco); margin-bottom: 8px; }
+    .sc-title { font-family: var(--ff-label); font-size: 0.62rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--azul); margin-bottom: 5px; }
+    .sc-body { font-family: var(--ff-corpo); font-size: 0.72rem; color: var(--cinza); line-height: 1.55; font-weight: 300; }
+    .sc-next-list { list-style: none; padding: 0; margin: 0; }
+    .sc-next-list li { font-family: var(--ff-corpo); font-size: 0.72rem; color: var(--cinza); line-height: 1.6; font-weight: 300; padding-left: 20px; position: relative; }
+    .sc-next-list li::before { content: attr(data-n); position: absolute; left: 0; font-weight: 700; color: var(--turq); font-family: var(--ff-label); font-size: 0.62rem; }
+
+    /* STEPS */
+    .steps-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px; }
+    .step-item { display: flex; gap: 16px; align-items: flex-start; }
+    .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--azul); color: var(--branco); font-family: var(--ff-titulo); font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .step-body { flex: 1; }
+    .step-title { font-family: var(--ff-label); font-size: 0.82rem; font-weight: 700; color: var(--azul); margin-bottom: 3px; }
+    .step-desc { font-family: var(--ff-corpo); font-size: 0.78rem; font-weight: 300; line-height: 1.7; color: var(--cinza); }
+    .note-box { background: var(--turq-bg); border: 1px solid rgba(86,161,164,0.3); border-radius: 8px; padding: 16px 20px; font-family: var(--ff-corpo); font-size: 0.78rem; font-weight: 300; line-height: 1.7; color: var(--azul); }
+    .note-box strong { font-weight: 700; color: var(--turq); }
+
+    /* CONTACTS */
+    .contact-grid { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
+    .contact-grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+    .contact-card { display: flex; align-items: flex-start; gap: 14px; padding: 16px 18px; border: 1px solid var(--borda); border-radius: 8px; background: var(--branco); }
+    .cc-icon { width: 36px; height: 36px; background: var(--turq-bg); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--turq); flex-shrink: 0; }
+    .cc-body { flex: 1; }
+    .cc-label { font-family: var(--ff-label); font-size: 0.56rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--cinza-light); margin-bottom: 3px; }
+    .cc-main { font-family: var(--ff-label); font-size: 0.85rem; font-weight: 700; color: var(--azul); margin-bottom: 2px; }
+    .cc-sub { font-family: var(--ff-corpo); font-size: 0.74rem; font-weight: 300; color: var(--cinza); }
+    .contact-section-title { font-family: var(--ff-label); font-size: 0.6rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--cinza-light); margin: 20px 0 10px; }
+    .contact-section-title:first-child { margin-top: 0; }
+    .final-hero { background: var(--azul); padding: 52px 48px 44px; display: flex; flex-direction: column; gap: 16px; }
+    .final-quote { font-family: var(--ff-titulo); font-size: 1.45rem; font-weight: 400; font-style: italic; color: var(--branco); line-height: 1.5; max-width: 460px; }
+    .final-attr { font-family: var(--ff-label); font-size: 0.62rem; font-weight: 600; letter-spacing: 2px; color: var(--turq-light); text-transform: uppercase; }
+
+    /* PRINT */
+    @media print {
+      @page { size: A4; margin: 0; }
+      body { background: white; }
+      .page {
+        margin: 0;
+        box-shadow: none;
+        height: 297mm;
+        overflow: hidden;
+        page-break-after: always;
+        break-after: page;
+      }
+      .page:last-child { page-break-after: auto; break-after: auto; }
+      .day-card { break-inside: avoid; }
+      .no-print { display: none !important; }
+      html, body { font-size: 15px; }
+      .ph { padding: 14px 48px 10px; }
+      .region-banner { height: 42px; }
+      .day-cards-wrap { padding: 0 44px 10px; }
+      .day-card { padding: 13px 18px 11px; margin-top: 13px; }
+      .dc-head { margin-bottom: 7px; }
+      .dc-keyinfo { padding: 5px 12px 5px; }
+      .dc-ki-route { margin-bottom: 3px; }
+      .dc-ki-metrics { padding-top: 3px; }
+      .dc-desc { margin-bottom: 7px; line-height: 1.6; }
+      .dc-vale-pena { margin-top: 5px; padding: 5px 9px; }
+      .dc-vale-pena-label { margin-bottom: 1px; }
+      .dc-naoperca { margin-top: 8px; padding-top: 8px; }
+      .dc-naoperca-label { margin-bottom: 4px; }
+      .final-hero { padding: 22px 48px 14px; }
+      .contact-card { padding: 12px 16px; }
+      .contact-grid { gap: 10px; margin-bottom: 16px; }
+      .contact-grid-2col { gap: 8px; margin-bottom: 16px; }
+      .contact-section-title { margin: 14px 0 8px; }
+      .steps-list { gap: 12px; margin-bottom: 20px; }
+    }
+
+    /* PRINT BUTTON */
+    .print-bar { width: 210mm; margin: 8px auto 0; display: flex; justify-content: flex-end; }
+    .btn-print { font-family: var(--ff-label); font-size: 0.65rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--branco); background: var(--azul); border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
+    .btn-print:hover { background: var(--turq); }
+  </style>
+</head>
+<body>
+
+<!-- HIDDEN SVG ICONS -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <defs>
+    <symbol id="ic-km" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 8h12M2 8l3-3M2 8l3 3M14 8l-3-3M14 8l-3 3"/>
+    </symbol>
+    <symbol id="ic-clock" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <circle cx="8" cy="8" r="6.5"/>
+      <path d="M8 4.5V8l2.5 2"/>
+    </symbol>
+    <symbol id="ic-mountain" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1 14L6 5l3.5 5L12 7l3 7H1z"/>
+    </symbol>
+    <symbol id="ic-bed" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1 12V7.5a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1V12M1 12h14M1 9.5H5"/>
+      <rect x="5.5" y="6.5" width="7" height="2.5" rx="0.5"/>
+      <circle cx="3" cy="6.5" r="1.25"/>
+    </symbol>
+    <symbol id="ic-coffee" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 6h8v5a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6z"/>
+      <path d="M11 7.5h1a1.5 1.5 0 0 1 0 3h-1"/>
+      <path d="M5.5 2.5v2M8 2.5v2"/>
+    </symbol>
+    <symbol id="ic-luggage" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="6" width="10" height="8" rx="1"/>
+      <path d="M6 6V4.5A.5.5 0 0 1 6.5 4h3a.5.5 0 0 1 .5.5V6"/>
+      <line x1="3" y1="9.5" x2="13" y2="9.5"/>
+    </symbol>
+    <symbol id="ic-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2.5 8.5l4 4 7-8"/>
+    </symbol>
+    <symbol id="ic-calendar" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="1.5" y="3" width="13" height="12" rx="1"/>
+      <path d="M5 1.5V4M11 1.5V4M1.5 7h13"/>
+    </symbol>
+    <symbol id="ic-route" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="3.5" cy="12.5" r="1.5"/>
+      <circle cx="12.5" cy="3.5" r="1.5"/>
+      <path d="M5 12.5h4a3 3 0 0 0 3-3v-4"/>
+    </symbol>
+    <symbol id="ic-phone" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 2h3l1.5 3.5-2 1.2a8 8 0 0 0 4 3.8l1.1-2L14 10v3a1 1 0 0 1-1 1C5.5 14 2 7.5 2 3a1 1 0 0 1 1-1z"/>
+    </symbol>
+    <symbol id="ic-mail" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="1.5" y="4" width="13" height="9" rx="1"/>
+      <path d="M1.5 4.5l6.5 5 6.5-5"/>
+    </symbol>
+    <symbol id="ic-pin" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 1.5a4.5 4.5 0 0 1 4.5 4.5c0 3-4.5 8.5-4.5 8.5S3.5 9 3.5 6A4.5 4.5 0 0 1 8 1.5z"/>
+      <circle cx="8" cy="6" r="1.5"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- PRINT BUTTON -->
+<div class="print-bar no-print">
+  <button class="btn-print" onclick="window.print()">Exportar PDF</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 1 — PORTADA
+════════════════════════════════════════════════ -->
+<div class="page cover">
+
+  <div class="deco-ring" style="width:440px;height:440px;right:-120px;top:40px;"></div>
+  <div class="deco-ring" style="width:300px;height:300px;right:-60px;top:100px;border-color:rgba(86,161,164,0.07);"></div>
+  <div class="deco-ring" style="width:180px;height:180px;right:20px;top:160px;border-color:rgba(86,161,164,0.06);"></div>
+
+  <div class="cover-top">
+    <div class="cover-wordmark">Easy <span>Camino</span> Santiago</div>
+    <div class="cover-tagline">Itinerario Premium · Camino Francés</div>
+  </div>
+
+  <div class="cover-hero">
+    <div class="cover-overline">Itinerario Detallado</div>
+    <div class="cover-title">Sarria<br>a Santiago</div>
+    <div class="cover-subtitle">Los últimos 115 km del Camino Francés</div>
+    <div class="cover-rule"></div>
+    <div class="cover-client-label">Tramo certificado — La Compostela</div>
+    <div class="cover-client-name">Galicia · Camino de Santiago</div>
+    <div class="cover-dates">Habitación individual con baño privado &nbsp;·&nbsp; Traslado de equipaje incluido</div>
+    <div style="margin-top:14px;display:inline-flex;align-items:center;gap:12px;background:rgba(86,161,164,0.12);border:1px solid rgba(86,161,164,0.25);border-radius:20px;padding:5px 14px;">
+      <span style="font-family:var(--ff-label);font-size:0.62rem;font-weight:700;color:var(--turq-light);letter-spacing:1px;">5 etapas</span>
+      <span style="color:rgba(255,255,255,0.2);font-size:0.7rem;">·</span>
+      <span style="font-family:var(--ff-label);font-size:0.62rem;font-weight:700;color:var(--turq-light);letter-spacing:1px;">5 noches</span>
+      <span style="color:rgba(255,255,255,0.2);font-size:0.7rem;">·</span>
+      <span style="font-family:var(--ff-label);font-size:0.62rem;font-weight:700;color:var(--turq-light);letter-spacing:1px;">~115 km</span>
+    </div>
+  </div>
+
+  <div class="cover-footer">
+    <div class="cover-footer-txt">Sarria &nbsp;·&nbsp; Portomarín &nbsp;·&nbsp; Palas de Rei &nbsp;·&nbsp; Arzúa &nbsp;·&nbsp; O Pedrouzo &nbsp;·&nbsp; Santiago de Compostela</div>
+    <div class="cover-ref">5 etapas &nbsp;·&nbsp; ~115 km</div>
+  </div>
+
+  <div class="cover-accent"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 2 — CARTA DE BIENVENIDA
+════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="ph">
+    <div class="ph-logo">Easy Camino Santiago</div>
+    <div class="ph-chapter">Carta de Bienvenida</div>
+  </div>
+
+  <div class="pc">
+    <div class="overline">Para ti, peregrino</div>
+    <div class="ch-title">Un camino que<br>cambia para siempre</div>
+    <div class="ch-sub">Los últimos 115 km antes del Obradoiro</div>
+    <div class="rule"></div>
+
+    <div class="letter-salutation">Bienvenido al Camino de Santiago,</div>
+
+    <p class="body-p">
+      En nombre de todo el equipo de Easy Camino Santiago, es un placer entregarte este itinerario para el tramo <strong style="color:var(--azul);font-weight:700;">Sarria — Santiago de Compostela</strong>, los últimos y más emocionantes kilómetros del Camino Francés.
+    </p>
+
+    <p class="body-p">
+      Desde Sarria hasta la Plaza del Obradoiro, recorrerás unos 115 kilómetros por el corazón de Galicia: bosques de roble y eucalipto que filtran la luz de la mañana, aldeas de granito con hórreos y cruceiros medievales, el pulpo de Melide, el puente de Ribadiso sobre el río Iso, y la emoción última del Monte do Gozo — la colina desde la que, por primera vez, divisarás las torres de la Catedral.
+    </p>
+
+    <p class="body-p">
+      Este tramo es el tramo de la Compostela: con más de 100 km a pie, tendrás derecho al certificado oficial de la Oficina del Peregrino. Pero más allá del papel, lo que te llevas de Santiago es algo que no tiene nombre — y que cada peregrino descubre a su manera en el momento exacto en que cruza el pórtico al Obradoiro.
+    </p>
+
+    <p class="body-p">
+      Hemos preparado este itinerario con atención a cada detalle: <em>habitación individual con baño privado</em> en alojamientos cuidadosamente seleccionados, <em>desayuno incluido</em> cada mañana y <em>traslado diario de equipaje</em> para que camines ligero, con la mente y los ojos libres para absorber todo lo que el Camino tiene que ofrecerte.
+    </p>
+
+    <p class="body-p">
+      Nuestro equipo estará disponible todos los días, por teléfono y WhatsApp, para cualquier necesidad que surja. Queremos que tu única preocupación sea poner un pie delante del otro.
+    </p>
+
+    <div class="letter-sig">
+      <div class="sig-farewell">¡Buen Camino!</div>
+      <div class="sig-name">Equipo Easy Camino Santiago</div>
+      <div class="sig-title">info@easycaminosantiago.com</div>
+    </div>
+  </div>
+
+  <div class="letter-stamp">
+    <div class="stamp-top">Easy<br>Camino</div>
+    <div class="stamp-year" style="font-size:0.75rem;letter-spacing:1px;">SCQ</div>
+    <div class="stamp-top">Santiago</div>
+  </div>
+
+  <div class="page-accent"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 3 — RESUMEN DEL CAMINO
+════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="ph">
+    <div class="ph-logo">Easy Camino Santiago</div>
+    <div class="ph-chapter">Tu Camino</div>
+  </div>
+
+  <div class="pc">
+    <div class="overline">Resumen General</div>
+    <div class="ch-title">5 etapas. ~115 km.<br>Una vida de recuerdos.</div>
+    <div class="rule"></div>
+
+    <!-- Route map -->
+    <div class="map-wrap">
+      <div class="map-label">Perfil de la ruta — Sarria a Santiago de Compostela</div>
+      <svg viewBox="0 0 680 115" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
+        <!-- Altitude fill -->
+        <path d="M 30,70 C 55,72 80,100 110,98 C 130,97 145,85 160,82 C 195,74 240,32 270,35 C 290,38 300,52 310,54 C 340,58 380,82 450,80 C 490,79 525,92 560,93 C 596,94 630,97 650,97 L 650,110 L 30,110 Z"
+              fill="rgba(86,161,164,0.06)"/>
+        <!-- Track grey -->
+        <path d="M 30,70 C 55,72 80,100 110,98 C 130,97 145,85 160,82 C 195,74 240,32 270,35 C 290,38 300,52 310,54 C 340,58 380,82 450,80 C 490,79 525,92 560,93 C 596,94 630,97 650,97"
+              fill="none" stroke="#d0e4e5" stroke-width="3.5" stroke-linecap="round"/>
+        <!-- Track turquoise -->
+        <path d="M 30,70 C 55,72 80,100 110,98 C 130,97 145,85 160,82 C 195,74 240,32 270,35 C 290,38 300,52 310,54 C 340,58 380,82 450,80 C 490,79 525,92 560,93 C 596,94 630,97 650,97"
+              fill="none" stroke="#56A1A4" stroke-width="2.5" stroke-linecap="round"/>
+
+        <!-- Sarria (start) -->
+        <circle cx="30" cy="70" r="5.5" fill="#2D4A52"/>
+        <circle cx="30" cy="70" r="2.5" fill="white"/>
+        <text x="30" y="85" text-anchor="middle" font-family="Raleway,sans-serif" font-size="7.5" fill="#2D4A52" font-weight="700">Sarria</text>
+        <text x="30" y="94" text-anchor="middle" font-family="Raleway,sans-serif" font-size="6.5" fill="#56A1A4">Día 1</text>
+
+        <!-- Portomarín -->
+        <circle cx="160" cy="82" r="4" fill="white" stroke="#56A1A4" stroke-width="1.5"/>
+        <text x="160" y="97" text-anchor="middle" font-family="Raleway,sans-serif" font-size="7" fill="#2D4A52" font-weight="600">Portomarín</text>
+        <text x="160" y="106" text-anchor="middle" font-family="Raleway,sans-serif" font-size="6.5" fill="#56A1A4">Día 1</text>
+
+        <!-- Palas de Rei (after peak) -->
+        <circle cx="310" cy="54" r="4" fill="white" stroke="#56A1A4" stroke-width="1.5"/>
+        <text x="310" y="44" text-anchor="middle" font-family="Raleway,sans-serif" font-size="7" fill="#2D4A52" font-weight="600">Palas de Rei</text>
+        <text x="310" y="36" text-anchor="middle" font-family="Raleway,sans-serif" font-size="6.5" fill="#56A1A4">Día 2</text>
+
+        <!-- Arzúa -->
+        <circle cx="450" cy="80" r="4" fill="white" stroke="#56A1A4" stroke-width="1.5"/>
+        <text x="450" y="95" text-anchor="middle" font-family="Raleway,sans-serif" font-size="7" fill="#2D4A52" font-weight="600">Arzúa</text>
+        <text x="450" y="104" text-anchor="middle" font-family="Raleway,sans-serif" font-size="6.5" fill="#56A1A4">Día 3</text>
+
+        <!-- O Pedrouzo -->
+        <circle cx="560" cy="93" r="4" fill="white" stroke="#56A1A4" stroke-width="1.5"/>
+        <text x="560" y="80" text-anchor="middle" font-family="Raleway,sans-serif" font-size="7" fill="#2D4A52" font-weight="600">O Pedrouzo</text>
+        <text x="560" y="72" text-anchor="middle" font-family="Raleway,sans-serif" font-size="6.5" fill="#56A1A4">Día 4</text>
+
+        <!-- Santiago (end) -->
+        <circle cx="650" cy="97" r="5.5" fill="#2D4A52"/>
+        <circle cx="650" cy="97" r="2.5" fill="#56A1A4"/>
+        <text x="650" y="112" text-anchor="middle" font-family="Raleway,sans-serif" font-size="7.5" fill="#2D4A52" font-weight="700">Santiago</text>
+
+        <!-- Labels -->
+        <text x="255" y="24" text-anchor="middle" font-family="Raleway,sans-serif" font-size="6" fill="#56A1A4" font-style="italic">Alto de Ligonde</text>
+        <text x="340" y="115" text-anchor="middle" font-family="Raleway,sans-serif" font-size="6" fill="#9ab0b2" font-weight="600" letter-spacing="1">GALICIA · ~115 KM</text>
+      </svg>
+    </div>
+
+    <!-- Facts grid -->
+    <div class="facts-grid">
+      <div class="fact-card">
+        <svg class="fact-icon"><use href="#ic-calendar"/></svg>
+        <div class="fact-lbl">Duración</div>
+        <div class="fact-val">5 etapas <small>/ 5 noches</small></div>
+      </div>
+      <div class="fact-card">
+        <svg class="fact-icon"><use href="#ic-km"/></svg>
+        <div class="fact-lbl">Distancia total</div>
+        <div class="fact-val">~115 km</div>
+      </div>
+      <div class="fact-card">
+        <svg class="fact-icon"><use href="#ic-pin"/></svg>
+        <div class="fact-lbl">Salida</div>
+        <div class="fact-val" style="font-size:0.82rem;">Sarria, Lugo</div>
+      </div>
+      <div class="fact-card">
+        <svg class="fact-icon"><use href="#ic-mountain"/></svg>
+        <div class="fact-lbl">Región</div>
+        <div class="fact-val" style="font-size:0.88rem;">Galicia, España</div>
+      </div>
+      <div class="fact-card">
+        <svg class="fact-icon"><use href="#ic-pin"/></svg>
+        <div class="fact-lbl">Llegada</div>
+        <div class="fact-val" style="font-size:0.75rem;">Santiago de Compostela</div>
+      </div>
+      <div class="fact-card">
+        <svg class="fact-icon"><use href="#ic-check"/></svg>
+        <div class="fact-lbl">Certificado</div>
+        <div class="fact-val" style="font-size:0.82rem;">La Compostela</div>
+      </div>
+    </div>
+
+    <!-- Inclusions -->
+    <div class="inc-label">Qué está incluido</div>
+    <div class="inc-grid">
+      <div class="inc-item"><svg width="14" height="14"><use href="#ic-bed"/></svg> 5 noches en alojamiento seleccionado</div>
+      <div class="inc-item"><svg width="14" height="14"><use href="#ic-check"/></svg> Habitación individual con baño privado</div>
+      <div class="inc-item"><svg width="14" height="14"><use href="#ic-coffee"/></svg> Desayuno incluido cada etapa</div>
+      <div class="inc-item"><svg width="14" height="14"><use href="#ic-luggage"/></svg> Traslado de equipaje diario</div>
+      <div class="inc-item"><svg width="14" height="14"><use href="#ic-route"/></svg> Credencial del Peregrino oficial</div>
+      <div class="inc-item"><svg width="14" height="14"><use href="#ic-phone"/></svg> Asistencia Easy Camino Santiago</div>
+      <div class="inc-item"><svg width="14" height="14"><use href="#ic-check"/></svg> Itinerario detallado por etapas</div>
+      <div class="inc-item"><svg width="14" height="14"><use href="#ic-check"/></svg> Acompañamiento durante todo el recorrido</div>
+    </div>
+  </div>
+
+  <div class="page-accent"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 4 — ETAPA 1: SARRIA → PORTOMARÍN
+════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="ph">
+    <div class="ph-logo">Easy Camino Santiago</div>
+    <div class="ph-chapter">Itinerario Detallado</div>
+  </div>
+
+  <div class="region-banner">
+    <div class="rb-name">Galicia — Camino Francés</div>
+    <div class="rb-meta">Etapa 1 &nbsp;·&nbsp; 22 km &nbsp;·&nbsp; Lugo</div>
+  </div>
+
+  <div class="day-cards-wrap">
+
+    <div class="day-card">
+      <div class="dc-head">
+        <div class="dc-num">Etapa 1</div>
+        <div class="dc-date">El punto de partida oficial</div>
+        <div class="dc-badge b-moderada">Moderada</div>
+      </div>
+      <div class="dc-keyinfo">
+        <div class="dc-ki-route">
+          <div class="dc-ki-place">
+            <div class="dc-ki-place-label">Origen</div>
+            <div class="dc-ki-place-name">Sarria</div>
+          </div>
+          <div class="dc-ki-arrow">&#8594;</div>
+          <div class="dc-ki-place">
+            <div class="dc-ki-place-label">Destino</div>
+            <div class="dc-ki-place-name">Portomarín</div>
+          </div>
+        </div>
+        <div class="dc-ki-metrics">
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Distancia</div><div class="dc-ki-m-val km">22 km</div></div>
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Tiempo</div><div class="dc-ki-m-val">5–6 horas</div></div>
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Ascenso</div><div class="dc-ki-m-val">+440 m</div></div>
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Terreno</div><div class="dc-ki-m-val">Mixto</div></div>
+        </div>
+      </div>
+      <div class="dc-desc">
+        La emoción del inicio. El hito del kilómetro 100 en Sarria marca el comienzo oficial del tramo certificado — a partir de aquí, cada paso cuenta para la Compostela. El camino sale de Sarria por la escalinata de la Rúa Mayor y se adentra en los bosques de roble y eucalipto que caracterizan la Galicia más auténtica. Aldeas de granito con hórreos, fuentes y cruceiros medievales jalonan el camino. La llegada a Portomarín cruzando el puente sobre el embalse de Belesar es uno de los momentos más fotogénicos del Camino Francés, especialmente al atardecer cuando el agua refleja las torres de la iglesia.
+      </div>
+      <div class="dc-vale-pena">
+        <div class="dc-vale-pena-label">Por qué vale la pena</div>
+        <div class="dc-vale-pena-text">El hito del Kilómetro 100 en Sarria es el primer umbral oficial: a partir de aquí, cada paso cuenta para la Compostela. Pocas emociones del Camino igualan la de cruzarlo por primera vez.</div>
+      </div>
+      <div class="dc-naoperca">
+        <div class="dc-naoperca-label">No te pierdas</div>
+        <div class="dc-naoperca-list">
+          <div class="dc-naoperca-item">Hito del Kilómetro 100 (Sarria)</div>
+          <div class="dc-naoperca-item">Escalinata medieval de la Rúa Mayor</div>
+          <div class="dc-naoperca-item">Igrexa de San Xoán de Portomarín</div>
+          <div class="dc-naoperca-item">Embalse de Belesar al atardecer</div>
+        </div>
+      </div>
+      <div class="dc-inc" style="margin-top:11px;">
+        <div class="dc-inc-item"><svg width="11" height="11"><use href="#ic-bed"/></svg> Habitación individual</div>
+        <div class="dc-inc-item"><svg width="11" height="11"><use href="#ic-coffee"/></svg> Desayuno</div>
+        <div class="dc-inc-item"><svg width="11" height="11"><use href="#ic-luggage"/></svg> Equipaje trasladado</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="page-accent"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 5 — ETAPA 2: PORTOMARÍN → PALAS DE REI
+════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="ph">
+    <div class="ph-logo">Easy Camino Santiago</div>
+    <div class="ph-chapter">Itinerario Detallado</div>
+  </div>
+
+  <div class="region-banner">
+    <div class="rb-name">Galicia — Camino Francés</div>
+    <div class="rb-meta">Etapa 2 &nbsp;·&nbsp; 24,6 km &nbsp;·&nbsp; Lugo</div>
+  </div>
+
+  <div class="day-cards-wrap">
+
+    <div class="day-card">
+      <div class="dc-head">
+        <div class="dc-num">Etapa 2</div>
+        <div class="dc-date">Cruceiros medievales y colinas de Galicia</div>
+        <div class="dc-badge b-moderada">Moderada</div>
+      </div>
+      <div class="dc-keyinfo">
+        <div class="dc-ki-route">
+          <div class="dc-ki-place">
+            <div class="dc-ki-place-label">Origen</div>
+            <div class="dc-ki-place-name">Portomarín</div>
+          </div>
+          <div class="dc-ki-arrow">&#8594;</div>
+          <div class="dc-ki-place">
+            <div class="dc-ki-place-label">Destino</div>
+            <div class="dc-ki-place-name">Palas de Rei</div>
+          </div>
+        </div>
+        <div class="dc-ki-metrics">
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Distancia</div><div class="dc-ki-m-val km">24,6 km</div></div>
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Tiempo</div><div class="dc-ki-m-val">6–7 horas</div></div>
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Ascenso</div><div class="dc-ki-m-val">+640 m</div></div>
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Terreno</div><div class="dc-ki-m-val">Colinas</div></div>
+        </div>
+      </div>
+      <div class="dc-desc">
+        Una etapa que invita a la contemplación. El camino sale de Portomarín subiendo suavemente entre prados y bosques de pino, con el embalse de Belesar brillando a lo lejos. A lo largo del recorrido se atraviesan pequeñas aldeas de apenas unas casas, capillas románicas discretas entre la vegetación y cruceiros cargados de historia medieval. El Monte Ligonde es el punto más alto de la etapa, con amplias vistas sobre los valles de Lugo. Las Ventas de Narón y el Hospital de la Cruz recuerdan que este camino lleva siglos recibiendo peregrinos.
+      </div>
+      <div class="dc-vale-pena">
+        <div class="dc-vale-pena-label">Por qué vale la pena</div>
+        <div class="dc-vale-pena-text">Los cruceiros de Ligonde son algunos de los más antiguos del Camino — inscripciones del siglo XIV que sobrevivieron guerras, invasiones y siglos de pisadas de peregrinos.</div>
+      </div>
+      <div class="dc-naoperca">
+        <div class="dc-naoperca-label">No te pierdas</div>
+        <div class="dc-naoperca-list">
+          <div class="dc-naoperca-item">Cruceiro de Lameiros</div>
+          <div class="dc-naoperca-item">Monte Ligonde (vistas panorámicas)</div>
+          <div class="dc-naoperca-item">Hospital de la Cruz</div>
+          <div class="dc-naoperca-item">Ventas de Narón</div>
+        </div>
+      </div>
+      <div class="dc-inc" style="margin-top:11px;">
+        <div class="dc-inc-item"><svg width="11" height="11"><use href="#ic-bed"/></svg> Habitación individual</div>
+        <div class="dc-inc-item"><svg width="11" height="11"><use href="#ic-coffee"/></svg> Desayuno</div>
+        <div class="dc-inc-item"><svg width="11" height="11"><use href="#ic-luggage"/></svg> Equipaje trasladado</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="page-accent"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 6 — ETAPA 3: PALAS DE REI → ARZÚA
+════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="ph">
+    <div class="ph-logo">Easy Camino Santiago</div>
+    <div class="ph-chapter">Itinerario Detallado</div>
+  </div>
+
+  <div class="region-banner">
+    <div class="rb-name">Galicia — Camino Francés</div>
+    <div class="rb-meta">Etapa 3 &nbsp;·&nbsp; 29 km &nbsp;·&nbsp; Lugo / A Coruña</div>
+  </div>
+
+  <div class="day-cards-wrap">
+
+    <div class="day-card">
+      <div class="dc-head">
+        <div class="dc-num">Etapa 3</div>
+        <div class="dc-date">Melide, Ribadiso y el mejor pulpo del mundo</div>
+        <div class="dc-badge b-exigente">Exigente</div>
+      </div>
+      <div class="dc-keyinfo">
+        <div class="dc-ki-route">
+          <div class="dc-ki-place">
+            <div class="dc-ki-place-label">Origen</div>
+            <div class="dc-ki-place-name">Palas de Rei</div>
+          </div>
+          <div class="dc-ki-arrow">&#8594;</div>
+          <div class="dc-ki-place">
+            <div class="dc-ki-place-label">Destino</div>
+            <div class="dc-ki-place-name">Arzúa</div>
+          </div>
+        </div>
+        <div class="dc-ki-metrics">
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Distancia</div><div class="dc-ki-m-val km">29 km</div></div>
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Tiempo</div><div class="dc-ki-m-val">7–8 horas</div></div>
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Ascenso</div><div class="dc-ki-m-val">+660 m</div></div>
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Terreno</div><div class="dc-ki-m-val">Variado</div></div>
+        </div>
+      </div>
+      <div class="dc-desc">
+        La etapa más larga del tramo y también la más rica en experiencias. El camino cruza la frontera entre las provincias de Lugo y A Coruña y pasa por Melide, la capital gallega del pulpo — una pausa imprescindible para recuperar fuerzas. Más adelante, el puente medieval de Ribadiso sobre el río Iso es uno de los rincones más tranquilos y fotogénicos del Camino Francés. La llegada a Arzúa, conocida por su queso con Denominación de Origen Protegida, cierra una etapa de gran riqueza gastronómica y paisajística.
+      </div>
+      <div class="dc-vale-pena">
+        <div class="dc-vale-pena-label">Por qué vale la pena</div>
+        <div class="dc-vale-pena-text">El pulpo a la gallega en Melide es la gran experiencia gastronómica del Camino. El puente medieval de Ribadiso, junto al río Iso, es uno de los rincones de mayor quietud y belleza de todo el recorrido.</div>
+      </div>
+      <div class="dc-naoperca">
+        <div class="dc-naoperca-label">No te pierdas</div>
+        <div class="dc-naoperca-list">
+          <div class="dc-naoperca-item">Pulpo a la gallega en Melide</div>
+          <div class="dc-naoperca-item">Iglesia de Santiago de Boente</div>
+          <div class="dc-naoperca-item">Puente medieval de Ribadiso</div>
+          <div class="dc-naoperca-item">Queso de Arzúa D.O.P.</div>
+        </div>
+      </div>
+      <div class="dc-inc" style="margin-top:11px;">
+        <div class="dc-inc-item"><svg width="11" height="11"><use href="#ic-bed"/></svg> Habitación individual</div>
+        <div class="dc-inc-item"><svg width="11" height="11"><use href="#ic-coffee"/></svg> Desayuno</div>
+        <div class="dc-inc-item"><svg width="11" height="11"><use href="#ic-luggage"/></svg> Equipaje trasladado</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="page-accent"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 7 — ETAPA 4: ARZÚA → O PEDROUZO
+════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="ph">
+    <div class="ph-logo">Easy Camino Santiago</div>
+    <div class="ph-chapter">Itinerario Detallado</div>
+  </div>
+
+  <div class="region-banner">
+    <div class="rb-name">Galicia — Camino Francés</div>
+    <div class="rb-meta">Etapa 4 &nbsp;·&nbsp; 19,7 km &nbsp;·&nbsp; A Coruña</div>
+  </div>
+
+  <div class="day-cards-wrap">
+
+    <div class="day-card">
+      <div class="dc-head">
+        <div class="dc-num">Etapa 4</div>
+        <div class="dc-date">Los bosques de eucalipto y la noche antes de Santiago</div>
+        <div class="dc-badge b-confortavel">Cómoda</div>
+      </div>
+      <div class="dc-keyinfo">
+        <div class="dc-ki-route">
+          <div class="dc-ki-place">
+            <div class="dc-ki-place-label">Origen</div>
+            <div class="dc-ki-place-name">Arzúa</div>
+          </div>
+          <div class="dc-ki-arrow">&#8594;</div>
+          <div class="dc-ki-place">
+            <div class="dc-ki-place-label">Destino</div>
+            <div class="dc-ki-place-name">O Pedrouzo (Arca)</div>
+          </div>
+        </div>
+        <div class="dc-ki-metrics">
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Distancia</div><div class="dc-ki-m-val km">19,7 km</div></div>
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Tiempo</div><div class="dc-ki-m-val">5–5,5 horas</div></div>
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Ascenso</div><div class="dc-ki-m-val">+380 m</div></div>
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Terreno</div><div class="dc-ki-m-val">Forestal</div></div>
+        </div>
+      </div>
+      <div class="dc-desc">
+        La penúltima etapa es el momento de la reflexión. Los bosques de eucalipto filtran la luz de la mañana como catedrales vegetales, y su aroma inconfundible impregnará cada kilómetro. Es la etapa más serena del tramo: sin grandes desafíos físicos, el camino permite que la mente anticipe con calma la llegada del día siguiente. Aldeas tranquilas, capillas escondidas entre la vegetación y el suave crujir de las hojas bajo los pies. Esta es la última noche antes de Santiago.
+      </div>
+      <div class="dc-vale-pena">
+        <div class="dc-vale-pena-label">Por qué vale la pena</div>
+        <div class="dc-vale-pena-text">La calma de los bosques de eucalipto a primera hora de la mañana — el silencio solo roto por el canto de los pájaros y el ritmo de tus pasos. La emoción de saber que mañana llegas.</div>
+      </div>
+      <div class="dc-naoperca">
+        <div class="dc-naoperca-label">No te pierdas</div>
+        <div class="dc-naoperca-list">
+          <div class="dc-naoperca-item">Bosques de eucalipto al amanecer</div>
+          <div class="dc-naoperca-item">Capilla de Santa Irene</div>
+          <div class="dc-naoperca-item">Aldea de A Rúa</div>
+          <div class="dc-naoperca-item">Cruceiro de Santa Irene</div>
+        </div>
+      </div>
+      <div class="dc-inc" style="margin-top:11px;">
+        <div class="dc-inc-item"><svg width="11" height="11"><use href="#ic-bed"/></svg> Habitación individual</div>
+        <div class="dc-inc-item"><svg width="11" height="11"><use href="#ic-coffee"/></svg> Desayuno</div>
+        <div class="dc-inc-item"><svg width="11" height="11"><use href="#ic-luggage"/></svg> Equipaje trasladado</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="page-accent"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 8 — ETAPA 5: O PEDROUZO → SANTIAGO
+════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="ph">
+    <div class="ph-logo">Easy Camino Santiago</div>
+    <div class="ph-chapter">Itinerario Detallado</div>
+  </div>
+
+  <div class="region-banner">
+    <div class="rb-name">Galicia — Camino Francés</div>
+    <div class="rb-meta">Etapa 5 &nbsp;·&nbsp; 20 km &nbsp;·&nbsp; A Coruña</div>
+  </div>
+
+  <div class="day-cards-wrap">
+
+    <div class="day-card dc-arrival">
+      <div class="dc-head">
+        <div class="dc-num">Etapa 5</div>
+        <div class="dc-date">El día que cambia todo</div>
+        <div class="dc-badge b-emotiva">Llegada</div>
+      </div>
+      <div class="dc-keyinfo">
+        <div class="dc-ki-route">
+          <div class="dc-ki-place">
+            <div class="dc-ki-place-label">Origen</div>
+            <div class="dc-ki-place-name">O Pedrouzo</div>
+          </div>
+          <div class="dc-ki-arrow">&#8594;</div>
+          <div class="dc-ki-place">
+            <div class="dc-ki-place-label">Destino</div>
+            <div class="dc-ki-place-name">Santiago de Compostela</div>
+          </div>
+        </div>
+        <div class="dc-ki-metrics">
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Distancia</div><div class="dc-ki-m-val km">20 km</div></div>
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Tiempo</div><div class="dc-ki-m-val">5–5,5 horas</div></div>
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Ascenso</div><div class="dc-ki-m-val">+385 m</div></div>
+          <div class="dc-ki-m"><div class="dc-ki-m-label">Terreno</div><div class="dc-ki-m-val">Ciudad</div></div>
+        </div>
+      </div>
+      <div class="dc-desc">
+        El día más importante del Camino. Muchos peregrinos salen antes del amanecer, con la linterna encendida y el corazón acelerado. El camino atraviesa la ciudad de Santiago hasta desembocar en la Plaza del Obradoiro. El Monte do Gozo — la Colina de la Alegría — es el último alto antes de divisar las torres de la Catedral por primera vez. Ese momento no tiene nombre. La Misa del Peregrino, el abrazo al Apóstol y la Compostela esperan al final del camino.
+      </div>
+      <div class="dc-vale-pena">
+        <div class="dc-vale-pena-label">Por qué vale la pena</div>
+        <div class="dc-vale-pena-text">El instante en que doblas la esquina hacia la Plaza del Obradoiro y ves la Catedral por primera vez. Es el destino de todos los caminos — un momento que no olvidarás jamás.</div>
+      </div>
+      <div class="dc-naoperca">
+        <div class="dc-naoperca-label">No te pierdas</div>
+        <div class="dc-naoperca-list">
+          <div class="dc-naoperca-item">Monte do Gozo (primera vista)</div>
+          <div class="dc-naoperca-item">Plaza del Obradoiro</div>
+          <div class="dc-naoperca-item">Catedral de Santiago — abrazo al Apóstol</div>
+          <div class="dc-naoperca-item">Misa del Peregrino (12:00 h)</div>
+          <div class="dc-naoperca-item">Oficina del Peregrino — La Compostela</div>
+          <div class="dc-naoperca-item">Rúa das Hortas · Rúa do Franco</div>
+        </div>
+      </div>
+      <div class="dc-inc" style="margin-top:11px;">
+        <div class="dc-inc-item"><svg width="11" height="11"><use href="#ic-bed"/></svg> Noche en Santiago</div>
+        <div class="dc-inc-item"><svg width="11" height="11"><use href="#ic-coffee"/></svg> Desayuno</div>
+        <div class="dc-inc-item"><svg width="11" height="11"><use href="#ic-route"/></svg> La Compostela te espera</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="page-accent"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 9 — SERVICIOS INCLUIDOS
+════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="ph">
+    <div class="ph-logo">Easy Camino Santiago</div>
+    <div class="ph-chapter">Lo Que Está Incluido</div>
+  </div>
+
+  <div class="pc">
+    <div class="overline">Tranquilidad total</div>
+    <div class="ch-title">Servicios incluidos<br>en tu viaje</div>
+    <div class="ch-sub">Todo organizado, del primer paso a la Plaza del Obradoiro</div>
+    <div class="rule"></div>
+
+    <div class="service-grid">
+
+      <div class="service-card">
+        <div class="sc-icon"><svg width="16" height="16"><use href="#ic-bed"/></svg></div>
+        <div class="sc-title">Alojamiento</div>
+        <div class="sc-body">Habitaciones individuales con baño privado en 5 alojamientos cuidadosamente seleccionados: hoteles, casas rurales y posadas en ubicaciones centrales o junto al camino. Las reservas son confirmadas individualmente y los vouchers de cada noche se envían con el itinerario completo.</div>
+      </div>
+
+      <div class="service-card">
+        <div class="sc-icon"><svg width="16" height="16"><use href="#ic-luggage"/></svg></div>
+        <div class="sc-title">Traslado de Equipaje</div>
+        <div class="sc-body">Tu maleta viaja de alojamiento en alojamiento cada día durante las 5 etapas. Derecho a 1 maleta de hasta 20 kg. El equipaje llega al siguiente alojamiento antes de tu llegada — caminas libre y ligero, sin peso en la espalda.</div>
+      </div>
+
+      <div class="service-card">
+        <div class="sc-icon"><svg width="16" height="16"><use href="#ic-route"/></svg></div>
+        <div class="sc-title">Credencial del Peregrino</div>
+        <div class="sc-body">La Credencial (Pilgrim Passport) es enviada a tu domicilio antes de la salida, junto con el itinerario impreso. Incluye instrucciones para obtener la Compostela oficial en la Oficina del Peregrino a tu llegada a Santiago.</div>
+      </div>
+
+      <div class="service-card">
+        <div class="sc-icon"><svg width="16" height="16"><use href="#ic-phone"/></svg></div>
+        <div class="sc-title">Asistencia 24 Horas</div>
+        <div class="sc-body">El equipo Easy Camino Santiago disponible por teléfono y WhatsApp todos los días durante el recorrido. Ante cualquier imprevisto — lesión, logística o alojamiento — respondemos de inmediato. Nunca caminas solo.</div>
+      </div>
+
+      <div class="service-card wide">
+        <div class="sc-icon"><svg width="16" height="16"><use href="#ic-clock"/></svg></div>
+        <div class="sc-title">Lo Que Ocurre Tras la Reserva</div>
+        <ul class="sc-next-list">
+          <li data-n="1.">Email de confirmación de la reserva con todos los detalles y los próximos pasos del proceso.</li>
+          <li data-n="2.">Confirmación individual de los 5 alojamientos en 5–7 días laborables.</li>
+          <li data-n="3.">Envío del itinerario completo con vouchers y contactos de cada alojamiento, 30 días antes de la salida.</li>
+          <li data-n="4.">Llamada de bienvenida con el equipo 2 semanas antes del inicio — logística, dudas y preparación.</li>
+          <li data-n="5.">Contacto de emergencia y orientaciones finales la víspera de la salida hacia Sarria.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="page-accent"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 10 — PRÓXIMOS PASOS
+════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="ph">
+    <div class="ph-logo">Easy Camino Santiago</div>
+    <div class="ph-chapter">Próximos Pasos</div>
+  </div>
+
+  <div class="pc">
+    <div class="overline">Tu reserva</div>
+    <div class="ch-title">¿Qué hacer ahora?</div>
+    <div class="ch-sub">En cuatro pasos sencillos, del email a las botas</div>
+    <div class="rule"></div>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Escríbenos con tus fechas y preferencias</div>
+          <div class="step-desc">Envía un email a <strong style="color:var(--azul);font-weight:700;">info@easycaminosantiago.com</strong> indicando tus fechas de inicio, número de personas y tipo de alojamiento deseado. Nuestro equipo te responderá en menos de 24 horas.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Recibe tu propuesta personalizada</div>
+          <div class="step-desc">Recibirás una propuesta detallada con disponibilidad de alojamientos, precios y todos los detalles del itinerario. Si tienes dudas, podemos agendar una llamada para resolverlas.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Confirma tu reserva</div>
+          <div class="step-desc">Con la confirmación de la reserva, aseguraremos todos los alojamientos del itinerario en 5–7 días laborables. Si por algún motivo no podemos confirmar las fechas solicitadas, te presentaremos alternativas o efectuaremos el reembolso íntegro.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Recibe el itinerario completo y empieza a caminar</div>
+          <div class="step-desc">Con los alojamientos confirmados, recibirás el itinerario detallado con vouchers, dirección y contacto de cada alojamiento, y toda la información práctica para el Camino. El resto es por tu cuenta.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <strong>Política de cancelación:</strong> Cancelación con más de 30 días de antelación — reembolso del 80%. Entre 15 y 30 días — 50%. Menos de 15 días — sin reembolso. Todas las modificaciones deben comunicarse por email con al menos 72 horas de antelación.
+    </div>
+  </div>
+
+  <div class="page-accent"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 11 — CONTACTOS Y ASISTENCIA
+════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="ph">
+    <div class="ph-logo">Easy Camino Santiago</div>
+    <div class="ph-chapter">Contactos y Asistencia</div>
+  </div>
+
+  <div class="pc">
+    <div class="overline">Estamos aquí para ti</div>
+    <div class="ch-title">Nuestro equipo,<br>siempre disponible</div>
+    <div class="ch-sub">Del primer email hasta la llegada al Obradoiro</div>
+    <div class="rule"></div>
+
+    <div class="contact-section-title">Easy Camino Santiago — Equipo de apoyo</div>
+    <div class="contact-grid-2col">
+      <div class="contact-card">
+        <div class="cc-icon"><svg width="18" height="18"><use href="#ic-mail"/></svg></div>
+        <div class="cc-body">
+          <div class="cc-label">Email principal</div>
+          <div class="cc-main">info@easycaminosantiago.com</div>
+          <div class="cc-sub">Respuesta en menos de 24 h · Lun–Sáb</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="cc-icon"><svg width="18" height="18"><use href="#ic-phone"/></svg></div>
+        <div class="cc-body">
+          <div class="cc-label">Teléfono y WhatsApp</div>
+          <div class="cc-main">Disponible tras confirmar la reserva</div>
+          <div class="cc-sub">Soporte diario durante el recorrido · 7 días</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="cc-icon"><svg width="18" height="18"><use href="#ic-route"/></svg></div>
+        <div class="cc-body">
+          <div class="cc-label">Website</div>
+          <div class="cc-main">www.easycaminosantiago.com</div>
+          <div class="cc-sub">Información, guías y recursos para el Camino</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="cc-icon" style="background:#fce4ec;color:#b71c1c;"><svg width="18" height="18"><use href="#ic-phone"/></svg></div>
+        <div class="cc-body">
+          <div class="cc-label">Emergencias — España</div>
+          <div class="cc-main" style="font-size:1.1rem;letter-spacing:1px;">112</div>
+          <div class="cc-sub">Policía · Bomberos · Ambulancia · 24 horas</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-section-title">Oficina del Peregrino — Santiago de Compostela</div>
+    <div class="contact-grid-2col">
+      <div class="contact-card">
+        <div class="cc-icon"><svg width="18" height="18"><use href="#ic-pin"/></svg></div>
+        <div class="cc-body">
+          <div class="cc-label">Dirección</div>
+          <div class="cc-main">Rúa das Carretas, 33</div>
+          <div class="cc-sub">Santiago de Compostela, 15705 · Galicia, España</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="cc-icon"><svg width="18" height="18"><use href="#ic-clock"/></svg></div>
+        <div class="cc-body">
+          <div class="cc-label">Horario (temporada alta)</div>
+          <div class="cc-main">09:00 — 21:00</div>
+          <div class="cc-sub">Todos los días · Para obtener la Compostela oficial</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final hero quote -->
+  <div class="final-hero">
+    <div class="final-quote">"La Compostela más importante no es la que llevas en las manos — es la que llevas en el corazón."</div>
+    <div class="final-attr">Tradición del Camino de Santiago</div>
+  </div>
+
+  <div class="cover-accent"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 12 — BIENVENIDOS A SANTIAGO
+════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="ph">
+    <div class="ph-logo">Easy Camino Santiago</div>
+    <div class="ph-chapter">Una Nota Personal</div>
+  </div>
+
+  <div class="pc">
+    <div class="overline">Para cada peregrino</div>
+    <div class="ch-title">Bienvenidos a<br>Santiago de Compostela</div>
+    <div class="ch-sub">Una nota del equipo Easy Camino Santiago</div>
+    <div class="rule"></div>
+
+    <div class="letter-salutation">Querido peregrino,</div>
+
+    <p class="body-p">
+      Cuando al final de tu última etapa dobles la esquina hacia la Plaza del Obradoiro y levantes los ojos hacia las torres de la Catedral, todos los kilómetros recorridos — cada amanecer en los bosques de Galicia, cada cruceiro de granito, cada kilómetro de camino — harán sentido de una forma que hoy, antes de empezar, todavía no es posible describir con palabras.
+    </p>
+
+    <p class="body-p">
+      En ese momento — con la Catedral delante, el olor a incienso en el aire, otros peregrinos a tu alrededor, el sonido de las campanas a lo lejos — quizás no encuentres palabras. Quizás se te doblen las rodillas, no de cansancio, sino de algo que no tiene nombre. Ríe, llora, abraza a quien tengas al lado, o simplemente quédate parado absorbiendo el momento. Todo eso es válido. Para eso existe el Camino.
+    </p>
+
+    <p class="body-p">
+      Desde los bosques de roble de Sarria hasta las últimas calles de granito de Santiago, cada etapa de este itinerario ha sido diseñada para que camines con comodidad, descanses bien y llegues a cada día siguiente con energía renovada. Las noches en habitaciones individuales con baño privado, el equipaje que viaja por delante, el equipo disponible cada día — todo existe para que tu única preocupación sea el Camino en sí.
+    </p>
+
+    <p class="body-p">
+      Muchos peregrinos que llegan a Santiago describen que el Camino no termina en el Obradoiro — empieza ahí. Lo que traes en el corazón cuando regresas es la parte más importante de toda la experiencia.
+    </p>
+
+    <div class="letter-sig">
+      <div class="sig-farewell">¡Buen Camino!</div>
+      <div class="sig-name">Equipo Easy Camino Santiago</div>
+      <div class="sig-title">info@easycaminosantiago.com &nbsp;·&nbsp; www.easycaminosantiago.com</div>
+    </div>
+  </div>
+
+  <div class="letter-stamp">
+    <div class="stamp-top">Easy<br>Camino</div>
+    <div class="stamp-year" style="font-size:0.75rem;letter-spacing:1px;">SCQ</div>
+    <div class="stamp-top">Santiago</div>
+  </div>
+
+  <div class="final-hero" style="padding:18px 48px 16px;">
+    <div class="final-quote" style="font-size:1.1rem;">"El Camino no termina en Santiago — comienza ahí."</div>
+    <div class="final-attr">Sabiduría del Camino de Santiago</div>
+  </div>
+</div>
+
+</body>
+</html>
