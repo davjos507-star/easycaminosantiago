@@ -980,6 +980,7 @@ function goStep(n){
   }
   if (n === 5) {
     updateSidebar();
+    if (!state.stripeInit) initStripe();
     selectMetodoPago(state.metodoPago);
   }
   window.scrollTo({top:0, behavior:'smooth'});
