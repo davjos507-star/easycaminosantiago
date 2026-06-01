@@ -490,6 +490,16 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
             <div class="toggle-switch" id="toggle-bicicleta"></div>
           </div>
         </div>
+        <div class="toggle-row" onclick="toggleTransporte('santiagoAeropuerto')">
+          <div class="extra-info">
+            <strong>Traslado Santiago ciudad → Aeropuerto</strong>
+            <span>Centro de Santiago de Compostela al aeropuerto</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+            <span style="font-size:0.88rem;font-weight:700;color:var(--azul);">+37 €</span>
+            <div class="toggle-switch" id="toggle-santiagoAeropuerto"></div>
+          </div>
+        </div>
       </div>
 
       <!-- PROTECCIÓN DE CANCELACIÓN -->
@@ -881,7 +891,8 @@ const EXTRAS_PRECIOS = {
   sarriaPension: 65, sarriaHotel: 95,
   santiagoPension: 65, santiagoHotel: 95,
   desayuno: 55, picnic: 15, cena: 125,
-  aeropuerto: 175, equipaje: 45
+  aeropuerto: 175, equipaje: 45,
+  santiagoAeropuerto: 37
 };
 
 const state = {
@@ -892,7 +903,7 @@ const state = {
   extraSarriaPension: 0, extraSarriaHotel: 0,
   extraSantiagoPension: 0, extraSantiagoHotel: 0,
   extrasDesayuno: 0, extrasPicnic: 0, extrasCena: 0,
-  transAeropuerto: false, transEquipaje: 0, transBicicleta: false,
+  transAeropuerto: false, transEquipaje: 0, transBicicleta: false, transSantiagoAeropuerto: false,
   total: 0, deposito: 0,
   metodoPago: 'tarjeta', reservaRef: null,
   stripeInstance: null, cardNumber: null, cardExpiry: null, cardCvc: null,
@@ -1049,9 +1060,12 @@ function toggleTransporte(key){
   if (key === 'aeropuerto') {
     state.transAeropuerto = !state.transAeropuerto;
     document.getElementById('toggle-aeropuerto').classList.toggle('on', state.transAeropuerto);
-  } else {
+  } else if (key === 'bicicleta') {
     state.transBicicleta = !state.transBicicleta;
     document.getElementById('toggle-bicicleta').classList.toggle('on', state.transBicicleta);
+  } else if (key === 'santiagoAeropuerto') {
+    state.transSantiagoAeropuerto = !state.transSantiagoAeropuerto;
+    document.getElementById('toggle-santiagoAeropuerto').classList.toggle('on', state.transSantiagoAeropuerto);
   }
   updateSidebar();
 }
@@ -1082,6 +1096,7 @@ function calcExtras(){
   add('Cena',            state.extrasCena,           EXTRAS_PRECIOS.cena);
   if (state.transAeropuerto) { lines.push({ label: 'Traslado aeropuerto', amount: EXTRAS_PRECIOS.aeropuerto }); total += EXTRAS_PRECIOS.aeropuerto; }
   add('Equipaje (5d)',   state.transEquipaje,        EXTRAS_PRECIOS.equipaje);
+  if (state.transSantiagoAeropuerto) { lines.push({ label: 'Traslado Santiago → Aeropuerto', amount: EXTRAS_PRECIOS.santiagoAeropuerto }); total += EXTRAS_PRECIOS.santiagoAeropuerto; }
   if (state.transBicicleta) { lines.push({ label: 'Transporte bicicleta', amount: null }); }
   return { total, lines };
 }
