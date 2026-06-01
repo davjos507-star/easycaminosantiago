@@ -1265,8 +1265,8 @@ function goStep(n){
   }
   if (n === 5) {
     updateSidebar();
-    if (!state.stripeInit) initStripe();
     selectMetodoPago(state.metodoPago);
+    if (!state.stripeInit) requestAnimationFrame(() => initStripe());
   }
   window.scrollTo({top:0, behavior:'smooth'});
 }
@@ -1284,9 +1284,9 @@ function selectMetodoPago(method){
   state.metodoPago = method;
   document.getElementById('pm-tarjeta').classList.toggle('pm-selected', method === 'tarjeta');
   document.getElementById('pm-transferencia').classList.toggle('pm-selected', method === 'transferencia');
-  document.getElementById('stripe-section').style.display = method === 'tarjeta' ? '' : 'none';
-  document.getElementById('transfer-section').style.display = method === 'transferencia' ? '' : 'none';
-  if (method === 'tarjeta' && !state.stripeInit) initStripe();
+  document.getElementById('stripe-section').style.display = method === 'tarjeta' ? 'block' : 'none';
+  document.getElementById('transfer-section').style.display = method === 'transferencia' ? 'block' : 'none';
+  if (method === 'tarjeta' && !state.stripeInit) requestAnimationFrame(() => initStripe());
   if (method === 'transferencia') {
     if (!state.reservaRef) {
       state.reservaRef = 'ECS-' + (state.ruta || 'REF').toUpperCase() + '-' + Date.now().toString().slice(-6);
