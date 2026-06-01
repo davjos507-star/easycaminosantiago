@@ -1284,7 +1284,7 @@ function selectMetodoPago(method){
   state.metodoPago = method;
   document.getElementById('pm-tarjeta').classList.toggle('pm-selected', method === 'tarjeta');
   document.getElementById('pm-transferencia').classList.toggle('pm-selected', method === 'transferencia');
-  document.getElementById('stripe-section').style.cssText = method === 'tarjeta' ? '' : 'visibility:hidden;height:0;overflow:hidden;pointer-events:none;';
+  document.getElementById('stripe-section').style.display = method === 'tarjeta' ? '' : 'none';
   document.getElementById('transfer-section').style.display = method === 'transferencia' ? '' : 'none';
   if (method === 'tarjeta' && !state.stripeInit) initStripe();
   if (method === 'transferencia') {
