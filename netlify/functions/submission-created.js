@@ -148,6 +148,7 @@ function getConfig(formName, data) {
         ['Peregrinos', pilgrimsLabel],
         ['Alojamiento', data.alojamiento],
         ['Total', data.total],
+        ['Extras', data.extras],
         ['Método de pago', data['metodo-pago']],
         ['Observaciones', data.observaciones],
       ]),

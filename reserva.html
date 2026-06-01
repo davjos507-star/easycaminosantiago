@@ -113,6 +113,23 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
 .seguro-info p { font-size:0.78rem; color:var(--gris); line-height:1.5; }
 .seguro-cost { font-weight:700; color:var(--azul); font-size:0.9rem; white-space:nowrap; }
 
+/* STEP 3 — EXTRAS ENHANCED */
+.extras-section { margin-bottom:24px; }
+.extras-cat-header { display:flex; align-items:center; gap:12px; padding:14px 0 8px; border-top:2px solid var(--border); }
+.extras-cat-icon { font-size:1.3rem; flex-shrink:0; }
+.extras-cat-header .ec-info strong { display:block; font-size:0.95rem; color:var(--azul-dark); margin-bottom:2px; }
+.extras-cat-header .ec-info span { font-size:0.8rem; color:var(--gris); }
+.extras-group-label { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; color:var(--azul); padding:10px 0 2px; }
+.toggle-row { display:flex; align-items:center; justify-content:space-between; padding:16px 0; border-bottom:1px solid var(--border); gap:16px; cursor:pointer; }
+.toggle-switch { width:42px; height:24px; border-radius:12px; background:#c8d8d8; transition:background 0.2s; position:relative; flex-shrink:0; }
+.toggle-switch.on { background:var(--azul); }
+.toggle-switch::after { content:''; position:absolute; width:18px; height:18px; border-radius:50%; background:white; top:3px; left:3px; transition:transform 0.2s; box-shadow:0 1px 3px rgba(0,0,0,0.25); }
+.toggle-switch.on::after { transform:translateX(18px); }
+/* Sidebar extras detail */
+.sb-extras-detail { padding:0 18px 8px; }
+.sb-extras-line { display:flex; justify-content:space-between; gap:8px; font-size:0.76rem; color:var(--gris); margin-bottom:3px; padding-left:8px; }
+.sb-extras-line span:last-child { font-weight:700; color:var(--azul-dark); white-space:nowrap; }
+
 /* STEP 4 */
 .traveler-section { margin-bottom:28px; }
 .traveler-section h3 { font-size:0.95rem; font-weight:700; color:var(--azul-dark); margin-bottom:16px; padding-bottom:8px; border-bottom:2px solid var(--azul); }
@@ -338,37 +355,144 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
       </div>
     </div>
 
-    <!-- STEP 3: OPCIONES -->
+    <!-- STEP 3: EXTRAS -->
     <div class="res-card" id="step3" style="display:none;">
-      <h2>Opciones adicionales</h2>
-      <p class="card-sub">Personaliza tu experiencia. Puedes dejar todo en 0 si no necesitas extras.</p>
+      <h2>Extras opcionales</h2>
+      <p class="card-sub">Personaliza tu experiencia. Todo es opcional — puedes continuar sin seleccionar nada.</p>
 
-      <div class="extra-row" id="extra-pre-row">
-        <div class="extra-info">
-          <strong>Noche extra antes de salir</strong>
-          <span>Alojamiento la noche anterior al inicio del Camino en la ciudad de salida</span>
+      <!-- NOCHES EXTRA -->
+      <div class="extras-section" id="extras-noches-section">
+        <div class="extras-cat-header">
+          <span class="extras-cat-icon">🌙</span>
+          <div class="ec-info">
+            <strong>Noches extra</strong>
+            <span>Alojamiento adicional antes o después del Camino</span>
+          </div>
         </div>
-        <div class="pax-ctrl">
-          <button class="pax-btn" onclick="changeExtra('pre',-1)">−</button>
-          <span class="pax-num" id="num-pre">0</span>
-          <button class="pax-btn" onclick="changeExtra('pre',1)">+</button>
+
+        <div class="extras-group-label">En Sarria — noche antes de salir</div>
+        <div class="extra-row">
+          <div class="extra-info"><strong>Pensión</strong><span>+65 € por noche</span></div>
+          <div class="pax-ctrl">
+            <button class="pax-btn" onclick="changeExtraNew('sarriaPension',-1)">−</button>
+            <span class="pax-num" id="num-sarriaPension">0</span>
+            <button class="pax-btn" onclick="changeExtraNew('sarriaPension',1)">+</button>
+          </div>
+          <div class="extra-price" id="price-sarriaPension">0 €</div>
         </div>
-        <div class="extra-price" id="price-pre">0 €</div>
+        <div class="extra-row">
+          <div class="extra-info"><strong>Hotel</strong><span>+95 € por noche</span></div>
+          <div class="pax-ctrl">
+            <button class="pax-btn" onclick="changeExtraNew('sarriaHotel',-1)">−</button>
+            <span class="pax-num" id="num-sarriaHotel">0</span>
+            <button class="pax-btn" onclick="changeExtraNew('sarriaHotel',1)">+</button>
+          </div>
+          <div class="extra-price" id="price-sarriaHotel">0 €</div>
+        </div>
+
+        <div class="extras-group-label">En Santiago — noche tras llegar</div>
+        <div class="extra-row">
+          <div class="extra-info"><strong>Pensión</strong><span>+65 € por noche</span></div>
+          <div class="pax-ctrl">
+            <button class="pax-btn" onclick="changeExtraNew('santiagoPension',-1)">−</button>
+            <span class="pax-num" id="num-santiagoPension">0</span>
+            <button class="pax-btn" onclick="changeExtraNew('santiagoPension',1)">+</button>
+          </div>
+          <div class="extra-price" id="price-santiagoPension">0 €</div>
+        </div>
+        <div class="extra-row">
+          <div class="extra-info"><strong>Hotel</strong><span>+95 € por noche</span></div>
+          <div class="pax-ctrl">
+            <button class="pax-btn" onclick="changeExtraNew('santiagoHotel',-1)">−</button>
+            <span class="pax-num" id="num-santiagoHotel">0</span>
+            <button class="pax-btn" onclick="changeExtraNew('santiagoHotel',1)">+</button>
+          </div>
+          <div class="extra-price" id="price-santiagoHotel">0 €</div>
+        </div>
       </div>
 
-      <div class="extra-row" id="extra-post-row">
-        <div class="extra-info">
-          <strong>Noche extra en Santiago</strong>
-          <span>Alojamiento adicional en Santiago de Compostela tras llegar a la Catedral</span>
+      <!-- COMIDAS -->
+      <div class="extras-section">
+        <div class="extras-cat-header">
+          <span class="extras-cat-icon">🍽️</span>
+          <div class="ec-info">
+            <strong>Comidas</strong>
+            <span>Selecciona la cantidad de personas</span>
+          </div>
         </div>
-        <div class="pax-ctrl">
-          <button class="pax-btn" onclick="changeExtra('post',-1)">−</button>
-          <span class="pax-num" id="num-post">0</span>
-          <button class="pax-btn" onclick="changeExtra('post',1)">+</button>
+        <div class="extra-row">
+          <div class="extra-info"><strong>Desayuno</strong><span>+55 € por persona</span></div>
+          <div class="pax-ctrl">
+            <button class="pax-btn" onclick="changeExtraNew('desayuno',-1)">−</button>
+            <span class="pax-num" id="num-desayuno">0</span>
+            <button class="pax-btn" onclick="changeExtraNew('desayuno',1)">+</button>
+          </div>
+          <div class="extra-price" id="price-desayuno">0 €</div>
         </div>
-        <div class="extra-price" id="price-post">0 €</div>
+        <div class="extra-row">
+          <div class="extra-info"><strong>Picnic</strong><span>+15 € por persona</span></div>
+          <div class="pax-ctrl">
+            <button class="pax-btn" onclick="changeExtraNew('picnic',-1)">−</button>
+            <span class="pax-num" id="num-picnic">0</span>
+            <button class="pax-btn" onclick="changeExtraNew('picnic',1)">+</button>
+          </div>
+          <div class="extra-price" id="price-picnic">0 €</div>
+        </div>
+        <div class="extra-row">
+          <div class="extra-info"><strong>Cena</strong><span>+125 € por persona</span></div>
+          <div class="pax-ctrl">
+            <button class="pax-btn" onclick="changeExtraNew('cena',-1)">−</button>
+            <span class="pax-num" id="num-cena">0</span>
+            <button class="pax-btn" onclick="changeExtraNew('cena',1)">+</button>
+          </div>
+          <div class="extra-price" id="price-cena">0 €</div>
+        </div>
       </div>
 
+      <!-- TRANSPORTE -->
+      <div class="extras-section">
+        <div class="extras-cat-header">
+          <span class="extras-cat-icon">🚌</span>
+          <div class="ec-info">
+            <strong>Transporte</strong>
+            <span>Servicios de traslado y transporte adicionales</span>
+          </div>
+        </div>
+        <div class="toggle-row" onclick="toggleTransporte('aeropuerto')">
+          <div class="extra-info">
+            <strong>Traslado aeropuerto → Sarria</strong>
+            <span>Aeropuerto de Santiago de Compostela a Sarria</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+            <span style="font-size:0.88rem;font-weight:700;color:var(--azul);">+175 €</span>
+            <div class="toggle-switch" id="toggle-aeropuerto"></div>
+          </div>
+        </div>
+        <div class="extra-row">
+          <div class="extra-info">
+            <strong>Transporte de equipaje</strong>
+            <span>+45 € por cada 5 días de servicio</span>
+          </div>
+          <div class="pax-ctrl">
+            <button class="pax-btn" onclick="changeExtraNew('equipaje',-1)">−</button>
+            <span class="pax-num" id="num-equipaje">0</span>
+            <button class="pax-btn" onclick="changeExtraNew('equipaje',1)">+</button>
+          </div>
+          <div class="extra-price" id="price-equipaje">0 €</div>
+        </div>
+        <div class="toggle-row" onclick="toggleTransporte('bicicleta')">
+          <div class="extra-info">
+            <strong>Transporte de bicicleta</strong>
+            <span>Servicio de traslado de bicicleta</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+            <span style="font-size:0.8rem;font-weight:700;color:var(--azul);white-space:nowrap;">Consultar precio</span>
+            <div class="toggle-switch" id="toggle-bicicleta"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROTECCIÓN DE CANCELACIÓN -->
       <div class="seguro-box" id="seguro-box" onclick="toggleSeguro()">
         <input type="checkbox" id="seguro-check" onclick="event.stopPropagation(); toggleSeguro()">
         <div class="seguro-info">
@@ -491,7 +615,7 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
         <h3>🗂️ Datos del presupuesto</h3>
         <div class="field-group" style="margin-bottom:14px;">
           <label>Referencia presupuesto</label>
-          <input type="text" id="v-referencia" placeholder="CF37-IND-7700">
+          <input type="text" id="v-referencia" placeholder="CF37-IND-9100">
         </div>
         <div class="field-group">
           <label>Observaciones <small style="font-weight:400;text-transform:none;letter-spacing:0;">(opcional)</small></label>
@@ -527,6 +651,18 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
         <div class="pa-label">Depósito a pagar ahora</div>
         <div class="pa-value" id="deposito-display">—</div>
         <div class="pa-note" id="deposito-note"></div>
+      </div>
+      <div id="step5-ref-box" style="display:none; background:#e8f4f5; border-radius:8px; padding:12px 16px; margin-bottom:12px; font-size:0.82rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="color:var(--gris); font-weight:700; text-transform:uppercase; font-size:0.72rem; letter-spacing:0.5px;">Referencia de reserva</span>
+          <span style="font-weight:700; color:var(--azul-dark); font-family:monospace; font-size:0.92rem;" id="step5-ref-val">—</span>
+        </div>
+      </div>
+
+      <div id="cf37-desglose" style="display:none; background:#f0f9f9; border-radius:8px; padding:12px 16px; margin-bottom:24px; font-size:0.82rem;">
+        <div style="display:flex; justify-content:space-between; padding:4px 0;"><span style="color:var(--gris);">Precio por persona</span><span style="font-weight:700;" id="d5-pp">—</span></div>
+        <div style="display:flex; justify-content:space-between; padding:4px 0;"><span style="color:var(--gris);">Viajeros</span><span style="font-weight:700;" id="d5-viajeros">—</span></div>
+        <div style="display:flex; justify-content:space-between; padding:6px 0 2px; border-top:1px solid var(--border); margin-top:4px;"><span style="color:var(--gris); font-weight:700;">Total reserva</span><span style="font-weight:900; color:var(--azul);" id="d5-total">—</span></div>
       </div>
 
       <p style="font-size:0.8rem;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">Método de pago</p>
@@ -622,10 +758,21 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
         <div class="itin-stat"><span class="ik">Duración</span><span class="iv" id="sb-dur">—</span></div>
       </div>
 
+      <div id="sb-ref-row" style="display:none; padding:12px 18px; border-bottom:1px solid var(--border);">
+        <div style="font-size:0.72rem; color:var(--gris); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:3px;">Referencia de reserva</div>
+        <div style="font-size:0.85rem; font-weight:700; color:var(--azul-dark); font-family:monospace;" id="sb-ref-val">—</div>
+      </div>
+
       <div class="sb-section" id="sb-cost-section">
         <h4>Resumen de costes</h4>
-        <div class="sb-row"><span class="sb-key">Paquete base (<span id="sb-pax-txt">1 persona</span>)</span><span class="sb-val" id="sb-base-price">—</span></div>
+        <div class="sb-row" id="sb-pp-row" style="display:none;"><span class="sb-key">Precio por persona</span><span class="sb-val" id="sb-pp-price">—</span></div>
+        <div class="sb-row" id="sb-viajeros-row" style="display:none;"><span class="sb-key">Viajeros</span><span class="sb-val" id="sb-viajeros">—</span></div>
+        <div class="sb-row">
+          <span class="sb-key"><span id="sb-base-key-normal">Paquete base (<span id="sb-pax-txt">1 persona</span>)</span><span id="sb-base-key-fijo" style="display:none;">Total reserva</span></span>
+          <span class="sb-val" id="sb-base-price">—</span>
+        </div>
         <div class="sb-row" id="sb-extras-row" style="display:none;"><span class="sb-key">Extras</span><span class="sb-val" id="sb-extras-price">—</span></div>
+        <div class="sb-extras-detail" id="sb-extras-detail" style="display:none;"></div>
         <div class="sb-row" id="sb-seguro-row" style="display:none;"><span class="sb-key">Protección cancelación (5%)</span><span class="sb-val" id="sb-seguro-price">—</span></div>
       </div>
 
@@ -663,6 +810,7 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
   <input type="hidden" name="deposito">
   <input type="hidden" name="referencia">
   <input type="hidden" name="observaciones">
+  <input type="hidden" name="extras">
   <input type="hidden" name="metodo-pago">
 </form>
 
@@ -726,16 +874,25 @@ const RUTAS = {
   primitivo: { nombre:'Camino Primitivo', km:'320 km', etapas:'13 etapas', noches:13, inicio:'Oviedo', fin:'Santiago de Compostela', foto:'ruta-images/camino-primitivo-ruta-montaña.jpg', precios:{albergue:790,pension:1090,hotel:null} },
   finisterre:{ nombre:'Camino a Finisterre', km:'87 km', etapas:'3 etapas', noches:3, inicio:'Santiago de Compostela', fin:'Fisterra', foto:'downloaded_images/camino-finisterre-costa-galicia-rocas.jpg', precios:{albergue:249,pension:349,hotel:null} },
   bicicleta: { nombre:'En Bicicleta', km:'200+ km', etapas:'3–6 días', noches:5, inicio:'Variable', fin:'Santiago de Compostela', foto:'downloaded_images/camino-santiago-peregrina-atardecer.jpg', precios:{albergue:349,pension:499,hotel:699} },
-  cf37:      { nombre:'Camino Francés 37 días — hab. individual', km:'780 km', etapas:'37 días', noches:36, inicio:'Saint-Jean-Pied-de-Port', fin:'Santiago de Compostela', foto:'downloaded_images/camino-frances-peregrino-mochila-concha.jpg', precios:{albergue:null,pension:null,hotel:null}, precioFijo:7700 }
+  cf37:      { nombre:'Camino Francés 37 días — hab. individual', km:'780 km', etapas:'37 días', noches:36, inicio:'Saint-Jean-Pied-de-Port', fin:'Santiago de Compostela', foto:'downloaded_images/camino-frances-peregrino-mochila-concha.jpg', precios:{albergue:null,pension:null,hotel:null}, precioFijo:9100 }
 };
 
-const EXTRA_PRECIO = { albergue:65, pension:85, hotel:110 };
+const EXTRAS_PRECIOS = {
+  sarriaPension: 65, sarriaHotel: 95,
+  santiagoPension: 65, santiagoHotel: 95,
+  desayuno: 55, picnic: 15, cena: 125,
+  aeropuerto: 175, equipaje: 45
+};
 
 const state = {
   step: 1, ruta: null, rutaData: null,
   fechaInicio: '', adultos: 1, ninos: 0,
   alojamiento: null,
-  extraPre: 0, extraPost: 0, seguro: false,
+  seguro: false,
+  extraSarriaPension: 0, extraSarriaHotel: 0,
+  extraSantiagoPension: 0, extraSantiagoHotel: 0,
+  extrasDesayuno: 0, extrasPicnic: 0, extrasCena: 0,
+  transAeropuerto: false, transEquipaje: 0, transBicicleta: false,
   total: 0, deposito: 0,
   metodoPago: 'tarjeta', reservaRef: null,
   stripeInstance: null, cardNumber: null, cardExpiry: null, cardCvc: null,
@@ -755,6 +912,7 @@ const state = {
       state.alojamiento = 'fijo';
       state.adultos = 2;
       document.getElementById('num-adultos').textContent = 2;
+      state.reservaRef = 'ECS-' + rutaKey.toUpperCase() + '-' + Date.now().toString().slice(-6);
       updateCf37UI();
     }
   }
@@ -774,6 +932,9 @@ function onRutaChange(){
     if (RUTAS[k].precioFijo) {
       state.adultos = 2;
       document.getElementById('num-adultos').textContent = 2;
+      if (!state.reservaRef) state.reservaRef = 'ECS-' + k.toUpperCase() + '-' + Date.now().toString().slice(-6);
+    } else {
+      state.reservaRef = null;
     }
   }
   updateCf37UI();
@@ -784,18 +945,16 @@ function updateCf37UI(){
   const isCf37 = state.ruta === 'cf37';
   const paxSection = document.getElementById('pax-section');
   const cf37PaxInfo = document.getElementById('cf37-pax-info');
-  const extraPreRow = document.getElementById('extra-pre-row');
-  const extraPostRow = document.getElementById('extra-post-row');
+  const extrasNochesSection = document.getElementById('extras-noches-section');
   const cf37Fields = document.getElementById('cf37-fields');
   if (paxSection) paxSection.style.display = isCf37 ? 'none' : '';
   if (cf37PaxInfo) cf37PaxInfo.style.display = isCf37 ? 'block' : 'none';
-  if (extraPreRow) extraPreRow.style.display = isCf37 ? 'none' : '';
-  if (extraPostRow) extraPostRow.style.display = isCf37 ? 'none' : '';
+  if (extrasNochesSection) extrasNochesSection.style.display = isCf37 ? 'none' : '';
   if (cf37Fields) {
     cf37Fields.style.display = isCf37 ? 'block' : 'none';
     if (isCf37) {
       const refEl = document.getElementById('v-referencia');
-      if (refEl && !refEl.value) refEl.value = 'CF37-IND-7700';
+      if (refEl) refEl.value = state.reservaRef || '';
     }
   }
 }
@@ -829,6 +988,20 @@ function changePax(type, delta){
 // ─── ALOJAMIENTO ───
 function renderAloj(){
   if (!state.rutaData) return;
+  if (state.rutaData.precioFijo) {
+    const precioPP = Math.round(state.rutaData.precioFijo / state.adultos);
+    document.getElementById('aloj-grid').innerHTML = `<div class="aloj-card selected" style="grid-column:1/-1;cursor:default;text-align:left;">
+      <div class="aloj-icon">🛏</div>
+      <div class="aloj-name">Alojamiento incluido</div>
+      <div style="margin:10px 0 12px;display:flex;flex-direction:column;gap:4px;">
+        <div style="display:flex;justify-content:space-between;font-size:0.85rem;"><span style="color:var(--gris);">Precio por persona</span><span style="font-weight:700;color:var(--azul);">${precioPP.toLocaleString('es-ES')} €</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:0.85rem;"><span style="color:var(--gris);">Viajeros</span><span style="font-weight:700;color:var(--azul-dark);">${state.adultos}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:0.88rem;padding-top:6px;border-top:1px solid var(--border);margin-top:2px;"><span style="color:var(--gris);font-weight:700;">Total reserva</span><span style="font-weight:900;color:var(--azul);font-size:1.1rem;">${state.rutaData.precioFijo.toLocaleString('es-ES')} €</span></div>
+      </div>
+      <div class="aloj-desc">2 habitaciones individuales con baño privado durante toda la ruta &nbsp;·&nbsp; Desayuno incluido &nbsp;·&nbsp; Traslado de equipaje incluido &nbsp;·&nbsp; 37 días / 36 noches</div>
+    </div>`;
+    return;
+  }
   const p = state.rutaData.precios;
   const tipos = [
     { key:'albergue', icon:'🏠', name:'Albergue Privado', precio:p.albergue, desc:'Albergues privados seleccionados, cama en habitación compartida', badge:false },
@@ -856,23 +1029,67 @@ function selectAloj(key){
 }
 
 // ─── EXTRAS ───
-function changeExtra(type, delta){
-  if (type === 'pre') {
-    state.extraPre = Math.max(0, state.extraPre + delta);
-    document.getElementById('num-pre').textContent = state.extraPre;
-  } else {
-    state.extraPost = Math.max(0, state.extraPost + delta);
-    document.getElementById('num-post').textContent = state.extraPost;
-  }
-  updateExtraPrices();
+const STEPPER_KEYS = ['sarriaPension','sarriaHotel','santiagoPension','santiagoHotel','desayuno','picnic','cena','equipaje'];
+const STATE_KEY_MAP = {
+  sarriaPension:'extraSarriaPension', sarriaHotel:'extraSarriaHotel',
+  santiagoPension:'extraSantiagoPension', santiagoHotel:'extraSantiagoHotel',
+  desayuno:'extrasDesayuno', picnic:'extrasPicnic', cena:'extrasCena',
+  equipaje:'transEquipaje'
+};
+
+function changeExtraNew(key, delta){
+  const stateKey = STATE_KEY_MAP[key];
+  state[stateKey] = Math.max(0, state[stateKey] + delta);
+  document.getElementById('num-' + key).textContent = state[stateKey];
+  refreshExtrasDisplay();
   updateSidebar();
 }
 
-function updateExtraPrices(){
-  const ep = state.alojamiento ? EXTRA_PRECIO[state.alojamiento] : 65;
-  const pax = state.adultos + state.ninos;
-  document.getElementById('price-pre').textContent = (state.extraPre * ep * pax) + ' €';
-  document.getElementById('price-post').textContent = (state.extraPost * ep * pax) + ' €';
+function toggleTransporte(key){
+  if (key === 'aeropuerto') {
+    state.transAeropuerto = !state.transAeropuerto;
+    document.getElementById('toggle-aeropuerto').classList.toggle('on', state.transAeropuerto);
+  } else {
+    state.transBicicleta = !state.transBicicleta;
+    document.getElementById('toggle-bicicleta').classList.toggle('on', state.transBicicleta);
+  }
+  updateSidebar();
+}
+
+function refreshExtrasDisplay(){
+  STEPPER_KEYS.forEach(function(key) {
+    const priceEl = document.getElementById('price-' + key);
+    if (!priceEl) return;
+    const stateKey = STATE_KEY_MAP[key];
+    const qty = state[stateKey];
+    const unitPrice = EXTRAS_PRECIOS[key];
+    priceEl.textContent = qty > 0 ? (qty * unitPrice) + ' €' : '0 €';
+  });
+}
+
+function calcExtras(){
+  const lines = [];
+  let total = 0;
+  function add(label, qty, unit) {
+    if (qty > 0) { lines.push({ label: label + ' ×' + qty, amount: qty * unit }); total += qty * unit; }
+  }
+  add('Sarria pensión',  state.extraSarriaPension,  EXTRAS_PRECIOS.sarriaPension);
+  add('Sarria hotel',    state.extraSarriaHotel,    EXTRAS_PRECIOS.sarriaHotel);
+  add('Santiago pensión',state.extraSantiagoPension,EXTRAS_PRECIOS.santiagoPension);
+  add('Santiago hotel',  state.extraSantiagoHotel,  EXTRAS_PRECIOS.santiagoHotel);
+  add('Desayuno',        state.extrasDesayuno,       EXTRAS_PRECIOS.desayuno);
+  add('Picnic',          state.extrasPicnic,         EXTRAS_PRECIOS.picnic);
+  add('Cena',            state.extrasCena,           EXTRAS_PRECIOS.cena);
+  if (state.transAeropuerto) { lines.push({ label: 'Traslado aeropuerto', amount: EXTRAS_PRECIOS.aeropuerto }); total += EXTRAS_PRECIOS.aeropuerto; }
+  add('Equipaje (5d)',   state.transEquipaje,        EXTRAS_PRECIOS.equipaje);
+  if (state.transBicicleta) { lines.push({ label: 'Transporte bicicleta', amount: null }); }
+  return { total, lines };
+}
+
+function buildExtrasText(){
+  const { lines } = calcExtras();
+  if (!lines.length) return '';
+  return lines.map(function(l){ return l.amount !== null ? l.label + ' (' + l.amount + ' €)' : l.label + ' (Consultar)'; }).join(' | ');
 }
 
 function toggleSeguro(){
@@ -899,22 +1116,55 @@ function updateSidebar(){
   document.getElementById('sb-pax-txt').textContent = pax + (pax===1?' persona':' personas');
 
   let total = 0;
-  if (state.alojamiento && r.precios[state.alojamiento]) {
+  const sbRefRow = document.getElementById('sb-ref-row');
+  if (r.precioFijo) {
+    const precioPP = Math.round(r.precioFijo / state.adultos);
+    document.getElementById('sb-pp-row').style.display = 'flex';
+    document.getElementById('sb-pp-price').textContent = precioPP.toLocaleString('es-ES') + ' €';
+    document.getElementById('sb-viajeros-row').style.display = 'flex';
+    document.getElementById('sb-viajeros').textContent = state.adultos;
+    document.getElementById('sb-base-key-normal').style.display = 'none';
+    document.getElementById('sb-base-key-fijo').style.display = '';
+    document.getElementById('sb-base-price').textContent = r.precioFijo.toLocaleString('es-ES') + ' €';
+    total = r.precioFijo;
+    if (sbRefRow && state.reservaRef) {
+      sbRefRow.style.display = '';
+      document.getElementById('sb-ref-val').textContent = state.reservaRef;
+    }
+  } else if (state.alojamiento && r.precios[state.alojamiento]) {
+    if (sbRefRow) sbRefRow.style.display = 'none';
+    document.getElementById('sb-pp-row').style.display = 'none';
+    document.getElementById('sb-viajeros-row').style.display = 'none';
+    document.getElementById('sb-base-key-normal').style.display = '';
+    document.getElementById('sb-base-key-fijo').style.display = 'none';
     const base = r.precios[state.alojamiento] * pax;
     document.getElementById('sb-base-price').textContent = base + ' €';
     total += base;
   } else {
+    if (sbRefRow) sbRefRow.style.display = 'none';
+    document.getElementById('sb-pp-row').style.display = 'none';
+    document.getElementById('sb-viajeros-row').style.display = 'none';
+    document.getElementById('sb-base-key-normal').style.display = '';
+    document.getElementById('sb-base-key-fijo').style.display = 'none';
     document.getElementById('sb-base-price').textContent = '—';
   }
 
-  const ep = state.alojamiento ? EXTRA_PRECIO[state.alojamiento] : 65;
-  const extras = (state.extraPre + state.extraPost) * ep * pax;
-  if (extras > 0) {
+  const extrasCalc = calcExtras();
+  const extras = extrasCalc.total;
+  const sbExtrasDetail = document.getElementById('sb-extras-detail');
+  if (extras > 0 || extrasCalc.lines.length) {
     document.getElementById('sb-extras-row').style.display = 'flex';
-    document.getElementById('sb-extras-price').textContent = extras + ' €';
+    document.getElementById('sb-extras-price').textContent = extras > 0 ? extras + ' €' : 'Consultar';
     total += extras;
+    if (sbExtrasDetail) {
+      sbExtrasDetail.style.display = '';
+      sbExtrasDetail.innerHTML = extrasCalc.lines.map(function(l){
+        return '<div class="sb-extras-line"><span>' + l.label + '</span><span>' + (l.amount !== null ? l.amount + ' €' : 'Consultar') + '</span></div>';
+      }).join('');
+    }
   } else {
     document.getElementById('sb-extras-row').style.display = 'none';
+    if (sbExtrasDetail) { sbExtrasDetail.style.display = 'none'; sbExtrasDetail.innerHTML = ''; }
   }
 
   if (state.seguro && total > 0) {
@@ -936,6 +1186,26 @@ function updateSidebar(){
   if (state.step === 5) {
     document.getElementById('deposito-display').textContent = state.deposito + ' €';
     document.getElementById('deposito-note').textContent = 'Depósito del 20% · Importe total: ' + state.total + ' €';
+    const step5ref = document.getElementById('step5-ref-box');
+    if (step5ref) {
+      if (r.precioFijo && state.reservaRef) {
+        step5ref.style.display = 'block';
+        document.getElementById('step5-ref-val').textContent = state.reservaRef;
+      } else {
+        step5ref.style.display = 'none';
+      }
+    }
+    const desglose = document.getElementById('cf37-desglose');
+    if (desglose) {
+      if (r.precioFijo) {
+        desglose.style.display = 'block';
+        document.getElementById('d5-pp').textContent = Math.round(r.precioFijo / state.adultos).toLocaleString('es-ES') + ' €';
+        document.getElementById('d5-viajeros').textContent = state.adultos;
+        document.getElementById('d5-total').textContent = r.precioFijo.toLocaleString('es-ES') + ' €';
+      } else {
+        desglose.style.display = 'none';
+      }
+    }
   }
 }
 
@@ -967,7 +1237,7 @@ function goStep(n){
   }
 
   if (n === 2) renderAloj();
-  if (n === 3) updateExtraPrices();
+  if (n === 3) refreshExtrasDisplay();
   if (n === 5) submitNetlifyLead();
   if (n === 4 && !state.itiInit) {
     state.itiInit = true;
@@ -1032,6 +1302,7 @@ async function confirmarTransferencia(){
     data.set('deposito', state.deposito + ' €');
     data.set('metodo-pago', 'Transferencia bancaria');
     data.set('referencia', state.reservaRef || '');
+    data.set('extras', buildExtrasText());
     await fetch('/', { method:'POST', body: data });
   } catch(e) {}
   window.location.href = 'gracias.html';
@@ -1054,6 +1325,8 @@ function submitNetlifyLead(){
     data.set('total', state.total + ' €');
     data.set('deposito', state.deposito + ' €');
     data.set('metodo-pago', state.metodoPago === 'transferencia' ? 'Transferencia bancaria' : 'Tarjeta bancaria');
+    data.set('referencia', state.reservaRef || '');
+    data.set('extras', buildExtrasText());
     fetch('/', { method:'POST', body: data });
   } catch(e) {}
 }
