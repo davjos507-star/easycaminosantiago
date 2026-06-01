@@ -2,40 +2,78 @@
 // Triggered automatically by Netlify for every form submission (event: submission-created).
 // Requires env var: RESEND_API_KEY  (resend.com — free tier covers 3 000 emails/month)
 
+const https = require('https');
+
+function resendPost(payload, apiKey) {
+  return new Promise((resolve, reject) => {
+    const body = JSON.stringify(payload);
+    const options = {
+      hostname: 'api.resend.com',
+      path: '/emails',
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + apiKey,
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(body),
+      },
+    };
+    const req = https.request(options, res => {
+      let data = '';
+      res.on('data', chunk => { data += chunk; });
+      res.on('end', () => {
+        try { resolve({ status: res.statusCode, body: JSON.parse(data) }); }
+        catch (e) { resolve({ status: res.statusCode, body: data }); }
+      });
+    });
+    req.on('error', reject);
+    req.write(body);
+    req.end();
+  });
+}
+
 exports.handler = async function (event) {
+  console.log('[submission-created] evento recibido');
+
   const body = JSON.parse(event.body);
   const form = body.payload;
   const data = form.data || {};
+  console.log('[submission-created] formulario:', form.form_name);
 
   const toEmail = data.email;
-  if (!toEmail) return ok('skipped: no email field');
+  if (!toEmail) {
+    console.log('[submission-created] sin campo email — omitido');
+    return ok('skipped: no email field');
+  }
+  console.log('[submission-created] email detectado:', toEmail);
 
   const config = getConfig(form.form_name, data);
-  if (!config) return ok('skipped: unhandled form');
+  if (!config) {
+    console.log('[submission-created] formulario no gestionado — omitido');
+    return ok('skipped: unhandled form');
+  }
 
   const firstName = (data.nombre || '').split(' ')[0] || 'Peregrino';
   const html = buildEmail(firstName, config);
 
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
+  console.log('[submission-created] llamando a Resend...');
+  const result = await resendPost(
+    {
       from: 'Easy Camino Santiago <info@easycaminosantiago.com>',
       to: [toEmail],
       subject: config.subject,
       html,
-    }),
-  });
+    },
+    process.env.RESEND_API_KEY
+  );
 
-  if (!res.ok) {
-    const err = await res.text();
-    console.error('Resend error:', res.status, err);
+  console.log('[submission-created] Resend respuesta:', result.status, JSON.stringify(result.body));
+
+  if (result.status >= 400) {
+    console.error('[submission-created] error Resend:', result.status, JSON.stringify(result.body));
     return { statusCode: 500, body: 'email send failed' };
   }
 
+  console.log('[submission-created] email enviado OK a', toEmail);
   return ok('sent');
 };
 

@@ -3,6 +3,7 @@
 
 [functions]
   node_bundler = "esbuild"
+  node_version = "18"
 
 [[headers]]
   for = "/*.html"
