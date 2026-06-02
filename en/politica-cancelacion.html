@@ -15,9 +15,267 @@
   <link rel="apple-touch-icon" href="../favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cancellation Policy | Easy Camino Santiago</title>
-  <meta name="description" content="Cancellation policy for Easy Camino Santiago. Find out about the timeframes and conditions for cancelling your Camino de Santiago booking.">
+  <meta name="description" content="Cancellation and refund policy for Easy Camino Santiago. Refund percentages, modification fees, cancellation protection, and how to cancel your Camino booking.">
+  <meta name="robots" content="noindex, follow">
   <link rel="stylesheet" href="../style.css?v=20260526">
   <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    .cancel-hero {
+      background: linear-gradient(135deg, #2D4A52 0%, #3a5f69 60%, #56A1A4 100%);
+      padding: 56px 20px 48px;
+      text-align: center;
+    }
+    .cancel-hero h1 {
+      font-family: 'Raleway', sans-serif;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+    .cancel-hero p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.78);
+      max-width: 580px;
+      margin: 0 auto 20px;
+      line-height: 1.6;
+    }
+    .cancel-hero .hero-fecha {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.7);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+    }
+    .cancel-nav-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      max-width: 780px;
+      margin: 28px auto 0;
+    }
+    .cancel-nav-pills a {
+      background: rgba(255,255,255,0.13);
+      color: rgba(255,255,255,0.9);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-family: 'Raleway', sans-serif;
+      letter-spacing: 0.3px;
+      transition: background 0.2s;
+    }
+    .cancel-nav-pills a:hover { background: rgba(255,255,255,0.22); }
+
+    .cancel-body {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+    }
+    .cancel-section {
+      margin-bottom: 48px;
+      scroll-margin-top: 80px;
+    }
+    .cancel-section-label {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #56A1A4;
+      margin-bottom: 6px;
+    }
+    .cancel-section h2 {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #2D4A52;
+      margin: 0 0 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #e8f2f3;
+    }
+    .cancel-section p, .cancel-section li {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.97rem;
+      color: #3d5258;
+      line-height: 1.75;
+    }
+    .cancel-section ul, .cancel-section ol {
+      padding-left: 22px;
+      margin: 12px 0 16px;
+    }
+    .cancel-section li { margin-bottom: 6px; }
+    .cancel-section strong { color: #2D4A52; }
+
+    .cancel-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .cancel-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.9rem;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 1px 6px rgba(45,74,82,0.08);
+    }
+    .cancel-table thead tr { background: #2D4A52; color: white; }
+    .cancel-table thead th { padding: 13px 16px; text-align: left; font-weight: 700; font-size: 0.82rem; letter-spacing: 0.3px; }
+    .cancel-table tbody tr:nth-child(odd) { background: #f5fafa; }
+    .cancel-table tbody tr:nth-child(even) { background: #ffffff; }
+    .cancel-table tbody td { padding: 12px 16px; border-bottom: 1px solid #e8f2f3; color: #3d5258; vertical-align: middle; }
+    .cancel-table tbody td:last-child { font-weight: 700; color: #2D4A52; white-space: nowrap; }
+    .cancel-table .tag-ok { color: #0e7b5c; }
+    .cancel-table .tag-no { color: #c0392b; }
+    .cancel-table .tag-mid { color: #d97706; }
+
+    .cancel-alert {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: #f0f9f9;
+      border-left: 4px solid #56A1A4;
+      border-radius: 0 8px 8px 0;
+      padding: 16px 18px;
+      margin: 20px 0;
+    }
+    .cancel-alert-icon { flex-shrink: 0; margin-top: 1px; }
+    .cancel-alert p { margin: 0; font-size: 0.9rem; line-height: 1.6; }
+    .cancel-alert strong { display: block; margin-bottom: 4px; color: #2D4A52; }
+
+    .cancel-proteccion-box {
+      background: linear-gradient(135deg, #edf9f9 0%, #f5fafa 100%);
+      border: 1.5px solid #a8d5d6;
+      border-radius: 12px;
+      padding: 24px 28px;
+      margin: 20px 0;
+    }
+    .cancel-proteccion-box h3 {
+      font-family: 'Raleway', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #2D4A52;
+      margin: 0 0 14px;
+    }
+    .cancel-proteccion-badge {
+      display: inline-block;
+      background: #56A1A4;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      font-family: 'Raleway', sans-serif;
+    }
+
+    .cancel-steps { margin: 16px 0; counter-reset: step; list-style: none; padding: 0; }
+    .cancel-steps li {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+      counter-increment: step;
+    }
+    .cancel-steps li::before {
+      content: counter(step);
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: #56A1A4;
+      color: white;
+      border-radius: 50%;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .cancel-steps li p { margin: 0; font-size: 0.95rem; color: #3d5258; line-height: 1.65; }
+
+    .cancel-contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 20px 0;
+    }
+    @media (max-width: 540px) { .cancel-contact-grid { grid-template-columns: 1fr; } }
+    .cancel-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #f5fafa;
+      border: 1.5px solid #d8eded;
+      border-radius: 10px;
+      padding: 16px 18px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .cancel-contact-item:hover { border-color: #56A1A4; background: #edf9f9; }
+    .cancel-contact-item-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: #edf9f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .cancel-contact-item-text { flex: 1; }
+    .cancel-contact-item-text strong { display: block; font-family: 'Raleway', sans-serif; font-size: 0.82rem; font-weight: 700; color: #2D4A52; margin-bottom: 2px; }
+    .cancel-contact-item-text span { font-size: 0.85rem; color: #56A1A4; font-weight: 700; }
+    .cancel-contact-item-text small { display: block; font-size: 0.75rem; color: #7a9ea4; margin-top: 2px; }
+
+    .cancel-toc {
+      background: #f5fafa;
+      border: 1px solid #deeef0;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 40px;
+    }
+    .cancel-toc p { font-family: 'Raleway', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #56A1A4; margin: 0 0 10px; }
+    .cancel-toc ol { padding-left: 18px; margin: 0; }
+    .cancel-toc li { margin-bottom: 4px; }
+    .cancel-toc a { color: #2D4A52; font-size: 0.88rem; text-decoration: none; }
+    .cancel-toc a:hover { color: #56A1A4; text-decoration: underline; }
+
+    .cancel-cta-box {
+      background: linear-gradient(135deg, #2D4A52 0%, #3a5f69 100%);
+      border-radius: 14px;
+      padding: 32px;
+      text-align: center;
+      margin-top: 56px;
+    }
+    .cancel-cta-box h3 { font-family: 'Raleway', sans-serif; font-size: 1.25rem; font-weight: 800; color: white; margin: 0 0 10px; }
+    .cancel-cta-box p { color: rgba(255,255,255,0.75); font-size: 0.9rem; margin: 0 0 22px; line-height: 1.6; }
+    .cancel-cta-box a {
+      display: inline-block;
+      background: #56A1A4;
+      color: white;
+      padding: 13px 28px;
+      border-radius: 8px;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 700;
+      font-size: 0.92rem;
+      text-decoration: none;
+      margin: 4px;
+      transition: filter 0.2s;
+    }
+    .cancel-cta-box a:hover { filter: brightness(0.9); }
+    .cancel-cta-box a.wa { background: #25D366; }
+
+    @media (max-width: 600px) {
+      .cancel-body { padding: 32px 16px 48px; }
+      .cancel-hero { padding: 40px 16px 36px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -100,109 +358,281 @@
   <a href="index.html#ecs-planifica" style="color:#F5A020;font-weight:bold">→ Plan your Camino</a>
 </div>
 
-<!-- Legal Content -->
-<section class="legal-section">
-  <p class="legal-fecha">Last updated: 1 January 2026</p>
-  <h1>Cancellation Policy</h1>
+<!-- Hero -->
+<div class="cancel-hero">
+  <span class="hero-fecha">Last updated: 2 June 2026</span>
+  <h1>Cancellation &amp; Refund Policy</h1>
+  <p>We understand that plans can change. This policy sets out clearly and completely the conditions that apply to any cancellation or modification of your booking with Easy Camino Santiago.</p>
+  <div class="cancel-nav-pills">
+    <a href="#sec-deposito">Booking &amp; deposit</a>
+    <a href="#sec-cancelaciones">Cancellations</a>
+    <a href="#sec-proteccion">Cancellation protection</a>
+    <a href="#sec-modificaciones">Modifications</a>
+    <a href="#sec-no-reembolsable">Non-refundable</a>
+    <a href="#sec-extraordinarias">Force majeure</a>
+    <a href="#sec-como">How to cancel</a>
+    <a href="#sec-contacto">Contact</a>
+  </div>
+</div>
 
-  <p>At Easy Camino Santiago we understand that plans can change. This cancellation policy is designed to be fair and transparent, protecting both our clients and our ability to provide the best possible service.</p>
+<!-- Body -->
+<div class="cancel-body">
 
-  <h2>1. Cancellations by the Client</h2>
-  <p>If you need to cancel your booking, the applicable charge depends on how much time remains before the service begins:</p>
-
-  <div style="overflow-x:auto;margin:2rem 0;">
-    <table style="width:100%;border-collapse:collapse;font-size:0.95rem;">
-      <thead>
-        <tr style="background:var(--azul);color:white;">
-          <th style="padding:12px 16px;text-align:left;">Cancellation timeframe</th>
-          <th style="padding:12px 16px;text-align:left;">Charge</th>
-          <th style="padding:12px 16px;text-align:left;">Refund</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="background:#f8fbfd;">
-          <td style="padding:12px 16px;border-bottom:1px solid #e0eaef;">More than 60 days before</td>
-          <td style="padding:12px 16px;border-bottom:1px solid #e0eaef;">Loss of deposit (30%)</td>
-          <td style="padding:12px 16px;border-bottom:1px solid #e0eaef;">70% of total amount</td>
-        </tr>
-        <tr>
-          <td style="padding:12px 16px;border-bottom:1px solid #e0eaef;">Between 60 and 30 days</td>
-          <td style="padding:12px 16px;border-bottom:1px solid #e0eaef;">50% of total price</td>
-          <td style="padding:12px 16px;border-bottom:1px solid #e0eaef;">50% of total amount</td>
-        </tr>
-        <tr style="background:#f8fbfd;">
-          <td style="padding:12px 16px;border-bottom:1px solid #e0eaef;">Between 29 and 15 days</td>
-          <td style="padding:12px 16px;border-bottom:1px solid #e0eaef;">75% of total price</td>
-          <td style="padding:12px 16px;border-bottom:1px solid #e0eaef;">25% of total amount</td>
-        </tr>
-        <tr>
-          <td style="padding:12px 16px;border-bottom:1px solid #e0eaef;">Fewer than 15 days</td>
-          <td style="padding:12px 16px;border-bottom:1px solid #e0eaef;">100% of total price</td>
-          <td style="padding:12px 16px;border-bottom:1px solid #e0eaef;">No refund</td>
-        </tr>
-        <tr style="background:#f8fbfd;">
-          <td style="padding:12px 16px;">No-show</td>
-          <td style="padding:12px 16px;">100% of total price</td>
-          <td style="padding:12px 16px;">No refund</td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- Table of contents -->
+  <div class="cancel-toc">
+    <p>Contents</p>
+    <ol>
+      <li><a href="#sec-deposito">Booking and deposit</a></li>
+      <li><a href="#sec-cancelaciones">Cancellations by the client</a></li>
+      <li><a href="#sec-proteccion">Cancellation protection</a></li>
+      <li><a href="#sec-modificaciones">Booking modifications</a></li>
+      <li><a href="#sec-no-reembolsable">Non-refundable costs</a></li>
+      <li><a href="#sec-extraordinarias">Cancellations due to extraordinary circumstances</a></li>
+      <li><a href="#sec-ecs">Cancellations by Easy Camino Santiago</a></li>
+      <li><a href="#sec-como">How to request a cancellation</a></li>
+      <li><a href="#sec-contacto">Contact details</a></li>
+    </ol>
   </div>
 
-  <p><strong>Important:</strong> Timeframes are calculated from the start date of the first booked service (first accommodation, first transfer, etc.).</p>
+  <!-- 1. Booking and deposit -->
+  <div class="cancel-section" id="sec-deposito">
+    <p class="cancel-section-label">Section 1</p>
+    <h2>Booking and deposit</h2>
+    <p>The booking is formalised by payment of a <strong>deposit of 20% of the total amount</strong>, with a minimum of <strong>€100</strong>. The deposit can be paid by bank card (Visa / Mastercard) via the Stripe secure payment gateway, or by bank transfer to the account indicated during the booking process.</p>
+    <p>The booking is provisional until Easy Camino Santiago confirms availability of the requested accommodation and services. If we are unable to fulfil your requested dates or any aspect of the trip, we will contact you to propose alternatives or issue a full refund of the deposit within 14 business days.</p>
+    <p>The <strong>remaining balance</strong> (80% of the total) is paid once the Easy Camino Santiago team has confirmed and coordinated all services, and always before the start of the Camino.</p>
+  </div>
 
-  <h2>2. Cancellation Procedure</h2>
-  <p>To process a cancellation correctly:</p>
-  <ol>
-    <li>Send your cancellation request in writing to <a href="mailto:info@easycaminosantiago.com">info@easycaminosantiago.com</a> or via WhatsApp at +34 982 907 629.</li>
-    <li>Include your full name, booking reference number and reason for cancellation.</li>
-    <li>You will receive confirmation of the cancellation within 24 business hours.</li>
-    <li>Any applicable refunds will be processed within a maximum of 14 business days via the original payment method.</li>
-  </ol>
+  <!-- 2. Cancellations -->
+  <div class="cancel-section" id="sec-cancelaciones">
+    <p class="cancel-section-label">Section 2</p>
+    <h2>Cancellations by the client</h2>
+    <p>If you need to cancel your booking, the applicable refund depends on how much time remains before the start date of the first booked service:</p>
 
-  <h2>3. Date Changes</h2>
-  <p>If you need to change the dates of your booking (subject to availability):</p>
-  <ul>
-    <li><strong>More than 45 days in advance:</strong> Free of charge up to 2 times per booking. From the third change onwards, a handling fee of €30 applies.</li>
-    <li><strong>Between 45 and 20 days:</strong> A handling fee of €50 per change, plus any price differences for the accommodation.</li>
-    <li><strong>Less than 20 days:</strong> A date change is treated as a cancellation and new booking, with the corresponding cancellation charges applied.</li>
-  </ul>
+    <div class="cancel-table-wrap">
+      <table class="cancel-table">
+        <thead>
+          <tr>
+            <th>Time before service start</th>
+            <th>Refund</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>More than 30 days before</td>
+            <td class="tag-mid">80% of total amount</td>
+          </tr>
+          <tr>
+            <td>Between 15 and 30 days before</td>
+            <td class="tag-mid">50% of total amount</td>
+          </tr>
+          <tr>
+            <td>Less than 15 days before</td>
+            <td class="tag-no">No refund</td>
+          </tr>
+          <tr>
+            <td>No-show</td>
+            <td class="tag-no">No refund</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-  <h2>4. Cancellation Insurance</h2>
-  <p>We strongly recommend taking out travel insurance that covers cancellation for justified reasons (illness, accident, death of a family member, etc.). At Easy Camino Santiago we can help you find the most suitable option for your situation.</p>
-  <p>The following reasons for cancellation are typically covered by travel insurance:</p>
-  <ul>
-    <li>Illness or accident affecting the insured person or a close family member</li>
-    <li>Death of a family member up to the second degree</li>
-    <li>Involuntary redundancy</li>
-    <li>Jury or court summons</li>
-    <li>Serious damage to the primary residence</li>
-  </ul>
+    <div class="cancel-alert">
+      <div class="cancel-alert-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <p><strong>About timeframes</strong>Timeframes are calculated from the date on which Easy Camino Santiago receives the written cancellation request, up to the start date of the first booked service (first accommodation or first transfer). The applicable refund is calculated on the total booking amount, but may never exceed the amount actually paid by the client.</p>
+    </div>
+  </div>
 
-  <h2>5. Cancellations Due to Force Majeure</h2>
-  <p>In the event of extraordinary and unforeseeable circumstances beyond the control of either party (WHO-declared pandemics, natural disasters, armed conflicts directly affecting the route), Easy Camino Santiago will offer, as a priority:</p>
-  <ul>
-    <li>Date change at no additional charge</li>
-    <li>Credit voucher for future bookings for the full amount paid</li>
-    <li>In exceptional cases, a partial refund following individual assessment</li>
-  </ul>
+  <!-- 3. Cancellation protection -->
+  <div class="cancel-section" id="sec-proteccion">
+    <p class="cancel-section-label">Section 3</p>
+    <h2>Cancellation protection</h2>
+    <p>When making your booking you can add <strong>cancellation protection</strong> for <strong>5% of the total price</strong>. With this option active, refund conditions improve significantly:</p>
 
-  <h2>6. Cancellations by Easy Camino Santiago</h2>
-  <p>In the extraordinary event that Easy Camino Santiago must cancel a confirmed service, the client will be entitled to:</p>
-  <ul>
-    <li><strong>Full refund</strong> of the amount paid within 14 business days, or</li>
-    <li><strong>An equivalent alternative</strong> of similar or superior quality at no additional cost.</li>
-  </ul>
-  <p>Easy Camino Santiago accepts no responsibility for additional costs the client may have incurred independently (flights, additional accommodation not managed by us, etc.).</p>
+    <div class="cancel-table-wrap">
+      <table class="cancel-table">
+        <thead>
+          <tr>
+            <th>Time before service start</th>
+            <th>Refund with protection</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>More than 30 days before</td>
+            <td class="tag-ok">100% of total amount</td>
+          </tr>
+          <tr>
+            <td>Less than 30 days before</td>
+            <td class="tag-mid">80% of total amount</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-  <h2>7. Contact for Cancellations and Changes</h2>
-  <p>For all matters relating to cancellations or changes, please contact us:</p>
-  <ul>
-    <li><strong>Email:</strong> <a href="mailto:info@easycaminosantiago.com">info@easycaminosantiago.com</a></li>
-    <li><strong>WhatsApp:</strong> <a href="https://wa.me/34982907629?text=Hello%2C%20I%20would%20like%20to%20manage%20a%20cancellation">+34 982 907 629</a></li>
-    <li><strong>Office hours:</strong> Monday to Friday, 9:00 – 19:00 (CET)</li>
-  </ul>
-</section>
+    <div class="cancel-proteccion-box">
+      <span class="cancel-proteccion-badge">Recommended</span>
+      <h3>Is cancellation protection worth it?</h3>
+      <p style="font-size:0.9rem;color:#3d5258;line-height:1.7;margin:0;">For a booking of <strong>€1,000</strong>, cancellation protection costs <strong>€50</strong>. If you need to cancel more than 30 days before departure, you receive the full <strong>€1,000</strong> instead of €800. That's a net difference of €150 in your favour. And if you cancel within 30 days, you still receive €800 instead of nothing.</p>
+    </div>
+
+    <p>Cancellation protection is not an approved travel insurance product. For additional coverage (illness, accident, cancellation for justified third-party reasons, luggage loss, civil liability), we recommend taking out travel insurance with an external insurer.</p>
+  </div>
+
+  <!-- 4. Modifications -->
+  <div class="cancel-section" id="sec-modificaciones">
+    <p class="cancel-section-label">Section 4</p>
+    <h2>Booking modifications</h2>
+    <p>Modifications must be requested at least <strong>72 hours before</strong> the start date of the affected service, by sending a written request to <a href="mailto:info@easycaminosantiago.com">info@easycaminosantiago.com</a> or via WhatsApp at +34 982 907 629.</p>
+
+    <div class="cancel-table-wrap">
+      <table class="cancel-table">
+        <thead>
+          <tr>
+            <th>Type of modification</th>
+            <th>Cost per person</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Service modification (accommodation, extras, number of people…)</td>
+            <td>€60/person</td>
+          </tr>
+          <tr>
+            <td>Change of start date</td>
+            <td>€100/person</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Modifications are subject to availability. If the requested change implies a price increase (due to seasonal differences, accommodation type or other factors), the difference will be communicated to the client for approval before proceeding. If the change implies a price reduction, no refund of the difference will be made once the change process has begun.</p>
+    <p>Modification requests received with <strong>less than 72 hours</strong> notice cannot be accommodated, and the service will be provided under the originally agreed conditions.</p>
+  </div>
+
+  <!-- 5. Non-refundable -->
+  <div class="cancel-section" id="sec-no-reembolsable">
+    <p class="cancel-section-label">Section 5</p>
+    <h2>Non-refundable costs</h2>
+    <p>Regardless of the cancellation timeframe and whether or not cancellation protection is held, the following costs are non-refundable in all circumstances:</p>
+    <ul>
+      <li>Booking management and administration fees</li>
+      <li>Bank charges and payment gateway commissions (Stripe or other providers)</li>
+      <li>Services already rendered at the time of cancellation (nights of accommodation used, transfers completed, etc.)</li>
+      <li>The amount corresponding to cancellation protection (5%), by its very nature</li>
+      <li>Third-party costs not managed by Easy Camino Santiago (flights, trains, buses, external insurance, visas, etc.)</li>
+    </ul>
+    <div class="cancel-alert">
+      <div class="cancel-alert-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <p><strong>Important</strong>Easy Camino Santiago accepts no responsibility for transport costs to the Camino start point, or for costs arising from the cancellation of services not managed by our agency.</p>
+    </div>
+  </div>
+
+  <!-- 6. Extraordinary circumstances -->
+  <div class="cancel-section" id="sec-extraordinarias">
+    <p class="cancel-section-label">Section 6</p>
+    <h2>Cancellations due to extraordinary circumstances</h2>
+    <p>In the event of extraordinary, unforeseeable circumstances beyond the control of either party — such as WHO-declared pandemics, natural disasters directly affecting the route, or official security alerts — Easy Camino Santiago will offer as a priority the following alternatives:</p>
+    <ul>
+      <li><strong>Date change at no additional charge</strong>, subject to availability and valid for the following 18 months</li>
+      <li><strong>Credit voucher</strong> for future bookings for the total amount paid, valid for 24 months</li>
+      <li>In duly justified exceptional cases, a partial refund following individual assessment of each case</li>
+    </ul>
+    <p>These conditions will apply when the extraordinary circumstances make the provision of the service objectively impossible, and provided the client requests this within 48 hours of becoming aware of those circumstances.</p>
+  </div>
+
+  <!-- 7. Cancellations by ECS -->
+  <div class="cancel-section" id="sec-ecs">
+    <p class="cancel-section-label">Section 7</p>
+    <h2>Cancellations by Easy Camino Santiago</h2>
+    <p>In the extraordinary event that Easy Camino Santiago must cancel a confirmed service due to reasons attributable to the agency, the client will be entitled to choose between:</p>
+    <ul>
+      <li><strong>Full refund</strong> of the total amount paid, within a maximum of 14 business days</li>
+      <li><strong>An equivalent alternative service</strong> of similar or superior characteristics, at no additional cost to the client</li>
+    </ul>
+    <p>Easy Camino Santiago accepts no responsibility for additional costs the client may have incurred independently (air transport, accommodation before or after the Camino not managed by the agency, visa fees, etc.).</p>
+  </div>
+
+  <!-- 8. How to cancel -->
+  <div class="cancel-section" id="sec-como">
+    <p class="cancel-section-label">Section 8</p>
+    <h2>How to request a cancellation</h2>
+    <p>To process a cancellation correctly, follow these steps:</p>
+    <ol class="cancel-steps">
+      <li><p>Send your cancellation request <strong>in writing</strong> to <a href="mailto:info@easycaminosantiago.com">info@easycaminosantiago.com</a> or via WhatsApp at <a href="https://wa.me/34982907629">+34 982 907 629</a>. Verbal cancellations are not valid.</p></li>
+      <li><p>Include in your message: <strong>full name, booking reference</strong> (format ECS-XXXXX) and the <strong>start date</strong> of the service you wish to cancel.</p></li>
+      <li><p>You will receive <strong>written confirmation</strong> of the cancellation and the applicable refund amount within 24 business hours.</p></li>
+      <li><p>The refund will be processed within a maximum of <strong>14 business days</strong> via the same payment method used for the booking.</p></li>
+    </ol>
+    <p>The effective cancellation date is the date on which Easy Camino Santiago receives the written request, not the date on which the client expresses a verbal intention to cancel.</p>
+  </div>
+
+  <!-- 9. Contact -->
+  <div class="cancel-section" id="sec-contacto">
+    <p class="cancel-section-label">Section 9</p>
+    <h2>Contact details</h2>
+    <p>For any matter relating to cancellations, modifications or queries about this policy:</p>
+
+    <div class="cancel-contact-grid">
+      <a href="mailto:info@easycaminosantiago.com" class="cancel-contact-item">
+        <div class="cancel-contact-item-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div class="cancel-contact-item-text">
+          <strong>Email</strong>
+          <span>info@easycaminosantiago.com</span>
+          <small>Reply within 24 hours</small>
+        </div>
+      </a>
+      <a href="https://wa.me/34982907629?text=Hello%2C%20I%20would%20like%20to%20manage%20a%20cancellation" target="_blank" class="cancel-contact-item">
+        <div class="cancel-contact-item-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#56A1A4"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </div>
+        <div class="cancel-contact-item-text">
+          <strong>WhatsApp</strong>
+          <span>+34 982 907 629</span>
+          <small>Mon–Fri, 9:00–19:00</small>
+        </div>
+      </a>
+      <a href="tel:+34982907629" class="cancel-contact-item">
+        <div class="cancel-contact-item-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+        </div>
+        <div class="cancel-contact-item-text">
+          <strong>Phone</strong>
+          <span>982 907 629</span>
+          <small>Mon–Fri, 9:00–19:00</small>
+        </div>
+      </a>
+      <div class="cancel-contact-item" style="cursor:default;">
+        <div class="cancel-contact-item-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="cancel-contact-item-text">
+          <strong>Address</strong>
+          <span>Easy Camino Santiago</span>
+          <small>C/ Estrada Granxa 38, 27002 Lugo, Spain</small>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size:0.85rem;color:#7a9ea4;margin-top:8px;">This policy applies to bookings made directly with Easy Camino Santiago. In the event of any discrepancy between this document and any prior communication, the most recent version of this policy published on the website shall prevail.</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="cancel-cta-box">
+    <h3>Do you have a question about your booking?</h3>
+    <p>Our team is available Monday to Friday, 9:00 to 19:00, to answer any questions about cancellations, modifications or the conditions of your Camino.</p>
+    <a href="mailto:info@easycaminosantiago.com">Send us an email</a>
+    <a href="https://wa.me/34982907629?text=Hello%2C%20I%20have%20a%20question%20about%20my%20booking" target="_blank" class="wa">WhatsApp direct</a>
+  </div>
+
+</div>
 
 <!-- Footer -->
 <footer class="ecs-footer" id="ecs-contacto">
@@ -237,7 +667,7 @@
     <div class="footer-col">
       <h4>Information</h4>
       <a href="politica-reservas.html">Booking &amp; Privacy Policy</a>
-      <a href="politica-cancelacion.html">Cancellation Policy</a>
+      <a href="politica-cancelacion.html" style="color:#56A1A4;font-weight:700;">Cancellation Policy</a>
       <a href="politica-cookies.html">Cookie Policy</a>
       <a href="aviso-legal.html">Legal Notice</a>
     </div>
