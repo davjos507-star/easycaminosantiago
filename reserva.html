@@ -1253,7 +1253,6 @@ function goStep(n){
 
   if (n === 2) renderAloj();
   if (n === 3) refreshExtrasDisplay();
-  if (n === 5) submitNetlifyLead();
   if (n === 4 && !state.itiInit) {
     state.itiInit = true;
     window.intlTelInput(document.getElementById('v-tel'), {
@@ -1321,29 +1320,6 @@ async function confirmarTransferencia(){
     await fetch('/', { method:'POST', body: data });
   } catch(e) {}
   window.location.href = 'gracias.html';
-}
-
-// ─── NETLIFY LEAD CAPTURE ───
-function submitNetlifyLead(){
-  try {
-    const form = document.querySelector('form[name="reserva"]');
-    const data = new FormData(form);
-    data.set('ruta', state.ruta || '');
-    data.set('fecha-inicio', state.fechaInicio || '');
-    data.set('adultos', state.adultos);
-    data.set('ninos', state.ninos);
-    data.set('alojamiento', state.alojamiento || '');
-    data.set('nombre', (document.getElementById('v-nombre').value || '') + ' ' + (document.getElementById('v-apellido').value || ''));
-    data.set('apellido', document.getElementById('v-apellido').value || '');
-    data.set('email', document.getElementById('v-email').value || '');
-    data.set('telefono', document.getElementById('v-tel').value || '');
-    data.set('total', state.total + ' €');
-    data.set('deposito', state.deposito + ' €');
-    data.set('metodo-pago', state.metodoPago === 'transferencia' ? 'Transferencia bancaria' : 'Tarjeta bancaria');
-    data.set('referencia', state.reservaRef || '');
-    data.set('extras', buildExtrasText());
-    fetch('/', { method:'POST', body: data });
-  } catch(e) {}
 }
 
 // ─── STRIPE ───
@@ -1426,6 +1402,26 @@ async function procesarPago(){
       btn.disabled = false;
       btn.textContent = '🔒 Pagar depósito ahora';
     } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
+      try {
+        const nlForm = document.querySelector('form[name="reserva"]');
+        const nlData = new FormData(nlForm);
+        nlData.set('ruta', state.ruta || '');
+        nlData.set('fecha-inicio', state.fechaInicio || '');
+        nlData.set('adultos', state.adultos);
+        nlData.set('ninos', state.ninos);
+        nlData.set('alojamiento', state.alojamiento || '');
+        nlData.set('nombre', ((document.getElementById('v-nombre').value || '') + ' ' + (document.getElementById('v-apellido').value || '')).trim());
+        nlData.set('apellido', document.getElementById('v-apellido').value || '');
+        nlData.set('email', document.getElementById('v-email').value || '');
+        nlData.set('telefono', document.getElementById('v-tel').value || '');
+        nlData.set('total', state.total + ' €');
+        nlData.set('deposito', state.deposito + ' €');
+        nlData.set('metodo-pago', 'Tarjeta bancaria');
+        nlData.set('referencia', result.paymentIntent.id);
+        nlData.set('extras', buildExtrasText());
+        nlData.set('observaciones', (document.getElementById('v-observaciones') || {}).value || '');
+        fetch('/', { method: 'POST', body: nlData, keepalive: true });
+      } catch(e) {}
       try {
         fetch('/.netlify/functions/send-booking-email', {
           method: 'POST',
