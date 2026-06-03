@@ -368,7 +368,14 @@
 
 <script>
 function ecsSetLang(lang){document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.lang-btn').forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes(lang))b.classList.add('active');});if(lang==='es'){document.querySelectorAll('.es-txt').forEach(e=>e.style.display='inline');document.querySelectorAll('.en-txt').forEach(e=>e.style.display='none');}else{document.querySelectorAll('.es-txt').forEach(e=>e.style.display='none');document.querySelectorAll('.en-txt').forEach(e=>e.style.display='inline');}localStorage.setItem('ecsLang',lang);}
-document.addEventListener('DOMContentLoaded',function(){var saved=localStorage.getItem('ecsLang')||'es';ecsSetLang(saved);});
+document.addEventListener('DOMContentLoaded',function(){
+  ecsSetLang('es');
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'en'")){
+      b.disabled=true;b.style.opacity='0.35';b.style.cursor='not-allowed';b.title='Only available in Spanish';
+    }
+  });
+});
 function ecsToggleNav(){document.getElementById('nav-mobile').classList.toggle('open');}
 </script>
 </body>
