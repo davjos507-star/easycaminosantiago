@@ -420,8 +420,8 @@
     try {
       const e = params.get('e');
       const r = params.get('r');
-      if (e) userEmail = atob(decodeURIComponent(e));
-      if (r) userRuta  = atob(decodeURIComponent(r));
+      if (e) userEmail = b64ToUtf8(e);
+      if (r) userRuta  = b64ToUtf8(r);
     } catch (_) { /* encoding inválido — continuar sin datos */ }
 
     const saved = loadProgress();
@@ -615,6 +615,13 @@
   }
 
   // ─── Helpers ──────────────────────────────────────────────────────────────────
+  function b64ToUtf8(b64) {
+    const binary = atob(decodeURIComponent(b64));
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    return new TextDecoder('utf-8').decode(bytes);
+  }
+
   function escHtml(str) {
     return String(str)
       .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
