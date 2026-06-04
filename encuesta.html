@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#56A1A4">
+  <title>Tu opinión — Easy Camino Santiago</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700;900&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CERD8SRPBP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CERD8SRPBP');
+  </script>
+
+  <style>
+    /* ── Variables ─────────────────────────────────────────── */
+    :root {
+      --teal:        #56A1A4;
+      --teal-dark:   #2D4A52;
+      --teal-light:  #eef7f7;
+      --teal-mid:    #c8e8e9;
+      --gray:        #6b7c7e;
+      --gray-light:  #a0b0b2;
+      --bg:          #f5fafa;
+      --border:      #dde8e9;
+      --white:       #ffffff;
+      --font-h:      'Raleway', sans-serif;
+      --font-b:      'Lato', sans-serif;
+      --radius:      14px;
+      --shadow:      0 6px 28px rgba(45,74,82,0.10);
+      --ease:        cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-b);
+      background: var(--bg);
+      color: var(--teal-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Progress bar ──────────────────────────────────────── */
+    .progress-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: rgba(86,161,164,0.18);
+      z-index: 200;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--teal);
+      transition: width 0.55s var(--ease);
+      width: 0%;
+    }
+
+    /* ── Nav ───────────────────────────────────────────────── */
+    .nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo img { height: 38px; width: auto; display: block; }
+    .nav-badge {
+      font-family: var(--font-b);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gray-light);
+    }
+
+    /* ── Main ──────────────────────────────────────────────── */
+    .main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px 64px;
+    }
+
+    .survey-wrap { width: 100%; max-width: 520px; }
+
+    /* ── Card ──────────────────────────────────────────────── */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal) 0%, #8dd0d3 100%);
+    }
+
+    /* ── Step indicator ────────────────────────────────────── */
+    .step-indicator {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 18px;
+    }
+
+    /* ── Question ──────────────────────────────────────────── */
+    .question-text {
+      font-family: var(--font-h);
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--teal-dark);
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    .question-hint {
+      font-size: 0.875rem;
+      color: var(--gray);
+      font-style: italic;
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+
+    /* ── Textarea ──────────────────────────────────────────── */
+    .answer-textarea {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-family: var(--font-b);
+      font-size: 15px;
+      color: var(--teal-dark);
+      resize: vertical;
+      min-height: 112px;
+      background: var(--white);
+      transition: border-color 200ms, box-shadow 200ms;
+      outline: none;
+      line-height: 1.65;
+    }
+    .answer-textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(86,161,164,0.13);
+    }
+    .answer-textarea::placeholder { color: #b0c0c2; }
+
+    /* ── Radio options ─────────────────────────────────────── */
+    .radio-options { display: flex; flex-direction: column; gap: 10px; }
+    .radio-option {
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 15px 18px;
+      cursor: pointer;
+      font-size: 15px;
+      color: var(--teal-dark);
+      transition: border-color 180ms, background 180ms;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .radio-option::before {
+      content: '';
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      transition: border-color 180ms, background 180ms;
+    }
+    .radio-option:hover { border-color: var(--teal); background: rgba(86,161,164,0.03); }
+    .radio-option:hover::before { border-color: var(--teal); }
+    .radio-option.selected {
+      border-color: var(--teal);
+      background: rgba(86,161,164,0.07);
+      font-weight: 700;
+    }
+    .radio-option.selected::before {
+      border-color: var(--teal);
+      background: var(--teal);
+      box-shadow: inset 0 0 0 3px var(--white);
+    }
+
+    /* ── Navigation ────────────────────────────────────────── */
+    .card-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 28px;
+    }
+    .btn-skip {
+      background: none;
+      border: none;
+      font-family: var(--font-b);
+      font-size: 13px;
+      color: var(--gray-light);
+      cursor: pointer;
+      padding: 8px 4px;
+      border-radius: 6px;
+      transition: color 160ms;
+      letter-spacing: 0.2px;
+    }
+    .btn-skip:hover { color: var(--gray); }
+    .btn-next {
+      background: var(--teal-dark);
+      color: var(--white);
+      border: none;
+      font-family: var(--font-h);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 13px 32px;
+      border-radius: 30px;
+      cursor: pointer;
+      letter-spacing: 0.4px;
+      transition: background 160ms, transform 80ms;
+    }
+    .btn-next:hover { background: var(--teal); }
+    .btn-next:active { transform: scale(0.97); }
+
+    /* ── Thanks screen ─────────────────────────────────────── */
+    .thanks-wrap { text-align: center; padding: 8px 0; }
+    .thanks-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2.5px solid var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 22px;
+    }
+    .thanks-title {
+      font-family: var(--font-h);
+      font-size: 1.65rem;
+      font-weight: 900;
+      color: var(--teal-dark);
+      margin-bottom: 14px;
+    }
+    .thanks-text {
+      font-size: 15px;
+      color: var(--gray);
+      line-height: 1.75;
+      margin-bottom: 32px;
+    }
+    .btn-home {
+      display: inline-block;
+      background: var(--teal-dark);
+      color: var(--white);
+      text-decoration: none;
+      font-family: var(--font-h);
+      font-weight: 700;
+      padding: 14px 36px;
+      border-radius: 30px;
+      font-size: 14px;
+      letter-spacing: 0.3px;
+      transition: background 160ms;
+    }
+    .btn-home:hover { background: var(--teal); }
+
+    /* ── Transitions ───────────────────────────────────────── */
+    .card.out {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+      transition: opacity 220ms var(--ease), transform 220ms var(--ease);
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .card.in { animation: cardIn 320ms var(--ease) forwards; }
+
+    /* ── Responsive ────────────────────────────────────────── */
+    @media (max-width: 560px) {
+      .card { padding: 28px 22px; }
+      .question-text { font-size: 1.2rem; }
+      .nav { padding: 12px 20px; }
+      .main { padding: 24px 16px 52px; }
+      .nav-badge { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Progress bar -->
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <a href="/" class="nav-logo">
+      <img src="/easy-camino-santiago-logo.png" alt="Easy Camino Santiago">
+    </a>
+    <span class="nav-badge">Tu opinión</span>
+  </nav>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="survey-wrap">
+      <div class="card" id="surveyCard">
+        <div id="cardContent"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Hidden forms para Netlify (detectadas en build time) -->
+  <form name="encuesta-open" data-netlify="true" hidden>
+    <input type="hidden" name="form-name" value="encuesta-open">
+    <input name="email" type="email">
+    <input name="ruta" type="text">
+    <input name="ts" type="text">
+    <input name="referrer" type="text">
+  </form>
+
+  <form name="encuesta-respuestas" data-netlify="true" hidden>
+    <input type="hidden" name="form-name" value="encuesta-respuestas">
+    <input name="email" type="email">
+    <input name="ruta" type="text">
+    <input name="q1_descripcion" type="text">
+    <input name="q2_info_web" type="text">
+    <input name="q3_servicio" type="text">
+    <input name="q4_dudas" type="text">
+    <input name="q5_competencia" type="text">
+    <input name="q6_formulario" type="text">
+    <input name="q7_blog" type="text">
+    <input name="tiempo_segundos" type="number">
+    <input name="preguntas_respondidas" type="number">
+  </form>
+
+  <script>
+  // ─── Preguntas ───────────────────────────────────────────────────────────────
+  const QUESTIONS = [
+    {
+      id: 'q1_descripcion',
+      text: '¿Cómo te describirías en pocas palabras?',
+      hint: 'Por ejemplo: "Tengo 43 años y quiero hacer el Camino durante mis vacaciones."',
+      type: 'textarea',
+      placeholder: 'Escribe aquí...'
+    },
+    {
+      id: 'q2_info_web',
+      text: '¿Qué información adicional te gustaría ver en nuestra web?',
+      hint: '',
+      type: 'textarea',
+      placeholder: 'Cualquier idea es bienvenida...'
+    },
+    {
+      id: 'q3_servicio',
+      text: '¿Crees que podemos añadir algún servicio adicional que haga nuestra propuesta más interesante para ti?',
+      hint: '',
+      type: 'textarea',
+      placeholder: 'Escribe aquí...'
+    },
+    {
+      id: 'q4_dudas',
+      text: '¿Cuál es tu mayor duda o reticencia antes de pedir presupuesto?',
+      hint: '',
+      type: 'textarea',
+      placeholder: 'Tu respuesta nos ayuda a mejorar...'
+    },
+    {
+      id: 'q5_competencia',
+      text: '¿Qué otras empresas o webs has consultado antes de llegar a Easy Camino Santiago?',
+      hint: '',
+      type: 'textarea',
+      placeholder: 'Puedes nombrar varias...'
+    },
+    {
+      id: 'q6_formulario',
+      text: '¿Crees que podemos mejorar algo del formulario de solicitud?',
+      hint: '',
+      type: 'textarea',
+      placeholder: 'Cualquier mejora que se te ocurra...'
+    },
+    {
+      id: 'q7_blog',
+      text: '¿Has leído alguno de nuestros artículos o blog?',
+      hint: '',
+      type: 'radio',
+      options: [
+        'Sí, varios artículos',
+        'Sí, alguno',
+        'No, todavía no los he visto'
+      ]
+    }
+  ];
+
+  const TOTAL = QUESTIONS.length;
+  const STORAGE_KEY = 'ecs_encuesta_v1';
+
+  // ─── Estado ──────────────────────────────────────────────────────────────────
+  let currentIndex  = 0;
+  let answers       = {};
+  let startTime     = Date.now();
+  let selectedRadio = null;
+  let userEmail     = '';
+  let userRuta      = '';
+
+  // ─── Init ────────────────────────────────────────────────────────────────────
+  function init() {
+    const params = new URLSearchParams(window.location.search);
+    try {
+      const e = params.get('e');
+      const r = params.get('r');
+      if (e) userEmail = atob(decodeURIComponent(e));
+      if (r) userRuta  = atob(decodeURIComponent(r));
+    } catch (_) { /* encoding inválido — continuar sin datos */ }
+
+    const saved = loadProgress();
+    if (saved.startTime) startTime = saved.startTime;
+    if (saved.answers)   answers   = saved.answers;
+
+    trackOpen();
+    render(0);
+  }
+
+  // ─── localStorage ────────────────────────────────────────────────────────────
+  function loadProgress() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+    catch (_) { return {}; }
+  }
+  function saveProgress() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ answers, startTime, currentIndex }));
+  }
+
+  // ─── Tracking ────────────────────────────────────────────────────────────────
+  function netlifySubmit(formName, data) {
+    fetch('/', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body:    new URLSearchParams({ 'form-name': formName, ...data }).toString()
+    }).catch(() => {});
+  }
+
+  function trackOpen() {
+    netlifySubmit('encuesta-open', {
+      email:    userEmail,
+      ruta:     userRuta,
+      ts:       new Date().toISOString(),
+      referrer: document.referrer || 'direct'
+    });
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'encuesta_open', { event_category: 'encuesta' });
+    }
+  }
+
+  function trackComplete(answeredCount) {
+    const tiempoSegundos = Math.round((Date.now() - startTime) / 1000);
+    netlifySubmit('encuesta-respuestas', {
+      email:                userEmail,
+      ruta:                 userRuta,
+      ...answers,
+      tiempo_segundos:      tiempoSegundos,
+      preguntas_respondidas: answeredCount
+    });
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'encuesta_complete', {
+        event_category: 'encuesta',
+        value:          tiempoSegundos,
+        event_label:    answeredCount + '/' + TOTAL
+      });
+    }
+    localStorage.removeItem(STORAGE_KEY);
+  }
+
+  // ─── Render ──────────────────────────────────────────────────────────────────
+  function updateProgress() {
+    const pct = (currentIndex / TOTAL) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  function render(index) {
+    currentIndex  = index;
+    selectedRadio = null;
+    updateProgress();
+
+    const q = QUESTIONS[index];
+    let inputHTML = '';
+
+    if (q.type === 'textarea') {
+      const saved = answers[q.id] || '';
+      inputHTML = `<textarea class="answer-textarea" id="answerInput"
+        placeholder="${q.placeholder || ''}"
+        rows="4"
+      >${escHtml(saved)}</textarea>`;
+    } else if (q.type === 'radio') {
+      selectedRadio = answers[q.id] || null;
+      const optsHTML = q.options.map(opt => {
+        const sel = answers[q.id] === opt ? ' selected' : '';
+        return `<div class="radio-option${sel}" onclick="selectRadio(this,'${escAttr(opt)}')">${escHtml(opt)}</div>`;
+      }).join('');
+      inputHTML = `<div class="radio-options">${optsHTML}</div>`;
+    }
+
+    const isLast   = index === TOTAL - 1;
+    const hintHTML = q.hint ? `<p class="question-hint">${escHtml(q.hint)}</p>` : '';
+
+    document.getElementById('cardContent').innerHTML = `
+      <div class="step-indicator">Pregunta ${index + 1} de ${TOTAL}</div>
+      <h2 class="question-text">${escHtml(q.text)}</h2>
+      ${hintHTML}
+      ${inputHTML}
+      <div class="card-nav">
+        <button class="btn-skip" onclick="skip()">Saltar</button>
+        <button class="btn-next" onclick="next()">${isLast ? 'Finalizar' : 'Siguiente'}</button>
+      </div>
+    `;
+
+    if (q.type === 'textarea') {
+      setTimeout(() => {
+        const ta = document.getElementById('answerInput');
+        if (ta) { ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); }
+      }, 330);
+    }
+  }
+
+  function selectRadio(el, value) {
+    document.querySelectorAll('.radio-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedRadio = value;
+  }
+
+  // ─── Navegación ──────────────────────────────────────────────────────────────
+  function next() {
+    const q = QUESTIONS[currentIndex];
+    if (q.type === 'textarea') {
+      const ta = document.getElementById('answerInput');
+      if (ta && ta.value.trim()) answers[q.id] = ta.value.trim();
+    } else if (q.type === 'radio' && selectedRadio) {
+      answers[q.id] = selectedRadio;
+    }
+    saveProgress();
+    advance();
+  }
+
+  function skip() {
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'encuesta_skip', {
+        event_category: 'encuesta',
+        event_label:    'q' + (currentIndex + 1)
+      });
+    }
+    advance();
+  }
+
+  function advance() {
+    if (currentIndex >= TOTAL - 1) {
+      finish();
+    } else {
+      transitionTo(currentIndex + 1, false);
+    }
+  }
+
+  function finish() {
+    const answeredCount = Object.keys(answers).length;
+    trackComplete(answeredCount);
+    document.getElementById('progressFill').style.width = '100%';
+    transitionTo(null, true);
+  }
+
+  // ─── Transiciones ─────────────────────────────────────────────────────────────
+  function transitionTo(nextIndex, toThanks) {
+    const card = document.getElementById('surveyCard');
+    card.classList.add('out');
+    setTimeout(() => {
+      card.classList.remove('out');
+      if (toThanks) {
+        renderThanks();
+      } else {
+        render(nextIndex);
+      }
+      card.classList.add('in');
+      setTimeout(() => card.classList.remove('in'), 350);
+    }, 240);
+  }
+
+  function renderThanks() {
+    document.getElementById('cardContent').innerHTML = `
+      <div class="thanks-wrap">
+        <div class="thanks-icon">
+          <svg width="28" height="28" fill="none" stroke="#56A1A4" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+        <h2 class="thanks-title">Muchas gracias.</h2>
+        <p class="thanks-text">
+          Tus respuestas nos ayudan a ofrecer<br>
+          una experiencia mejor y más humana.<br><br>
+          En breve recibirás nuestra propuesta personalizada.
+        </p>
+        <a href="/" class="btn-home">Volver a Easy Camino Santiago</a>
+      </div>
+    `;
+    currentIndex = -1;
+    updateProgress();
+  }
+
+  // ─── Helpers ──────────────────────────────────────────────────────────────────
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+  }
+  function escAttr(str) {
+    return String(str).replace(/'/g,"\\'");
+  }
+
+  // ─── Arrancar ─────────────────────────────────────────────────────────────────
+  init();
+  </script>
+
+  <!-- HubSpot -->
+  <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/148622668.js"></script>
+
+</body>
+</html>

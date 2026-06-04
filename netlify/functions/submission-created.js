@@ -3,14 +3,16 @@
 // Requires env var: RESEND_API_KEY  (resend.com)
 //
 // Forms handled:
-//   reserva           → tarjeta: skip (send-booking-email handles it after Stripe)
-//                     → transferencia: "reserva recibida, pendiente de pago"
-//   solicitud-info    → "solicitud recibida, propuesta en <24h"
-//   solicitud-info-en → idem in English
-//   folleto*          → "tu itinerario está en camino"
-//   contacto          → "mensaje recibido"
-//   llamada           → skip (no email field)
-//   presupuesto       → skip (no email field)
+//   reserva              → tarjeta: skip (send-booking-email handles it after Stripe)
+//                        → transferencia: "reserva recibida, pendiente de pago"
+//   solicitud-info       → email PREMIUM con resumen + CTA encuesta
+//   solicitud-info-en    → idem in English
+//   folleto*             → "tu itinerario está en camino"
+//   contacto             → "mensaje recibido"
+//   llamada              → skip (no email field)
+//   presupuesto          → skip (no email field)
+//   encuesta-open        → skip (tracking interno, sin respuesta)
+//   encuesta-respuestas  → skip (tracking interno, sin respuesta)
 
 const https = require('https');
 
@@ -58,9 +60,10 @@ exports.handler = async function (event) {
 
   console.log('[submission-created] form_name:', formName);
 
-  // Formularios sin email — log y skip
-  if (formName === 'llamada' || formName === 'presupuesto') {
-    console.log('[submission-created] formulario sin email — skip:', formName);
+  // Formularios sin email o de tracking interno — skip
+  const skipForms = ['llamada', 'presupuesto', 'encuesta-open', 'encuesta-respuestas'];
+  if (skipForms.includes(formName)) {
+    console.log('[submission-created] formulario sin email o tracking — skip:', formName);
     return ok('skipped: no email form');
   }
 
@@ -86,9 +89,19 @@ exports.handler = async function (event) {
   console.log('[submission-created] plantilla seleccionada:', config.templateName);
 
   const firstName = (data.nombre || data.name || '').split(' ')[0] || 'Peregrino';
-  const html = buildEmail(firstName, config);
-  const apiKey = process.env.RESEND_API_KEY;
 
+  // Generar URL de encuesta para emails premium
+  if (config.premium) {
+    const eB64 = encodeURIComponent(Buffer.from(toEmail).toString('base64'));
+    const rB64 = data.ruta ? encodeURIComponent(Buffer.from(data.ruta).toString('base64')) : '';
+    config.ctaUrl = 'https://easycaminosantiago.com/encuesta/?e=' + eB64 + (rB64 ? '&r=' + rB64 : '');
+  }
+
+  const html = config.premium
+    ? buildPremiumEmail(firstName, config)
+    : buildEmail(firstName, config);
+
+  const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     console.error('[submission-created] RESEND_API_KEY no configurada');
     return ok('error: no api key');
@@ -122,24 +135,19 @@ exports.handler = async function (event) {
 
 function getConfig(formName, data) {
 
-  // ── Solicitud de información / presupuesto (ES) ──────────────────────────
+  // ── Solicitud de información / presupuesto (ES) — email PREMIUM ───────────
   if (formName === 'solicitud-info') {
     return {
-      templateName: 'solicitud-info',
-      subject: 'Hemos recibido tu solicitud — Easy Camino Santiago',
-      heading: 'Hemos recibido tu solicitud',
-      intro: 'Gracias por ponerte en contacto con nosotros. Hemos recibido tu solicitud y prepararemos una propuesta personalizada para tu Camino en menos de 24 horas laborables.',
-      tableRows: dataRows([
-        ['Ruta', data.ruta],
-        ['Nombre', [data.titulo, data.nombre, data.apellido].filter(Boolean).join(' ')],
-        ['Teléfono', data.telefono],
-        ['Localidad', data.localidad],
+      premium: true,
+      templateName: 'solicitud-info-premium',
+      subject: 'Hemos recibido correctamente tu solicitud — Easy Camino Santiago',
+      summaryRows: premiumDataRows([
+        ['Ruta',             data.ruta],
         ['Fecha aproximada', data.fecha],
-        ['Peregrinos', data.personas],
-        ['Alojamiento', data.alojamiento],
-        ['Mensaje', data.mensaje],
+        ['Peregrinos',       data.personas],
+        ['Alojamiento',      data.alojamiento],
+        ['Comentarios',      data.mensaje],
       ]),
-      responsePromise: 'Te enviaremos una propuesta detallada en menos de 24 horas laborables.',
     };
   }
 
@@ -151,14 +159,14 @@ function getConfig(formName, data) {
       heading: 'Enquiry received',
       intro: 'Thank you for getting in touch. We have received your enquiry and will prepare a personalised proposal for your Camino within 24 working hours.',
       tableRows: dataRows([
-        ['Route', data.ruta],
-        ['Name', [data.titulo, data.nombre, data.apellido].filter(Boolean).join(' ')],
-        ['Phone', data.telefono],
-        ['Location', data.localidad],
+        ['Route',            data.ruta],
+        ['Name',             [data.titulo, data.nombre, data.apellido].filter(Boolean).join(' ')],
+        ['Phone',            data.telefono],
+        ['Location',         data.localidad],
         ['Approximate date', data.fecha],
-        ['Pilgrims', data.personas],
-        ['Accommodation', data.alojamiento],
-        ['Message', data.mensaje],
+        ['Pilgrims',         data.personas],
+        ['Accommodation',    data.alojamiento],
+        ['Message',          data.mensaje],
       ]),
       responsePromise: 'We will send you a detailed proposal within 24 working hours.',
     };
@@ -172,7 +180,7 @@ function getConfig(formName, data) {
       heading: 'Hemos recibido tu mensaje',
       intro: 'Gracias por escribirnos. Hemos recibido tu mensaje y te responderemos en menos de 24 horas laborables.',
       tableRows: dataRows([
-        ['Asunto', data.asunto],
+        ['Asunto',  data.asunto],
         ['Mensaje', data.mensaje],
       ]),
       responsePromise: 'Te responderemos en menos de 24 horas laborables.',
@@ -187,7 +195,7 @@ function getConfig(formName, data) {
       heading: 'Tu itinerario está en camino',
       intro: 'Gracias por tu interés en el Camino de Santiago. Hemos recibido tu solicitud de itinerario y te lo enviaremos en breve a este correo.',
       tableRows: dataRows([
-        ['Ruta', data.ruta],
+        ['Ruta',     data.ruta],
         ['Teléfono', data.telefono],
       ]),
       responsePromise: '¿Listo para dar el siguiente paso? Podemos prepararte un presupuesto personalizado sin compromiso.',
@@ -198,13 +206,10 @@ function getConfig(formName, data) {
   if (formName === 'reserva') {
     const metodoPago = data['metodo-pago'] || '';
 
-    // Tarjeta bancaria: el pago está confirmado por Stripe.
-    // send-booking-email.js ya envía el correo al cliente. Skip aquí.
     if (metodoPago === 'Tarjeta bancaria') {
       return 'SKIP_STRIPE';
     }
 
-    // Transferencia bancaria: reserva recibida, pendiente de pago
     const pilgrimsLabel = [
       data.adultos && `${data.adultos} adulto${data.adultos !== '1' ? 's' : ''}`,
       data.ninos && data.ninos !== '0' && `${data.ninos} niño${data.ninos !== '1' ? 's' : ''}`,
@@ -216,15 +221,15 @@ function getConfig(formName, data) {
       heading: 'Solicitud de reserva recibida',
       intro: 'Hemos recibido tu solicitud de reserva con pago por transferencia bancaria. En cuanto confirmemos la recepción del depósito, te enviaremos la confirmación definitiva con toda la documentación.',
       tableRows: dataRows([
-        ['Referencia', data.referencia],
-        ['Ruta', data.ruta],
+        ['Referencia',      data.referencia],
+        ['Ruta',            data.ruta],
         ['Fecha de inicio', data['fecha-inicio']],
-        ['Peregrinos', pilgrimsLabel],
-        ['Alojamiento', data.alojamiento],
-        ['Total reserva', data.total],
-        ['Depósito (20%)', data.deposito],
-        ['Extras', data.extras],
-        ['Observaciones', data.observaciones],
+        ['Peregrinos',      pilgrimsLabel],
+        ['Alojamiento',     data.alojamiento],
+        ['Total reserva',   data.total],
+        ['Depósito (20%)',  data.deposito],
+        ['Extras',          data.extras],
+        ['Observaciones',   data.observaciones],
       ]),
       responsePromise: 'Confirmaremos la reserva en cuanto recibamos la transferencia. Si tienes dudas, escríbenos por WhatsApp.',
     };
@@ -234,7 +239,7 @@ function getConfig(formName, data) {
 }
 
 // ---------------------------------------------------------------------------
-// HTML helpers
+// Helpers de filas
 // ---------------------------------------------------------------------------
 
 function dataRows(pairs) {
@@ -248,6 +253,160 @@ function dataRows(pairs) {
         </tr>`)
     .join('');
 }
+
+function premiumDataRows(pairs) {
+  const filtered = pairs.filter(([, v]) => v && String(v).trim());
+  if (!filtered.length) return '';
+  return filtered.map(([label, value], i, arr) => {
+    const border = i < arr.length - 1 ? 'border-bottom:1px solid #eef2f2;' : '';
+    return `
+      <tr>
+        <td style="padding:12px 20px;font-size:11px;color:#8a9ea0;white-space:nowrap;vertical-align:top;${border}font-family:Arial,sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;">${label}</td>
+        <td style="padding:12px 20px;font-size:14px;color:#2D4A52;font-weight:600;vertical-align:top;${border}font-family:Arial,sans-serif;">${value}</td>
+      </tr>`;
+  }).join('');
+}
+
+// ---------------------------------------------------------------------------
+// Email PREMIUM — solicitud-info
+// ---------------------------------------------------------------------------
+
+function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
+  const summaryBlock = summaryRows
+    ? `<tr>
+        <td colspan="2" style="background:#2D4A52;padding:12px 20px;">
+          <p style="margin:0;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.50);font-weight:700;font-family:Arial,sans-serif;">Tu solicitud</p>
+        </td>
+      </tr>
+      ${summaryRows}`
+    : '';
+
+  return `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Hemos recibido correctamente tu solicitud</title>
+</head>
+<body style="margin:0;padding:0;background:#eff5f5;font-family:Arial,Helvetica,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#eff5f5;padding:32px 16px;">
+  <tr><td align="center">
+  <table width="600" cellpadding="0" cellspacing="0"
+    style="max-width:600px;width:100%;background:#ffffff;border-radius:10px;overflow:hidden;box-shadow:0 4px 24px rgba(45,74,82,0.12);">
+
+    <!-- LOGO -->
+    <tr>
+      <td style="background:#ffffff;padding:32px 40px 24px;text-align:center;border-bottom:1px solid #eef2f2;">
+        <img src="https://easycaminosantiago.com/easy-camino-santiago-logo.png"
+          alt="Easy Camino Santiago"
+          height="50"
+          style="height:50px;width:auto;display:block;margin:0 auto;">
+      </td>
+    </tr>
+
+    <!-- HEADER -->
+    <tr>
+      <td style="background:#2D4A52;padding:28px 40px 30px;text-align:center;">
+        <p style="margin:0 0 8px;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,0.40);text-transform:uppercase;font-weight:700;font-family:Arial,sans-serif;">Easy Camino Santiago</p>
+        <h1 style="margin:0;font-size:21px;font-weight:700;color:#ffffff;line-height:1.4;font-family:Arial,sans-serif;">
+          Hemos recibido correctamente<br>tu solicitud
+        </h1>
+      </td>
+    </tr>
+
+    <!-- INTRO -->
+    <tr>
+      <td style="padding:32px 40px 26px;">
+        <p style="margin:0 0 10px;font-size:16px;font-weight:700;color:#2D4A52;font-family:Arial,sans-serif;">Hola, ${firstName}.</p>
+        <p style="margin:0;font-size:15px;color:#4a5c5e;line-height:1.72;font-family:Arial,sans-serif;">
+          Gracias por confiar en Easy Camino Santiago.<br>
+          Ya estamos preparando tu propuesta personalizada para el Camino de Santiago.
+        </p>
+      </td>
+    </tr>
+
+    <!-- RESUMEN DE SOLICITUD -->
+    <tr>
+      <td style="padding:0 40px 28px;">
+        <table width="100%" cellpadding="0" cellspacing="0"
+          style="border:1px solid #d8e8e9;border-radius:8px;overflow:hidden;">
+          <tbody>
+            ${summaryBlock}
+          </tbody>
+        </table>
+      </td>
+    </tr>
+
+    <!-- CTA ENCUESTA -->
+    <tr>
+      <td style="padding:0 40px 28px;">
+        <table width="100%" cellpadding="0" cellspacing="0"
+          style="background:#edf7f7;border-radius:10px;overflow:hidden;">
+          <tr>
+            <td style="padding:26px 28px;">
+              <p style="margin:0 0 6px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#56A1A4;font-weight:700;font-family:Arial,sans-serif;">Mientras preparamos tu propuesta</p>
+              <p style="margin:0 0 20px;font-size:15px;color:#2D4A52;line-height:1.68;font-family:Arial,sans-serif;">
+                Nos ayudaría mucho conocer un poco mejor tu experiencia en nuestra web. Solo son 7 preguntas rápidas.
+              </p>
+              <a href="${ctaUrl}"
+                style="display:inline-block;background:#2D4A52;color:#ffffff;text-decoration:none;font-size:14px;font-weight:700;padding:14px 28px;border-radius:30px;letter-spacing:0.4px;font-family:Arial,sans-serif;">
+                Responder preguntas ahora
+              </a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <!-- NOTA DE TIEMPO -->
+    <tr>
+      <td style="padding:0 40px 32px;text-align:center;">
+        <p style="margin:0;font-size:13px;color:#8da4a6;line-height:1.65;font-family:Arial,sans-serif;">
+          Normalmente respondemos en menos de 24 horas.<br>
+          Si no recibes nuestra propuesta, revisa tu carpeta de <strong>spam</strong>.
+        </p>
+      </td>
+    </tr>
+
+    <!-- FOOTER -->
+    <tr>
+      <td style="background:#f4f9f9;border-top:1px solid #dde8e9;padding:22px 40px;">
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td style="vertical-align:top;">
+              <p style="margin:0 0 5px;font-size:13px;font-weight:700;color:#2D4A52;font-family:Arial,sans-serif;">Easy Camino Santiago</p>
+              <p style="margin:0 0 4px;font-size:12px;font-family:Arial,sans-serif;">
+                <a href="https://wa.me/34982907629" style="color:#56A1A4;text-decoration:none;">WhatsApp</a>
+                &nbsp;&middot;&nbsp;
+                <a href="mailto:info@easycaminosantiago.com" style="color:#56A1A4;text-decoration:none;">info@easycaminosantiago.com</a>
+              </p>
+              <p style="margin:0 0 4px;font-size:12px;font-family:Arial,sans-serif;">
+                <a href="https://www.instagram.com/easycaminosantiago/" style="color:#56A1A4;text-decoration:none;">Instagram</a>
+                &nbsp;&middot;&nbsp;
+                <a href="https://easycaminosantiago.com" style="color:#56A1A4;text-decoration:none;">easycaminosantiago.com</a>
+              </p>
+              <p style="margin:5px 0 0;font-size:11px;color:#a8b8ba;font-family:Arial,sans-serif;">Empresa local en Galicia</p>
+            </td>
+            <td align="right" style="vertical-align:top;">
+              <p style="margin:0;font-size:11px;color:#bac8ca;line-height:1.6;font-family:Arial,sans-serif;text-align:right;">
+                Mensaje automático.<br>No respondas a este correo.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+  </table>
+  </td></tr>
+</table>
+</body>
+</html>`;
+}
+
+// ---------------------------------------------------------------------------
+// Email ESTÁNDAR — resto de formularios
+// ---------------------------------------------------------------------------
 
 function buildEmail(firstName, { heading, intro, tableRows, responsePromise }) {
   const summaryBlock = tableRows
@@ -272,7 +431,6 @@ function buildEmail(firstName, { heading, intro, tableRows, responsePromise }) {
   <table width="600" cellpadding="0" cellspacing="0"
     style="max-width:600px;background:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(45,74,82,0.10);">
 
-    <!-- Header logo -->
     <tr>
       <td style="background:#ffffff;padding:24px 32px 0;text-align:center;">
         <img src="https://easycaminosantiago.com/favicon.png"
@@ -288,7 +446,6 @@ function buildEmail(firstName, { heading, intro, tableRows, responsePromise }) {
       </td>
     </tr>
 
-    <!-- Greeting -->
     <tr>
       <td style="padding:28px 32px 20px;">
         <p style="margin:0 0 6px;font-size:16px;color:#2D4A52;font-weight:700;">Hola, ${firstName}.</p>
@@ -296,10 +453,8 @@ function buildEmail(firstName, { heading, intro, tableRows, responsePromise }) {
       </td>
     </tr>
 
-    <!-- Data summary -->
     ${summaryBlock}
 
-    <!-- Response promise -->
     <tr>
       <td style="padding:0 32px 24px;">
         <table width="100%" cellpadding="0" cellspacing="0">
@@ -315,7 +470,6 @@ function buildEmail(firstName, { heading, intro, tableRows, responsePromise }) {
       </td>
     </tr>
 
-    <!-- WhatsApp CTA -->
     <tr>
       <td style="padding:0 32px 28px;text-align:center;">
         <p style="margin:0 0 12px;font-size:14px;color:#6b7c7e;">¿Tienes alguna pregunta?</p>
@@ -326,7 +480,6 @@ function buildEmail(firstName, { heading, intro, tableRows, responsePromise }) {
       </td>
     </tr>
 
-    <!-- Footer -->
     <tr>
       <td style="padding:20px 32px;background:#f8fafa;border-top:1px solid #e2e8ea;">
         <table width="100%" cellpadding="0" cellspacing="0">
