@@ -296,22 +296,26 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
 
     <!-- LOGO -->
     <tr>
-      <td style="background:#ffffff;padding:32px 40px 24px;text-align:center;border-bottom:1px solid #eef2f2;">
+      <td style="background:#ffffff;padding:36px 40px 30px;text-align:center;border-bottom:1px solid #eef2f2;">
         <img src="https://easycaminosantiago.com/easy-camino-santiago-logo.png"
           alt="Easy Camino Santiago"
-          height="50"
-          style="height:50px;width:auto;display:block;margin:0 auto;">
+          height="60"
+          style="height:60px;width:auto;display:block;margin:0 auto;">
       </td>
     </tr>
 
-    <!-- HEADER -->
+    <!-- HEADER con gradiente sutil -->
     <tr>
-      <td style="background:#2D4A52;padding:28px 40px 30px;text-align:center;">
-        <p style="margin:0 0 8px;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,0.40);text-transform:uppercase;font-weight:700;font-family:Arial,sans-serif;">Easy Camino Santiago</p>
-        <h1 style="margin:0;font-size:21px;font-weight:700;color:#ffffff;line-height:1.4;font-family:Arial,sans-serif;">
+      <td bgcolor="#2D4A52" style="background-color:#2D4A52;background-image:linear-gradient(180deg,#233c44 0%,#2D4A52 100%);padding:34px 40px 36px;text-align:center;">
+        <p style="margin:0 0 10px;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,0.38);text-transform:uppercase;font-weight:700;font-family:Arial,sans-serif;">Easy Camino Santiago</p>
+        <h1 style="margin:0;font-size:24px;font-weight:700;color:#ffffff;line-height:1.35;font-family:Arial,sans-serif;">
           Hemos recibido correctamente<br>tu solicitud
         </h1>
       </td>
+    </tr>
+    <!-- Línea de acento turquesa -->
+    <tr>
+      <td bgcolor="#56A1A4" style="background:#56A1A4;height:3px;font-size:0;line-height:0;padding:0;">&nbsp;</td>
     </tr>
 
     <!-- INTRO -->
@@ -337,6 +341,21 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
       </td>
     </tr>
 
+    <!-- TEXTO HUMANO -->
+    <tr>
+      <td style="padding:0 40px 24px;">
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td style="border-left:3px solid #56A1A4;padding:12px 18px;background:#f7fbfb;border-radius:0 6px 6px 0;">
+              <p style="margin:0;font-size:15px;color:#2D4A52;line-height:1.72;font-family:Arial,sans-serif;">
+                Estamos revisando tu ruta, fechas y preferencias para prepararte una propuesta clara y personalizada.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
     <!-- CTA ENCUESTA -->
     <tr>
       <td style="padding:0 40px 28px;">
@@ -352,6 +371,43 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
                 style="display:inline-block;background:#2D4A52;color:#ffffff;text-decoration:none;font-size:14px;font-weight:700;padding:14px 28px;border-radius:30px;letter-spacing:0.4px;font-family:Arial,sans-serif;">
                 Responder preguntas ahora
               </a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <!-- TRUST INDICATORS -->
+    <tr>
+      <td style="padding:0 40px 28px;">
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td colspan="2" style="padding-bottom:14px;border-top:1px solid #eef2f2;padding-top:22px;">
+              <p style="margin:0;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8da4a6;font-weight:700;font-family:Arial,sans-serif;">Por qué confiar en nosotros</p>
+            </td>
+          </tr>
+          <tr>
+            <td width="50%" style="padding:0 14px 10px 0;vertical-align:top;">
+              <p style="margin:0;font-size:13px;color:#2D4A52;font-family:Arial,sans-serif;line-height:1.5;">
+                <span style="color:#56A1A4;font-weight:700;">&#10003;&nbsp;</span>Empresa local en Galicia
+              </p>
+            </td>
+            <td width="50%" style="padding:0 0 10px;vertical-align:top;">
+              <p style="margin:0;font-size:13px;color:#2D4A52;font-family:Arial,sans-serif;line-height:1.5;">
+                <span style="color:#56A1A4;font-weight:700;">&#10003;&nbsp;</span>Atención personalizada
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td width="50%" style="padding:0 14px 0 0;vertical-align:top;">
+              <p style="margin:0;font-size:13px;color:#2D4A52;font-family:Arial,sans-serif;line-height:1.5;">
+                <span style="color:#56A1A4;font-weight:700;">&#10003;&nbsp;</span>Alojamientos seleccionados
+              </p>
+            </td>
+            <td width="50%" style="padding:0;vertical-align:top;">
+              <p style="margin:0;font-size:13px;color:#2D4A52;font-family:Arial,sans-serif;line-height:1.5;">
+                <span style="color:#56A1A4;font-weight:700;">&#10003;&nbsp;</span>Respuesta en menos de 24h
+              </p>
             </td>
           </tr>
         </table>
@@ -379,11 +435,10 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
                 <a href="https://wa.me/34982907629" style="color:#56A1A4;text-decoration:none;">WhatsApp</a>
                 &nbsp;&middot;&nbsp;
                 <a href="mailto:info@easycaminosantiago.com" style="color:#56A1A4;text-decoration:none;">info@easycaminosantiago.com</a>
-              </p>
-              <p style="margin:0 0 4px;font-size:12px;font-family:Arial,sans-serif;">
+                &nbsp;&middot;&nbsp;
                 <a href="https://www.instagram.com/easycaminosantiago/" style="color:#56A1A4;text-decoration:none;">Instagram</a>
                 &nbsp;&middot;&nbsp;
-                <a href="https://easycaminosantiago.com" style="color:#56A1A4;text-decoration:none;">easycaminosantiago.com</a>
+                <a href="https://easycaminosantiago.com" style="color:#56A1A4;text-decoration:none;">Web</a>
               </p>
               <p style="margin:5px 0 0;font-size:11px;color:#a8b8ba;font-family:Arial,sans-serif;">Empresa local en Galicia</p>
             </td>
