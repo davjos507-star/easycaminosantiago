@@ -15,6 +15,7 @@
 //   encuesta-respuestas  → skip (tracking interno, sin respuesta)
 
 const https = require('https');
+const nodemailer = require('nodemailer');
 
 function resendPost(payload, apiKey) {
   return new Promise((resolve, reject) => {
@@ -73,7 +74,7 @@ exports.handler = async function (event) {
   console.log('[SC] DIAGNÓSTICO email detectado=' + JSON.stringify(data.email));
   console.log('[SC] DIAGNÓSTICO ruta detectada=' + JSON.stringify(data.ruta));
   console.log('[SC] DIAGNÓSTICO data keys=' + JSON.stringify(Object.keys(data)));
-  console.log('[SC] DIAGNÓSTICO RESEND_API_KEY presente=' + (!!process.env.RESEND_API_KEY));
+  console.log('[SC] DIAGNÓSTICO SMTP_HOST presente=' + (!!process.env.SMTP_HOST) + ' RESEND_API_KEY presente=' + (!!process.env.RESEND_API_KEY));
 
   // Formularios sin email o de tracking interno — skip
   const skipForms = ['llamada', 'presupuesto', 'encuesta-open', 'encuesta-respuestas'];
@@ -114,6 +115,43 @@ exports.handler = async function (event) {
     ? buildPremiumEmail(firstName, config)
     : buildEmail(firstName, config);
 
+  // solicitud-info → SMTP vía Nodemailer (PrivateEmail/Namecheap)
+  if (formName === 'solicitud-info') {
+    const smtpHost = process.env.SMTP_HOST;
+    const smtpPort = parseInt(process.env.SMTP_PORT || '587', 10);
+    const smtpUser = process.env.SMTP_USER;
+    const smtpPass = process.env.SMTP_PASS;
+
+    if (!smtpHost || !smtpUser || !smtpPass) {
+      console.error('[SC] ✗ SMTP env vars no configuradas — necesita SMTP_HOST, SMTP_USER, SMTP_PASS en Netlify Site Settings > Env Vars');
+      return ok('error: no smtp config');
+    }
+
+    const transporter = nodemailer.createTransport({
+      host: smtpHost,
+      port: smtpPort,
+      secure: smtpPort === 465,
+      auth: { user: smtpUser, pass: smtpPass },
+    });
+
+    console.log('[SC] → enviando via SMTP a:', toEmail, '| asunto:', config.subject, '| host:', smtpHost, 'puerto:', smtpPort);
+    try {
+      await transporter.sendMail({
+        from: 'Easy Camino Santiago <info@easycaminosantiago.com>',
+        to: toEmail,
+        subject: config.subject,
+        html,
+      });
+    } catch (err) {
+      console.error('[SC] ✗ excepción SMTP:', err.message);
+      return { statusCode: 500, body: 'smtp exception: ' + err.message };
+    }
+
+    console.log('[SC] ✓ email enviado OK via SMTP a', toEmail);
+    return ok('sent');
+  }
+
+  // Resto de formularios → Resend
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     console.error('[SC] ✗ RESEND_API_KEY no configurada en Netlify — CORRÍGELO EN Site Settings > Env Vars');
