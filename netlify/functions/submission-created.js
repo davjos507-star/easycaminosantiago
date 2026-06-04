@@ -44,57 +44,60 @@ function resendPost(payload, apiKey) {
 }
 
 exports.handler = async function (event) {
-  console.log('[submission-created] evento recibido');
+  console.log('[SC] ▶ invocado — método:', event.httpMethod);
 
   let parsed;
   try {
     parsed = JSON.parse(event.body);
   } catch (e) {
-    console.error('[submission-created] body inválido:', e.message);
+    console.error('[SC] ✗ body inválido:', e.message, '| raw:', String(event.body).slice(0, 200));
     return ok('error: invalid body');
   }
 
-  const form = parsed.payload;
+  const form = parsed.payload || {};
   const data = form.data || {};
   const formName = form.form_name || '';
 
-  console.log('[submission-created] form_name:', formName);
+  // LOG DIAGNÓSTICO — siempre visible en Netlify Function logs
+  console.log('[SC] DIAGNÓSTICO formName=' + JSON.stringify(formName));
+  console.log('[SC] DIAGNÓSTICO email detectado=' + JSON.stringify(data.email));
+  console.log('[SC] DIAGNÓSTICO ruta detectada=' + JSON.stringify(data.ruta));
+  console.log('[SC] DIAGNÓSTICO data keys=' + JSON.stringify(Object.keys(data)));
+  console.log('[SC] DIAGNÓSTICO RESEND_API_KEY presente=' + (!!process.env.RESEND_API_KEY));
 
   // Formularios sin email o de tracking interno — skip
   const skipForms = ['llamada', 'presupuesto', 'encuesta-open', 'encuesta-respuestas'];
   if (skipForms.includes(formName)) {
-    console.log('[submission-created] formulario sin email o tracking — skip:', formName);
+    console.log('[SC] skip (tracking/sin email):', formName);
     return ok('skipped: no email form');
   }
 
   const toEmail = data.email;
   if (!toEmail || !toEmail.includes('@')) {
-    console.log('[submission-created] campo email ausente o inválido — omitido');
+    console.log('[SC] ✗ email ausente o inválido en data — keys disponibles:', JSON.stringify(Object.keys(data)));
     return ok('skipped: no valid email field');
   }
-  console.log('[submission-created] email detectado:', toEmail);
 
   const config = getConfig(formName, data);
+  console.log('[SC] DIAGNÓSTICO premium=' + (config && config !== 'SKIP_STRIPE' ? JSON.stringify(!!config.premium) : 'N/A') + ' config=' + (config ? (config === 'SKIP_STRIPE' ? 'SKIP_STRIPE' : config.templateName) : 'null'));
+
   if (!config) {
-    console.log('[submission-created] formulario no gestionado — omitido:', formName);
+    console.log('[SC] formulario no gestionado — omitido:', formName);
     return ok('skipped: unhandled form');
   }
 
-  // reserva con tarjeta: pago gestionado por send-booking-email, no enviar aquí
   if (config === 'SKIP_STRIPE') {
-    console.log('[submission-created] reserva con tarjeta — gestionada por send-booking-email, skip');
+    console.log('[SC] reserva tarjeta — skip (send-booking-email lo gestiona)');
     return ok('skipped: stripe payment handled by send-booking-email');
   }
 
-  console.log('[submission-created] plantilla seleccionada:', config.templateName);
-
   const firstName = (data.nombre || data.name || '').split(' ')[0] || 'Peregrino';
 
-  // Generar URL de encuesta para emails premium
   if (config.premium) {
     const eB64 = encodeURIComponent(Buffer.from(toEmail).toString('base64'));
     const rB64 = data.ruta ? encodeURIComponent(Buffer.from(data.ruta).toString('base64')) : '';
     config.ctaUrl = 'https://easycaminosantiago.com/encuesta/?e=' + eB64 + (rB64 ? '&r=' + rB64 : '');
+    console.log('[SC] DIAGNÓSTICO ctaUrl generada=' + config.ctaUrl);
   }
 
   const html = config.premium
@@ -103,29 +106,35 @@ exports.handler = async function (event) {
 
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    console.error('[submission-created] RESEND_API_KEY no configurada');
+    console.error('[SC] ✗ RESEND_API_KEY no configurada en Netlify — CORRÍGELO EN Site Settings > Env Vars');
     return ok('error: no api key');
   }
 
-  console.log('[submission-created] llamando a Resend...');
-  const result = await resendPost(
-    {
-      from: 'Easy Camino Santiago <info@easycaminosantiago.com>',
-      to: [toEmail],
-      subject: config.subject,
-      html,
-    },
-    apiKey
-  );
+  console.log('[SC] → llamando Resend para enviar a:', toEmail, '| asunto:', config.subject);
+  let result;
+  try {
+    result = await resendPost(
+      {
+        from: 'Easy Camino Santiago <info@easycaminosantiago.com>',
+        to: [toEmail],
+        subject: config.subject,
+        html,
+      },
+      apiKey
+    );
+  } catch (err) {
+    console.error('[SC] ✗ excepción al llamar Resend:', err.message);
+    return { statusCode: 500, body: 'resend exception: ' + err.message };
+  }
 
-  console.log('[submission-created] Resend respuesta:', result.status, JSON.stringify(result.body));
+  console.log('[SC] DIAGNÓSTICO Resend status=' + result.status + ' body=' + JSON.stringify(result.body));
 
   if (result.status >= 400) {
-    console.error('[submission-created] error Resend:', result.status, JSON.stringify(result.body));
+    console.error('[SC] ✗ Resend rechazó el email — status:', result.status, 'body:', JSON.stringify(result.body));
     return { statusCode: 500, body: 'email send failed' };
   }
 
-  console.log('[submission-created] email enviado OK a', toEmail);
+  console.log('[SC] ✓ email enviado OK a', toEmail);
   return ok('sent');
 };
 
