@@ -46,6 +46,16 @@ function resendPost(payload, apiKey) {
 exports.handler = async function (event) {
   console.log('[SC] ▶ invocado — método:', event.httpMethod);
 
+  // Endpoint de diagnóstico: GET /.netlify/functions/submission-created
+  // Confirma que la función está desplegada sin necesitar un form submit.
+  if (event.httpMethod === 'GET') {
+    return {
+      statusCode: 200,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ deployed: true, fn: 'submission-created', ts: new Date().toISOString() }),
+    };
+  }
+
   let parsed;
   try {
     parsed = JSON.parse(event.body);
