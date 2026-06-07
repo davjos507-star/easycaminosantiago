@@ -115,18 +115,13 @@ exports.handler = async function (event) {
     ? buildPremiumEmail(firstName, config)
     : buildEmail(firstName, config);
 
-  // solicitud-info → SMTP vía Nodemailer (PrivateEmail/Namecheap)
-  if (formName === 'solicitud-info') {
-    const smtpHost = process.env.SMTP_HOST;
-    const smtpPort = parseInt(process.env.SMTP_PORT || '587', 10);
-    const smtpUser = process.env.SMTP_USER;
-    const smtpPass = process.env.SMTP_PASS;
+  // Envío: SMTP si está configurado (todos los formularios), Resend como fallback
+  const smtpHost = process.env.SMTP_HOST;
+  const smtpUser = process.env.SMTP_USER;
+  const smtpPass = process.env.SMTP_PASS;
+  const smtpPort = parseInt(process.env.SMTP_PORT || '587', 10);
 
-    if (!smtpHost || !smtpUser || !smtpPass) {
-      console.error('[SC] ✗ SMTP env vars no configuradas — necesita SMTP_HOST, SMTP_USER, SMTP_PASS en Netlify Site Settings > Env Vars');
-      return ok('error: no smtp config');
-    }
-
+  if (smtpHost && smtpUser && smtpPass) {
     const transporter = nodemailer.createTransport({
       host: smtpHost,
       port: smtpPort,
@@ -134,7 +129,7 @@ exports.handler = async function (event) {
       auth: { user: smtpUser, pass: smtpPass },
     });
 
-    console.log('[SC] → enviando via SMTP a:', toEmail, '| asunto:', config.subject, '| host:', smtpHost, 'puerto:', smtpPort);
+    console.log('[SC] → enviando via SMTP a:', toEmail, '| asunto:', config.subject, '| host:', smtpHost, 'puerto:', smtpPort, '| formulario:', formName);
     try {
       await transporter.sendMail({
         from: 'Easy Camino Santiago <info@easycaminosantiago.com>',
@@ -147,15 +142,16 @@ exports.handler = async function (event) {
       return { statusCode: 500, body: 'smtp exception: ' + err.message };
     }
 
-    console.log('[SC] ✓ email enviado OK via SMTP a', toEmail);
+    console.log('[SC] ✓ email enviado OK via SMTP a', toEmail, '| formulario:', formName);
     return ok('sent');
   }
 
-  // Resto de formularios → Resend
+  // Fallback → Resend (solo si SMTP no está configurado)
+  console.warn('[SC] SMTP no configurado — usando Resend como fallback para formulario:', formName);
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    console.error('[SC] ✗ RESEND_API_KEY no configurada en Netlify — CORRÍGELO EN Site Settings > Env Vars');
-    return ok('error: no api key');
+    console.error('[SC] ✗ RESEND_API_KEY no configurada — CORRÍGELO EN Site Settings > Env Vars');
+    return ok('error: no smtp config and no resend api key');
   }
 
   console.log('[SC] → llamando Resend para enviar a:', toEmail, '| asunto:', config.subject);
@@ -182,7 +178,7 @@ exports.handler = async function (event) {
     return { statusCode: 500, body: 'email send failed' };
   }
 
-  console.log('[SC] ✓ email enviado OK a', toEmail);
+  console.log('[SC] ✓ email enviado OK via Resend a', toEmail);
   return ok('sent');
 };
 
@@ -331,8 +327,8 @@ function premiumDataRows(pairs) {
 function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
   const summaryBlock = summaryRows
     ? `<tr>
-        <td colspan="2" style="background:#2D4A52;padding:12px 20px;">
-          <p style="margin:0;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.50);font-weight:700;font-family:Arial,sans-serif;">Tu solicitud</p>
+        <td colspan="2" style="background:#f0f8f8;padding:10px 20px;border-bottom:1px solid #d8e8e9;">
+          <p style="margin:0;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#56A1A4;font-weight:700;font-family:Arial,sans-serif;">Tu solicitud</p>
         </td>
       </tr>
       ${summaryRows}`
@@ -345,41 +341,49 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Hemos recibido correctamente tu solicitud</title>
 </head>
-<body style="margin:0;padding:0;background:#eff5f5;font-family:Arial,Helvetica,sans-serif;">
-<table width="100%" cellpadding="0" cellspacing="0" style="background:#eff5f5;padding:32px 16px;">
+<body style="margin:0;padding:0;background:#f2f6f6;font-family:Arial,Helvetica,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f2f6f6;padding:40px 16px;">
   <tr><td align="center">
   <table width="600" cellpadding="0" cellspacing="0"
-    style="max-width:600px;width:100%;background:#ffffff;border-radius:10px;overflow:hidden;box-shadow:0 4px 24px rgba(45,74,82,0.12);">
+    style="max-width:600px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 20px rgba(45,74,82,0.09);">
+
+    <!-- ACENTO SUPERIOR -->
+    <tr>
+      <td bgcolor="#56A1A4" style="background:#56A1A4;height:4px;font-size:0;line-height:0;padding:0;">&nbsp;</td>
+    </tr>
 
     <!-- LOGO -->
     <tr>
-      <td style="background:#ffffff;padding:36px 40px 30px;text-align:center;border-bottom:1px solid #eef2f2;">
-        <img src="https://easycaminosantiago.com/easy-camino-santiago-logo.png"
+      <td style="padding:48px 40px 36px;text-align:center;">
+        <img src="https://easycaminosantiago.com/logo/favicon-easy.png"
           alt="Easy Camino Santiago"
-          height="60"
-          style="height:60px;width:auto;display:block;margin:0 auto;">
+          width="88"
+          style="width:88px;height:88px;display:block;margin:0 auto;border-radius:50%;">
       </td>
     </tr>
 
-    <!-- HEADER con gradiente sutil -->
+    <!-- TÍTULO -->
     <tr>
-      <td bgcolor="#2D4A52" style="background-color:#2D4A52;background-image:linear-gradient(180deg,#233c44 0%,#2D4A52 100%);padding:34px 40px 36px;text-align:center;">
-        <p style="margin:0 0 10px;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,0.38);text-transform:uppercase;font-weight:700;font-family:Arial,sans-serif;">Easy Camino Santiago</p>
-        <h1 style="margin:0;font-size:24px;font-weight:700;color:#ffffff;line-height:1.35;font-family:Arial,sans-serif;">
-          Hemos recibido correctamente<br>tu solicitud
+      <td style="padding:0 40px 36px;text-align:center;">
+        <p style="margin:0 0 14px;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#56A1A4;font-weight:700;font-family:Arial,sans-serif;">Easy Camino Santiago</p>
+        <h1 style="margin:0;font-size:26px;font-weight:700;color:#2D4A52;line-height:1.35;font-family:Arial,sans-serif;">
+          Hemos recibido<br>tu solicitud
         </h1>
       </td>
     </tr>
-    <!-- Línea de acento turquesa -->
+
+    <!-- DIVIDER -->
     <tr>
-      <td bgcolor="#56A1A4" style="background:#56A1A4;height:3px;font-size:0;line-height:0;padding:0;">&nbsp;</td>
+      <td style="padding:0 40px;">
+        <div style="height:1px;background:#eef2f2;font-size:0;line-height:0;">&nbsp;</div>
+      </td>
     </tr>
 
     <!-- INTRO -->
     <tr>
-      <td style="padding:32px 40px 26px;">
-        <p style="margin:0 0 10px;font-size:16px;font-weight:700;color:#2D4A52;font-family:Arial,sans-serif;">Hola, ${firstName}.</p>
-        <p style="margin:0;font-size:15px;color:#4a5c5e;line-height:1.72;font-family:Arial,sans-serif;">
+      <td style="padding:36px 40px 28px;">
+        <p style="margin:0 0 12px;font-size:16px;font-weight:700;color:#2D4A52;font-family:Arial,sans-serif;">Hola, ${firstName}.</p>
+        <p style="margin:0;font-size:15px;color:#4a5c5e;line-height:1.78;font-family:Arial,sans-serif;">
           Gracias por confiar en Easy Camino Santiago.<br>
           Ya estamos preparando tu propuesta personalizada para el Camino de Santiago.
         </p>
@@ -388,7 +392,7 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
 
     <!-- RESUMEN DE SOLICITUD -->
     <tr>
-      <td style="padding:0 40px 28px;">
+      <td style="padding:0 40px 32px;">
         <table width="100%" cellpadding="0" cellspacing="0"
           style="border:1px solid #d8e8e9;border-radius:8px;overflow:hidden;">
           <tbody>
@@ -400,11 +404,11 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
 
     <!-- TEXTO HUMANO -->
     <tr>
-      <td style="padding:0 40px 24px;">
+      <td style="padding:0 40px 32px;">
         <table width="100%" cellpadding="0" cellspacing="0">
           <tr>
-            <td style="border-left:3px solid #56A1A4;padding:12px 18px;background:#f7fbfb;border-radius:0 6px 6px 0;">
-              <p style="margin:0;font-size:15px;color:#2D4A52;line-height:1.72;font-family:Arial,sans-serif;">
+            <td style="border-left:3px solid #56A1A4;padding:14px 20px;background:#f7fbfb;border-radius:0 6px 6px 0;">
+              <p style="margin:0;font-size:15px;color:#2D4A52;line-height:1.78;font-family:Arial,sans-serif;">
                 Estamos revisando tu ruta, fechas y preferencias para prepararte una propuesta clara y personalizada.
               </p>
             </td>
@@ -415,17 +419,17 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
 
     <!-- CTA ENCUESTA -->
     <tr>
-      <td style="padding:0 40px 28px;">
+      <td style="padding:0 40px 36px;">
         <table width="100%" cellpadding="0" cellspacing="0"
           style="background:#edf7f7;border-radius:10px;overflow:hidden;">
           <tr>
-            <td style="padding:26px 28px;">
-              <p style="margin:0 0 6px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#56A1A4;font-weight:700;font-family:Arial,sans-serif;">Mientras preparamos tu propuesta</p>
-              <p style="margin:0 0 20px;font-size:15px;color:#2D4A52;line-height:1.68;font-family:Arial,sans-serif;">
+            <td style="padding:28px 32px;">
+              <p style="margin:0 0 8px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#56A1A4;font-weight:700;font-family:Arial,sans-serif;">Mientras preparamos tu propuesta</p>
+              <p style="margin:0 0 22px;font-size:15px;color:#2D4A52;line-height:1.72;font-family:Arial,sans-serif;">
                 Nos ayudaría mucho conocer un poco mejor tu experiencia en nuestra web. Solo son 7 preguntas rápidas.
               </p>
               <a href="${ctaUrl}"
-                style="display:inline-block;background:#2D4A52;color:#ffffff;text-decoration:none;font-size:14px;font-weight:700;padding:14px 28px;border-radius:30px;letter-spacing:0.4px;font-family:Arial,sans-serif;">
+                style="display:inline-block;background:#2D4A52;color:#ffffff;text-decoration:none;font-size:14px;font-weight:700;padding:15px 30px;border-radius:30px;letter-spacing:0.4px;font-family:Arial,sans-serif;">
                 Responder preguntas ahora
               </a>
             </td>
@@ -434,12 +438,19 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
       </td>
     </tr>
 
+    <!-- DIVIDER -->
+    <tr>
+      <td style="padding:0 40px;">
+        <div style="height:1px;background:#eef2f2;font-size:0;line-height:0;">&nbsp;</div>
+      </td>
+    </tr>
+
     <!-- TRUST INDICATORS -->
     <tr>
-      <td style="padding:0 40px 28px;">
+      <td style="padding:28px 40px 28px;">
         <table width="100%" cellpadding="0" cellspacing="0">
           <tr>
-            <td colspan="2" style="padding-bottom:14px;border-top:1px solid #eef2f2;padding-top:22px;">
+            <td colspan="2" style="padding-bottom:16px;">
               <p style="margin:0;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8da4a6;font-weight:700;font-family:Arial,sans-serif;">Por qué confiar en nosotros</p>
             </td>
           </tr>
@@ -473,8 +484,8 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
 
     <!-- NOTA DE TIEMPO -->
     <tr>
-      <td style="padding:0 40px 32px;text-align:center;">
-        <p style="margin:0;font-size:13px;color:#8da4a6;line-height:1.65;font-family:Arial,sans-serif;">
+      <td style="padding:0 40px 40px;text-align:center;">
+        <p style="margin:0;font-size:13px;color:#8da4a6;line-height:1.70;font-family:Arial,sans-serif;">
           Normalmente respondemos en menos de 24 horas.<br>
           Si no recibes nuestra propuesta, revisa tu carpeta de <strong>spam</strong>.
         </p>
@@ -483,7 +494,7 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
 
     <!-- FOOTER -->
     <tr>
-      <td style="background:#f4f9f9;border-top:1px solid #dde8e9;padding:22px 40px;">
+      <td style="background:#f7fafa;border-top:1px solid #e4eced;padding:24px 40px;">
         <table width="100%" cellpadding="0" cellspacing="0">
           <tr>
             <td style="vertical-align:top;">
