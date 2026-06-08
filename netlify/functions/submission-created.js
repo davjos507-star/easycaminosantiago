@@ -354,11 +354,10 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
 
     <!-- LOGO -->
     <tr>
-      <td style="padding:48px 40px 36px;text-align:center;">
+      <td style="background:#ffffff;padding:40px 40px 32px;text-align:center;">
         <img src="https://easycaminosantiago.com/logo/favicon-easy.png"
           alt="Easy Camino Santiago"
-          width="88"
-          style="width:88px;height:88px;display:block;margin:0 auto;border-radius:50%;">
+          style="display:block;margin:0 auto;max-width:180px;width:180px;height:auto;">
       </td>
     </tr>
 
@@ -555,11 +554,10 @@ function buildEmail(firstName, { heading, intro, tableRows, responsePromise }) {
     style="max-width:600px;background:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 2px 12px rgba(45,74,82,0.10);">
 
     <tr>
-      <td style="background:#ffffff;padding:24px 32px 0;text-align:center;">
-        <img src="https://easycaminosantiago.com/favicon.png"
-          width="80" height="80"
+      <td style="background:#ffffff;padding:32px 32px 24px;text-align:center;">
+        <img src="https://easycaminosantiago.com/logo/favicon-easy.png"
           alt="Easy Camino Santiago"
-          style="display:block;margin:0 auto;width:80px;height:80px;border-radius:50%;border:3px solid #e8f2f3;">
+          style="display:block;margin:0 auto;max-width:160px;width:160px;height:auto;">
       </td>
     </tr>
     <tr>

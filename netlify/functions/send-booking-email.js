@@ -92,11 +92,10 @@ exports.handler = async function(event) {
 
     <!-- Header logo -->
     <tr>
-      <td style="background:#ffffff;padding:24px 32px 0;text-align:center;">
-        <img src="https://easycaminosantiago.com/favicon.png"
-          width="80" height="80"
+      <td style="background:#ffffff;padding:32px 32px 24px;text-align:center;">
+        <img src="https://easycaminosantiago.com/logo/favicon-easy.png"
           alt="Easy Camino Santiago"
-          style="display:block;margin:0 auto;width:80px;height:80px;border-radius:50%;border:3px solid #e8f2f3;">
+          style="display:block;margin:0 auto;max-width:160px;width:160px;height:auto;">
       </td>
     </tr>
 
