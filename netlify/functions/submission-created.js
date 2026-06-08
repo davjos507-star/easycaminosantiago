@@ -598,7 +598,7 @@ function buildEmail(firstName, { heading, intro, tableRows, responsePromise }) {
         <p style="margin:0 0 12px;font-size:14px;color:#6b7c7e;">¿Tienes alguna pregunta?</p>
         <a href="https://wa.me/34982907629"
           style="display:inline-block;background:#25D366;color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;padding:13px 30px;border-radius:24px;letter-spacing:0.3px;">
-          &#128172; Escríbenos por WhatsApp
+          Escríbenos por WhatsApp
         </a>
       </td>
     </tr>

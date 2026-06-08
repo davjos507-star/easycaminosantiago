@@ -1,4 +1,4 @@
-// Netlify Function: test endpoint for Resend email delivery.
+// Netlify Function: test endpoint for email delivery via SMTP (Resend as fallback).
 // Sends a simulated booking confirmation email WITHOUT touching Stripe.
 // Protected by TEST_EMAIL_SECRET env var.
 //
@@ -7,6 +7,7 @@
 //   POST /.netlify/functions/test-email?secret=<TOKEN>   (body: { to: "email" })
 
 const https = require('https');
+const nodemailer = require('nodemailer');
 
 function resendPost(payload, apiKey) {
   return new Promise((resolve, reject) => {
@@ -50,12 +51,6 @@ exports.handler = async function (event) {
   if (secret !== expectedSecret) {
     console.warn('[test-email] acceso denegado — secret incorrecto');
     return json(403, { error: 'Forbidden' });
-  }
-
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    console.error('[test-email] RESEND_API_KEY no configurada');
-    return json(500, { error: 'RESEND_API_KEY not configured' });
   }
 
   // Determine recipient — query param > POST body > fallback to admin
@@ -160,7 +155,7 @@ exports.handler = async function (event) {
         <p style="margin:0 0 12px;font-size:14px;color:#6b7c7e;">¿Tienes alguna pregunta urgente?</p>
         <a href="https://wa.me/34982907629"
           style="display:inline-block;background:#25D366;color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;padding:13px 30px;border-radius:24px;letter-spacing:0.3px;">
-          &#128172; Escríbenos por WhatsApp
+          Escríbenos por WhatsApp
         </a>
       </td>
     </tr>
@@ -190,6 +185,42 @@ exports.handler = async function (event) {
 </html>`;
 
   console.log('[test-email] enviando email de prueba a', toEmail);
+
+  const smtpHost = process.env.SMTP_HOST;
+  const smtpUser = process.env.SMTP_USER;
+  const smtpPass = process.env.SMTP_PASS;
+  const smtpPort = parseInt(process.env.SMTP_PORT || '587', 10);
+
+  if (smtpHost && smtpUser && smtpPass) {
+    console.log('[test-email] → enviando via SMTP host:', smtpHost, 'puerto:', smtpPort);
+    try {
+      const transporter = nodemailer.createTransport({
+        host: smtpHost,
+        port: smtpPort,
+        secure: smtpPort === 465,
+        auth: { user: smtpUser, pass: smtpPass },
+      });
+      await transporter.sendMail({
+        from: 'Easy Camino Santiago <info@easycaminosantiago.com>',
+        to: toEmail,
+        subject: '[TEST] Depósito recibido — Empezamos a organizar tu Camino',
+        html: clientHtml,
+      });
+      console.log('[test-email] ✓ enviado OK via SMTP a', toEmail);
+      return json(200, { ok: true, via: 'smtp', sentTo: toEmail, note: 'TEST — datos ficticios, sin pago real' });
+    } catch (err) {
+      console.error('[test-email] ✗ excepción SMTP:', err.message);
+      return json(500, { ok: false, error: err.message });
+    }
+  }
+
+  // Fallback → Resend
+  console.warn('[test-email] SMTP no configurado — usando Resend como fallback');
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error('[test-email] RESEND_API_KEY no configurada y SMTP tampoco');
+    return json(500, { error: 'No email transport configured (SMTP or Resend)' });
+  }
   const result = await resendPost(
     {
       from: 'Easy Camino Santiago <info@easycaminosantiago.com>',
@@ -204,6 +235,7 @@ exports.handler = async function (event) {
 
   return json(result.status >= 400 ? 500 : 200, {
     ok: result.status < 400,
+    via: 'resend',
     resendStatus: result.status,
     resendBody: result.body,
     sentTo: toEmail,
