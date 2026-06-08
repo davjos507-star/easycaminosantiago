@@ -355,9 +355,10 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
     <!-- LOGO -->
     <tr>
       <td style="background:#ffffff;padding:40px 40px 32px;text-align:center;">
-        <img src="https://easycaminosantiago.com/logo/favicon-easy.png"
+        <img src="https://easycaminosantiago.com/img/logo-ecs-email.png"
           alt="Easy Camino Santiago"
-          style="display:block;margin:0 auto;max-width:180px;width:180px;height:auto;">
+          width="200" height="200"
+          style="display:block;margin:0 auto;width:200px;height:auto;border:0;outline:none;text-decoration:none;">
       </td>
     </tr>
 
@@ -555,9 +556,10 @@ function buildEmail(firstName, { heading, intro, tableRows, responsePromise }) {
 
     <tr>
       <td style="background:#ffffff;padding:32px 32px 24px;text-align:center;">
-        <img src="https://easycaminosantiago.com/logo/favicon-easy.png"
+        <img src="https://easycaminosantiago.com/img/logo-ecs-email.png"
           alt="Easy Camino Santiago"
-          style="display:block;margin:0 auto;max-width:160px;width:160px;height:auto;">
+          width="200" height="200"
+          style="display:block;margin:0 auto;width:200px;height:auto;border:0;outline:none;text-decoration:none;">
       </td>
     </tr>
     <tr>
