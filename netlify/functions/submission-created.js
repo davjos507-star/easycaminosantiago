@@ -1,6 +1,7 @@
-// Netlify Function: auto-reply email for all Netlify Forms submissions.
+// Netlify Function: auto-reply email + HubSpot CRM sync for all Netlify Forms submissions.
 // Triggered automatically by Netlify for every form submission (event: submission-created).
-// Requires env var: RESEND_API_KEY  (resend.com)
+// Env vars required: SMTP_HOST, SMTP_USER, SMTP_PASS, SMTP_PORT (email)
+//                    HUBSPOT_TOKEN (HubSpot Private App Token, optional — sync skipped if absent)
 //
 // Forms handled:
 //   reserva              → tarjeta: skip (send-booking-email handles it after Stripe)
@@ -40,6 +41,37 @@ function resendPost(payload, apiKey) {
     });
     req.on('error', reject);
     req.write(body);
+    req.end();
+  });
+}
+
+function hubspotRequest(method, path, token, body) {
+  return new Promise((resolve, reject) => {
+    const data = body ? JSON.stringify(body) : null;
+    const options = {
+      hostname: 'api.hubapi.com',
+      path,
+      method,
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json',
+        ...(data && { 'Content-Length': Buffer.byteLength(data) }),
+      },
+    };
+    const req = https.request(options, res => {
+      let responseData = '';
+      res.on('data', chunk => { responseData += chunk; });
+      res.on('end', () => {
+        if (!responseData.trim()) {
+          resolve({ status: res.statusCode, body: null });
+          return;
+        }
+        try { resolve({ status: res.statusCode, body: JSON.parse(responseData) }); }
+        catch (e) { resolve({ status: res.statusCode, body: responseData }); }
+      });
+    });
+    req.on('error', reject);
+    if (data) req.write(data);
     req.end();
   });
 }
@@ -143,6 +175,7 @@ exports.handler = async function (event) {
     }
 
     console.log('[SC] ✓ email enviado OK via SMTP a', toEmail, '| formulario:', formName);
+    try { await syncToHubspot(formName, data); } catch (e) { console.error('[HS] ✗ error inesperado:', e.message); }
     return ok('sent');
   }
 
@@ -179,6 +212,7 @@ exports.handler = async function (event) {
   }
 
   console.log('[SC] ✓ email enviado OK via Resend a', toEmail);
+  try { await syncToHubspot(formName, data); } catch (e) { console.error('[HS] ✗ error inesperado:', e.message); }
   return ok('sent');
 };
 
@@ -629,4 +663,129 @@ function buildEmail(firstName, { heading, intro, tableRows, responsePromise }) {
 
 function ok(body) {
   return { statusCode: 200, body };
+}
+
+// ---------------------------------------------------------------------------
+// HubSpot CRM sync — crea o actualiza contacto + añade nota con detalles
+// ---------------------------------------------------------------------------
+
+async function syncToHubspot(formName, data) {
+  const token = process.env.HUBSPOT_TOKEN;
+  if (!token) {
+    console.warn('[HS] HUBSPOT_TOKEN no configurado — sync omitido');
+    return;
+  }
+
+  const email = (data.email || '').trim().toLowerCase();
+  if (!email || !email.includes('@')) {
+    console.log('[HS] email sin datos suficientes — sync omitido (formName=' + formName + ')');
+    return;
+  }
+
+  // Formularios de tracking sin contacto real — omitir
+  const skipForms = ['encuesta-open', 'encuesta-respuestas', 'llamada', 'presupuesto'];
+  if (skipForms.includes(formName)) {
+    console.log('[HS] formulario tracking — sync omitido:', formName);
+    return;
+  }
+
+  // ── Construir nombre ──────────────────────────────────────────────────────
+  let firstname = '';
+  let lastname = '';
+  if (formName === 'solicitud-info-en') {
+    firstname = [data.titulo, data.nombre].filter(Boolean).join(' ').trim();
+    lastname  = (data.apellido || '').trim();
+  } else {
+    const parts = (data.nombre || '').trim().split(/\s+/);
+    firstname = parts[0] || '';
+    lastname  = parts.slice(1).join(' ') || '';
+  }
+
+  // ── Propiedades del contacto ──────────────────────────────────────────────
+  const properties = {
+    email,
+    ...(firstname && { firstname }),
+    ...(lastname  && { lastname }),
+    ...(data.telefono && { phone: data.telefono }),
+    lifecyclestage: 'lead',
+  };
+
+  // ── Buscar contacto existente ─────────────────────────────────────────────
+  let contactId;
+  try {
+    const search = await hubspotRequest('POST', '/crm/v3/objects/contacts/search', token, {
+      filterGroups: [{ filters: [{ propertyName: 'email', operator: 'EQ', value: email }] }],
+      properties: ['email'],
+      limit: 1,
+    });
+
+    const existing = search.body && search.body.results && search.body.results[0];
+
+    if (existing) {
+      const upd = await hubspotRequest('PATCH', '/crm/v3/objects/contacts/' + existing.id, token, { properties });
+      if (upd.status >= 400) {
+        console.error('[HS] ✗ error HubSpot al actualizar — status:', upd.status, JSON.stringify(upd.body));
+        return;
+      }
+      contactId = existing.id;
+      console.log('[HS] ✓ contacto actualizado id:', contactId, '| email:', email, '| formulario:', formName);
+    } else {
+      const created = await hubspotRequest('POST', '/crm/v3/objects/contacts', token, { properties });
+      if (created.status >= 400) {
+        console.error('[HS] ✗ error HubSpot al crear — status:', created.status, JSON.stringify(created.body));
+        return;
+      }
+      contactId = created.body.id;
+      console.log('[HS] ✓ contacto creado id:', contactId, '| email:', email, '| formulario:', formName);
+    }
+  } catch (err) {
+    console.error('[HS] ✗ error HubSpot (contacto):', err.message);
+    return;
+  }
+
+  // ── Construir nota con detalles del formulario ────────────────────────────
+  const pilgrimsLabel = [
+    data.adultos && data.adultos !== '0' && data.adultos + ' adultos',
+    data.ninos   && data.ninos   !== '0' && data.ninos   + ' niños',
+  ].filter(Boolean).join(', ');
+
+  const noteLines = [
+    'Formulario: ' + formName,
+    'Fuente: Web / Netlify Forms',
+    data.ruta            && 'Ruta: '              + data.ruta,
+    data.alojamiento     && 'Alojamiento: '       + data.alojamiento,
+    data.fecha           && 'Fecha aprox.: '      + data.fecha,
+    data['fecha-inicio'] && 'Fecha inicio: '      + data['fecha-inicio'],
+    data.personas        && 'Peregrinos: '        + data.personas,
+    pilgrimsLabel        && 'Peregrinos: '        + pilgrimsLabel,
+    data.localidad       && 'Localidad: '         + data.localidad,
+    data.asunto          && 'Asunto: '            + data.asunto,
+    data.mensaje         && 'Mensaje: '           + data.mensaje,
+    data.observaciones   && 'Observaciones: '     + data.observaciones,
+    data.total           && 'Total: '             + data.total + ' €',
+    data.deposito        && 'Depósito: '          + data.deposito + ' €',
+    data.referencia      && 'Referencia: '        + data.referencia,
+  ].filter(Boolean).join('\n');
+
+  if (!noteLines) return;
+
+  try {
+    const note = await hubspotRequest('POST', '/crm/v3/objects/notes', token, {
+      properties: {
+        hs_note_body: noteLines,
+        hs_timestamp: new Date().toISOString(),
+      },
+      associations: [{
+        to:    { id: contactId },
+        types: [{ associationCategory: 'HUBSPOT_DEFINED', associationTypeId: 202 }],
+      }],
+    });
+    if (note.status >= 400) {
+      console.error('[HS] ✗ error HubSpot (nota) — status:', note.status, JSON.stringify(note.body));
+    } else {
+      console.log('[HS] ✓ nota añadida al contacto', contactId);
+    }
+  } catch (err) {
+    console.error('[HS] ✗ error HubSpot (nota):', err.message);
+  }
 }
