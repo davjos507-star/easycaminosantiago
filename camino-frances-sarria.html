@@ -14,8 +14,8 @@
     <link rel="icon" type="image/png" href="favicon.png">
   <link rel="apple-touch-icon" href="favicon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Camino de Santiago desde Sarria: últimos 100 km | Precio y etapas</title>
-  <meta name="description" content="Organiza el Camino de Santiago desde Sarria hasta Santiago: últimos 100 km del Camino Francés, 5 o 6 etapas, alojamientos, traslado de mochila y asistencia.">
+  <title>Camino de Santiago desde Sarria | Precio desde 549 € | Paquete organizado 5 etapas</title>
+  <meta name="description" content="Camino de Santiago organizado desde Sarria: 100 km, 5 etapas, desde 549 € por persona. Habitación privada, traslado de equipaje y asistencia incluidos. Agencia local en Galicia.">
   <meta name="keywords" content="camino santiago desde sarria, ultimas 100km camino frances, camino santiago sarria precio, compostela sarria, camino frances sarria santiago, paquete sarria santiago">
   <link rel="stylesheet" href="style.css?v=20260526">
   <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
@@ -150,20 +150,57 @@
       .mh-item:nth-child(even) { border-right:none; }
       .mh-item:nth-last-child(-n+2) { border-bottom:none; }
     }
+
+    /* ===== HERO INFO BADGES ===== */
+    .hero-info-badges { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; justify-content:center; }
+    .hero-info-badge { background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.45); color:white; padding:7px 16px; border-radius:24px; font-size:0.8rem; font-family:'Raleway',sans-serif; font-weight:700; backdrop-filter:blur(4px); white-space:nowrap; line-height:1.3; }
+    .hero-info-badge strong { color:#F3A949; }
+    @media(max-width:600px){ .hero-info-badge { font-size:0.73rem; padding:5px 11px; } }
+
+    /* ===== TRUST BAR ===== */
+    .ecs-trust-bar { background:#2D4A52; padding:18px 40px; }
+    .ecs-trust-inner { max-width:1000px; margin:0 auto; display:flex; flex-wrap:wrap; gap:14px 28px; justify-content:center; align-items:center; }
+    .ecs-trust-item { display:flex; align-items:center; gap:8px; color:rgba(255,255,255,0.9); font-family:'Raleway',sans-serif; font-size:0.8rem; font-weight:600; }
+    .ecs-trust-item svg { flex-shrink:0; color:#56A1A4; }
+    .ecs-trust-sep { color:rgba(255,255,255,0.2); font-size:1.2rem; line-height:1; }
+    @media(max-width:600px){ .ecs-trust-bar { padding:14px 20px; } .ecs-trust-sep { display:none; } }
+
+    /* ===== SEO PRECIO SECTION ===== */
+    .seo-precio-section { background:#f9fcfc; padding:72px 40px; border-top:1px solid rgba(86,161,164,0.12); }
+    .seo-precio-inner { max-width:1000px; margin:0 auto; }
+    .seo-precio-content { display:grid; grid-template-columns:1fr 300px; gap:48px; align-items:start; margin-top:36px; }
+    .seo-precio-text h3 { font-family:'Raleway',sans-serif; font-size:1.05rem; font-weight:800; color:#2D4A52; margin:26px 0 8px; line-height:1.3; }
+    .seo-precio-text h3:first-child { margin-top:0; }
+    .seo-precio-text p { font-size:0.93rem; line-height:1.8; color:#4b5b5a; margin-bottom:14px; font-family:sans-serif; }
+    .seo-precio-text p strong { color:#2D4A52; }
+    .spc-card { background:white; border-radius:16px; border:1.5px solid rgba(86,161,164,0.25); box-shadow:0 6px 28px rgba(86,161,164,0.12); padding:24px; position:sticky; top:80px; }
+    .spc-label { font-size:0.63rem; font-weight:700; color:#56A1A4; text-transform:uppercase; letter-spacing:1.8px; font-family:sans-serif; margin:0 0 6px; }
+    .spc-name { font-family:'Raleway',sans-serif; font-size:0.95rem; font-weight:800; color:#2D4A52; margin:0 0 10px; }
+    .spc-price { font-family:'Raleway',sans-serif; font-size:2.1rem; font-weight:800; color:#2D4A52; line-height:1; }
+    .spc-sub { font-size:0.73rem; color:#6b7a7a; font-family:sans-serif; margin:4px 0 14px; }
+    .spc-list { list-style:none; padding:0; margin:0 0 16px; border-top:1px solid #f0f5f5; padding-top:12px; }
+    .spc-list li { font-size:0.84rem; color:#4b5b5a; padding:5px 0; border-bottom:1px solid #f0f5f5; font-family:sans-serif; display:flex; gap:8px; align-items:flex-start; }
+    .spc-list li::before { content:'✓'; color:#56A1A4; font-weight:800; flex-shrink:0; margin-top:1px; }
+    .spc-cta { display:block; text-align:center; padding:12px 20px; border-radius:10px; font-family:'Raleway',sans-serif; font-weight:700; font-size:0.9rem; text-decoration:none; background:#56A1A4; color:white; margin-bottom:8px; transition:background 0.2s; }
+    .spc-cta:hover { background:#2D4A52; color:white; }
+    .spc-cta2 { display:block; text-align:center; padding:10px 20px; border-radius:10px; font-family:'Raleway',sans-serif; font-weight:700; font-size:0.85rem; color:#56A1A4; border:2px solid #56A1A4; background:transparent; cursor:pointer; width:100%; transition:background 0.2s; }
+    .spc-cta2:hover { background:rgba(86,161,164,0.08); }
+    @media(max-width:860px){ .seo-precio-content { grid-template-columns:1fr; } .spc-card { position:static; } }
+    @media(max-width:600px){ .seo-precio-section { padding:48px 20px; } }
   </style>
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Easy Camino Santiago">
   <meta property="og:locale" content="es_ES">
   <meta property="og:url" content="https://easycaminosantiago.com/camino-frances-sarria.html">
-  <meta property="og:title" content="Camino de Santiago desde Sarria: últimos 100 km | Precio y etapas">
-  <meta property="og:description" content="Organiza el Camino de Santiago desde Sarria hasta Santiago: últimos 100 km del Camino Francés, 5 o 6 etapas, alojamientos, traslado de mochila y asistencia.">
+  <meta property="og:title" content="Camino de Santiago desde Sarria | Desde 549 € | Paquete organizado">
+  <meta property="og:description" content="Camino organizado desde Sarria: 100 km, 5 etapas, desde 549 € por persona. Habitación privada, traslado de equipaje y asistencia. Agencia local en Galicia.">
   <meta property="og:image" content="https://easycaminosantiago.com/img/camino-santiago-sarria-peregrina.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Camino de Santiago desde Sarria: últimos 100 km | Precio y etapas">
-  <meta name="twitter:description" content="Organiza el Camino de Santiago desde Sarria hasta Santiago: últimos 100 km del Camino Francés, 5 o 6 etapas, alojamientos, traslado de mochila y asistencia.">
+  <meta name="twitter:title" content="Camino de Santiago desde Sarria | Desde 549 € | Paquete organizado">
+  <meta name="twitter:description" content="Camino organizado desde Sarria: 100 km, 5 etapas, desde 549 € por persona. Habitación privada, traslado de equipaje y asistencia. Agencia local en Galicia.">
   <meta name="twitter:image" content="https://easycaminosantiago.com/img/camino-santiago-sarria-peregrina.jpg">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="https://easycaminosantiago.com/camino-frances-sarria.html">
@@ -182,7 +219,7 @@
     "telephone":"+34982907629",
     "address":{"@type":"PostalAddress","addressLocality":"Lugo","addressCountry":"ES"}
   },
-  "offers":{"@type":"Offer","price":"399","priceCurrency":"EUR","availability":"https://schema.org/InStock"}
+  "offers":{"@type":"Offer","price":"549","priceCurrency":"EUR","availability":"https://schema.org/InStock"}
 }
 </script>
 <script type="application/ld+json">
@@ -236,6 +273,38 @@
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Es la opción ideal para quienes buscan una experiencia auténtica del Camino de Santiago en menos tiempo, con etapas accesibles y un ambiente peregrino muy vivo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto cuesta el Camino de Santiago desde Sarria con un paquete organizado?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Un paquete organizado del Camino de Santiago desde Sarria cuesta desde 549 € por persona, con habitación privada, desayuno, traslado de mochila y asistencia incluidos durante los 6 días y 5 noches del recorrido. El precio varía según el tipo de alojamiento (pensión, hotel o casa rural) y la temporada."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Es posible hacer el Camino desde Sarria con habitación privada?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Todos nuestros paquetes del Camino organizado desde Sarria incluyen habitación privada en pensiones, hostales, casas rurales y pequeños hoteles seleccionados en cada etapa. No trabajamos con albergues de literas, ya que priorizamos el descanso real del peregrino."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto cuesta el Camino de Santiago 100 km desde Sarria por libre?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Haciendo los 100 km del Camino desde Sarria por libre, el gasto diario suele rondar entre 40 y 80 € por persona, incluyendo alojamiento (albergue o pensión), comidas y extras. En total, unos 250–500 € según el tipo de alojamiento y el estilo de viaje. Con un paquete organizado, desde 549 € lo tienes todo reservado y gestionado."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuál es la mejor época para hacer el Camino de Santiago desde Sarria?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El Camino desde Sarria se puede hacer todo el año. Los meses más recomendados son mayo, junio y septiembre: buen clima, temperatura agradable y mejor disponibilidad de alojamiento. Julio y agosto son los más concurridos. En invierno hay más tranquilidad y paisajes únicos, pero el clima gallego puede ser lluvioso."
       }
     }
   ]
@@ -342,9 +411,15 @@
   <img class="page-hero-img" src="img/camino-santiago-sarria-peregrina.jpg" alt="Camino de Santiago desde Sarria, últimos 100 km del Camino Francés" width="1600" height="600" loading="eager" fetchpriority="high">
   <div class="page-hero-content">
     <h1>Camino de Santiago desde Sarria: últimos 100 km</h1>
-    <p>Camina hasta Santiago con alojamiento, equipaje y asistencia organizados.</p>
+    <p>Camino de Santiago organizado desde Sarria: alojamiento, equipaje y asistencia incluidos. Tú solo camina.</p>
     <div class="hero-cta-group">
-      <a href="reserva.html" class="btn-hero-primary">Solicitar presupuesto</a>
+      <a href="reserva.html?ruta=sarria" class="btn-hero-primary">Solicitar presupuesto</a>
+    </div>
+    <div class="hero-info-badges">
+      <span class="hero-info-badge"><strong>Desde 549 €</strong> / persona</span>
+      <span class="hero-info-badge">6 días · 5 noches</span>
+      <span class="hero-info-badge">Habitación privada disponible</span>
+      <span class="hero-info-badge">Traslado de equipaje incluido</span>
     </div>
   </div>
 </div>
@@ -407,8 +482,8 @@
         </div>
         <div class="sarria-ficha-price-band">
           <div class="sarria-ficha-price-label">Desde</div>
-          <div class="sarria-ficha-price-num">399€</div>
-          <div class="sarria-ficha-price-sub">por persona · todo incluido</div>
+          <div class="sarria-ficha-price-num">549€</div>
+          <div class="sarria-ficha-price-sub">por persona · 6 noches · todo incluido</div>
         </div>
         <div class="sarria-ficha-btns">
           <a href="reserva.html?ruta=sarria" class="sarria-fbt sarria-fbt-primary">Solicitar presupuesto</a>
@@ -419,6 +494,31 @@
     </div>
   </div>
 </section>
+
+<!-- TRUST BAR -->
+<div class="ecs-trust-bar">
+  <div class="ecs-trust-inner">
+    <div class="ecs-trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span>Agencia local en Galicia, a 20 min de Sarria</span>
+    </div>
+    <span class="ecs-trust-sep">·</span>
+    <div class="ecs-trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.8 12.8 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.8 12.8 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <span>Asistencia antes y durante el Camino</span>
+    </div>
+    <span class="ecs-trust-sep">·</span>
+    <div class="ecs-trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Atención personalizada, presupuesto en 24h</span>
+    </div>
+    <span class="ecs-trust-sep">·</span>
+    <div class="ecs-trust-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      <span>Organizamos todo — tú solo tienes que caminar</span>
+    </div>
+  </div>
+</div>
 
 <!-- GALLERY -->
 <section class="sarria-gallery-section">
@@ -585,6 +685,20 @@
   </div>
 </section>
 
+<!-- CTA ORGANIZA TU CAMINO -->
+<section style="background:white;padding:48px 40px;border-top:1px solid rgba(86,161,164,0.12);border-bottom:1px solid rgba(86,161,164,0.12);">
+  <div style="max-width:780px;margin:0 auto;text-align:center;">
+    <p style="font-family:'Raleway',sans-serif;font-size:0.7rem;font-weight:700;color:#56A1A4;text-transform:uppercase;letter-spacing:2px;margin:0 0 10px;">Easy Camino Santiago · Agencia local en Galicia</p>
+    <h2 style="font-family:'Raleway',sans-serif;font-size:1.7rem;font-weight:800;color:#2D4A52;margin:0 0 14px;line-height:1.25;">Organiza tu Camino desde Sarria con nosotros</h2>
+    <p style="font-family:sans-serif;font-size:0.97rem;color:#4b5b5a;line-height:1.75;margin:0 0 28px;">Somos una agencia especializada en el Camino de Santiago con base en Lugo, a 20 minutos de Sarria. Llevamos años organizando el tramo Sarria–Santiago para peregrinos de toda España y Europa. Nos encargamos de todo — alojamientos, traslado de mochila, credencial, itinerario y asistencia — para que tú solo tengas que caminar.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+      <a href="reserva.html?ruta=sarria" style="background:#56A1A4;color:white;padding:14px 28px;border-radius:10px;font-family:'Raleway',sans-serif;font-weight:700;font-size:0.95rem;text-decoration:none;display:inline-block;">Solicitar presupuesto gratis</a>
+      <button onclick="ecsOpenCallback()" style="background:transparent;color:#56A1A4;border:2px solid #56A1A4;padding:14px 28px;border-radius:10px;font-family:'Raleway',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;">Consultar disponibilidad</button>
+    </div>
+    <p style="font-family:sans-serif;font-size:0.82rem;color:#8a9a9a;margin:16px 0 0;">Respuesta garantizada en menos de 24 horas · Sin compromiso</p>
+  </div>
+</section>
+
 <!-- VALORES -->
 <section class="testimonios ecs-section" style="padding:64px 40px;">
   <div class="section-title">
@@ -698,6 +812,57 @@
       <h2>Alojamiento seleccionado con cuidado</h2>
       <p>Trabajamos con <strong>pensiones, hostales, casas rurales y pequeños hoteles</strong> en cada etapa del Camino. Priorizamos habitación privada, descanso real, buena ubicación y baño privado según disponibilidad. Nada de albergues de literas si no es lo que buscas.</p>
       <button onclick="ecsOpenAloj()" class="sarria-aloj-btn">Ver tipos de alojamiento</button>
+    </div>
+  </div>
+</section>
+
+<!-- SEO PRECIO SECTION -->
+<section class="seo-precio-section">
+  <div class="seo-precio-inner">
+    <div class="section-title">
+      <h2>¿Cuánto cuesta el Camino de Santiago desde Sarria?</h2>
+      <p>Todo lo que necesitas saber antes de decidirte</p>
+      <div class="linea"></div>
+    </div>
+    <div class="seo-precio-content">
+      <div class="seo-precio-text">
+
+        <h3>El precio del Camino de Santiago organizado desde Sarria</h3>
+        <p>El Camino de Santiago organizado desde Sarria cuesta <strong>desde 549 € por persona</strong> con habitación privada, desayuno, traslado de mochila diario y asistencia durante todo el recorrido. Es la opción más popular para quienes buscan vivir el Camino de verdad sin tener que preocuparse de gestionar reservas, logística ni imprevistos.</p>
+        <p>Nuestra agencia está en Lugo, a solo 20 minutos de Sarria, lo que significa que conocemos cada alojamiento, cada etapa y cada aldea del trayecto. No trabajamos como intermediarios: gestionamos todo directamente.</p>
+
+        <h3>¿Cuánto cuesta el Camino desde Sarria por libre?</h3>
+        <p>Si haces los 100 km del Camino desde Sarria por tu cuenta, el gasto diario suele rondar entre 40 y 80 € por persona, dependiendo del tipo de alojamiento y las comidas. Un albergue de peregrinos puede costar entre 12 y 20 € la noche, mientras que una pensión con habitación privada ronda los 30–60 €. En total, entre 250 y 500 € según el estilo de viaje — pero sin el itinerario organizado, el traslado de mochila ni la asistencia.</p>
+
+        <h3>Albergue vs habitación privada: ¿qué diferencia hay?</h3>
+        <p>En un albergue de peregrinos pagas menos, pero compartes habitación en literas con otros peregrinos, sin intimidad ni garantía de descanso. Con <strong>habitación privada</strong>, duermes solo o en pareja, con tu propio espacio para recuperarte cada noche. Cuando vas a caminar 18–28 km al día durante 5 o 6 etapas consecutivas, el descanso importa mucho más de lo que parece.</p>
+        <p>En Easy Camino Santiago <strong>solo trabajamos con habitación privada</strong> — pensiones, hostales, casas rurales y pequeños hoteles seleccionados por nosotros. No incluimos albergues de literas en nuestros paquetes.</p>
+
+        <h3>¿Influye la temporada en el precio del Camino desde Sarria?</h3>
+        <p>Sí, especialmente en julio y agosto, cuando la demanda de alojamiento en el Camino es muy alta y los precios suben. Los meses de <strong>mayo, junio y septiembre</strong> ofrecen mejor disponibilidad, mejor relación calidad-precio y menos masificación en los caminos. En invierno el Camino está muy tranquilo, el clima gallego puede ser lluvioso, pero los paisajes son únicos.</p>
+
+        <h3>¿Qué incluye un paquete del Camino organizado desde Sarria?</h3>
+        <p>Un paquete organizado para hacer el Camino de Santiago desde Sarria incluye: alojamiento reservado en todas las etapas, <strong>traslado diario de mochila</strong> de un alojamiento al siguiente, credencial del peregrino, itinerario personalizado con información de cada etapa, y asistencia telefónica antes y durante el recorrido. En Easy Camino también añadimos atención personalizada y respuesta garantizada en menos de 24 horas.</p>
+
+      </div>
+      <div>
+        <div class="spc-card">
+          <p class="spc-label">Paquete más reservado</p>
+          <h3 class="spc-name">Habitación privada estándar</h3>
+          <div class="spc-price">549€</div>
+          <div class="spc-sub">por persona · 6 días · 5 noches</div>
+          <ul class="spc-list">
+            <li>Habitación privada en todas las etapas</li>
+            <li>Desayuno incluido cada mañana</li>
+            <li>Traslado de mochila diario</li>
+            <li>Credencial del peregrino</li>
+            <li>Itinerario personalizado</li>
+            <li>Asistencia durante el Camino</li>
+          </ul>
+          <a href="reserva.html?ruta=sarria" class="spc-cta">Solicitar presupuesto</a>
+          <button onclick="ecsOpenCallback()" class="spc-cta2">Consultar disponibilidad</button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -876,6 +1041,22 @@
           <div class="faq-item">
             <button class="faq-q" onclick="ecsFaqToggle(this)">¿Cómo organizar el Camino para un grupo privado?</button>
             <div class="faq-a">A partir de <strong>6 personas</strong> preparamos un presupuesto personalizado con precio especial por persona. Podemos adaptar fechas, ritmo, tipo de alojamiento y servicios. <a href="reserva.html?ruta=sarria&amp;tipo=grupo" style="color:#56A1A4;">Pedir presupuesto para grupo →</a></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="ecsFaqToggle(this)">¿Cuánto cuesta hacer el Camino de Santiago desde Sarria?</button>
+            <div class="faq-a">Un paquete organizado del Camino desde Sarria cuesta <strong>desde 549 € por persona</strong> con habitación privada, desayuno, traslado de mochila y asistencia incluidos. Hacerlo por libre suele costar entre 40 y 80 € al día: alojamiento (12–60 € según albergue o pensión), comidas y extras. En total, entre 250 y 500 € por libre — pero sin itinerario, sin traslado de mochila y sin asistencia.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="ecsFaqToggle(this)">¿Se incluye el transporte de equipaje en el paquete?</button>
+            <div class="faq-a">Sí. En todos nuestros paquetes el <strong>traslado diario de mochila</strong> está incluido. Cada mañana recogen tu mochila en el alojamiento y la llevan al siguiente. Tú caminas con solo una pequeña mochila de día, lo que hace el Camino mucho más cómodo y agradable.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="ecsFaqToggle(this)">¿Es posible habitación privada en el Camino desde Sarria?</button>
+            <div class="faq-a">Sí, y es lo que ofrecemos siempre. En nuestros paquetes <strong>solo trabajamos con habitación privada</strong> — pensiones, hostales, casas rurales y pequeños hoteles seleccionados en cada etapa. No incluimos albergues de literas. La habitación privada garantiza mejor descanso, más intimidad y más energía para cada jornada.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" onclick="ecsFaqToggle(this)">¿Cuál es la mejor época para hacer el Camino desde Sarria?</button>
+            <div class="faq-a">El Camino de Santiago desde Sarria se puede hacer <strong>todo el año</strong>. Los meses más recomendados son <strong>mayo, junio y septiembre</strong>: buen clima, temperatura agradable y mejor disponibilidad de alojamiento. Julio y agosto son los más calurosos y con más afluencia de peregrinos. En invierno hay tranquilidad y paisajes únicos, pero lleva siempre chubasquero — Galicia es lluviosa.</div>
           </div>
         </div>
       </div>
