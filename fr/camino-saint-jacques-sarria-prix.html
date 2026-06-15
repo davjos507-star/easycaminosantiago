@@ -218,6 +218,9 @@
     .fr-faq-item.open .fr-faq-a { display: block; }
 
     /* Mobile fixes */
+    @media(max-width:768px){
+      .whatsapp-float { bottom: 16px; right: 16px; }
+    }
     @media(max-width:640px) {
       .fr-prix-banner .prix-value { font-size: 2rem; }
       .fr-inclusion-card { padding: 18px 16px; gap: 12px; }
@@ -349,28 +352,28 @@
 <!-- ROUTE STRIP -->
 <div class="route-strip">
   <div class="route-strip-item"><strong>115 km</strong><span>Distance totale</span></div>
-  <div class="page-subnav" id="page-subnav">
-    <div class="page-subnav-inner">
-      <nav class="page-subnav-tabs" id="subnav-tabs">
-        <a href="#sec-inclus" class="subnav-tab" data-sec="sec-inclus">Ce qui est inclus</a>
-        <a href="#sec-etapes" class="subnav-tab" data-sec="sec-etapes">Étapes</a>
-        <a href="#sec-confiance" class="subnav-tab" data-sec="sec-confiance">Pourquoi nous ?</a>
-        <a href="#sec-faq" class="subnav-tab" data-sec="sec-faq">FAQ</a>
-      </nav>
-      <div class="page-subnav-btns">
-        <a href="../contacto.html" class="subnav-btn subnav-btn-primary">Devis gratuit</a>
-        <button onclick="ecsOpenCallback()" class="subnav-btn subnav-btn-outline">Rappel gratuit</button>
-      </div>
-    </div>
-  </div>
   <div class="route-strip-item"><strong>5 étapes</strong><span>Itinéraire standard</span></div>
   <div class="route-strip-item"><strong>6 nuits</strong><span>Hébergements inclus</span></div>
-  <div class="route-strip-item"><strong>Facile</strong><span>Niveau de difficulté</span></div>
+  <div class="route-strip-item"><strong>Facile</strong><span>Difficulté</span></div>
   <div class="route-strip-item"><strong>Toute l'année</strong><span>Disponibilité</span></div>
+</div>
+<div class="page-subnav" id="page-subnav">
+  <div class="page-subnav-inner">
+    <nav class="page-subnav-tabs" id="subnav-tabs">
+      <a href="#sec-inclus" class="subnav-tab" data-sec="sec-inclus">Ce qui est inclus</a>
+      <a href="#sec-etapes" class="subnav-tab" data-sec="sec-etapes">Étapes</a>
+      <a href="#sec-confiance" class="subnav-tab" data-sec="sec-confiance">Pourquoi nous ?</a>
+      <a href="#sec-faq" class="subnav-tab" data-sec="sec-faq">FAQ</a>
+    </nav>
+    <div class="page-subnav-btns">
+      <a href="../contacto.html" class="subnav-btn subnav-btn-primary">Devis gratuit</a>
+      <button onclick="ecsOpenCallback()" class="subnav-btn subnav-btn-outline">Rappel gratuit</button>
+    </div>
+  </div>
 </div>
 
 <!-- CE QUI EST INCLUS -->
-<section style="background:white;padding:72px 24px;" id="sec-inclus">
+<section style="background:white;padding:56px 24px;" id="sec-inclus">
   <div style="max-width:920px;margin:0 auto;">
     <div class="section-title">
       <h2>Ce qui est inclus dans votre forfait</h2>
@@ -452,7 +455,7 @@
 </section>
 
 <!-- ÉTAPES -->
-<section style="background:#f0f7f8;padding:72px 24px;" id="sec-etapes">
+<section style="background:#f0f7f8;padding:56px 24px;" id="sec-etapes">
   <div style="max-width:920px;margin:0 auto;">
     <div class="section-title">
       <h2>Les étapes du Camino depuis Sarria</h2>
@@ -524,7 +527,7 @@
 </section>
 
 <!-- CONFIANCE -->
-<section style="background:white;padding:72px 24px;" id="sec-confiance">
+<section style="background:white;padding:56px 24px;" id="sec-confiance">
   <div style="max-width:920px;margin:0 auto;">
     <div class="section-title">
       <h2>Pourquoi choisir Easy Camino Santiago ?</h2>
@@ -539,11 +542,11 @@
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;margin-bottom:48px;">
       <div style="text-align:center;padding:28px 16px;background:#f8fbfb;border-radius:14px;border:1px solid rgba(86,161,164,0.12);">
         <div style="font-family:'Raleway',sans-serif;font-size:2rem;font-weight:800;color:#F3A949;margin-bottom:8px;">+500</div>
-        <div style="font-family:'Lato',sans-serif;font-size:0.84rem;color:#4b5b5a;line-height:1.4;">Pèlerins organisés</div>
+        <div style="font-family:'Lato',sans-serif;font-size:0.84rem;color:#4b5b5a;line-height:1.4;">Pèlerins accompagnés</div>
       </div>
       <div style="text-align:center;padding:28px 16px;background:#f8fbfb;border-radius:14px;border:1px solid rgba(86,161,164,0.12);">
         <div style="font-family:'Raleway',sans-serif;font-size:2rem;font-weight:800;color:#F3A949;margin-bottom:8px;">&lt; 24 h</div>
-        <div style="font-family:'Lato',sans-serif;font-size:0.84rem;color:#4b5b5a;line-height:1.4;">Réponse garantie</div>
+        <div style="font-family:'Lato',sans-serif;font-size:0.84rem;color:#4b5b5a;line-height:1.4;">Réponse sous 24 h</div>
       </div>
       <div style="text-align:center;padding:28px 16px;background:#f8fbfb;border-radius:14px;border:1px solid rgba(86,161,164,0.12);">
         <div style="font-family:'Raleway',sans-serif;font-size:2rem;font-weight:800;color:#F3A949;margin-bottom:8px;">Galice</div>
@@ -569,7 +572,7 @@
 </section>
 
 <!-- FAQ -->
-<section style="background:#f0f7f8;padding:72px 24px;" id="sec-faq">
+<section style="background:#f0f7f8;padding:56px 24px;" id="sec-faq">
   <div style="max-width:840px;margin:0 auto;">
     <div class="section-title">
       <h2>Questions fréquentes</h2>
