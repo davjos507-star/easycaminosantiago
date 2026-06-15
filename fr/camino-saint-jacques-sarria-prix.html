@@ -106,39 +106,26 @@
     /* Prix banner */
     .fr-prix-banner {
       background: linear-gradient(135deg, #2D4A52 0%, #56A1A4 100%);
-      padding: 32px 24px;
+      padding: 44px 24px;
       text-align: center;
-    }
-    .fr-prix-banner .prix-label {
-      font-family: 'Lato', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: rgba(255,255,255,0.72);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 8px;
     }
     .fr-prix-banner .prix-value {
       font-family: 'Raleway', sans-serif;
-      font-size: 2.6rem;
+      font-size: 2.8rem;
       font-weight: 800;
       color: white;
-      line-height: 1.05;
-      margin-bottom: 6px;
+      line-height: 1;
+      margin-bottom: 14px;
     }
     .fr-prix-banner .prix-sub {
       font-family: 'Lato', sans-serif;
-      font-size: 0.88rem;
-      color: rgba(255,255,255,0.82);
-      margin-bottom: 10px;
-    }
-    .fr-prix-banner .prix-details {
-      font-family: 'Lato', sans-serif;
-      font-size: 0.84rem;
+      font-size: 0.9rem;
       color: rgba(255,255,255,0.78);
-      max-width: 560px;
-      margin: 0 auto;
-      line-height: 1.55;
+      letter-spacing: 0.3px;
+    }
+    @media(max-width:640px){
+      .fr-prix-banner { padding: 36px 20px; }
+      .fr-prix-banner .prix-value { font-size: 2.2rem; }
     }
 
     /* Inclusions grid */
@@ -343,10 +330,8 @@
 
 <!-- PRIX VISIBLE -->
 <div class="fr-prix-banner">
-  <div class="prix-label">Prix par personne</div>
   <div class="prix-value">À partir de 549 €</div>
-  <div class="prix-sub">Chambre privée · 6 nuits · 5 étapes</div>
-  <div class="prix-details">Hébergement privé, transport de bagages, étapes organisées et assistance locale.</div>
+  <div class="prix-sub">6 nuits · Chambre privée · Transport des bagages inclus</div>
 </div>
 
 <!-- ROUTE STRIP -->
