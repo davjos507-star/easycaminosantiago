@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#56A1A4">
+<meta name="robots" content="noindex, nofollow">
+<title>Notas rápidas HubSpot | Easy Camino Santiago</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;700;800;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #56A1A4;
+  --azul-dark: #2D4A52;
+  --naranja: #F3A949;
+  --gris: #5a6b6a;
+  --bg: #f0f4f4;
+  --white: #ffffff;
+  --border: #d8e8e8;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dark); }
+
+.res-nav { background:var(--white); border-bottom:1px solid var(--border); padding:12px 32px; display:flex; align-items:center; }
+.res-nav img { height:40px; width:auto; }
+
+.page-title-bar { max-width:640px; margin:32px auto 0; padding:0 20px; }
+.page-title-bar h1 { font-family:'Raleway',sans-serif; font-size:1.5rem; font-weight:900; color:var(--azul-dark); text-transform:uppercase; letter-spacing:1px; }
+.page-title-bar p { color:var(--gris); font-size:0.9rem; margin-top:6px; }
+
+.res-main { max-width:640px; margin:24px auto 60px; padding:0 20px; }
+
+.res-card { background:var(--white); border-radius:12px; padding:32px; margin-bottom:20px; }
+.section-h3 { font-size:0.95rem; font-weight:700; color:var(--azul-dark); margin:0 0 16px; padding-bottom:8px; border-bottom:2px solid var(--azul); }
+
+.field-group { display:flex; flex-direction:column; gap:6px; margin-bottom:14px; }
+.field-group label { font-size:0.8rem; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:var(--gris); }
+.field-group input, .field-group textarea { padding:12px 14px; border:1.5px solid var(--border); border-radius:8px; font-size:0.92rem; font-family:'Lato',sans-serif; color:var(--azul-dark); background:var(--white); }
+.field-group input:focus, .field-group textarea:focus { outline:none; border-color:var(--azul); }
+.field-group textarea { resize:vertical; min-height:70px; }
+
+.btn-main { background:var(--azul); color:var(--white); border:none; padding:14px 28px; border-radius:8px; font-family:'Raleway',sans-serif; font-weight:800; font-size:0.92rem; cursor:pointer; text-transform:uppercase; letter-spacing:1px; transition:filter 0.2s; width:100%; }
+.btn-main:hover { filter:brightness(0.9); }
+.btn-main:disabled { opacity:0.6; cursor:not-allowed; }
+
+.quick-btn { display:flex; align-items:center; gap:12px; width:100%; text-align:left; padding:14px 16px; border:1.5px solid var(--border); border-radius:8px; background:var(--white); font-family:'Lato',sans-serif; font-size:0.92rem; font-weight:700; color:var(--azul-dark); cursor:pointer; margin-bottom:10px; transition:all 0.15s; }
+.quick-btn:hover { border-color:var(--azul); background:#f0f9f9; }
+.quick-btn:disabled { opacity:0.5; cursor:not-allowed; }
+.quick-btn .qb-icon { font-size:1.2rem; flex-shrink:0; }
+
+#estado-msg { margin-top:16px; padding:14px 16px; border-radius:8px; font-size:0.88rem; line-height:1.5; display:none; }
+#estado-msg.ok { display:block; background:#eaf7ef; color:#1e7a45; border:1px solid #bfe6cc; }
+#estado-msg.error { display:block; background:#fdeceb; color:#b3261e; border:1px solid #f5c6c2; }
+
+.salir-link { display:inline-block; margin-top:8px; font-size:0.78rem; color:var(--gris); text-decoration:underline; cursor:pointer; background:none; border:none; }
+
+.sugerencias-box { position:absolute; top:100%; left:0; right:0; background:var(--white); border:1.5px solid var(--border); border-radius:8px; margin-top:4px; max-height:240px; overflow-y:auto; z-index:10; box-shadow:0 6px 20px rgba(45,74,82,0.12); }
+.sugerencia-item { padding:10px 14px; cursor:pointer; border-bottom:1px solid var(--border); }
+.sugerencia-item:last-child { border-bottom:none; }
+.sugerencia-item:hover { background:#f0f9f9; }
+.sugerencia-item .si-nombre { font-weight:700; font-size:0.9rem; color:var(--azul-dark); }
+.sugerencia-item .si-email { font-size:0.76rem; color:var(--gris); margin-top:2px; }
+.sugerencia-empty { padding:12px 14px; font-size:0.85rem; color:var(--gris); }
+
+.contacto-sel { display:flex; align-items:center; justify-content:space-between; gap:12px; background:#f0f9f9; border:1.5px solid var(--azul); border-radius:8px; padding:12px 14px; }
+.contacto-sel .cs-info strong { display:block; font-size:0.92rem; color:var(--azul-dark); }
+.contacto-sel .cs-info span { font-size:0.78rem; color:var(--gris); }
+.contacto-sel button { background:none; border:none; color:var(--azul); font-size:0.78rem; font-weight:700; text-decoration:underline; cursor:pointer; flex-shrink:0; }
+</style>
+</head>
+<body>
+
+<nav class="res-nav">
+  <a href="index.html"><img src="easy-camino-santiago-logo.png" alt="Easy Camino Santiago"></a>
+</nav>
+
+<div class="page-title-bar">
+  <h1>Notas rápidas para HubSpot</h1>
+  <p>Herramienta interna: registra acciones de seguimiento en la ficha del contacto sin salir de la web. No modifica los datos del contacto, solo añade una nota con fecha y hora.</p>
+</div>
+
+<div class="res-main">
+
+  <!-- ACCESO -->
+  <div class="res-card" id="card-acceso">
+    <h3 class="section-h3">Acceso</h3>
+    <div class="field-group">
+      <label>Contraseña de acceso</label>
+      <input type="password" id="secret-input" autocomplete="off" onkeydown="if(event.key==='Enter') entrar()">
+    </div>
+    <button class="btn-main" onclick="entrar()">Entrar</button>
+    <div id="acceso-error" style="display:none;color:#b3261e;font-size:0.83rem;margin-top:10px;"></div>
+  </div>
+
+  <!-- HERRAMIENTA -->
+  <div id="tool" style="display:none;">
+
+    <div class="res-card">
+      <h3 class="section-h3">Contacto</h3>
+      <div class="field-group" style="position:relative;">
+        <label>Buscar por nombre o apellido</label>
+        <input type="text" id="contacto-search" placeholder="Escribe 2-3 letras... ej. Emma, Marie, Renn" autocomplete="off" oninput="onBuscarContacto()">
+        <div id="sugerencias" class="sugerencias-box" style="display:none;"></div>
+      </div>
+      <div id="contacto-seleccionado" class="contacto-sel" style="display:none;">
+        <div class="cs-info">
+          <strong id="cs-nombre">—</strong>
+          <span id="cs-email">—</span>
+        </div>
+        <button type="button" onclick="cambiarContacto()">Cambiar</button>
+      </div>
+    </div>
+
+    <div class="res-card">
+      <h3 class="section-h3">Acciones rápidas</h3>
+      <button class="quick-btn" disabled onclick="enviarNota('📧 Presupuesto enviado')"><span class="qb-icon">📧</span> Presupuesto enviado</button>
+      <button class="quick-btn" disabled onclick="enviarNota('💳 Enlace de pago enviado')"><span class="qb-icon">💳</span> Enlace de pago enviado</button>
+      <button class="quick-btn" disabled onclick="enviarNota('💬 WhatsApp enviado')"><span class="qb-icon">💬</span> WhatsApp enviado</button>
+      <button class="quick-btn" disabled onclick="enviarNota('🔄 Seguimiento realizado')"><span class="qb-icon">🔄</span> Seguimiento realizado</button>
+      <button class="quick-btn" disabled onclick="enviarNota('✅ Reserva confirmada')"><span class="qb-icon">✅</span> Reserva confirmada</button>
+      <button class="quick-btn" disabled onclick="enviarNota('❌ Reserva cancelada')"><span class="qb-icon">❌</span> Reserva cancelada</button>
+    </div>
+
+    <div id="estado-msg"></div>
+
+    <button class="salir-link" onclick="salir()">🔒 Cambiar contraseña</button>
+  </div>
+
+</div>
+
+<script>
+const FN_URL = '/.netlify/functions/hubspot-note';
+const SEARCH_URL = '/.netlify/functions/hubspot-search';
+
+let contactoSeleccionado = null; // { id, email, nombre }
+let buscarDebounce = null;
+let buscarSeq = 0;
+let sugerenciasActuales = [];
+
+(function init(){
+  const params = new URLSearchParams(window.location.search);
+  const email = params.get('email');
+  if (email) {
+    contactoSeleccionado = { id: null, email, nombre: params.get('nombre') || email };
+  }
+
+  if (sessionStorage.getItem('ecsAdminSecret')) {
+    mostrarHerramienta();
+  }
+
+  document.addEventListener('click', (e) => {
+    const box = document.getElementById('sugerencias');
+    const input = document.getElementById('contacto-search');
+    if (box && box.style.display !== 'none' && e.target !== input && !box.contains(e.target)) {
+      box.style.display = 'none';
+    }
+  });
+})();
+
+function mostrarHerramienta(){
+  document.getElementById('card-acceso').style.display = 'none';
+  document.getElementById('tool').style.display = 'block';
+  if (contactoSeleccionado) mostrarContactoSeleccionado();
+}
+
+function entrar(){
+  const val = document.getElementById('secret-input').value.trim();
+  if (!val) {
+    document.getElementById('acceso-error').style.display = 'block';
+    document.getElementById('acceso-error').textContent = 'Introduce la contraseña.';
+    return;
+  }
+  sessionStorage.setItem('ecsAdminSecret', val);
+  document.getElementById('acceso-error').style.display = 'none';
+  mostrarHerramienta();
+}
+
+function salir(){
+  sessionStorage.removeItem('ecsAdminSecret');
+  document.getElementById('secret-input').value = '';
+  document.getElementById('tool').style.display = 'none';
+  document.getElementById('card-acceso').style.display = 'block';
+}
+
+function mostrarEstado(tipo, texto){
+  const el = document.getElementById('estado-msg');
+  el.className = tipo;
+  el.textContent = texto;
+}
+
+function setBotonesDisabled(disabled){
+  document.querySelectorAll('.quick-btn').forEach(b => b.disabled = disabled || !contactoSeleccionado);
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function ocultarSugerencias(){
+  document.getElementById('sugerencias').style.display = 'none';
+}
+
+function onBuscarContacto(){
+  contactoSeleccionado = null;
+  document.getElementById('contacto-seleccionado').style.display = 'none';
+  setBotonesDisabled(false);
+  const q = document.getElementById('contacto-search').value.trim();
+  clearTimeout(buscarDebounce);
+  if (q.length < 2) {
+    ocultarSugerencias();
+    return;
+  }
+  buscarDebounce = setTimeout(() => buscarContactos(q), 300);
+}
+
+async function buscarContactos(q){
+  const miSeq = ++buscarSeq;
+  try {
+    const res = await fetch(SEARCH_URL + '?q=' + encodeURIComponent(q), {
+      headers: { 'x-admin-secret': sessionStorage.getItem('ecsAdminSecret') || '' }
+    });
+    if (miSeq !== buscarSeq) return; // hay una búsqueda más reciente en curso
+    if (res.status === 401) {
+      salir();
+      mostrarEstado('error', 'Contraseña incorrecta. Vuelve a introducirla.');
+      return;
+    }
+    const data = await res.json();
+    if (!res.ok) {
+      renderSugerencias([], data.error || 'Error al buscar contactos.');
+      return;
+    }
+    renderSugerencias(data.results || []);
+  } catch (err) {
+    if (miSeq !== buscarSeq) return;
+    renderSugerencias([], 'Error de conexión al buscar contactos.');
+  }
+}
+
+function renderSugerencias(results, errorMsg){
+  sugerenciasActuales = results;
+  const box = document.getElementById('sugerencias');
+  if (errorMsg) {
+    box.innerHTML = '<div class="sugerencia-empty">' + escapeHtml(errorMsg) + '</div>';
+  } else if (!results.length) {
+    box.innerHTML = '<div class="sugerencia-empty">No se encontraron contactos.</div>';
+  } else {
+    box.innerHTML = results.map((c, i) =>
+      '<div class="sugerencia-item" onclick="seleccionarContacto(' + i + ')">' +
+        '<div class="si-nombre">' + escapeHtml(c.nombre) + '</div>' +
+        '<div class="si-email">' + escapeHtml(c.email) + '</div>' +
+      '</div>'
+    ).join('');
+  }
+  box.style.display = 'block';
+}
+
+function seleccionarContacto(i){
+  contactoSeleccionado = sugerenciasActuales[i];
+  document.getElementById('contacto-search').value = '';
+  ocultarSugerencias();
+  mostrarContactoSeleccionado();
+}
+
+function mostrarContactoSeleccionado(){
+  document.getElementById('cs-nombre').textContent = contactoSeleccionado.nombre;
+  document.getElementById('cs-email').textContent = contactoSeleccionado.email;
+  document.getElementById('contacto-seleccionado').style.display = 'flex';
+  setBotonesDisabled(false);
+}
+
+function cambiarContacto(){
+  contactoSeleccionado = null;
+  document.getElementById('contacto-seleccionado').style.display = 'none';
+  document.getElementById('contacto-search').value = '';
+  setBotonesDisabled(false);
+  document.getElementById('contacto-search').focus();
+}
+
+async function enviarNota(nota){
+  if (!contactoSeleccionado) {
+    mostrarEstado('error', 'Busca y selecciona primero un contacto.');
+    return;
+  }
+  const email = contactoSeleccionado.email;
+  setBotonesDisabled(true);
+  mostrarEstado('ok', 'Enviando nota...');
+  try {
+    const res = await fetch(FN_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-admin-secret': sessionStorage.getItem('ecsAdminSecret') || ''
+      },
+      body: JSON.stringify({ email, nota })
+    });
+    const data = await res.json();
+    if (res.status === 401) {
+      salir();
+      mostrarEstado('error', 'Contraseña incorrecta. Vuelve a introducirla.');
+      return;
+    }
+    if (!res.ok) {
+      mostrarEstado('error', data.error || 'No se ha podido añadir la nota.');
+      return;
+    }
+    mostrarEstado('ok', '✅ Nota añadida a ' + (data.contactName || email) + ': "' + nota + '"');
+  } catch (err) {
+    mostrarEstado('error', 'Error de conexión. Inténtalo de nuevo.');
+  } finally {
+    setBotonesDisabled(false);
+  }
+}
+
+</script>
+</body>
+</html>
