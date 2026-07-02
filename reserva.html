@@ -907,7 +907,8 @@ const state = {
   total: 0, deposito: 0,
   metodoPago: 'tarjeta', reservaRef: null,
   stripeInstance: null, cardNumber: null, cardExpiry: null, cardCvc: null,
-  itiInit: false, stripeInit: false
+  itiInit: false, stripeInit: false,
+  piClientSecret: null, piId: null, piStatus: null
 };
 
 // ─── INIT ───────────────────────────────────────────────────────────
@@ -1338,7 +1339,7 @@ function initStripe(){
 }
 
 async function procesarPago(){
-  const btn = document.getElementById('btn-pay');
+  const btn   = document.getElementById('btn-pay');
   const errEl = document.getElementById('stripe-error');
   errEl.textContent = '';
 
@@ -1347,36 +1348,66 @@ async function procesarPago(){
     return;
   }
 
+  // Pago ya en proceso (retraso bancario) — el webhook payment_intent.succeeded lo cerrará
+  if (state.piStatus === 'processing') {
+    errEl.textContent = 'Tu pago ya está siendo procesado. Recibirás la confirmación por email en breve.';
+    return;
+  }
+
   btn.disabled = true;
   btn.textContent = 'Procesando...';
 
+  // ── PaymentIntent: reutilizar si el estado lo permite ──────────────────────
+  // requires_payment_method → tarjeta rechazada pero el PI admite reintento
+  // requires_action         → 3D Secure pendiente, confirmCardPayment lo resuelve
+  // requires_confirmation   → PI creado sin confirmar, reutilizable
+  const reusableStatuses = ['requires_payment_method', 'requires_action', 'requires_confirmation'];
+  const canReuse = state.piClientSecret && reusableStatuses.includes(state.piStatus);
+
+  if (!canReuse) {
+    try {
+      const res = await fetch('/.netlify/functions/create-payment-intent', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          amount: state.deposito,
+          description: 'Depósito reserva ' + (state.rutaData ? state.rutaData.nombre : '') + ' — Easy Camino Santiago',
+          metadata: {
+            ruta:         state.ruta,
+            adultos:      state.adultos,
+            ninos:        state.ninos,
+            alojamiento:  state.alojamiento,
+            fecha_inicio: state.fechaInicio,
+            nombre:       document.getElementById('v-nombre').value + ' ' + document.getElementById('v-apellido').value,
+            email:        document.getElementById('v-email').value,
+            telefono:     document.getElementById('v-tel').value,
+            total:        state.total,
+            tipo_pago:    'deposito',
+            origen:       'reserva'
+          }
+        })
+      });
+      const piData = await res.json();
+      if (!piData.clientSecret) throw new Error(piData.error || 'Error al crear el pago');
+
+      state.piClientSecret = piData.clientSecret;
+      state.piId           = piData.clientSecret.split('_secret_')[0];
+      state.piStatus       = 'requires_payment_method';
+      console.log('[Stripe] PaymentIntent creado | id:', state.piId);
+    } catch(err) {
+      errEl.textContent = 'No se ha podido completar el pago. Por favor, inténtalo de nuevo o contacta con nosotros.';
+      console.error('[Stripe] error al crear PaymentIntent:', err.message);
+      btn.disabled = false;
+      btn.textContent = '🔒 Pagar depósito ahora';
+      return;
+    }
+  } else {
+    console.log('[Stripe] PaymentIntent reutilizado | id:', state.piId, '| estado anterior:', state.piStatus);
+  }
+
+  // ── Confirmar pago con Stripe ─────────────────────────────────────────────
   try {
-    const res = await fetch('/.netlify/functions/create-payment-intent', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        amount: state.deposito,
-        description: 'Depósito reserva ' + (state.rutaData ? state.rutaData.nombre : '') + ' — Easy Camino Santiago',
-        metadata: {
-          ruta:         state.ruta,
-          adultos:      state.adultos,
-          ninos:        state.ninos,
-          alojamiento:  state.alojamiento,
-          fecha_inicio: state.fechaInicio,
-          nombre:       document.getElementById('v-nombre').value + ' ' + document.getElementById('v-apellido').value,
-          email:        document.getElementById('v-email').value,
-          telefono:     document.getElementById('v-tel').value,
-          total:        state.total,
-          tipo_pago:    'deposito',
-          origen:       'reserva'
-        }
-      })
-    });
-
-    const data = await res.json();
-    if (!data.clientSecret) throw new Error(data.error || 'Error al crear el pago');
-
-    const result = await state.stripeInstance.confirmCardPayment(data.clientSecret, {
+    const result = await state.stripeInstance.confirmCardPayment(state.piClientSecret, {
       payment_method: {
         card: state.cardNumber,
         billing_details: {
@@ -1387,6 +1418,9 @@ async function procesarPago(){
     });
 
     if (result.error) {
+      // result.error.payment_intent contiene el estado actualizado del PI
+      state.piStatus = (result.error.payment_intent && result.error.payment_intent.status) || 'requires_payment_method';
+      console.error('[Stripe] error | code:', result.error.code, '| piStatus:', state.piStatus);
       const errores = {
         card_declined:      'Tarjeta denegada. Por favor, usa otra tarjeta o contacta con tu banco.',
         insufficient_funds: 'Fondos insuficientes. Por favor, usa otra tarjeta.',
@@ -1398,13 +1432,14 @@ async function procesarPago(){
         generic_decline:    'Tarjeta denegada. Contacta con tu banco o usa otra tarjeta.',
       };
       errEl.textContent = errores[result.error.code] || 'No se ha podido completar el pago. Por favor, revisa los datos o usa otra tarjeta.';
-      console.error('[Stripe result.error]', result.error);
       state.cardNumber.clear();
       state.cardExpiry.clear();
       state.cardCvc.clear();
       btn.disabled = false;
       btn.textContent = '🔒 Pagar depósito ahora';
+
     } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
+      state.piStatus = 'succeeded';
       try {
         const nlForm = document.querySelector('form[name="reserva"]');
         const nlData = new FormData(nlForm);
@@ -1444,14 +1479,25 @@ async function procesarPago(){
         });
       } catch (e) { /* no bloquea */ }
       window.location.href = 'gracias.html';
+
+    } else if (result.paymentIntent && result.paymentIntent.status === 'processing') {
+      state.piStatus = 'processing';
+      console.log('[Stripe] estado processing | id:', state.piId);
+      // El webhook payment_intent.succeeded actualizará HubSpot en diferido
+      errEl.textContent = 'Tu pago está siendo procesado por el banco. Recibirás la confirmación por email en breve.';
+      btn.disabled = true;
+      btn.textContent = 'Procesando...';
+
     } else {
+      state.piStatus = (result.paymentIntent && result.paymentIntent.status) || 'unknown';
+      console.warn('[Stripe] estado inesperado:', state.piStatus, '| id:', state.piId);
       errEl.textContent = 'No se ha podido verificar el estado del pago. Por favor, contáctanos por teléfono.';
       btn.disabled = false;
       btn.textContent = '🔒 Pagar depósito ahora';
     }
   } catch(err) {
     errEl.textContent = 'No se ha podido completar el pago. Por favor, inténtalo de nuevo o contacta con nosotros.';
-    console.error('[procesarPago catch]', err);
+    console.error('[Stripe] error en confirmCardPayment:', err.message);
     state.cardNumber.clear();
     state.cardExpiry.clear();
     state.cardCvc.clear();
