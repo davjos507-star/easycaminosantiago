@@ -64,6 +64,17 @@ exports.handler = async function(event) {
     };
   }
 
+  // Validación defensiva: email requerido para que el webhook pueda identificar
+  // al contacto en HubSpot. Si falta, se corta aquí sin crear nada en Stripe.
+  const metaEmail = (metadata && typeof metadata.email === 'string') ? metadata.email.trim() : '';
+  if (!metaEmail || !metaEmail.includes('@')) {
+    return {
+      statusCode: 400,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ error: 'Email requerido para crear PaymentIntent' })
+    };
+  }
+
   // El frontend envía euros; Stripe requiere céntimos
   const amountCents = Math.round(amount * 100);
 

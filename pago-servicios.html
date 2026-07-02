@@ -430,11 +430,16 @@ async function procesarPago(){
         amount: importeAhora,
         description: 'Pago de servicio — ' + datos.concepto + ' — Easy Camino Santiago',
         metadata: {
-          tipo: 'pago-servicio',
-          concepto: datos.concepto,
-          cliente: datos.nombre,
-          email: datos.email,
-          total: datos.importe,
+          tipo:       'pago-servicio',
+          concepto:   datos.concepto,
+          ruta:       datos.concepto,
+          cliente:    datos.nombre,
+          nombre:     datos.nombre,
+          email:      datos.email,
+          telefono:   datos.telefono,
+          total:      datos.importe,
+          tipo_pago:  state.opcionPago === '100' ? 'pago_completo' : 'deposito',
+          origen:     'pago-servicios',
           opcionPago: state.opcionPago
         }
       })

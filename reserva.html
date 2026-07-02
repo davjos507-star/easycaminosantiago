@@ -1358,14 +1358,17 @@ async function procesarPago(){
         amount: state.deposito,
         description: 'Depósito reserva ' + (state.rutaData ? state.rutaData.nombre : '') + ' — Easy Camino Santiago',
         metadata: {
-          ruta: state.ruta,
-          adultos: state.adultos,
-          ninos: state.ninos,
-          alojamiento: state.alojamiento,
+          ruta:         state.ruta,
+          adultos:      state.adultos,
+          ninos:        state.ninos,
+          alojamiento:  state.alojamiento,
           fecha_inicio: state.fechaInicio,
-          nombre: document.getElementById('v-nombre').value + ' ' + document.getElementById('v-apellido').value,
-          email: document.getElementById('v-email').value,
-          total: state.total
+          nombre:       document.getElementById('v-nombre').value + ' ' + document.getElementById('v-apellido').value,
+          email:        document.getElementById('v-email').value,
+          telefono:     document.getElementById('v-tel').value,
+          total:        state.total,
+          tipo_pago:    'deposito',
+          origen:       'reserva'
         }
       })
     });
