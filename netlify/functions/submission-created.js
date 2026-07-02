@@ -717,21 +717,28 @@ async function syncToHubspot(formName, data, estadoReserva) {
     lastname  = parts.slice(1).join(' ') || '';
   }
 
+  // Limpia importes: elimina '€', espacios y puntos de miles (formato español "1.200 €" → 1200)
+  const parseAmount = str => {
+    if (!str) return undefined;
+    const n = parseFloat(String(str).replace(/[€\s.]/g, '').replace(',', '.'));
+    return isNaN(n) ? undefined : n;
+  };
+  const importeDeposito = parseAmount(data.deposito);
+  const importeTotal    = parseAmount(data.total);
+
   // ── Propiedades del contacto ──────────────────────────────────────────────
   const properties = {
     email,
-    ...(firstname && { firstname }),
-    ...(lastname  && { lastname }),
-    ...(data.telefono && { phone: data.telefono }),
+    ...(firstname              && { firstname }),
+    ...(lastname               && { lastname }),
+    ...(data.telefono          && { phone:              data.telefono }),
     lifecyclestage: 'lead',
-    // Propiedades personalizadas — crear primero en HubSpot (Configuración → Propiedades de contacto)
-    // y después descomentar estas líneas:
-    // ...(estadoReserva        && { estado_reserva:      estadoReserva }),
-    // ...(data['metodo-pago']  && { metodo_pago_reserva: data['metodo-pago'] }),
-    // ...(data.deposito        && { importe_deposito:    data.deposito }),
-    // ...(data.total           && { importe_total:       data.total }),
-    // ...(data.ruta            && { ruta_reservada:      data.ruta }),
-    // ...(data.referencia      && { stripe_payment_id:   data.referencia }),
+    ...(estadoReserva          && { estado_reserva:      estadoReserva }),
+    ...(data['metodo-pago']    && { metodo_pago_reserva: data['metodo-pago'] }),
+    ...(importeDeposito !== undefined && { importe_deposito: importeDeposito }),
+    ...(importeTotal    !== undefined && { importe_total:    importeTotal }),
+    ...(data.ruta              && { ruta_reservada:      data.ruta }),
+    ...(data.referencia        && { stripe_payment_id:   data.referencia }),
   };
 
   // ── Buscar contacto existente ─────────────────────────────────────────────
