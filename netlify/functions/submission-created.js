@@ -4,8 +4,9 @@
 //                    HUBSPOT_TOKEN (HubSpot Private App Token, optional — sync skipped if absent)
 //
 // Forms handled:
-//   reserva              → tarjeta: skip (send-booking-email handles it after Stripe)
-//                        → transferencia: "reserva recibida, pendiente de pago"
+//   reserva              → HubSpot sync siempre, independiente del email:
+//                          tarjeta: estado=reserva_iniciada, email omitido (send-booking-email lo gestiona)
+//                          transferencia: estado=pendiente_transferencia + email "reserva recibida"
 //   solicitud-info       → email PREMIUM con resumen + CTA encuesta
 //   solicitud-info-en    → idem in English
 //   folleto*             → "tu itinerario está en camino"
@@ -129,9 +130,20 @@ exports.handler = async function (event) {
     return ok('skipped: unhandled form');
   }
 
+  // HubSpot sync — independiente del email: se ejecuta SIEMPRE para el formulario 'reserva'
+  // independientemente del método de pago elegido por el cliente.
+  let hubspotSynced = false;
+  if (formName === 'reserva') {
+    const metodoPago = data['metodo-pago'] || '';
+    const estadoReserva = metodoPago === 'Tarjeta bancaria' ? 'reserva_iniciada' : 'pendiente_transferencia';
+    console.log('[SC] reserva — sync HubSpot independiente | método:', metodoPago, '| estado:', estadoReserva);
+    try { await syncToHubspot(formName, data, estadoReserva); } catch (e) { console.error('[HS] ✗ error inesperado en reserva:', e.message); }
+    hubspotSynced = true;
+  }
+
   if (config === 'SKIP_STRIPE') {
-    console.log('[SC] reserva tarjeta — skip (send-booking-email lo gestiona)');
-    return ok('skipped: stripe payment handled by send-booking-email');
+    console.log('[SC] reserva tarjeta — HubSpot sincronizado, saltando email (send-booking-email lo gestiona)');
+    return ok('skipped: stripe email handled by send-booking-email');
   }
 
   const firstName = (data.nombre || data.name || '').split(' ')[0] || 'Peregrino';
@@ -175,7 +187,9 @@ exports.handler = async function (event) {
     }
 
     console.log('[SC] ✓ email enviado OK via SMTP a', toEmail, '| formulario:', formName);
-    try { await syncToHubspot(formName, data); } catch (e) { console.error('[HS] ✗ error inesperado:', e.message); }
+    if (!hubspotSynced) {
+      try { await syncToHubspot(formName, data, null); } catch (e) { console.error('[HS] ✗ error inesperado:', e.message); }
+    }
     return ok('sent');
   }
 
@@ -212,7 +226,9 @@ exports.handler = async function (event) {
   }
 
   console.log('[SC] ✓ email enviado OK via Resend a', toEmail);
-  try { await syncToHubspot(formName, data); } catch (e) { console.error('[HS] ✗ error inesperado:', e.message); }
+  if (!hubspotSynced) {
+    try { await syncToHubspot(formName, data, null); } catch (e) { console.error('[HS] ✗ error inesperado:', e.message); }
+  }
   return ok('sent');
 };
 
@@ -669,7 +685,7 @@ function ok(body) {
 // HubSpot CRM sync — crea o actualiza contacto + añade nota con detalles
 // ---------------------------------------------------------------------------
 
-async function syncToHubspot(formName, data) {
+async function syncToHubspot(formName, data, estadoReserva) {
   const token = process.env.HUBSPOT_TOKEN;
   if (!token) {
     console.warn('[HS] HUBSPOT_TOKEN no configurado — sync omitido');
@@ -708,6 +724,14 @@ async function syncToHubspot(formName, data) {
     ...(lastname  && { lastname }),
     ...(data.telefono && { phone: data.telefono }),
     lifecyclestage: 'lead',
+    // Propiedades personalizadas — crear primero en HubSpot (Configuración → Propiedades de contacto)
+    // y después descomentar estas líneas:
+    // ...(estadoReserva        && { estado_reserva:      estadoReserva }),
+    // ...(data['metodo-pago']  && { metodo_pago_reserva: data['metodo-pago'] }),
+    // ...(data.deposito        && { importe_deposito:    data.deposito }),
+    // ...(data.total           && { importe_total:       data.total }),
+    // ...(data.ruta            && { ruta_reservada:      data.ruta }),
+    // ...(data.referencia      && { stripe_payment_id:   data.referencia }),
   };
 
   // ── Buscar contacto existente ─────────────────────────────────────────────
@@ -752,6 +776,8 @@ async function syncToHubspot(formName, data) {
   const noteLines = [
     'Formulario: ' + formName,
     'Fuente: Web / Netlify Forms',
+    estadoReserva        && 'Estado reserva: '    + estadoReserva,
+    data['metodo-pago']  && 'Método de pago: '    + data['metodo-pago'],
     data.ruta            && 'Ruta: '              + data.ruta,
     data.alojamiento     && 'Alojamiento: '       + data.alojamiento,
     data.fecha           && 'Fecha aprox.: '      + data.fecha,
