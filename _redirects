@@ -28,3 +28,4 @@
 /products/camino-finisterre           /camino-finisterre.html       301
 /products/camino-bicicleta            /camino-bicicleta.html        301
 /products/*                           /index.html                   301
+/persona                              /                             301
