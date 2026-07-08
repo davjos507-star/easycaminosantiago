@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Propuesta para grupos — Easy Camino Santiago</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --turq:    #56A1A4;
+      --azul:    #2D4A52;
+      --crema:   #ECE7E2;
+      --naranja: #F3A949;
+      --cinza:   #6b7c7e;
+      --border:  #dde6e7;
+      --bg:      #f5f9f9;
+      --white:   #ffffff;
+      --ff-serif: 'Playfair Display', Georgia, serif;
+      --ff-label: 'Raleway', sans-serif;
+      --ff-body:  'Lato', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #d8e2e3; font-family: var(--ff-body); color: var(--azul); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { width: 210mm; min-height: 297mm; background: var(--white); margin: 28px auto; box-shadow: 0 8px 48px rgba(0,0,0,0.18); display: flex; flex-direction: column; }
+    .doc-header { background: var(--azul); padding: 30px 44px 28px; display: flex; justify-content: space-between; align-items: flex-start; }
+    .logo-wrap { display: flex; align-items: center; padding-top: 2px; }
+    .logo-img { height: 44px; width: auto; display: block; filter: brightness(0) invert(1); opacity: 0.92; }
+    .doc-header-right { text-align: right; }
+    .doc-overline { font-family: var(--ff-label); font-size: 0.57rem; font-weight: 700; letter-spacing: 3.5px; text-transform: uppercase; color: var(--turq); margin-bottom: 9px; }
+    .doc-title { font-family: var(--ff-serif); font-size: 1.6rem; font-weight: 600; color: var(--white); line-height: 1.15; }
+    .doc-subtitle { font-family: var(--ff-serif); font-size: 0.98rem; font-style: italic; color: rgba(255,255,255,0.58); margin-top: 4px; }
+    .doc-meta { font-family: var(--ff-label); font-size: 0.55rem; color: rgba(255,255,255,0.32); margin-top: 10px; letter-spacing: 0.4px; }
+    .doc-meta span { color: rgba(255,255,255,0.5); margin-left: 4px; }
+    .accent-band { height: 4px; background: linear-gradient(90deg, var(--turq) 0%, var(--naranja) 100%); }
+    .doc-body { flex: 1; padding: 32px 44px 30px; display: flex; flex-direction: column; gap: 24px; }
+    .sec-label { font-family: var(--ff-label); font-size: 0.59rem; font-weight: 700; letter-spacing: 2.7px; text-transform: uppercase; color: var(--turq); padding-bottom: 7px; border-bottom: 1.5px solid var(--border); margin-bottom: 13px; }
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 32px; }
+    .info-key { font-family: var(--ff-label); font-size: 0.62rem; font-weight: 700; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.9px; margin-bottom: 2px; }
+    .info-val { font-size: 0.86rem; font-weight: 700; color: var(--azul); line-height: 1.35; }
+    .info-val.light { font-weight: 400; }
+    .intro-block { background: var(--crema); border-left: 4px solid var(--turq); border-radius: 0 6px 6px 0; padding: 14px 18px; }
+    .intro-text { font-size: 0.84rem; line-height: 1.65; color: var(--azul); }
+    .itinerary { display: flex; flex-direction: column; gap: 0; }
+    .itin-row { display: flex; align-items: stretch; gap: 0; }
+    .itin-day-col { width: 64px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; padding-top: 10px; }
+    .itin-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--turq); border: 2px solid var(--white); outline: 1.5px solid var(--turq); flex-shrink: 0; }
+    .itin-dot.special { background: var(--naranja); outline-color: var(--naranja); }
+    .itin-line { width: 1.5px; flex: 1; background: var(--border); margin-top: 4px; }
+    .itin-row:last-child .itin-line { display: none; }
+    .itin-content { flex: 1; padding: 7px 0 12px 0; }
+    .itin-label { font-family: var(--ff-label); font-size: 0.6rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cinza); margin-bottom: 2px; }
+    .itin-title { font-size: 0.87rem; font-weight: 700; color: var(--azul); line-height: 1.3; }
+    .itin-desc { font-size: 0.77rem; color: var(--cinza); line-height: 1.5; margin-top: 2px; }
+    .itin-note { font-size: 0.78rem; color: var(--cinza); font-style: italic; margin-top: 10px; line-height: 1.55; padding-left: 64px; }
+    .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 24px; }
+    .svc-item { display: flex; align-items: flex-start; gap: 9px; font-size: 0.82rem; color: var(--azul); line-height: 1.4; }
+    .svc-mark { width: 15px; height: 15px; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; }
+    .noincl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 24px; }
+    .noincl-item { display: flex; align-items: flex-start; gap: 9px; font-size: 0.82rem; color: var(--cinza); line-height: 1.4; }
+    .noincl-mark { width: 15px; height: 15px; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; }
+    .price-total-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: var(--azul); border-radius: 8px; margin-bottom: 14px; }
+    .price-label { font-family: var(--ff-label); font-size: 0.62rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+    .price-amount { font-family: var(--ff-serif); font-size: 2rem; font-weight: 700; color: var(--white); line-height: 1; }
+    .price-per { font-size: 0.75rem; color: rgba(255,255,255,0.45); font-family: var(--ff-label); margin-top: 3px; }
+    .price-right { text-align: right; }
+    .price-total-label { font-family: var(--ff-label); font-size: 0.57rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 4px; }
+    .price-total-amount { font-family: var(--ff-serif); font-size: 1.4rem; font-weight: 700; color: var(--naranja); }
+    .payment-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    .payment-box { border-radius: 8px; padding: 12px 14px; text-align: center; }
+    .payment-box.deposit { background: var(--naranja); }
+    .payment-box.pending { background: var(--bg); border: 1.5px solid var(--border); }
+    .pbox-label { font-family: var(--ff-label); font-size: 0.54rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
+    .payment-box.deposit .pbox-label { color: rgba(255,255,255,0.75); }
+    .payment-box.pending  .pbox-label { color: var(--cinza); }
+    .pbox-amount { font-family: var(--ff-serif); font-size: 1.35rem; font-weight: 700; line-height: 1; margin-bottom: 3px; }
+    .payment-box.deposit .pbox-amount { color: var(--white); }
+    .payment-box.pending  .pbox-amount { color: var(--azul); }
+    .pbox-pct { font-family: var(--ff-label); font-size: 0.58rem; font-weight: 600; }
+    .payment-box.deposit .pbox-pct { color: rgba(255,255,255,0.65); }
+    .payment-box.pending  .pbox-pct { color: var(--cinza); }
+    .payment-method { font-size: 0.82rem; color: var(--cinza); line-height: 1.5; padding: 10px 14px; background: var(--bg); border-radius: 6px; }
+    .conditions-text { font-size: 0.8rem; color: var(--cinza); line-height: 1.65; }
+    .validity-note { font-family: var(--ff-label); font-size: 0.68rem; color: var(--cinza); letter-spacing: 0.3px; }
+    .validity-note strong { color: var(--azul); }
+    .doc-footer { background: var(--crema); border-top: 1.5px solid var(--border); padding: 20px 44px; display: flex; justify-content: space-between; align-items: flex-end; }
+    .sign-name { font-family: var(--ff-serif); font-size: 1.05rem; font-weight: 600; color: var(--azul); }
+    .sign-role { font-family: var(--ff-label); font-size: 0.62rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cinza); margin-top: 3px; }
+    .sign-contact { font-size: 0.78rem; color: var(--cinza); margin-top: 6px; line-height: 1.7; }
+    .footer-brand { text-align: right; }
+    .footer-brand-name { font-family: var(--ff-label); font-size: 0.63rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--turq); }
+    .footer-brand-url { font-size: 0.77rem; color: var(--cinza); margin-top: 2px; }
+    .footer-tagline { font-family: var(--ff-serif); font-size: 0.75rem; font-style: italic; color: var(--cinza); margin-top: 4px; opacity: 0.7; }
+    .print-btn { position: fixed; bottom: 28px; right: 28px; background: var(--azul); color: var(--white); font-family: var(--ff-label); font-size: 0.78rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; border: none; border-radius: 40px; padding: 13px 26px; cursor: pointer; box-shadow: 0 4px 20px rgba(45,74,82,0.35); transition: background 0.2s, box-shadow 0.2s; z-index: 100; }
+    .print-btn:hover { background: var(--turq); box-shadow: 0 6px 28px rgba(86,161,164,0.45); }
+    @media print {
+      body { background: none; }
+      .page { margin: 0; box-shadow: none; width: 100%; }
+      .print-btn { display: none; }
+      section { page-break-inside: avoid; }
+      .itinerary { page-break-inside: avoid; }
+      .payment-grid { page-break-inside: avoid; }
+      .price-total-row { page-break-inside: avoid; }
+      .doc-footer { page-break-inside: avoid; }
+      .intro-block { page-break-inside: avoid; }
+      .noincl-grid { page-break-inside: avoid; }
+      .services-grid { page-break-inside: avoid; }
+      .info-grid { page-break-inside: avoid; }
+    }
+    @page { size: A4; margin: 0; }
+  </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">Imprimir / Guardar como PDF</button>
+
+<div class="page">
+
+  <!--
+  ══════════════════════════════════════════════════════════════════
+  PLANTILLA OFICIAL DE GRUPOS · EASY CAMINO SANTIAGO
+  Para emitir un nuevo presupuesto, editar únicamente estos campos:
+  ══════════════════════════════════════════════════════════════════
+
+  1. CABECERA
+     · <div class="doc-title">          → nombre de la ruta
+     · <div class="doc-subtitle">       → "N viajeros · X días / Y noches"
+     · <div class="doc-meta"> <span>    → referencia y fecha de emisión
+
+  2. DATOS DEL GRUPO
+     · Contacto principal               → nombre del responsable del grupo
+     · Email                            → email de contacto
+     · (añadir Teléfono si se dispone de él)
+
+  3. DATOS DEL VIAJE
+     · Fechas                           → fechas de inicio y fin del viaje
+     · Grupo                            → número de viajeros
+     · Noches                           → número de noches
+
+  4. INTRO
+     · <p class="intro-text">           → adaptar al grupo, la ruta y el número de viajeros
+
+  5. ITINERARIO
+     · Duplicar o eliminar bloques .itin-row según las etapas
+     · itin-label                       → "Día N · Fecha"
+     · itin-title                       → "Origen → Destino"
+     · itin-desc                        → descripción breve (solo días destacados)
+
+  6. PRECIO Y PAGOS
+     · <div class="price-amount">       → precio por persona
+     · <div class="price-per">          → "N viajeros · Y noches · Nombre de la ruta"
+     · <div class="price-total-amount"> → total del grupo
+     · <div class="pbox-amount"> ×3     → importes de depósito, segundo pago y pago final
+     · <div class="pbox-pct"> ×3        → porcentaje y fecha de cada pago
+
+  7. FORMA DE PAGO
+     · <div class="payment-method">     → ajustar si cambia la modalidad de pago
+
+  8. VALIDEZ
+     · <div class="validity-note">      → fecha de emisión y fecha límite de la propuesta
+  ══════════════════════════════════════════════════════════════════
+  -->
+
+  <header class="doc-header">
+    <div class="logo-wrap">
+      <img class="logo-img" src="../easy-camino-santiago-logo.png" alt="Easy Camino Santiago">
+    </div>
+    <div class="doc-header-right">
+      <div class="doc-overline">Propuesta personalizada de viaje</div>
+      <div class="doc-title">Camino de Finisterre a Santiago</div>
+      <div class="doc-subtitle">20 viajeros · 8 días / 7 noches</div>
+      <div class="doc-meta">Ref. <span>ECS-GRP-20271001-001</span> &nbsp;·&nbsp; 8 de julio de 2026</div>
+    </div>
+  </header>
+
+  <div class="accent-band"></div>
+
+  <main class="doc-body">
+
+    <section>
+      <div class="sec-label">Datos del grupo</div>
+      <div class="info-grid">
+        <div class="info-cell">
+          <div class="info-key">Contacto principal</div>
+          <div class="info-val">Jeanette McCarthy</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-key">Referencia</div>
+          <div class="info-val">ECS-GRP-20271001-001</div>
+        </div>
+        <div class="info-cell" style="grid-column: span 2;">
+          <div class="info-key">Email</div>
+          <div class="info-val light">jay.jackson014@gmail.com</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">Datos del viaje</div>
+      <div class="info-grid">
+        <div class="info-cell">
+          <div class="info-key">Ruta</div>
+          <div class="info-val">Camino de Finisterre a Santiago</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-key">Fechas</div>
+          <div class="info-val">1 – 8 de octubre de 2027</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-key">Grupo</div>
+          <div class="info-val">20 viajeros</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-key">Noches</div>
+          <div class="info-val">7</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-key">Alojamiento</div>
+          <div class="info-val">Habitaciones privadas · baño privado siempre que sea posible</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-key">Régimen</div>
+          <div class="info-val">Desayuno incluido</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-key">Transporte de equipaje</div>
+          <div class="info-val">Incluido diariamente</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-key">Traslados privados</div>
+          <div class="info-val">Aeropuerto Santiago ↔ ruta</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">Propuesta diseñada para vuestro grupo</div>
+      <div class="intro-block">
+        <p class="intro-text">Esta propuesta ha sido preparada exclusivamente para vuestro grupo de 20 viajeros. El itinerario combina etapas a pie desde el confín del mundo en Finisterre hasta la Catedral de Santiago, con una logística completa: alojamiento en exclusiva, equipaje puerta a puerta cada mañana, traslados privados y un contacto dedicado durante todo el recorrido.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">Itinerario</div>
+      <div class="itinerary">
+
+        <div class="itin-row">
+          <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
+          <div class="itin-content">
+            <div class="itin-label">Día 1 · Vie 1 oct</div>
+            <div class="itin-title">Llegada — Aeropuerto de Santiago → Finisterre</div>
+            <div class="itin-desc">Traslado privado del grupo. Bienvenida y tarde libre en el faro.</div>
+          </div>
+        </div>
+
+        <div class="itin-row">
+          <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
+          <div class="itin-content">
+            <div class="itin-label">Día 2 · Sáb 2 oct</div>
+            <div class="itin-title">Finisterre → Cee</div>
+          </div>
+        </div>
+
+        <div class="itin-row">
+          <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
+          <div class="itin-content">
+            <div class="itin-label">Día 3 · Dom 3 oct</div>
+            <div class="itin-title">Cee → Olveiroa</div>
+          </div>
+        </div>
+
+        <div class="itin-row">
+          <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
+          <div class="itin-content">
+            <div class="itin-label">Día 4 · Lun 4 oct</div>
+            <div class="itin-title">Olveiroa → Santa Mariña</div>
+          </div>
+        </div>
+
+        <div class="itin-row">
+          <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
+          <div class="itin-content">
+            <div class="itin-label">Día 5 · Mar 5 oct</div>
+            <div class="itin-title">Santa Mariña → Negreira</div>
+          </div>
+        </div>
+
+        <div class="itin-row">
+          <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
+          <div class="itin-content">
+            <div class="itin-label">Día 6 · Mié 6 oct</div>
+            <div class="itin-title">Negreira → Augapesada</div>
+          </div>
+        </div>
+
+        <div class="itin-row">
+          <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
+          <div class="itin-content">
+            <div class="itin-label">Día 7 · Jue 7 oct</div>
+            <div class="itin-title">Augapesada → Santiago de Compostela</div>
+            <div class="itin-desc">Llegada a la Catedral, recogida de la Compostela y cena de celebración.</div>
+          </div>
+        </div>
+
+        <div class="itin-row">
+          <div class="itin-day-col"><div class="itin-dot special"></div></div>
+          <div class="itin-content">
+            <div class="itin-label">Día 8 · Vie 8 oct</div>
+            <div class="itin-title">Salida — Traslado privado al aeropuerto de Santiago</div>
+          </div>
+        </div>
+
+      </div>
+      <p class="itin-note">El alojamiento de cada etapa se confirma en el momento de la reserva, según disponibilidad para las fechas y el tamaño del grupo.</p>
+    </section>
+
+    <section>
+      <div class="sec-label">Servicios incluidos</div>
+      <div class="services-grid">
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>7 noches de alojamiento en habitaciones privadas</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Desayuno incluido cada mañana</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Baño privado siempre que sea posible</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Transporte de equipaje puerta a puerta diario</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Traslado privado de llegada (aeropuerto → inicio de ruta)</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Traslado privado de salida (Santiago → aeropuerto)</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Coordinador dedicado y asistencia durante todo el viaje</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Credencial del peregrino y documentación del Camino</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>IVA incluido · sin costes ocultos</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">No incluido</div>
+      <div class="noincl-grid">
+        <div class="noincl-item"><div class="noincl-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#6b7c7e" stroke-width="1.2"/><path d="M4.5 8.5L8.5 4.5M4.5 4.5L8.5 8.5" stroke="#6b7c7e" stroke-width="1.2" stroke-linecap="round"/></svg></div><span>Vuelos internacionales</span></div>
+        <div class="noincl-item"><div class="noincl-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#6b7c7e" stroke-width="1.2"/><path d="M4.5 8.5L8.5 4.5M4.5 4.5L8.5 8.5" stroke="#6b7c7e" stroke-width="1.2" stroke-linecap="round"/></svg></div><span>Comidas y cenas</span></div>
+        <div class="noincl-item"><div class="noincl-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#6b7c7e" stroke-width="1.2"/><path d="M4.5 8.5L8.5 4.5M4.5 4.5L8.5 8.5" stroke="#6b7c7e" stroke-width="1.2" stroke-linecap="round"/></svg></div><span>Seguro de viaje (muy recomendable)</span></div>
+        <div class="noincl-item"><div class="noincl-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#6b7c7e" stroke-width="1.2"/><path d="M4.5 8.5L8.5 4.5M4.5 4.5L8.5 8.5" stroke="#6b7c7e" stroke-width="1.2" stroke-linecap="round"/></svg></div><span>Gastos personales y propinas</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">Precio y forma de pago</div>
+      <p style="font-size:0.82rem; color:var(--cinza); margin-bottom:14px; font-style:italic;">Propuesta elaborada para 20 viajeros. Precio sujeto a disponibilidad en el momento de la confirmación.</p>
+      <div class="price-total-row">
+        <div>
+          <div class="price-label">Precio por persona</div>
+          <div class="price-amount">600 €</div>
+          <div class="price-per">20 viajeros · 7 noches · Camino de Finisterre</div>
+        </div>
+        <div class="price-right">
+          <div class="price-total-label">Total del grupo</div>
+          <div class="price-total-amount">12.000 €</div>
+        </div>
+      </div>
+      <div class="payment-grid">
+        <div class="payment-box deposit">
+          <div class="pbox-label">Depósito al reservar</div>
+          <div class="pbox-amount">3.600 €</div>
+          <div class="pbox-pct">30% · asegura fechas y alojamiento</div>
+        </div>
+        <div class="payment-box pending">
+          <div class="pbox-label">Segundo pago · 6 meses antes</div>
+          <div class="pbox-amount">4.800 €</div>
+          <div class="pbox-pct">40% · abril de 2027</div>
+        </div>
+        <div class="payment-box pending">
+          <div class="pbox-label">Pago final · 8 semanas antes</div>
+          <div class="pbox-amount">3.600 €</div>
+          <div class="pbox-pct">30% · agosto de 2027</div>
+        </div>
+      </div>
+      <div class="payment-method">
+        Forma de pago: <strong>tarjeta bancaria</strong> o <strong>transferencia bancaria (IBAN)</strong>. Los gastos de transferencia internacional corren por cuenta del pagador.
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">Condiciones</div>
+      <p class="conditions-text">Los alojamientos están sujetos a disponibilidad en el momento de la confirmación. Si algún establecimiento no estuviera disponible, Easy Camino Santiago ofrecerá una alternativa de igual o superior categoría sin coste adicional.</p>
+      <p class="conditions-text" style="margin-top:8px;"><strong>Cancelación:</strong> más de 90 días → pérdida del depósito · 60–90 días → 50% del total · 30–60 días → 75% · menos de 30 días → 100%. <strong>Mínimo:</strong> 15 viajeros. Si el número final varía, el precio se revisará antes de la confirmación.</p>
+    </section>
+
+    <section>
+      <div class="sec-label">Próximos pasos</div>
+      <div class="intro-block">
+        <p class="intro-text">Una vez recibida vuestra confirmación, gestionaremos la reserva y verificaremos la disponibilidad definitiva de los alojamientos para el grupo. Recibiréis la confirmación completa junto con la documentación y el itinerario definitivo.</p>
+      </div>
+    </section>
+
+    <div class="validity-note">
+      Propuesta emitida el <strong>8 de julio de 2026</strong>. Válida hasta el <strong>7 de agosto de 2026</strong>. Precios y disponibilidad sujetos a confirmación en el momento de la reserva.
+    </div>
+
+  </main>
+
+  <footer class="doc-footer">
+    <div class="footer-sign">
+      <div class="sign-name">Bibiana</div>
+      <div class="sign-role">Grupos y Viajes Privados · Easy Camino Santiago</div>
+      <div style="font-family:var(--ff-serif); font-style:italic; font-size:0.82rem; color:var(--turq); margin-top:5px;">Tu Camino, nuestra experiencia.</div>
+      <div class="sign-contact">info@easycaminosantiago.com<br>+34 982 907 629 &nbsp;·&nbsp; easycaminosantiago.com</div>
+    </div>
+    <div class="footer-brand">
+      <div class="footer-brand-name">Easy Camino Santiago</div>
+      <div class="footer-tagline">We look forward to welcoming your group and sharing our land with you.</div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
