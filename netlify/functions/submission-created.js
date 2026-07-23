@@ -802,10 +802,11 @@ async function syncToHubspot(formName, data, estadoReserva) {
   ].filter(Boolean).join('\n');
 
   // ── Crear Deal si el formulario tiene intención comercial ─────────────────
+  console.log('[HS-DEAL-DEBUG] a punto de llamar a ensureDealForContact | formName:', formName, '| contactId:', contactId);
   try {
     await ensureDealForContact(token, contactId, formName, data, { firstname, lastname, importeTotal, noteLines });
   } catch (err) {
-    console.error('[HS-DEAL] ✗ error inesperado:', err.message);
+    console.error('[HS-DEAL] ✗ error inesperado:', err.message, '| stack:', err.stack);
   }
 
   if (!noteLines) return;
@@ -850,9 +851,13 @@ const MONTH_NAMES_EN = [
 // Descubre automáticamente el pipeline y la etapa "Nuevo lead" — evita hardcodear
 // IDs internos de HubSpot, que son específicos de cada portal y pueden cambiar.
 async function getDealPipelineStage(token) {
-  if (cachedPipelineInfo) return cachedPipelineInfo;
+  if (cachedPipelineInfo) {
+    console.log('[HS-DEAL-DEBUG] getDealPipelineStage — usando caché:', JSON.stringify(cachedPipelineInfo));
+    return cachedPipelineInfo;
+  }
 
   const res = await hubspotRequest('GET', '/crm/v3/pipelines/deals', token, null);
+  console.log('[HS-DEAL-DEBUG] GET /crm/v3/pipelines/deals — status:', res.status, '| body:', JSON.stringify(res.body));
   if (res.status >= 400 || !res.body || !Array.isArray(res.body.results)) {
     console.error('[HS-DEAL] ✗ error al listar pipelines — status:', res.status, JSON.stringify(res.body));
     return null;
@@ -862,6 +867,7 @@ async function getDealPipelineStage(token) {
     const stage = (pipeline.stages || []).find(
       s => (s.label || '').trim().toLowerCase() === 'nuevo lead'
     );
+    console.log('[HS-DEAL-DEBUG] pipeline revisado:', pipeline.id, '| stages:', JSON.stringify((pipeline.stages || []).map(s => s.label)), '| match "Nuevo lead":', !!stage);
     if (stage) {
       cachedPipelineInfo = {
         pipelineId: pipeline.id,
@@ -870,6 +876,7 @@ async function getDealPipelineStage(token) {
           .filter(s => s.metadata && s.metadata.isClosed === 'true')
           .map(s => s.id),
       };
+      console.log('[HS-DEAL-DEBUG] pipelineInfo resuelto:', JSON.stringify(cachedPipelineInfo));
       return cachedPipelineInfo;
     }
   }
@@ -882,14 +889,19 @@ async function getDealPipelineStage(token) {
 // si el portal tiene labels personalizados). 3 = "Deal to Contact" HubSpot-defined,
 // se usa solo como fallback si la API de labels no responde.
 async function getDealContactAssociationTypeId(token) {
-  if (cachedDealContactAssocTypeId) return cachedDealContactAssocTypeId;
+  if (cachedDealContactAssocTypeId) {
+    console.log('[HS-DEAL-DEBUG] getDealContactAssociationTypeId — usando caché:', cachedDealContactAssocTypeId);
+    return cachedDealContactAssocTypeId;
+  }
 
   const res = await hubspotRequest('GET', '/crm/v4/associations/deals/contacts/labels', token, null);
+  console.log('[HS-DEAL-DEBUG] GET /crm/v4/associations/deals/contacts/labels — status:', res.status, '| body:', JSON.stringify(res.body));
   const defined = res.body && Array.isArray(res.body.results)
     ? res.body.results.find(r => r.category === 'HUBSPOT_DEFINED')
     : null;
 
   cachedDealContactAssocTypeId = defined ? defined.typeId : 3;
+  console.log('[HS-DEAL-DEBUG] assocTypeId resuelto:', cachedDealContactAssocTypeId, defined ? '(desde API)' : '(fallback hardcoded, la API no devolvió un default HUBSPOT_DEFINED)');
   return cachedDealContactAssocTypeId;
 }
 
@@ -899,9 +911,11 @@ async function findOpenDealIdForContact(token, contactId, closedStageIds) {
   const assoc = await hubspotRequest(
     'GET', '/crm/v3/objects/contacts/' + contactId + '/associations/deals', token, null
   );
+  console.log('[HS-DEAL-DEBUG] GET associations/deals para contacto', contactId, '— status:', assoc.status, '| body:', JSON.stringify(assoc.body));
   const dealIds = (assoc.body && Array.isArray(assoc.body.results))
     ? assoc.body.results.map(r => r.id).filter(Boolean)
     : [];
+  console.log('[HS-DEAL-DEBUG] dealIds ya asociados al contacto:', JSON.stringify(dealIds), '| closedStageIds:', JSON.stringify(closedStageIds));
 
   if (!dealIds.length) return null;
 
@@ -910,6 +924,7 @@ async function findOpenDealIdForContact(token, contactId, closedStageIds) {
       'GET', '/crm/v3/objects/deals/' + dealId + '?properties=dealstage', token, null
     );
     const stageId = deal.body && deal.body.properties && deal.body.properties.dealstage;
+    console.log('[HS-DEAL-DEBUG] deal', dealId, '— status:', deal.status, '| dealstage:', stageId, '| ¿cerrado?:', closedStageIds.includes(stageId));
     if (stageId && !closedStageIds.includes(stageId)) {
       return dealId;
     }
@@ -943,7 +958,11 @@ function buildDealName(formName, data, firstname, lastname) {
 }
 
 async function ensureDealForContact(token, contactId, formName, data, dealContext) {
-  if (!DEAL_FORMS.includes(formName)) return;
+  console.log('[HS-DEAL-DEBUG] ▶ entrada ensureDealForContact | formName:', formName, '| contactId:', contactId, '| ¿en DEAL_FORMS?:', DEAL_FORMS.includes(formName));
+  if (!DEAL_FORMS.includes(formName)) {
+    console.log('[HS-DEAL-DEBUG] ✗ salida temprana — formulario no genera deal:', formName);
+    return;
+  }
 
   const { firstname, lastname, importeTotal, noteLines } = dealContext;
 
@@ -979,13 +998,17 @@ async function ensureDealForContact(token, contactId, formName, data, dealContex
     properties.amount = importeTotal;
   }
 
-  const created = await hubspotRequest('POST', '/crm/v3/objects/deals', token, {
+  const dealPayload = {
     properties,
     associations: [{
       to: { id: contactId },
       types: [{ associationCategory: 'HUBSPOT_DEFINED', associationTypeId: assocTypeId }],
     }],
-  });
+  };
+  console.log('[HS-DEAL-DEBUG] payload a enviar a POST /crm/v3/objects/deals:', JSON.stringify(dealPayload));
+
+  const created = await hubspotRequest('POST', '/crm/v3/objects/deals', token, dealPayload);
+  console.log('[HS-DEAL-DEBUG] POST /crm/v3/objects/deals — status:', created.status, '| body completo:', JSON.stringify(created.body));
 
   if (created.status >= 400) {
     console.error('[HS-DEAL] ✗ error al crear deal — status:', created.status, JSON.stringify(created.body));
