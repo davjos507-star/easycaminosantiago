@@ -774,7 +774,7 @@ async function syncToHubspot(formName, data, estadoReserva) {
     return;
   }
 
-  // ── Construir nota con detalles del formulario ────────────────────────────
+  // ── Construir resumen del formulario (reutilizado en la nota y en el deal) ─
   const pilgrimsLabel = [
     data.adultos && data.adultos !== '0' && data.adultos + ' adultos',
     data.ninos   && data.ninos   !== '0' && data.ninos   + ' niños',
@@ -782,6 +782,7 @@ async function syncToHubspot(formName, data, estadoReserva) {
 
   const noteLines = [
     'Formulario: ' + formName,
+    'Idioma: '            + (formName.endsWith('-en') ? 'Inglés' : 'Español'),
     'Fuente: Web / Netlify Forms',
     estadoReserva        && 'Estado reserva: '    + estadoReserva,
     data['metodo-pago']  && 'Método de pago: '    + data['metodo-pago'],
@@ -799,6 +800,13 @@ async function syncToHubspot(formName, data, estadoReserva) {
     data.deposito        && 'Depósito: '          + data.deposito + ' €',
     data.referencia      && 'Referencia: '        + data.referencia,
   ].filter(Boolean).join('\n');
+
+  // ── Crear Deal si el formulario tiene intención comercial ─────────────────
+  try {
+    await ensureDealForContact(token, contactId, formName, data, { firstname, lastname, importeTotal, noteLines });
+  } catch (err) {
+    console.error('[HS-DEAL] ✗ error inesperado:', err.message);
+  }
 
   if (!noteLines) return;
 
@@ -821,4 +829,168 @@ async function syncToHubspot(formName, data, estadoReserva) {
   } catch (err) {
     console.error('[HS] ✗ error HubSpot (nota):', err.message);
   }
+}
+
+// ---------------------------------------------------------------------------
+// HubSpot Deals — creación automática para formularios con intención comercial
+// ---------------------------------------------------------------------------
+
+// Formularios que generan Deal. Formularios de bajo interés (folleto, contacto,
+// newsletter, tracking) quedan fuera para no ensuciar el pipeline de ventas.
+const DEAL_FORMS = ['solicitud-info', 'solicitud-info-en', 'reserva'];
+
+let cachedPipelineInfo = null;
+let cachedDealContactAssocTypeId = null;
+
+const MONTH_NAMES_EN = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+
+// Descubre automáticamente el pipeline y la etapa "Nuevo lead" — evita hardcodear
+// IDs internos de HubSpot, que son específicos de cada portal y pueden cambiar.
+async function getDealPipelineStage(token) {
+  if (cachedPipelineInfo) return cachedPipelineInfo;
+
+  const res = await hubspotRequest('GET', '/crm/v3/pipelines/deals', token, null);
+  if (res.status >= 400 || !res.body || !Array.isArray(res.body.results)) {
+    console.error('[HS-DEAL] ✗ error al listar pipelines — status:', res.status, JSON.stringify(res.body));
+    return null;
+  }
+
+  for (const pipeline of res.body.results) {
+    const stage = (pipeline.stages || []).find(
+      s => (s.label || '').trim().toLowerCase() === 'nuevo lead'
+    );
+    if (stage) {
+      cachedPipelineInfo = {
+        pipelineId: pipeline.id,
+        stageId: stage.id,
+        closedStageIds: (pipeline.stages || [])
+          .filter(s => s.metadata && s.metadata.isClosed === 'true')
+          .map(s => s.id),
+      };
+      return cachedPipelineInfo;
+    }
+  }
+
+  console.error('[HS-DEAL] ✗ ninguna etapa "Nuevo lead" encontrada en los pipelines de deals — revisa el nombre exacto en HubSpot');
+  return null;
+}
+
+// Descubre el associationTypeId por defecto entre Deal y Contact (puede variar
+// si el portal tiene labels personalizados). 3 = "Deal to Contact" HubSpot-defined,
+// se usa solo como fallback si la API de labels no responde.
+async function getDealContactAssociationTypeId(token) {
+  if (cachedDealContactAssocTypeId) return cachedDealContactAssocTypeId;
+
+  const res = await hubspotRequest('GET', '/crm/v4/associations/deals/contacts/labels', token, null);
+  const defined = res.body && Array.isArray(res.body.results)
+    ? res.body.results.find(r => r.category === 'HUBSPOT_DEFINED')
+    : null;
+
+  cachedDealContactAssocTypeId = defined ? defined.typeId : 3;
+  return cachedDealContactAssocTypeId;
+}
+
+// Busca si el contacto ya tiene un deal abierto (etapa no cerrada). Si lo tiene,
+// no se crea uno nuevo — evita duplicados cuando el mismo lead envía varios formularios.
+async function findOpenDealIdForContact(token, contactId, closedStageIds) {
+  const assoc = await hubspotRequest(
+    'GET', '/crm/v3/objects/contacts/' + contactId + '/associations/deals', token, null
+  );
+  const dealIds = (assoc.body && Array.isArray(assoc.body.results))
+    ? assoc.body.results.map(r => r.id).filter(Boolean)
+    : [];
+
+  if (!dealIds.length) return null;
+
+  for (const dealId of dealIds) {
+    const deal = await hubspotRequest(
+      'GET', '/crm/v3/objects/deals/' + dealId + '?properties=dealstage', token, null
+    );
+    const stageId = deal.body && deal.body.properties && deal.body.properties.dealstage;
+    if (stageId && !closedStageIds.includes(stageId)) {
+      return dealId;
+    }
+  }
+  return null;
+}
+
+// Fecha del formulario en formato ISO (YYYY-MM-DD, tal como la entregan los
+// <input type="date">) → "Month YYYY" en inglés, para el nombre del deal.
+function formatMonthYear(dateStr) {
+  const match = /^(\d{4})-(\d{2})-\d{2}/.exec(String(dateStr || '').trim());
+  if (!match) return '';
+  const monthIdx = parseInt(match[2], 10) - 1;
+  if (monthIdx < 0 || monthIdx > 11) return '';
+  return MONTH_NAMES_EN[monthIdx] + ' ' + match[1];
+}
+
+// Nombre significativo: "Nombre Apellido - Ruta - Mes Año"
+// (usa el mismo firstname/lastname ya calculado para el Contacto — evita duplicar
+// esa lógica — y omite los segmentos cuyo dato no vino en el formulario).
+function buildDealName(formName, data, firstname, lastname) {
+  const fullName = [firstname, lastname].filter(Boolean).join(' ').trim() || data.email || 'Sin nombre';
+  const dateStr = formName === 'reserva' ? data['fecha-inicio'] : data.fecha;
+
+  const parts = [fullName];
+  if (data.ruta) parts.push(data.ruta);
+  const monthYear = formatMonthYear(dateStr);
+  if (monthYear) parts.push(monthYear);
+
+  return parts.join(' - ');
+}
+
+async function ensureDealForContact(token, contactId, formName, data, dealContext) {
+  if (!DEAL_FORMS.includes(formName)) return;
+
+  const { firstname, lastname, importeTotal, noteLines } = dealContext;
+
+  const pipelineInfo = await getDealPipelineStage(token);
+  if (!pipelineInfo) {
+    console.error('[HS-DEAL] no se pudo resolver pipeline/etapa — creación de deal omitida');
+    return;
+  }
+
+  const existingDealId = await findOpenDealIdForContact(token, contactId, pipelineInfo.closedStageIds);
+  if (existingDealId) {
+    console.log('[HS-DEAL] contacto ya tiene deal abierto — se omite creación | deal:', existingDealId, '| contacto:', contactId);
+    return;
+  }
+
+  const assocTypeId = await getDealContactAssociationTypeId(token);
+
+  // Todas propiedades nativas por defecto de Deals — ninguna se crea ni se
+  // asume custom. Ruta, Fecha, Peregrinos, Alojamiento, Idioma y Fuente no
+  // tienen propiedad nativa propia en Deals, así que se consolidan en
+  // "description" (mismo resumen que la nota).
+  const properties = {
+    dealname: buildDealName(formName, data, firstname, lastname),
+    pipeline: pipelineInfo.pipelineId,
+    dealstage: pipelineInfo.stageId,
+  };
+
+  if (noteLines) {
+    properties.description = noteLines;
+  }
+
+  if (formName === 'reserva' && importeTotal !== undefined) {
+    properties.amount = importeTotal;
+  }
+
+  const created = await hubspotRequest('POST', '/crm/v3/objects/deals', token, {
+    properties,
+    associations: [{
+      to: { id: contactId },
+      types: [{ associationCategory: 'HUBSPOT_DEFINED', associationTypeId: assocTypeId }],
+    }],
+  });
+
+  if (created.status >= 400) {
+    console.error('[HS-DEAL] ✗ error al crear deal — status:', created.status, JSON.stringify(created.body));
+    return;
+  }
+
+  console.log('[HS-DEAL] ✓ deal creado id:', created.body.id, '| contacto:', contactId, '| formulario:', formName);
 }
