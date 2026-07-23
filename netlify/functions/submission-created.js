@@ -1,5 +1,8 @@
 // Netlify Function: auto-reply email + HubSpot CRM sync for all Netlify Forms submissions.
-// Triggered automatically by Netlify for every form submission (event: submission-created).
+// Triggered automatically by Netlify's "formSubmitted" platform event (Functions API v2 —
+// see https://docs.netlify.com/build/functions/trigger-on-events/). Netlify's own
+// FormSubmittedEvent type (@netlify/types) exposes only `{ data: Record<string,string> }`;
+// there is no separate form-name field — "form-name" arrives as a regular key inside `data`.
 // Env vars required: SMTP_HOST, SMTP_USER, SMTP_PASS, SMTP_PORT (email)
 //                    HUBSPOT_TOKEN (HubSpot Private App Token, optional — sync skipped if absent)
 //
@@ -16,8 +19,8 @@
 //   encuesta-open        → skip (tracking interno, sin respuesta)
 //   encuesta-respuestas  → skip (tracking interno, sin respuesta)
 
-const https = require('https');
-const nodemailer = require('nodemailer');
+import https from 'https';
+import nodemailer from 'nodemailer';
 
 function resendPost(payload, apiKey) {
   return new Promise((resolve, reject) => {
@@ -77,159 +80,147 @@ function hubspotRequest(method, path, token, body) {
   });
 }
 
-exports.handler = async function (event) {
-  console.log('[SC] ▶ invocado — método:', event.httpMethod);
+export default {
+  async formSubmitted(event) {
+    console.log('[SC] ▶ invocado — evento formSubmitted');
 
-  // Endpoint de diagnóstico: GET /.netlify/functions/submission-created
-  // Confirma que la función está desplegada sin necesitar un form submit.
-  if (event.httpMethod === 'GET') {
-    return {
-      statusCode: 200,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ deployed: true, fn: 'submission-created', ts: new Date().toISOString() }),
-    };
-  }
+    // FormSubmittedEvent (@netlify/types@2.8.0, dist/main.d.ts) expone únicamente
+    // `{ data: Record<string,string> }`. No existe un campo de nombre de formulario
+    // aparte: "form-name" llega como una clave más dentro de `data`, igual que
+    // cualquier otro campo del formulario (el <input type="hidden" name="form-name">
+    // que ya llevan todos los formularios de este sitio).
+    const data = event.data || {};
+    const formName = data['form-name'] || '';
 
-  let parsed;
-  try {
-    parsed = JSON.parse(event.body);
-  } catch (e) {
-    console.error('[SC] ✗ body inválido:', e.message, '| raw:', String(event.body).slice(0, 200));
-    return ok('error: invalid body');
-  }
+    // LOG DIAGNÓSTICO — siempre visible en Netlify Function logs
+    console.log('[SC] DIAGNÓSTICO formName=' + JSON.stringify(formName));
+    console.log('[SC] DIAGNÓSTICO email detectado=' + JSON.stringify(data.email));
+    console.log('[SC] DIAGNÓSTICO ruta detectada=' + JSON.stringify(data.ruta));
+    console.log('[SC] DIAGNÓSTICO data keys=' + JSON.stringify(Object.keys(data)));
+    console.log('[SC] DIAGNÓSTICO SMTP_HOST presente=' + (!!process.env.SMTP_HOST) + ' RESEND_API_KEY presente=' + (!!process.env.RESEND_API_KEY));
 
-  const form = parsed.payload || {};
-  const data = form.data || {};
-  const formName = form.form_name || '';
-
-  // LOG DIAGNÓSTICO — siempre visible en Netlify Function logs
-  console.log('[SC] DIAGNÓSTICO formName=' + JSON.stringify(formName));
-  console.log('[SC] DIAGNÓSTICO email detectado=' + JSON.stringify(data.email));
-  console.log('[SC] DIAGNÓSTICO ruta detectada=' + JSON.stringify(data.ruta));
-  console.log('[SC] DIAGNÓSTICO data keys=' + JSON.stringify(Object.keys(data)));
-  console.log('[SC] DIAGNÓSTICO SMTP_HOST presente=' + (!!process.env.SMTP_HOST) + ' RESEND_API_KEY presente=' + (!!process.env.RESEND_API_KEY));
-
-  // Formularios sin email o de tracking interno — skip
-  const skipForms = ['llamada', 'presupuesto', 'encuesta-open', 'encuesta-respuestas'];
-  if (skipForms.includes(formName)) {
-    console.log('[SC] skip (tracking/sin email):', formName);
-    return ok('skipped: no email form');
-  }
-
-  const toEmail = data.email;
-  if (!toEmail || !toEmail.includes('@')) {
-    console.log('[SC] ✗ email ausente o inválido en data — keys disponibles:', JSON.stringify(Object.keys(data)));
-    return ok('skipped: no valid email field');
-  }
-
-  const config = getConfig(formName, data);
-  console.log('[SC] DIAGNÓSTICO premium=' + (config && config !== 'SKIP_STRIPE' ? JSON.stringify(!!config.premium) : 'N/A') + ' config=' + (config ? (config === 'SKIP_STRIPE' ? 'SKIP_STRIPE' : config.templateName) : 'null'));
-
-  if (!config) {
-    console.log('[SC] formulario no gestionado — omitido:', formName);
-    return ok('skipped: unhandled form');
-  }
-
-  // HubSpot sync — independiente del email: se ejecuta SIEMPRE para el formulario 'reserva'
-  // independientemente del método de pago elegido por el cliente.
-  let hubspotSynced = false;
-  if (formName === 'reserva') {
-    const metodoPago = data['metodo-pago'] || '';
-    const estadoReserva = metodoPago === 'Tarjeta bancaria' ? 'reserva_iniciada' : 'pendiente_transferencia';
-    console.log('[SC] reserva — sync HubSpot independiente | método:', metodoPago, '| estado:', estadoReserva);
-    try { await syncToHubspot(formName, data, estadoReserva); } catch (e) { console.error('[HS] ✗ error inesperado en reserva:', e.message); }
-    hubspotSynced = true;
-  }
-
-  if (config === 'SKIP_STRIPE') {
-    console.log('[SC] reserva tarjeta — HubSpot sincronizado, saltando email (send-booking-email lo gestiona)');
-    return ok('skipped: stripe email handled by send-booking-email');
-  }
-
-  const firstName = (data.nombre || data.name || '').split(' ')[0] || 'Peregrino';
-
-  if (config.premium) {
-    const eB64 = encodeURIComponent(Buffer.from(toEmail).toString('base64'));
-    const rB64 = data.ruta ? encodeURIComponent(Buffer.from(data.ruta).toString('base64')) : '';
-    config.ctaUrl = 'https://easycaminosantiago.com/encuesta/?e=' + eB64 + (rB64 ? '&r=' + rB64 : '');
-    console.log('[SC] DIAGNÓSTICO ctaUrl generada=' + config.ctaUrl);
-  }
-
-  const html = config.premium
-    ? buildPremiumEmail(firstName, config)
-    : buildEmail(firstName, config);
-
-  // Envío: SMTP si está configurado (todos los formularios), Resend como fallback
-  const smtpHost = process.env.SMTP_HOST;
-  const smtpUser = process.env.SMTP_USER;
-  const smtpPass = process.env.SMTP_PASS;
-  const smtpPort = parseInt(process.env.SMTP_PORT || '587', 10);
-
-  if (smtpHost && smtpUser && smtpPass) {
-    const transporter = nodemailer.createTransport({
-      host: smtpHost,
-      port: smtpPort,
-      secure: smtpPort === 465,
-      auth: { user: smtpUser, pass: smtpPass },
-    });
-
-    console.log('[SC] → enviando via SMTP a:', toEmail, '| asunto:', config.subject, '| host:', smtpHost, 'puerto:', smtpPort, '| formulario:', formName);
-    try {
-      await transporter.sendMail({
-        from: 'Easy Camino Santiago <info@easycaminosantiago.com>',
-        to: toEmail,
-        subject: config.subject,
-        html,
-      });
-    } catch (err) {
-      console.error('[SC] ✗ excepción SMTP:', err.message);
-      return { statusCode: 500, body: 'smtp exception: ' + err.message };
+    // Formularios sin email o de tracking interno — skip
+    const skipForms = ['llamada', 'presupuesto', 'encuesta-open', 'encuesta-respuestas'];
+    if (skipForms.includes(formName)) {
+      console.log('[SC] skip (tracking/sin email):', formName);
+      return ok('skipped: no email form');
     }
 
-    console.log('[SC] ✓ email enviado OK via SMTP a', toEmail, '| formulario:', formName);
+    const toEmail = data.email;
+    if (!toEmail || !toEmail.includes('@')) {
+      console.log('[SC] ✗ email ausente o inválido en data — keys disponibles:', JSON.stringify(Object.keys(data)));
+      return ok('skipped: no valid email field');
+    }
+
+    const config = getConfig(formName, data);
+    console.log('[SC] DIAGNÓSTICO premium=' + (config && config !== 'SKIP_STRIPE' ? JSON.stringify(!!config.premium) : 'N/A') + ' config=' + (config ? (config === 'SKIP_STRIPE' ? 'SKIP_STRIPE' : config.templateName) : 'null'));
+
+    if (!config) {
+      console.log('[SC] formulario no gestionado — omitido:', formName);
+      return ok('skipped: unhandled form');
+    }
+
+    // HubSpot sync — independiente del email: se ejecuta SIEMPRE para el formulario 'reserva'
+    // independientemente del método de pago elegido por el cliente.
+    let hubspotSynced = false;
+    if (formName === 'reserva') {
+      const metodoPago = data['metodo-pago'] || '';
+      const estadoReserva = metodoPago === 'Tarjeta bancaria' ? 'reserva_iniciada' : 'pendiente_transferencia';
+      console.log('[SC] reserva — sync HubSpot independiente | método:', metodoPago, '| estado:', estadoReserva);
+      try { await syncToHubspot(formName, data, estadoReserva); } catch (e) { console.error('[HS] ✗ error inesperado en reserva:', e.message); }
+      hubspotSynced = true;
+    }
+
+    if (config === 'SKIP_STRIPE') {
+      console.log('[SC] reserva tarjeta — HubSpot sincronizado, saltando email (send-booking-email lo gestiona)');
+      return ok('skipped: stripe email handled by send-booking-email');
+    }
+
+    const firstName = (data.nombre || data.name || '').split(' ')[0] || 'Peregrino';
+
+    if (config.premium) {
+      const eB64 = encodeURIComponent(Buffer.from(toEmail).toString('base64'));
+      const rB64 = data.ruta ? encodeURIComponent(Buffer.from(data.ruta).toString('base64')) : '';
+      config.ctaUrl = 'https://easycaminosantiago.com/encuesta/?e=' + eB64 + (rB64 ? '&r=' + rB64 : '');
+      console.log('[SC] DIAGNÓSTICO ctaUrl generada=' + config.ctaUrl);
+    }
+
+    const html = config.premium
+      ? buildPremiumEmail(firstName, config)
+      : buildEmail(firstName, config);
+
+    // Envío: SMTP si está configurado (todos los formularios), Resend como fallback
+    const smtpHost = process.env.SMTP_HOST;
+    const smtpUser = process.env.SMTP_USER;
+    const smtpPass = process.env.SMTP_PASS;
+    const smtpPort = parseInt(process.env.SMTP_PORT || '587', 10);
+
+    if (smtpHost && smtpUser && smtpPass) {
+      const transporter = nodemailer.createTransport({
+        host: smtpHost,
+        port: smtpPort,
+        secure: smtpPort === 465,
+        auth: { user: smtpUser, pass: smtpPass },
+      });
+
+      console.log('[SC] → enviando via SMTP a:', toEmail, '| asunto:', config.subject, '| host:', smtpHost, 'puerto:', smtpPort, '| formulario:', formName);
+      try {
+        await transporter.sendMail({
+          from: 'Easy Camino Santiago <info@easycaminosantiago.com>',
+          to: toEmail,
+          subject: config.subject,
+          html,
+        });
+      } catch (err) {
+        console.error('[SC] ✗ excepción SMTP:', err.message);
+        return { statusCode: 500, body: 'smtp exception: ' + err.message };
+      }
+
+      console.log('[SC] ✓ email enviado OK via SMTP a', toEmail, '| formulario:', formName);
+      if (!hubspotSynced) {
+        try { await syncToHubspot(formName, data, null); } catch (e) { console.error('[HS] ✗ error inesperado:', e.message); }
+      }
+      return ok('sent');
+    }
+
+    // Fallback → Resend (solo si SMTP no está configurado)
+    console.warn('[SC] SMTP no configurado — usando Resend como fallback para formulario:', formName);
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      console.error('[SC] ✗ RESEND_API_KEY no configurada — CORRÍGELO EN Site Settings > Env Vars');
+      return ok('error: no smtp config and no resend api key');
+    }
+
+    console.log('[SC] → llamando Resend para enviar a:', toEmail, '| asunto:', config.subject);
+    let result;
+    try {
+      result = await resendPost(
+        {
+          from: 'Easy Camino Santiago <info@easycaminosantiago.com>',
+          to: [toEmail],
+          subject: config.subject,
+          html,
+        },
+        apiKey
+      );
+    } catch (err) {
+      console.error('[SC] ✗ excepción al llamar Resend:', err.message);
+      return { statusCode: 500, body: 'resend exception: ' + err.message };
+    }
+
+    console.log('[SC] DIAGNÓSTICO Resend status=' + result.status + ' body=' + JSON.stringify(result.body));
+
+    if (result.status >= 400) {
+      console.error('[SC] ✗ Resend rechazó el email — status:', result.status, 'body:', JSON.stringify(result.body));
+      return { statusCode: 500, body: 'email send failed' };
+    }
+
+    console.log('[SC] ✓ email enviado OK via Resend a', toEmail);
     if (!hubspotSynced) {
       try { await syncToHubspot(formName, data, null); } catch (e) { console.error('[HS] ✗ error inesperado:', e.message); }
     }
     return ok('sent');
-  }
-
-  // Fallback → Resend (solo si SMTP no está configurado)
-  console.warn('[SC] SMTP no configurado — usando Resend como fallback para formulario:', formName);
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    console.error('[SC] ✗ RESEND_API_KEY no configurada — CORRÍGELO EN Site Settings > Env Vars');
-    return ok('error: no smtp config and no resend api key');
-  }
-
-  console.log('[SC] → llamando Resend para enviar a:', toEmail, '| asunto:', config.subject);
-  let result;
-  try {
-    result = await resendPost(
-      {
-        from: 'Easy Camino Santiago <info@easycaminosantiago.com>',
-        to: [toEmail],
-        subject: config.subject,
-        html,
-      },
-      apiKey
-    );
-  } catch (err) {
-    console.error('[SC] ✗ excepción al llamar Resend:', err.message);
-    return { statusCode: 500, body: 'resend exception: ' + err.message };
-  }
-
-  console.log('[SC] DIAGNÓSTICO Resend status=' + result.status + ' body=' + JSON.stringify(result.body));
-
-  if (result.status >= 400) {
-    console.error('[SC] ✗ Resend rechazó el email — status:', result.status, 'body:', JSON.stringify(result.body));
-    return { statusCode: 500, body: 'email send failed' };
-  }
-
-  console.log('[SC] ✓ email enviado OK via Resend a', toEmail);
-  if (!hubspotSynced) {
-    try { await syncToHubspot(formName, data, null); } catch (e) { console.error('[HS] ✗ error inesperado:', e.message); }
-  }
-  return ok('sent');
+  },
 };
 
 // ---------------------------------------------------------------------------
