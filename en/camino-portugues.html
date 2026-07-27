@@ -563,7 +563,7 @@ document.addEventListener('click',function(e){var dd=document.getElementById('la
   </div>
 </div>
 <script>
-var _ecsFolletoUrl='../folleto-camino-portugues.html';
+var _ecsFolletoUrl='folleto-camino-portugues.html';
 function ecsOpenFolleto(){document.getElementById('ecs-folleto-overlay').style.display='flex';if(typeof gtag==='function'){gtag('event','click_folleto',{ruta:window.location.pathname});}}
 function ecsCloseFolletoBtn(){document.getElementById('ecs-folleto-overlay').style.display='none';}
 function ecsCloseFolleto(e){if(e.target===document.getElementById('ecs-folleto-overlay'))document.getElementById('ecs-folleto-overlay').style.display='none';}
@@ -576,16 +576,16 @@ function ecsSubmitFolleto(){
   if(!em||em.indexOf('@')===-1){alert('Please enter a valid email.');return;}
   if(!ch){alert('You must accept the privacy policy.');return;}
   if(typeof gtag==='function'){gtag('event','lead_folleto',{ruta:window.location.pathname});}
-  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({'form-name':'folleto',nombre:n,email:em,telefono:tel,ruta:_ecsFolletoUrl}).toString()});
+  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({'form-name':'folleto-en',nombre:n,email:em,telefono:tel,ruta:_ecsFolletoUrl}).toString()});
   localStorage.setItem('ecs_folleto_nombre',n);
   localStorage.setItem('ecs_folleto_url',_ecsFolletoUrl);
-  window.location.href='../descarga-folleto.html?ruta='+encodeURIComponent(_ecsFolletoUrl);
+  window.location.href='descarga-folleto.html?ruta='+encodeURIComponent(_ecsFolletoUrl);
 }
 </script>
 <script>
 (function(){var tabs=document.querySelectorAll('.subnav-tab[data-sec]');var secs=[];tabs.forEach(function(t){var el=document.getElementById(t.dataset.sec);if(el)secs.push({tab:t,el:el});});function setActive(){var top=window.scrollY+140;var active=null;secs.forEach(function(s){if(s.el.getBoundingClientRect().top+window.scrollY<=top)active=s;});tabs.forEach(function(t){t.classList.remove('active');});if(active)active.tab.classList.add('active');}window.addEventListener('scroll',setActive,{passive:true});setActive();})();
 </script>
-<form name="folleto" data-netlify="true" hidden><input name="nombre"><input name="email"><input name="telefono"><input name="ruta"></form>
+<form name="folleto-en" data-netlify="true" hidden><input name="nombre"><input name="email"><input name="telefono"><input name="ruta"></form>
 <form name="llamada" data-netlify="true" hidden><input name="telefono"><input name="pagina"></form>
 <div id="ecs-aloj-overlay" onclick="ecsCloseAloj(event)" style="display:none;position:fixed;inset:0;background:rgba(1,46,56,0.82);z-index:3000;justify-content:center;align-items:flex-start;overflow-y:auto;padding:32px 16px;">
   <div style="background:white;border-radius:20px;max-width:580px;width:100%;position:relative;margin:auto;overflow:hidden;" onclick="event.stopPropagation()">

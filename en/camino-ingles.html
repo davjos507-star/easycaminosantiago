@@ -619,7 +619,7 @@ document.addEventListener('click',function(e){var dd=document.getElementById('la
   </div>
 </div>
 <script>
-var _ecsFolletoUrl='../folleto-camino-ingles.html';
+var _ecsFolletoUrl='folleto-camino-ingles.html';
 function ecsOpenFolleto(){var el=document.getElementById('ecs-folleto-overlay');el.style.display='flex';if(typeof gtag==='function'){gtag('event','click_folleto',{ruta:window.location.pathname});}}
 function ecsCloseFolletoBtn(){document.getElementById('ecs-folleto-overlay').style.display='none';}
 function ecsCloseFolleto(e){if(e.target===document.getElementById('ecs-folleto-overlay'))document.getElementById('ecs-folleto-overlay').style.display='none';}
@@ -632,10 +632,10 @@ function ecsSubmitFolleto(){
   if(!em||em.indexOf('@')===-1){alert('Please enter a valid email.');return;}
   if(!ch){alert('You must accept the privacy policy.');return;}
   if(typeof gtag==='function'){gtag('event','lead_folleto',{ruta:window.location.pathname});}
-  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({'form-name':'folleto',nombre:n,email:em,telefono:tel,ruta:_ecsFolletoUrl}).toString()});
+  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({'form-name':'folleto-en',nombre:n,email:em,telefono:tel,ruta:_ecsFolletoUrl}).toString()});
   localStorage.setItem('ecs_folleto_nombre',n);
   localStorage.setItem('ecs_folleto_url',_ecsFolletoUrl);
-  window.location.href='../descarga-folleto.html?ruta='+encodeURIComponent(_ecsFolletoUrl);
+  window.location.href='descarga-folleto.html?ruta='+encodeURIComponent(_ecsFolletoUrl);
 }
 </script>
 <script>
@@ -646,7 +646,7 @@ function ecsSubmitFolleto(){
   window.addEventListener('scroll',setActive,{passive:true});setActive();
 })();
 </script>
-<form name="folleto" data-netlify="true" hidden><input name="nombre"><input name="email"><input name="telefono"><input name="ruta"></form>
+<form name="folleto-en" data-netlify="true" hidden><input name="nombre"><input name="email"><input name="telefono"><input name="ruta"></form>
 <form name="llamada" data-netlify="true" hidden><input name="telefono"><input name="pagina"></form>
 <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/148622668.js"></script>
 </body>

@@ -281,6 +281,21 @@ function getConfig(formName, data) {
     };
   }
 
+  // ── Descarga de folleto (EN) (folleto-en, folleto-sarria-en, folleto-portugues-en…) ─
+  if (formName.startsWith('folleto') && formName.endsWith('-en')) {
+    return {
+      templateName: 'folleto',
+      subject: 'Your Camino de Santiago itinerary — Easy Camino Santiago',
+      heading: 'Your itinerary is on its way',
+      intro: 'Thank you for your interest in the Camino de Santiago. We have received your itinerary request and will send it to you at this email address shortly.',
+      tableRows: dataRows([
+        ['Route', data.ruta],
+        ['Phone', data.telefono],
+      ]),
+      responsePromise: 'Ready to take the next step? We can prepare a personalised, no-obligation quote for you.',
+    };
+  }
+
   // ── Descarga de folleto (folleto, folleto-sarria, folleto-portugues…) ─────
   if (formName.startsWith('folleto')) {
     return {
