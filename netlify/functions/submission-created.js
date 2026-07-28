@@ -10,7 +10,6 @@
 //   reserva              → HubSpot sync siempre, independiente del email:
 //                          tarjeta: estado=reserva_iniciada, email omitido (send-booking-email lo gestiona)
 //                          transferencia: estado=pendiente_transferencia + email "reserva recibida"
-//   portugues            → alias de "reserva" (mismo comportamiento) — ver FORM_NAME_ALIASES
 //   solicitud-info       → email PREMIUM con resumen + CTA encuesta
 //   solicitud-info-en    → idem in English
 //   folleto*             → "tu itinerario está en camino"
@@ -22,16 +21,6 @@
 
 import https from 'https';
 import nodemailer from 'nodemailer';
-
-// El formulario de reserva (reserva.html / en/reserva.html / pago-servicios.html) envía
-// su AJAX POST sin el campo "form-name" (el <form name="reserva" ... hidden> no declara
-// ese input y el JS de envío tampoco lo añade). Netlify registra entonces la submission
-// bajo el nombre "portugues" en vez de "reserva", así que sin este alias getConfig()
-// no reconoce el formulario y syncToHubspot() nunca llega a ejecutarse (contacto, nota
-// y Deal quedan sin crear). El payload de datos es idéntico al de "reserva"
-// (ruta, fecha-inicio, adultos, ninos, alojamiento, total, deposito, metodo-pago…),
-// así que basta con tratarlo como un alias en vez de duplicar toda la lógica.
-const FORM_NAME_ALIASES = { portugues: 'reserva' };
 
 function resendPost(payload, apiKey) {
   return new Promise((resolve, reject) => {
@@ -101,13 +90,9 @@ export default {
     // cualquier otro campo del formulario (el <input type="hidden" name="form-name">
     // que ya llevan todos los formularios de este sitio).
     const data = event.data || {};
-    const rawFormName = data['form-name'] || '';
-    const formName = FORM_NAME_ALIASES[rawFormName] || rawFormName;
+    const formName = data['form-name'] || '';
 
     // LOG DIAGNÓSTICO — siempre visible en Netlify Function logs
-    if (rawFormName !== formName) {
-      console.log('[SC] DIAGNÓSTICO form-name alias aplicado: "' + rawFormName + '" → "' + formName + '"');
-    }
     console.log('[SC] DIAGNÓSTICO formName=' + JSON.stringify(formName));
     console.log('[SC] DIAGNÓSTICO email detectado=' + JSON.stringify(data.email));
     console.log('[SC] DIAGNÓSTICO ruta detectada=' + JSON.stringify(data.ruta));
