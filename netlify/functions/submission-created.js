@@ -132,8 +132,20 @@ export default {
     }
 
     if (config === 'SKIP_STRIPE') {
-      console.log('[SC] reserva tarjeta — HubSpot sincronizado, saltando email (send-booking-email lo gestiona)');
-      return ok('skipped: stripe email handled by send-booking-email');
+      // Solicitud de reserva con tarjeta, enviada ANTES de intentar el cobro (aún no hay
+      // pago confirmado). No se envía nada al cliente aquí — eso lo hace send-booking-email
+      // solo si el pago llega a completarse. Pero el equipo sí debe enterarse de que hay una
+      // solicitud nueva pendiente de pago, incluso si el cliente nunca llega a pagar.
+      console.log('[SC] reserva tarjeta (pago pendiente) — HubSpot sincronizado, enviando aviso interno');
+      try {
+        await sendInternalNotice(
+          'Nueva solicitud de reserva (pago pendiente) — ' + (data.ruta || '—') + ' — ' + (data.nombre || '—'),
+          buildInternalReservaHtml(data)
+        );
+      } catch (e) {
+        console.error('[SC] ✗ error inesperado al enviar aviso interno:', e.message);
+      }
+      return ok('skipped: client email handled by send-booking-email, internal notice sent');
     }
 
     const firstName = (data.nombre || data.name || '').split(' ')[0] || 'Peregrino';
@@ -685,6 +697,98 @@ function buildEmail(firstName, { heading, intro, tableRows, responsePromise }) {
 
 function ok(body) {
   return { statusCode: 200, body };
+}
+
+// ---------------------------------------------------------------------------
+// Aviso interno — nueva solicitud de reserva con tarjeta, pago aún pendiente
+// (send-booking-email cubre el email al cliente cuando el pago se completa)
+// ---------------------------------------------------------------------------
+
+function buildInternalReservaHtml(data) {
+  const pilgrimsLabel = [
+    data.adultos && data.adultos !== '0' && data.adultos + ' adultos',
+    data.ninos   && data.ninos   !== '0' && data.ninos   + ' niños',
+  ].filter(Boolean).join(', ');
+
+  const rows = [
+    ['Cliente',          data.nombre],
+    ['Email',            data.email],
+    ['Teléfono',         data.telefono],
+    ['Ruta',             data.ruta],
+    ['Fecha inicio',     data['fecha-inicio']],
+    ['Peregrinos',       pilgrimsLabel],
+    ['Alojamiento',      data.alojamiento],
+    ['Total reserva',    data.total],
+    ['Depósito (20%)',   data.deposito],
+    ['Referencia',       data.referencia],
+  ].filter(([, v]) => v && String(v).trim());
+
+  const rowsHtml = rows.map(([label, value]) => `
+    <tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888;width:140px">${label}</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">${value}</td></tr>
+  `).join('');
+
+  return `
+    <div style="font-family:Arial,sans-serif;max-width:600px">
+      <h2 style="color:#2D4A52;border-bottom:2px solid #56A1A4;padding-bottom:8px">
+        🕓 Nueva solicitud de reserva — pago pendiente
+      </h2>
+      <p style="font-size:13px;color:#888">El cliente ha confirmado sus datos y ha llegado al paso de pago con tarjeta, pero todavía no se ha cobrado nada. Si el pago se completa, recibirás otra notificación.</p>
+      <table style="font-size:14px;border-collapse:collapse;width:100%">${rowsHtml}</table>
+    </div>`;
+}
+
+// Envía un email interno (solo a info@easycaminosantiago.com), reutilizando el mismo
+// fallback SMTP → Resend que usa el resto de esta función para los emails al cliente.
+async function sendInternalNotice(subject, html) {
+  const adminEmail = 'info@easycaminosantiago.com';
+
+  const smtpHost = process.env.SMTP_HOST;
+  const smtpUser = process.env.SMTP_USER;
+  const smtpPass = process.env.SMTP_PASS;
+  const smtpPort = parseInt(process.env.SMTP_PORT || '587', 10);
+
+  if (smtpHost && smtpUser && smtpPass) {
+    const transporter = nodemailer.createTransport({
+      host: smtpHost,
+      port: smtpPort,
+      secure: smtpPort === 465,
+      auth: { user: smtpUser, pass: smtpPass },
+    });
+    try {
+      await transporter.sendMail({
+        from: 'Easy Camino Santiago <info@easycaminosantiago.com>',
+        to: adminEmail,
+        subject,
+        html,
+      });
+      console.log('[SC] ✓ aviso interno enviado via SMTP');
+      return true;
+    } catch (err) {
+      console.error('[SC] ✗ excepción SMTP (aviso interno):', err.message);
+      return false;
+    }
+  }
+
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error('[SC] ✗ no se pudo enviar aviso interno — sin SMTP ni RESEND_API_KEY configurados');
+    return false;
+  }
+  try {
+    const result = await resendPost(
+      { from: 'Easy Camino Santiago <info@easycaminosantiago.com>', to: [adminEmail], subject, html },
+      apiKey
+    );
+    if (result.status >= 400) {
+      console.error('[SC] ✗ Resend rechazó el aviso interno — status:', result.status, JSON.stringify(result.body));
+      return false;
+    }
+    console.log('[SC] ✓ aviso interno enviado via Resend');
+    return true;
+  } catch (err) {
+    console.error('[SC] ✗ excepción Resend (aviso interno):', err.message);
+    return false;
+  }
 }
 
 // ---------------------------------------------------------------------------

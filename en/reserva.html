@@ -673,7 +673,8 @@ const state = {
   extraPre: 0, extraPost: 0, seguro: false,
   total: 0, deposito: 0,
   stripeInstance: null, cardNumber: null, cardExpiry: null, cardCvc: null,
-  itiInit: false, stripeInit: false
+  itiInit: false, stripeInit: false,
+  reservaRef: null, solicitudEnviada: false
 };
 
 // ─── INIT ───────────────────────────────────────────────────────────
@@ -893,7 +894,45 @@ function toggleItin(){
 }
 
 // ─── NETLIFY LEAD CAPTURE ───
-function submitNetlifyLead(){
+// Solicitud de reserva previa al pago: se dispara al llegar al paso 5 (datos ya
+// confirmados), antes de intentar cobrar con Stripe, para que llegue a Netlify Forms /
+// HubSpot aunque el usuario no introduzca la tarjeta, la abandone o el pago sea rechazado.
+// state.solicitudEnviada evita reenvíos duplicados en reintentos o si se vuelve al paso 5.
+// SOLICITUD_STORAGE_KEY persiste esa misma protección ante una recarga (F5) de la página.
+const SOLICITUD_STORAGE_KEY = 'ecs_reserva_en_solicitud';
+
+function guardarSolicitudEnSesion(email){
+  try {
+    sessionStorage.setItem(SOLICITUD_STORAGE_KEY, JSON.stringify({
+      reservaRef: state.reservaRef, ruta: state.ruta || '', fechaInicio: state.fechaInicio || '', email: email || ''
+    }));
+  } catch(e) {}
+}
+
+function leerSolicitudDeSesion(){
+  try {
+    const raw = sessionStorage.getItem(SOLICITUD_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch(e) { return null; }
+}
+
+async function submitNetlifyLead(){
+  if (state.solicitudEnviada) return;
+
+  const email = document.getElementById('v-email').value || '';
+  const guardada = leerSolicitudDeSesion();
+  if (guardada && guardada.reservaRef && guardada.ruta === (state.ruta || '') &&
+      guardada.fechaInicio === (state.fechaInicio || '') && guardada.email === email) {
+    state.reservaRef = guardada.reservaRef;
+    state.solicitudEnviada = true;
+    console.log('[Reserva] solicitud ya enviada antes de una recarga — no se reenvía | ref:', state.reservaRef);
+    return;
+  }
+
+  if (!state.reservaRef) {
+    state.reservaRef = 'ECS-' + (state.ruta || 'REF').toUpperCase() + '-' + Date.now().toString().slice(-6);
+  }
+  state.solicitudEnviada = true;
   try {
     const form = document.querySelector('form[name="reserva"]');
     const data = new FormData(form);
@@ -905,12 +944,18 @@ function submitNetlifyLead(){
     data.set('alojamiento', state.alojamiento || '');
     data.set('nombre', (document.getElementById('v-nombre').value || '') + ' ' + (document.getElementById('v-apellido').value || ''));
     data.set('apellido', document.getElementById('v-apellido').value || '');
-    data.set('email', document.getElementById('v-email').value || '');
+    data.set('email', email);
     data.set('telefono', document.getElementById('v-tel').value || '');
     data.set('total', state.total + ' €');
     data.set('deposito', state.deposito + ' €');
-    fetch('/', { method:'POST', body: data });
-  } catch(e) {}
+    data.set('metodo-pago', 'Tarjeta bancaria');
+    data.set('referencia', state.reservaRef);
+    await fetch('/', { method:'POST', body: data });
+    guardarSolicitudEnSesion(email);
+  } catch(e) {
+    state.solicitudEnviada = false;
+    console.error('[Reserva] error al enviar solicitud:', e.message);
+  }
 }
 
 // ─── STRIPE ───
@@ -938,6 +983,12 @@ async function procesarPago(){
     return;
   }
 
+  // Safety net: if the request wasn't sent yet (e.g. it failed in the background
+  // when entering step 5), retry it here, blocking, before charging the card.
+  if (!state.solicitudEnviada) {
+    await submitNetlifyLead();
+  }
+
   btn.disabled = true;
   btn.textContent = 'Processing...';
 
@@ -956,7 +1007,8 @@ async function procesarPago(){
           fecha_inicio: state.fechaInicio,
           nombre: document.getElementById('v-nombre').value + ' ' + document.getElementById('v-apellido').value,
           email: document.getElementById('v-email').value,
-          total: state.total
+          total: state.total,
+          reserva_id: state.reservaRef || ''
         }
       })
     });
@@ -979,6 +1031,26 @@ async function procesarPago(){
       btn.disabled = false;
       btn.textContent = '🔒 Pay deposit now';
     } else {
+      // The request was already sent to Netlify/HubSpot before charging (submitNetlifyLead).
+      // Moving the deal to "deposit paid" is handled by the payment_intent.succeeded webhook.
+      try {
+        fetch('/.netlify/functions/send-booking-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          keepalive: true,
+          body: JSON.stringify({
+            nombre: document.getElementById('v-nombre').value + ' ' + document.getElementById('v-apellido').value,
+            email: document.getElementById('v-email').value,
+            telefono: document.getElementById('v-tel').value,
+            ruta: state.rutaData ? state.rutaData.nombre : state.ruta,
+            fechaInicio: state.fechaInicio,
+            alojamiento: state.alojamiento,
+            deposito: state.deposito,
+            total: state.total,
+            paymentIntentId: result.paymentIntent ? result.paymentIntent.id : ''
+          })
+        });
+      } catch (e) { /* no bloquea */ }
       window.location.href = '../en/gracias.html';
     }
   } catch(err) {

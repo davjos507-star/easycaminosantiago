@@ -271,6 +271,7 @@ const STRIPE_PUBLIC_KEY = 'pk_live_51KHQyDLdy1SiD5iFtf5Vja5WbadI1LJeYXbzUzaL1K2p
 const state = {
   opcionPago: '20',
   metodoPago: 'tarjeta',
+  reservaRef: null, solicitudEnviada: false,
   stripeInstance: null, cardNumber: null, cardExpiry: null, cardCvc: null,
   stripeInit: false
 };
@@ -383,12 +384,64 @@ async function confirmarTransferencia(){
   const btn = document.getElementById('btn-transfer');
   btn.disabled = true;
   btn.textContent = 'Enviando...';
-  const referencia = 'ECS-SERV-' + Date.now().toString().slice(-6);
+  if (!state.reservaRef) {
+    state.reservaRef = 'ECS-SERV-' + Date.now().toString().slice(-6);
+  }
+  state.solicitudEnviada = true;
   try {
-    const data = buildNetlifyData(datos, referencia, montoAhora(), 'Transferencia bancaria');
+    const data = buildNetlifyData(datos, state.reservaRef, montoAhora(), 'Transferencia bancaria');
     await fetch('/', { method:'POST', body: data });
+    guardarSolicitudEnSesion(datos);
   } catch (e) {}
   window.location.href = 'gracias.html';
+}
+
+// ─── SOLICITUD DE PAGO (previa al cobro con tarjeta) ───
+// Se dispara al validar los datos, antes de crear el PaymentIntent y cobrar. Así la
+// solicitud llega a Netlify Forms / HubSpot aunque la tarjeta se rechace o se abandone.
+// Persistida en sessionStorage: si el usuario recarga la página (F5) con los mismos
+// datos (p. ej. reabre el mismo enlace prellenado por URL), no se reenvía duplicada.
+const SOLICITUD_STORAGE_KEY = 'ecs_pago_servicios_solicitud';
+
+function guardarSolicitudEnSesion(datos){
+  try {
+    sessionStorage.setItem(SOLICITUD_STORAGE_KEY, JSON.stringify({
+      reservaRef: state.reservaRef, concepto: datos.concepto, email: datos.email, importe: datos.importe
+    }));
+  } catch(e) {}
+}
+
+function leerSolicitudDeSesion(){
+  try {
+    const raw = sessionStorage.getItem(SOLICITUD_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch(e) { return null; }
+}
+
+async function enviarSolicitudReserva(datos){
+  if (state.solicitudEnviada) return;
+
+  const guardada = leerSolicitudDeSesion();
+  if (guardada && guardada.reservaRef && guardada.concepto === datos.concepto &&
+      guardada.email === datos.email && guardada.importe === datos.importe) {
+    state.reservaRef = guardada.reservaRef;
+    state.solicitudEnviada = true;
+    console.log('[Reserva] solicitud ya enviada antes de una recarga — no se reenvía | ref:', state.reservaRef);
+    return;
+  }
+
+  if (!state.reservaRef) {
+    state.reservaRef = 'ECS-SERV-' + Date.now().toString().slice(-6);
+  }
+  state.solicitudEnviada = true;
+  try {
+    const data = buildNetlifyData(datos, state.reservaRef, montoAhora(), 'Tarjeta bancaria');
+    await fetch('/', { method: 'POST', body: data });
+    guardarSolicitudEnSesion(datos);
+  } catch (e) {
+    state.solicitudEnviada = false;
+    console.error('[Reserva] error al enviar solicitud:', e.message);
+  }
 }
 
 // ─── STRIPE ───
@@ -420,6 +473,12 @@ async function procesarPago(){
     return;
   }
 
+  // Red de seguridad: garantiza que la solicitud llegue a Netlify/HubSpot antes de cobrar,
+  // incluso si algo impidió el envío al validar los datos.
+  if (!state.solicitudEnviada) {
+    await enviarSolicitudReserva(datos);
+  }
+
   const importeAhora = montoAhora();
   btn.disabled = true;
   btn.textContent = 'Procesando...';
@@ -442,6 +501,7 @@ async function procesarPago(){
           total:      datos.importe,
           tipo_pago:  state.opcionPago === '100' ? 'pago_completo' : 'deposito',
           origen:     'pago-servicios',
+          reserva_id: state.reservaRef || '',
           opcionPago: state.opcionPago
         }
       })
@@ -476,10 +536,8 @@ async function procesarPago(){
       btn.disabled = false;
       btn.textContent = '🔒 Pagar ahora';
     } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
-      try {
-        const nlData = buildNetlifyData(datos, result.paymentIntent.id, importeAhora, 'Tarjeta bancaria');
-        fetch('/', { method: 'POST', body: nlData, keepalive: true });
-      } catch (e) {}
+      // La solicitud ya se envió a Netlify/HubSpot antes del cobro (enviarSolicitudReserva).
+      // Actualizar el negocio a "depósito pagado" lo hace el webhook payment_intent.succeeded.
       try {
         fetch('/.netlify/functions/send-booking-email', {
           method: 'POST',
