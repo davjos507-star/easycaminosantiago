@@ -234,6 +234,7 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
 
 <!-- NETLIFY FORM (misma definición que reserva.html — reutiliza el formulario "reserva" para no tocar las Netlify Functions) -->
 <form name="reserva" netlify netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="reserva">
   <input type="hidden" name="bot-field">
   <input type="hidden" name="ruta">
   <input type="hidden" name="fecha-inicio">
@@ -356,6 +357,7 @@ function validarDatos(){
 function buildNetlifyData(datos, referencia, deposito, metodoPagoLabel){
   const form = document.querySelector('form[name="reserva"]');
   const data = new FormData(form);
+  data.set('form-name', 'reserva');
   data.set('ruta', datos.concepto);
   data.set('fecha-inicio', '');
   data.set('adultos', '');
