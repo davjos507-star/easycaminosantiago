@@ -1325,7 +1325,7 @@ async function confirmarTransferencia(){
     data.set('metodo-pago', 'Transferencia bancaria');
     data.set('referencia', state.reservaRef || '');
     data.set('extras', buildExtrasText());
-    await fetch('/', { method:'POST', body: data });
+    await fetch('/', { method:'POST', body: data, keepalive: true });
     guardarSolicitudEnSesion(document.getElementById('v-email').value || '');
   } catch(e) {}
   window.location.href = 'gracias.html';
@@ -1392,7 +1392,7 @@ async function enviarSolicitudReserva(){
     nlData.set('referencia', state.reservaRef);
     nlData.set('extras', buildExtrasText());
     nlData.set('observaciones', (document.getElementById('v-observaciones') || {}).value || '');
-    await fetch('/', { method: 'POST', body: nlData });
+    await fetch('/', { method: 'POST', body: nlData, keepalive: true });
     guardarSolicitudEnSesion(email);
   } catch(e) {
     state.solicitudEnviada = false; // permite reintentar en el siguiente goStep(5) o antes del pago
