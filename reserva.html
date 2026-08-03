@@ -297,7 +297,6 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
             <option value="primitivo">Camino Primitivo</option>
             <option value="finisterre">Camino a Finisterre</option>
             <option value="bicicleta">En Bicicleta</option>
-            <option value="cf37">Camino Francés 37 días — habitación individual</option>
           </select>
         </div>
       </div>
@@ -885,7 +884,26 @@ const RUTAS = {
   primitivo: { nombre:'Camino Primitivo', km:'320 km', etapas:'13 etapas', noches:13, inicio:'Oviedo', fin:'Santiago de Compostela', foto:'ruta-images/camino-primitivo-ruta-montaña.jpg', precios:{albergue:790,pension:1090,hotel:null} },
   finisterre:{ nombre:'Camino a Finisterre', km:'87 km', etapas:'3 etapas', noches:3, inicio:'Santiago de Compostela', fin:'Fisterra', foto:'downloaded_images/camino-finisterre-costa-galicia-rocas.jpg', precios:{albergue:249,pension:349,hotel:null} },
   bicicleta: { nombre:'En Bicicleta', km:'200+ km', etapas:'3–6 días', noches:5, inicio:'Variable', fin:'Santiago de Compostela', foto:'downloaded_images/camino-santiago-peregrina-atardecer.jpg', precios:{albergue:349,pension:499,hotel:699} },
-  cf37:      { nombre:'Camino Francés 37 días — hab. individual', km:'780 km', etapas:'37 días', noches:36, inicio:'Saint-Jean-Pied-de-Port', fin:'Santiago de Compostela', foto:'downloaded_images/camino-frances-peregrino-mochila-concha.jpg', precios:{albergue:null,pension:null,hotel:null}, precioFijo:9100 }
+
+  // CASO ESPECIAL — no es un producto estándar del catálogo. Se creó en exclusiva para
+  // una pareja de Brasil con un itinerario y necesidades específicas (37 días, 2 habitaciones
+  // individuales, precio fijo). Retirado del selector público de rutas (no aparece en
+  // #ruta-select) para que no vuelva a influir en presupuestos ni comparativas futuras.
+  // Sigue accesible solo por enlace directo (?ruta=cf37) para no romper el enlace ya
+  // enviado a esa pareja. No usar como referencia de precio ni de itinerario para ningún
+  // otro cliente.
+  cf37: {
+    casoEspecial: true,
+    nombre: 'Camino Francés 37 días — hab. individual',
+    km: '780 km',
+    etapas: '37 días',
+    noches: 36,
+    inicio: 'Saint-Jean-Pied-de-Port',
+    fin: 'Santiago de Compostela',
+    foto: 'downloaded_images/camino-frances-peregrino-mochila-concha.jpg',
+    precios: { albergue: null, pension: null, hotel: null },
+    precioFijo: 9100
+  }
 };
 
 const EXTRAS_PRECIOS = {
