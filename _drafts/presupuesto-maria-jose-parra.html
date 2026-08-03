@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Propuesta — Camino Francés desde Sarria — Easy Camino Santiago</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --turq:    #56A1A4;
+      --azul:    #2D4A52;
+      --crema:   #ECE7E2;
+      --naranja: #F3A949;
+      --cinza:   #6b7c7e;
+      --border:  #dde6e7;
+      --bg:      #f5f9f9;
+      --white:   #ffffff;
+      --ff-serif: 'Playfair Display', Georgia, serif;
+      --ff-label: 'Raleway', sans-serif;
+      --ff-body:  'Lato', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #d8e2e3; font-family: var(--ff-body); color: var(--azul); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { width: 210mm; min-height: 297mm; background: var(--white); margin: 28px auto; box-shadow: 0 8px 48px rgba(0,0,0,0.18); display: flex; flex-direction: column; }
+    .doc-header { background: var(--azul); padding: 30px 44px 28px; display: flex; justify-content: space-between; align-items: flex-start; }
+    .logo-wrap { display: flex; align-items: center; padding-top: 2px; }
+    .logo-img { height: 44px; width: auto; display: block; filter: brightness(0) invert(1); opacity: 0.92; }
+    .doc-header-right { text-align: right; }
+    .doc-overline { font-family: var(--ff-label); font-size: 0.57rem; font-weight: 700; letter-spacing: 3.5px; text-transform: uppercase; color: var(--turq); margin-bottom: 9px; }
+    .doc-title { font-family: var(--ff-serif); font-size: 1.6rem; font-weight: 600; color: var(--white); line-height: 1.15; }
+    .doc-subtitle { font-family: var(--ff-serif); font-size: 0.98rem; font-style: italic; color: rgba(255,255,255,0.58); margin-top: 4px; }
+    .doc-meta { font-family: var(--ff-label); font-size: 0.55rem; color: rgba(255,255,255,0.32); margin-top: 10px; letter-spacing: 0.4px; }
+    .doc-meta span { color: rgba(255,255,255,0.5); margin-left: 4px; }
+    .accent-band { height: 4px; background: linear-gradient(90deg, var(--turq) 0%, var(--naranja) 100%); }
+    .doc-body { flex: 1; padding: 32px 44px 30px; display: flex; flex-direction: column; gap: 24px; }
+    .sec-label { font-family: var(--ff-label); font-size: 0.59rem; font-weight: 700; letter-spacing: 2.7px; text-transform: uppercase; color: var(--turq); padding-bottom: 7px; border-bottom: 1.5px solid var(--border); margin-bottom: 13px; }
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 32px; }
+    .info-key { font-family: var(--ff-label); font-size: 0.62rem; font-weight: 700; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.9px; margin-bottom: 2px; }
+    .info-val { font-size: 0.86rem; font-weight: 700; color: var(--azul); line-height: 1.35; }
+    .info-val.light { font-weight: 400; }
+    .info-val.placeholder { font-weight: 400; font-style: italic; color: var(--cinza); }
+    .intro-block { background: var(--crema); border-left: 4px solid var(--turq); border-radius: 0 6px 6px 0; padding: 14px 18px; }
+    .intro-text { font-size: 0.84rem; line-height: 1.65; color: var(--azul); }
+    .itinerary { display: flex; flex-direction: column; gap: 0; }
+    .itin-row { display: flex; align-items: stretch; gap: 0; }
+    .itin-day-col { width: 64px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; padding-top: 10px; }
+    .itin-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--turq); border: 2px solid var(--white); outline: 1.5px solid var(--turq); flex-shrink: 0; }
+    .itin-dot.special { background: var(--naranja); outline-color: var(--naranja); }
+    .itin-line { width: 1.5px; flex: 1; background: var(--border); margin-top: 4px; }
+    .itin-row:last-child .itin-line { display: none; }
+    .itin-content { flex: 1; padding: 7px 0 12px 0; }
+    .itin-label { font-family: var(--ff-label); font-size: 0.6rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cinza); margin-bottom: 2px; }
+    .itin-title { font-size: 0.87rem; font-weight: 700; color: var(--azul); line-height: 1.3; }
+    .itin-km { font-family: var(--ff-label); font-weight: 600; color: var(--turq); }
+    .itin-desc { font-size: 0.77rem; color: var(--cinza); line-height: 1.5; margin-top: 2px; }
+    .itin-note { font-size: 0.78rem; color: var(--cinza); font-style: italic; margin-top: 10px; line-height: 1.55; padding-left: 64px; }
+    .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 24px; }
+    .svc-item { display: flex; align-items: flex-start; gap: 9px; font-size: 0.82rem; color: var(--azul); line-height: 1.4; }
+    .svc-mark { width: 15px; height: 15px; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; }
+    .noincl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 24px; }
+    .noincl-item { display: flex; align-items: flex-start; gap: 9px; font-size: 0.82rem; color: var(--cinza); line-height: 1.4; }
+    .noincl-mark { width: 15px; height: 15px; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; }
+    .price-total-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: var(--azul); border-radius: 8px; margin-bottom: 14px; }
+    .price-label { font-family: var(--ff-label); font-size: 0.62rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+    .price-amount { font-family: var(--ff-serif); font-size: 2rem; font-weight: 700; color: var(--white); line-height: 1; }
+    .price-per { font-size: 0.75rem; color: rgba(255,255,255,0.45); font-family: var(--ff-label); margin-top: 3px; }
+    .price-right { text-align: right; }
+    .price-total-label { font-family: var(--ff-label); font-size: 0.57rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 4px; }
+    .price-total-amount { font-family: var(--ff-serif); font-size: 1.4rem; font-weight: 700; color: var(--naranja); }
+    .payment-method { font-size: 0.82rem; color: var(--cinza); line-height: 1.5; padding: 10px 14px; background: var(--bg); border-radius: 6px; }
+    .conditions-text { font-size: 0.8rem; color: var(--cinza); line-height: 1.65; }
+    .validity-note { font-family: var(--ff-label); font-size: 0.68rem; color: var(--cinza); letter-spacing: 0.3px; }
+    .validity-note strong { color: var(--azul); }
+    .doc-footer { background: var(--crema); border-top: 1.5px solid var(--border); padding: 20px 44px; display: flex; justify-content: space-between; align-items: flex-end; }
+    .sign-name { font-family: var(--ff-serif); font-size: 1.05rem; font-weight: 600; color: var(--azul); }
+    .sign-role { font-family: var(--ff-label); font-size: 0.62rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cinza); margin-top: 3px; }
+    .sign-contact { font-size: 0.78rem; color: var(--cinza); margin-top: 6px; line-height: 1.7; }
+    .footer-brand { text-align: right; }
+    .footer-brand-name { font-family: var(--ff-label); font-size: 0.63rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--turq); }
+    .footer-tagline { font-family: var(--ff-serif); font-size: 0.75rem; font-style: italic; color: var(--cinza); margin-top: 4px; opacity: 0.7; }
+    .print-btn { position: fixed; bottom: 28px; right: 28px; background: var(--azul); color: var(--white); font-family: var(--ff-label); font-size: 0.78rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; border: none; border-radius: 40px; padding: 13px 26px; cursor: pointer; box-shadow: 0 4px 20px rgba(45,74,82,0.35); transition: background 0.2s, box-shadow 0.2s; z-index: 100; }
+    .print-btn:hover { background: var(--turq); box-shadow: 0 6px 28px rgba(86,161,164,0.45); }
+    @media print {
+      body { background: none; }
+      .page { margin: 0; box-shadow: none; width: 100%; }
+      .print-btn { display: none; }
+      section { page-break-inside: avoid; }
+      .itinerary { page-break-inside: avoid; }
+      .price-total-row { page-break-inside: avoid; }
+      .doc-footer { page-break-inside: avoid; }
+      .intro-block { page-break-inside: avoid; }
+      .noincl-grid { page-break-inside: avoid; }
+      .services-grid { page-break-inside: avoid; }
+      .info-grid { page-break-inside: avoid; }
+    }
+    @page { size: A4; margin: 0; }
+  </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">Imprimir / Guardar como PDF</button>
+
+<div class="page">
+
+  <header class="doc-header">
+    <div class="logo-wrap">
+      <img class="logo-img" src="../easy-camino-santiago-logo.png" alt="Easy Camino Santiago">
+    </div>
+    <div class="doc-header-right">
+      <div class="doc-overline">Propuesta personalizada de viaje</div>
+      <div class="doc-title">Camino Francés · Desde Sarria</div>
+      <div class="doc-subtitle">Sarria – Santiago de Compostela · 2 personas · 7 días de viaje · 6 noches · 5 etapas del Camino</div>
+      <div class="doc-meta">Ref. <span id="doc-ref">—</span> &nbsp;·&nbsp; <span id="fecha-emision-header">—</span></div>
+    </div>
+  </header>
+
+  <div class="accent-band"></div>
+
+  <main class="doc-body">
+
+    <section>
+      <div class="sec-label">Datos de la clienta</div>
+      <div class="info-grid">
+        <div class="info-cell">
+          <div class="info-key">Nombre</div>
+          <div class="info-val">María José Parra</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-key">Referencia</div>
+          <div class="info-val" id="doc-ref-2">—</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">Datos del viaje</div>
+      <div class="info-grid">
+        <div class="info-cell">
+          <div class="info-key">Ruta</div>
+          <div class="info-val">Camino Francés desde Sarria — últimos 100 km (Sarria → Santiago de Compostela)</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-key">Fechas</div>
+          <div class="info-val">30 de agosto – 5 de septiembre de 2026</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-key">Personas</div>
+          <div class="info-val">2 personas</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-key">Noches</div>
+          <div class="info-val">6 noches · 5 etapas caminando</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-key">Habitación</div>
+          <div class="info-val">Doble con dos camas individuales y baño privado</div>
+        </div>
+        <div class="info-cell">
+          <div class="info-key">Régimen</div>
+          <div class="info-val">Alojamiento y desayuno diario incluidos</div>
+        </div>
+        <div class="info-cell" style="grid-column: span 2;">
+          <div class="info-key">Transporte de equipaje</div>
+          <div class="info-val">Incluido diariamente</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">Propuesta a vuestra medida</div>
+      <div class="intro-block">
+        <p class="intro-text">Esta propuesta ha sido preparada para vosotros dos, lista para reservar mientras seguimos comprobando si existe una salida de grupo compatible con vuestras fechas. Un recorrido por los últimos 100 km del Camino Francés, desde Sarria hasta la Catedral de Santiago, con alojamiento en habitación doble con baño privado, el equipaje resuelto etapa a etapa, y todo preparado para que solo tengáis que caminar.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">Itinerario</div>
+      <div class="itinerary">
+
+        <div class="itin-row">
+          <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
+          <div class="itin-content">
+            <div class="itin-label">Día 1 · 30 ago</div>
+            <div class="itin-title">Llegada — Sarria</div>
+            <div class="itin-desc">Llegada a Sarria, punto de partida de los últimos 100 km del Camino Francés. Tiempo libre para conocer el casco histórico antes de comenzar a caminar al día siguiente.</div>
+          </div>
+        </div>
+
+        <div class="itin-row">
+          <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
+          <div class="itin-content">
+            <div class="itin-label">Día 2 · 31 ago</div>
+            <div class="itin-title">Sarria → Portomarín <span class="itin-km">· 22 km</span></div>
+          </div>
+        </div>
+
+        <div class="itin-row">
+          <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
+          <div class="itin-content">
+            <div class="itin-label">Día 3 · 1 sep</div>
+            <div class="itin-title">Portomarín → Palas de Rei <span class="itin-km">· 25 km</span></div>
+          </div>
+        </div>
+
+        <div class="itin-row">
+          <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
+          <div class="itin-content">
+            <div class="itin-label">Día 4 · 2 sep</div>
+            <div class="itin-title">Palas de Rei → Arzúa <span class="itin-km">· 29 km</span></div>
+          </div>
+        </div>
+
+        <div class="itin-row">
+          <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
+          <div class="itin-content">
+            <div class="itin-label">Día 5 · 3 sep</div>
+            <div class="itin-title">Arzúa → O Pedrouzo <span class="itin-km">· 19 km</span></div>
+          </div>
+        </div>
+
+        <div class="itin-row">
+          <div class="itin-day-col"><div class="itin-dot special"></div></div>
+          <div class="itin-content">
+            <div class="itin-label">Día 6 · 4 sep</div>
+            <div class="itin-title">O Pedrouzo → Santiago de Compostela <span class="itin-km">· 20 km</span></div>
+            <div class="itin-desc">Llegada a la Catedral de Santiago y recogida de la Compostela. Noche en Santiago antes de la salida.</div>
+          </div>
+        </div>
+
+      </div>
+      <p class="itin-note">El alojamiento de cada etapa se confirma en el momento de la reserva, según disponibilidad para las fechas elegidas. Salida el 5 de septiembre.</p>
+    </section>
+
+    <section>
+      <div class="sec-label">Servicios incluidos</div>
+      <div class="services-grid">
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Organización completa del Camino</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>6 noches en habitación doble con dos camas individuales y baño privado</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Desayuno diario</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Transporte diario de equipaje</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Asistencia durante todo el Camino</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Documentación práctica del viaje</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>IVA incluido</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">Transporte diario de equipaje</div>
+      <div class="services-grid" style="grid-template-columns:1fr;">
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Peso máximo: 18 kg por maleta o mochila.</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Recogida en la recepción del alojamiento antes de las 08:00.</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Entrega en el siguiente alojamiento antes de las 14:00.</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>El equipaje debe ir correctamente identificado con las etiquetas facilitadas por Easy Camino Santiago.</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Si surgiera cualquier incidencia durante el servicio, estaremos disponibles para ayudaros.</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">No incluido</div>
+      <div class="noincl-grid">
+        <div class="noincl-item"><div class="noincl-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#6b7c7e" stroke-width="1.2"/><path d="M4.5 8.5L8.5 4.5M4.5 4.5L8.5 8.5" stroke="#6b7c7e" stroke-width="1.2" stroke-linecap="round"/></svg></div><span>Comidas y cenas no especificadas.</span></div>
+        <div class="noincl-item"><div class="noincl-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#6b7c7e" stroke-width="1.2"/><path d="M4.5 8.5L8.5 4.5M4.5 4.5L8.5 8.5" stroke="#6b7c7e" stroke-width="1.2" stroke-linecap="round"/></svg></div><span>Seguro de viaje o cancelación.</span></div>
+        <div class="noincl-item"><div class="noincl-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#6b7c7e" stroke-width="1.2"/><path d="M4.5 8.5L8.5 4.5M4.5 4.5L8.5 8.5" stroke="#6b7c7e" stroke-width="1.2" stroke-linecap="round"/></svg></div><span>Traslados a/desde aeropuerto.</span></div>
+        <div class="noincl-item"><div class="noincl-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#6b7c7e" stroke-width="1.2"/><path d="M4.5 8.5L8.5 4.5M4.5 4.5L8.5 8.5" stroke="#6b7c7e" stroke-width="1.2" stroke-linecap="round"/></svg></div><span>Gastos personales.</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">Precio y forma de pago</div>
+      <div class="price-total-row">
+        <div>
+          <div class="price-label">Camino Francés · Desde Sarria</div>
+          <div class="price-amount">595 €</div>
+          <div class="price-per">por persona · habitación doble con baño privado</div>
+        </div>
+        <div class="price-right">
+          <div class="price-total-label">Total para 2 personas</div>
+          <div class="price-total-amount">1.190 €</div>
+        </div>
+      </div>
+      <p style="font-size:0.82rem; color:var(--cinza); margin-bottom:14px; font-style:italic;">Incluye todos los servicios descritos en esta propuesta.</p>
+      <div class="payment-method">
+        Depósito de reserva: <strong>20% del importe total (238 €)</strong>, a abonar para confirmar fechas y alojamiento. Resto del pago: <strong>952 €</strong>, antes de iniciar el Camino. Forma de pago: <strong>tarjeta bancaria</strong> o <strong>transferencia bancaria (IBAN)</strong>.
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">✓ Experiencia diseñada por un equipo local</div>
+      <div class="intro-block">
+        <p class="intro-text">No ofrecemos un paquete estándar. Cada propuesta se adapta a las preferencias de cada cliente para que el Camino sea vuestro, no una experiencia genérica.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">Condiciones</div>
+      <p class="conditions-text">La disponibilidad de los alojamientos y la asignación definitiva de los mismos están sujetas a confirmación en el momento de realizar la reserva.</p>
+      <div style="margin-top:10px; padding:10px 14px; background:var(--bg); border-radius:6px; border-left:3px solid var(--border);">
+        <p style="font-size:0.74rem; color:var(--cinza); line-height:1.6;"><strong style="color:var(--cinza);">Política de cancelación:</strong> más de 60 días → pérdida del depósito · 30–60 días → 50% del total · menos de 30 días → 100%.</p>
+      </div>
+      <p class="conditions-text" style="margin-top:10px;"><strong>Respuesta y confirmación:</strong> os confirmamos disponibilidad de alojamientos en menos de 24-48h laborables desde que nos indiquéis vuestra decisión. La reserva queda confirmada en firme al recibir el depósito.</p>
+    </section>
+
+    <section>
+      <div class="sec-label">Diseñado para vosotros</div>
+      <div class="intro-block">
+        <p class="intro-text">Más que recorrer el Camino, queremos que viváis Galicia: sus paisajes, su gente y su hospitalidad, con cada detalle pensado para que la experiencia sea vuestra.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">¿Qué ocurre después de confirmar?</div>
+      <div class="services-grid" style="grid-template-columns:1fr;">
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Confirmaremos todos los alojamientos.</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Os enviaremos la relación completa de alojamientos con sus direcciones.</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Recibiréis las etiquetas para el transporte de equipaje.</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Os enviaremos toda la documentación necesaria para vuestro Camino.</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Seguiremos disponibles para cualquier duda antes y durante el viaje.</span></div>
+      </div>
+    </section>
+
+    <div class="validity-note">
+      Propuesta emitida el <strong id="fecha-emision">—</strong>. Precios y disponibilidad sujetos a confirmación en el momento de la reserva.
+    </div>
+
+  </main>
+
+  <footer class="doc-footer">
+    <div class="footer-sign">
+      <div class="sign-name">Bibiana</div>
+      <div class="sign-role">Atención al Peregrino · Easy Camino Santiago</div>
+      <div style="font-family:var(--ff-serif); font-style:italic; font-size:0.82rem; color:var(--turq); margin-top:5px;">Tu Camino, nuestra experiencia.</div>
+      <div class="sign-contact">info@easycaminosantiago.com<br>+34 982 907 629 &nbsp;·&nbsp; easycaminosantiago.com</div>
+    </div>
+    <div class="footer-brand">
+      <div class="footer-brand-name">Easy Camino Santiago</div>
+      <div class="footer-tagline">We look forward to welcoming you and sharing our land with you.</div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // ─── FECHA DE EMISIÓN Y REFERENCIA — se calculan solas a partir de la fecha
+  // real del día en que se genera el PDF. No editar valores de fecha a mano.
+  // NOTA: a diferencia de otras propuestas de esta carpeta, aquí NO se incluye
+  // una fecha de "validez de 7 días" — se eliminó a petición explícita para
+  // este presupuesto (ver instrucciones del caso María José Parra).
+  (function () {
+    const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    const formatFechaEs = d => d.getDate() + ' de ' + MESES[d.getMonth()] + ' de ' + d.getFullYear();
+    const pad2 = n => String(n).padStart(2, '0');
+
+    const hoy = new Date();
+    const ref = 'ECS-IND-' + hoy.getFullYear() + pad2(hoy.getMonth() + 1) + pad2(hoy.getDate()) + '-002';
+
+    document.getElementById('fecha-emision-header').textContent = formatFechaEs(hoy);
+    document.getElementById('fecha-emision').textContent = formatFechaEs(hoy);
+    document.getElementById('doc-ref').textContent = ref;
+    document.getElementById('doc-ref-2').textContent = ref;
+  })();
+</script>
+</body>
+</html>
