@@ -90,6 +90,11 @@ export default {
     // cualquier otro campo del formulario (el <input type="hidden" name="form-name">
     // que ya llevan todos los formularios de este sitio).
     const data = event.data || {};
+
+    // DIAGNÓSTICO TEMPORAL — quitar en cuanto se confirme dónde vive el nombre del formulario.
+    console.log('[SC] EVENT KEYS=' + JSON.stringify(Object.keys(event)));
+    console.log('[SC] EVENT RAW=' + JSON.stringify(event));
+
     const formName = data['form-name'] || '';
 
     // LOG DIAGNÓSTICO — siempre visible en Netlify Function logs
