@@ -165,10 +165,7 @@ export default {
     const firstName = (data.nombre || data.name || '').split(' ')[0] || 'Peregrino';
 
     if (config.premium) {
-      const eB64 = encodeURIComponent(Buffer.from(toEmail).toString('base64'));
-      const rB64 = data.ruta ? encodeURIComponent(Buffer.from(data.ruta).toString('base64')) : '';
-      config.ctaUrl = 'https://easycaminosantiago.com/encuesta/?e=' + eB64 + (rB64 ? '&r=' + rB64 : '');
-      console.log('[SC] DIAGNÓSTICO ctaUrl generada=' + config.ctaUrl);
+      config.subject = firstName + ', gracias por contarnos tu Camino';
     }
 
     const html = config.premium
@@ -260,7 +257,9 @@ function getConfig(formName, data) {
     return {
       premium: true,
       templateName: 'solicitud-info-premium',
-      subject: 'Hemos recibido correctamente tu solicitud — Easy Camino Santiago',
+      subject: 'Gracias por contarnos tu Camino — Easy Camino Santiago', // se reescribe con el nombre más abajo, en cuanto se conoce firstName
+      ruta: data.ruta,
+      fecha: data.fecha,
       summaryRows: premiumDataRows([
         ['Ruta',             data.ruta],
         ['Fecha aproximada', data.fecha],
@@ -403,10 +402,30 @@ function premiumDataRows(pairs) {
 }
 
 // ---------------------------------------------------------------------------
+// CTA de WhatsApp — compartido por buildEmail y buildPremiumEmail
+// ---------------------------------------------------------------------------
+
+function whatsappCtaBlock({ paddingH = 32, leadText = '¿Tienes alguna pregunta?' } = {}) {
+  const lead = leadText
+    ? `<p style="margin:0 0 12px;font-size:14px;color:#6b7c7e;">${leadText}</p>`
+    : '';
+  return `
+    <tr>
+      <td style="padding:0 ${paddingH}px 28px;text-align:center;">
+        ${lead}
+        <a href="https://wa.me/34982907629"
+          style="display:inline-block;background:#25D366;color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;padding:13px 30px;border-radius:24px;letter-spacing:0.3px;">
+          Escríbenos por WhatsApp
+        </a>
+      </td>
+    </tr>`;
+}
+
+// ---------------------------------------------------------------------------
 // Email PREMIUM — solicitud-info
 // ---------------------------------------------------------------------------
 
-function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
+function buildPremiumEmail(firstName, { summaryRows, ruta, fecha }) {
   const summaryBlock = summaryRows
     ? `<tr>
         <td colspan="2" style="background:#f0f8f8;padding:10px 20px;border-bottom:1px solid #d8e8e9;">
@@ -416,12 +435,16 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
       ${summaryRows}`
     : '';
 
+  const rutaFechaPhrase = ruta
+    ? ' y contarnos que quieres hacer el ' + ruta + (fecha ? ' para ' + fecha : '')
+    : '';
+
   return `<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Hemos recibido correctamente tu solicitud</title>
+  <title>Gracias por contarnos tu Camino</title>
 </head>
 <body style="margin:0;padding:0;background:#f2f6f6;font-family:Arial,Helvetica,sans-serif;">
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#f2f6f6;padding:40px 16px;">
@@ -449,7 +472,7 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
       <td style="padding:0 40px 36px;text-align:center;">
         <p style="margin:0 0 14px;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#56A1A4;font-weight:700;font-family:Arial,sans-serif;">Easy Camino Santiago</p>
         <h1 style="margin:0;font-size:26px;font-weight:700;color:#2D4A52;line-height:1.35;font-family:Arial,sans-serif;">
-          Hemos recibido<br>tu solicitud
+          Gracias por escribirnos
         </h1>
       </td>
     </tr>
@@ -466,8 +489,7 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
       <td style="padding:36px 40px 28px;">
         <p style="margin:0 0 12px;font-size:16px;font-weight:700;color:#2D4A52;font-family:Arial,sans-serif;">Hola, ${firstName}.</p>
         <p style="margin:0;font-size:15px;color:#4a5c5e;line-height:1.78;font-family:Arial,sans-serif;">
-          Gracias por confiar en Easy Camino Santiago.<br>
-          Ya estamos preparando tu propuesta personalizada para el Camino de Santiago.
+          Gracias por escribirnos${rutaFechaPhrase}. He revisado lo que nos has contado para entender bien cómo quieres vivir tu Camino.
         </p>
       </td>
     </tr>
@@ -484,14 +506,15 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
       </td>
     </tr>
 
-    <!-- TEXTO HUMANO -->
+    <!-- SIGUIENTE PASO -->
     <tr>
       <td style="padding:0 40px 32px;">
         <table width="100%" cellpadding="0" cellspacing="0">
           <tr>
             <td style="border-left:3px solid #56A1A4;padding:14px 20px;background:#f7fbfb;border-radius:0 6px 6px 0;">
               <p style="margin:0;font-size:15px;color:#2D4A52;line-height:1.78;font-family:Arial,sans-serif;">
-                Estamos revisando tu ruta, fechas y preferencias para prepararte una propuesta clara y personalizada.
+                Ahora mismo estoy revisando tu ruta, tus fechas y todos los detalles de tu solicitud para prepararte una propuesta personalizada. En cuanto la tenga lista, en menos de 24 horas laborables, te la envío a este mismo correo.<br><br>
+                Si mientras tanto quieres añadir o cambiar algo, puedes responder directamente a este correo —lo leo yo— o escribirme por WhatsApp si te resulta más rápido.
               </p>
             </td>
           </tr>
@@ -499,24 +522,16 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
       </td>
     </tr>
 
-    <!-- CTA ENCUESTA -->
+    ${whatsappCtaBlock({ paddingH: 40, leadText: null })}
+
+    <!-- FIRMA -->
     <tr>
-      <td style="padding:0 40px 36px;">
-        <table width="100%" cellpadding="0" cellspacing="0"
-          style="background:#edf7f7;border-radius:10px;overflow:hidden;">
-          <tr>
-            <td style="padding:28px 32px;">
-              <p style="margin:0 0 8px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#56A1A4;font-weight:700;font-family:Arial,sans-serif;">Mientras preparamos tu propuesta</p>
-              <p style="margin:0 0 22px;font-size:15px;color:#2D4A52;line-height:1.72;font-family:Arial,sans-serif;">
-                Nos ayudaría mucho conocer un poco mejor tu experiencia en nuestra web. Solo son 7 preguntas rápidas.
-              </p>
-              <a href="${ctaUrl}"
-                style="display:inline-block;background:#2D4A52;color:#ffffff;text-decoration:none;font-size:14px;font-weight:700;padding:15px 30px;border-radius:30px;letter-spacing:0.4px;font-family:Arial,sans-serif;">
-                Responder preguntas ahora
-              </a>
-            </td>
-          </tr>
-        </table>
+      <td style="padding:0 40px 32px;">
+        <p style="margin:0;font-size:14px;color:#2D4A52;line-height:1.7;font-family:Arial,sans-serif;">
+          Bibiana<br>
+          <span style="color:#6b7c7e;">Atención al Peregrino</span><br>
+          <span style="color:#6b7c7e;">Easy Camino Santiago</span>
+        </p>
       </td>
     </tr>
 
@@ -527,78 +542,20 @@ function buildPremiumEmail(firstName, { summaryRows, ctaUrl }) {
       </td>
     </tr>
 
-    <!-- TRUST INDICATORS -->
-    <tr>
-      <td style="padding:28px 40px 28px;">
-        <table width="100%" cellpadding="0" cellspacing="0">
-          <tr>
-            <td colspan="2" style="padding-bottom:16px;">
-              <p style="margin:0;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8da4a6;font-weight:700;font-family:Arial,sans-serif;">Por qué confiar en nosotros</p>
-            </td>
-          </tr>
-          <tr>
-            <td width="50%" style="padding:0 14px 10px 0;vertical-align:top;">
-              <p style="margin:0;font-size:13px;color:#2D4A52;font-family:Arial,sans-serif;line-height:1.5;">
-                <span style="color:#56A1A4;font-weight:700;">&#10003;&nbsp;</span>Empresa local en Galicia
-              </p>
-            </td>
-            <td width="50%" style="padding:0 0 10px;vertical-align:top;">
-              <p style="margin:0;font-size:13px;color:#2D4A52;font-family:Arial,sans-serif;line-height:1.5;">
-                <span style="color:#56A1A4;font-weight:700;">&#10003;&nbsp;</span>Atención personalizada
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td width="50%" style="padding:0 14px 0 0;vertical-align:top;">
-              <p style="margin:0;font-size:13px;color:#2D4A52;font-family:Arial,sans-serif;line-height:1.5;">
-                <span style="color:#56A1A4;font-weight:700;">&#10003;&nbsp;</span>Alojamientos seleccionados
-              </p>
-            </td>
-            <td width="50%" style="padding:0;vertical-align:top;">
-              <p style="margin:0;font-size:13px;color:#2D4A52;font-family:Arial,sans-serif;line-height:1.5;">
-                <span style="color:#56A1A4;font-weight:700;">&#10003;&nbsp;</span>Respuesta en menos de 24h
-              </p>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-
-    <!-- NOTA DE TIEMPO -->
-    <tr>
-      <td style="padding:0 40px 40px;text-align:center;">
-        <p style="margin:0;font-size:13px;color:#8da4a6;line-height:1.70;font-family:Arial,sans-serif;">
-          Normalmente respondemos en menos de 24 horas.<br>
-          Si no recibes nuestra propuesta, revisa tu carpeta de <strong>spam</strong>.
-        </p>
-      </td>
-    </tr>
-
     <!-- FOOTER -->
     <tr>
       <td style="background:#f7fafa;border-top:1px solid #e4eced;padding:24px 40px;">
-        <table width="100%" cellpadding="0" cellspacing="0">
-          <tr>
-            <td style="vertical-align:top;">
-              <p style="margin:0 0 5px;font-size:13px;font-weight:700;color:#2D4A52;font-family:Arial,sans-serif;">Easy Camino Santiago</p>
-              <p style="margin:0 0 4px;font-size:12px;font-family:Arial,sans-serif;">
-                <a href="https://wa.me/34982907629" style="color:#56A1A4;text-decoration:none;">WhatsApp</a>
-                &nbsp;&middot;&nbsp;
-                <a href="mailto:info@easycaminosantiago.com" style="color:#56A1A4;text-decoration:none;">info@easycaminosantiago.com</a>
-                &nbsp;&middot;&nbsp;
-                <a href="https://www.instagram.com/easycaminosantiago/" style="color:#56A1A4;text-decoration:none;">Instagram</a>
-                &nbsp;&middot;&nbsp;
-                <a href="https://easycaminosantiago.com" style="color:#56A1A4;text-decoration:none;">Web</a>
-              </p>
-              <p style="margin:5px 0 0;font-size:11px;color:#a8b8ba;font-family:Arial,sans-serif;">Empresa local en Galicia</p>
-            </td>
-            <td align="right" style="vertical-align:top;">
-              <p style="margin:0;font-size:11px;color:#bac8ca;line-height:1.6;font-family:Arial,sans-serif;text-align:right;">
-                Mensaje automático.<br>No respondas a este correo.
-              </p>
-            </td>
-          </tr>
-        </table>
+        <p style="margin:0 0 5px;font-size:13px;font-weight:700;color:#2D4A52;font-family:Arial,sans-serif;">Easy Camino Santiago</p>
+        <p style="margin:0 0 4px;font-size:12px;font-family:Arial,sans-serif;">
+          <a href="https://wa.me/34982907629" style="color:#56A1A4;text-decoration:none;">WhatsApp</a>
+          &nbsp;&middot;&nbsp;
+          <a href="mailto:info@easycaminosantiago.com" style="color:#56A1A4;text-decoration:none;">info@easycaminosantiago.com</a>
+          &nbsp;&middot;&nbsp;
+          <a href="https://www.instagram.com/easycaminosantiago/" style="color:#56A1A4;text-decoration:none;">Instagram</a>
+          &nbsp;&middot;&nbsp;
+          <a href="https://easycaminosantiago.com" style="color:#56A1A4;text-decoration:none;">Web</a>
+        </p>
+        <p style="margin:5px 0 0;font-size:11px;color:#a8b8ba;font-family:Arial,sans-serif;">Empresa local en Galicia</p>
       </td>
     </tr>
 
@@ -675,15 +632,7 @@ function buildEmail(firstName, { heading, intro, tableRows, responsePromise }) {
       </td>
     </tr>
 
-    <tr>
-      <td style="padding:0 32px 28px;text-align:center;">
-        <p style="margin:0 0 12px;font-size:14px;color:#6b7c7e;">¿Tienes alguna pregunta?</p>
-        <a href="https://wa.me/34982907629"
-          style="display:inline-block;background:#25D366;color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;padding:13px 30px;border-radius:24px;letter-spacing:0.3px;">
-          Escríbenos por WhatsApp
-        </a>
-      </td>
-    </tr>
+    ${whatsappCtaBlock({ paddingH: 32 })}
 
     <tr>
       <td style="padding:20px 32px;background:#f8fafa;border-top:1px solid #e2e8ea;">
