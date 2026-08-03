@@ -110,8 +110,8 @@
 
     /* ===== LEAFLET MAP ===== */
     #sarria-map { width:100%; height:380px; border-radius:14px; overflow:hidden; border:1.5px solid rgba(86,161,164,0.2); }
-    .leaflet-tooltip.ecs-tip { background:white; border:none; box-shadow:0 2px 8px rgba(0,0,0,0.18); font-family:'Raleway',sans-serif; font-size:0.78rem; font-weight:700; color:#2D4A52; padding:4px 10px; border-radius:6px; white-space:nowrap; }
-    .leaflet-tooltip.ecs-tip::before { display:none; }
+    .sarria-bed-icon { display:flex; align-items:center; justify-content:center; width:26px; height:26px; background:#56A1A4; border-radius:50%; border:2.5px solid white; box-shadow:0 2px 6px rgba(0,0,0,0.3); }
+    .sarria-bed-icon svg { width:15px; height:15px; color:white; }
     @media (max-width:600px) { #sarria-map { height:280px; } }
 
     /* ===== INFO TABS ===== */
@@ -1338,17 +1338,18 @@ function ecsCloseAloj(e){if(!e||e.target===document.getElementById('ecs-aloj-ove
   }).addTo(map);
   var route=[[42.7779,-7.4144],[42.7980,-7.5250],[42.8085,-7.6162],[42.8307,-7.7195],[42.8726,-7.8711],[42.9119,-8.0110],[42.9271,-8.1629],[42.9123,-8.2899],[42.9026,-8.3541],[42.8928,-8.4389],[42.8805,-8.5457]];
   L.polyline(route,{color:'#56A1A4',weight:4,opacity:0.85}).addTo(map);
+  var bedIconHtml='<div class="sarria-bed-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16" /><path d="M2 8h18a2 2 0 0 1 2 2v10" /><path d="M2 17h20" /><path d="M6 8v9" /></svg></div>';
   var stops=[
-    {n:'Sarria',c:[42.7779,-7.4144],col:'#2D4A52'},
-    {n:'Portomarín',c:[42.8085,-7.6162],col:'#56A1A4'},
-    {n:'Palas de Rei',c:[42.8726,-7.8711],col:'#56A1A4'},
-    {n:'Arzúa',c:[42.9271,-8.1629],col:'#56A1A4'},
-    {n:'O Pedrouzo',c:[42.9026,-8.3541],col:'#56A1A4'},
-    {n:'Santiago',c:[42.8805,-8.5457],col:'#F3A949'}
+    {n:'Sarria',c:[42.7779,-7.4144]},
+    {n:'Portomarín',c:[42.8085,-7.6162]},
+    {n:'Palas de Rei',c:[42.8726,-7.8711]},
+    {n:'Arzúa',c:[42.9271,-8.1629]},
+    {n:'O Pedrouzo',c:[42.9026,-8.3541]},
+    {n:'Santiago de Compostela',c:[42.8805,-8.5457]}
   ];
   stops.forEach(function(s){
-    var ico=L.divIcon({className:'',html:'<div style="background:'+s.col+';width:16px;height:16px;border-radius:50%;border:2.5px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);"></div>',iconSize:[16,16],iconAnchor:[8,8]});
-    L.marker(s.c,{icon:ico}).addTo(map).bindTooltip(s.n,{permanent:true,className:'ecs-tip',direction:'top',offset:[0,-12]});
+    var ico=L.divIcon({className:'',html:bedIconHtml,iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-14]});
+    L.marker(s.c,{icon:ico}).addTo(map).bindPopup(s.n);
   });
 })();
 </script>
