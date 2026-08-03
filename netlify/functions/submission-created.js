@@ -91,11 +91,20 @@ export default {
     // que ya llevan todos los formularios de este sitio).
     const data = event.data || {};
 
-    // DIAGNÓSTICO TEMPORAL — quitar en cuanto se confirme dónde vive el nombre del formulario.
-    console.log('[SC] EVENT KEYS=' + JSON.stringify(Object.keys(event)));
-    console.log('[SC] EVENT RAW=' + JSON.stringify(event));
+    let formName = data['form-name'] || '';
 
-    const formName = data['form-name'] || '';
+    // FALLBACK: en el evento formSubmitted real, "form-name" no llega dentro de `data`
+    // (confirmado por [SC] EVENT KEYS=["data"] en logs de producción — el objeto `event`
+    // solo contiene `data`, y form-name no está entre sus claves). Como red de seguridad,
+    // si formName llega vacío se detecta el formulario "reserva" por la presencia conjunta
+    // de campos que solo aparecen en ese formulario.
+    if (!formName) {
+      const reservaFields = ['ruta', 'fecha-inicio', 'adultos', 'alojamiento', 'email', 'total', 'deposito'];
+      const looksLikeReserva = reservaFields.every(field => field in data);
+      if (looksLikeReserva) {
+        formName = 'reserva';
+      }
+    }
 
     // LOG DIAGNÓSTICO — siempre visible en Netlify Function logs
     console.log('[SC] DIAGNÓSTICO formName=' + JSON.stringify(formName));
