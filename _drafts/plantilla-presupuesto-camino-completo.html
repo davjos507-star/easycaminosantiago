@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Propuesta para grupos — Easy Camino Santiago</title>
+  <title>Propuesta Camino completo — Easy Camino Santiago</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
@@ -90,7 +90,6 @@
     .sign-contact { font-size: 0.78rem; color: var(--cinza); margin-top: 6px; line-height: 1.7; }
     .footer-brand { text-align: right; }
     .footer-brand-name { font-family: var(--ff-label); font-size: 0.63rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--turq); }
-    .footer-brand-url { font-size: 0.77rem; color: var(--cinza); margin-top: 2px; }
     .footer-tagline { font-family: var(--ff-serif); font-size: 0.75rem; font-style: italic; color: var(--cinza); margin-top: 4px; opacity: 0.7; }
     .print-btn { position: fixed; bottom: 28px; right: 28px; background: var(--azul); color: var(--white); font-family: var(--ff-label); font-size: 0.78rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; border: none; border-radius: 40px; padding: 13px 26px; cursor: pointer; box-shadow: 0 4px 20px rgba(45,74,82,0.35); transition: background 0.2s, box-shadow 0.2s; z-index: 100; }
     .print-btn:hover { background: var(--turq); box-shadow: 0 6px 28px rgba(86,161,164,0.45); }
@@ -119,37 +118,36 @@
 
   <!--
   ══════════════════════════════════════════════════════════════════
-  PLANTILLA OFICIAL DE GRUPOS · EASY CAMINO SANTIAGO
+  PLANTILLA OFICIAL CAMINO COMPLETO (+25 días) · EASY CAMINO SANTIAGO
   Para emitir un nuevo presupuesto, editar únicamente estos campos:
   ══════════════════════════════════════════════════════════════════
 
   1. CABECERA
-     · <div class="doc-title">          → nombre de la ruta
-     · <div class="doc-subtitle">       → "N viajeros · X días / Y noches"
+     · <div class="doc-title">          → nombre de la ruta y origen completo
+     · <div class="doc-subtitle">       → "N viajero/s · X días / Y noches"
      · <div class="doc-meta"> <span>    → referencia y fecha de emisión
 
-  2. DATOS DEL GRUPO
-     · Contacto principal               → nombre del responsable del grupo
+  2. DATOS DEL CLIENTE
+     · Nombre                           → nombre del viajero o pareja
      · Email                            → email de contacto
-     · (añadir Teléfono si se dispone de él)
+     · Teléfono                         → añadir si se dispone de él
 
   3. DATOS DEL VIAJE
      · Fechas                           → fechas de inicio y fin del viaje
-     · Grupo                            → número de viajeros
+     · Viajeros                         → número de personas
      · Noches                           → número de noches
 
-  4. INTRO ("Propuesta diseñada para vuestro grupo")
+  4. INTRO ("Un Camino que lo cambia todo")
      · <p class="intro-text">           → debe incluir SIEMPRE al menos una referencia
-                                            específica a lo que este grupo/cliente contó
-                                            o pidió. Nunca limitarse a describir la ruta
-                                            en genérico — tiene que demostrar que hemos
-                                            leído su solicitud.
+                                            específica a lo que este cliente contó o pidió.
+                                            Nunca limitarse a describir la ruta en genérico
+                                            — tiene que demostrar que hemos leído su solicitud.
 
-  5. ITINERARIO
-     · Duplicar o eliminar bloques .itin-row según las etapas
-     · itin-label                       → "Día N · Fecha"
-     · itin-title                       → "Origen → Destino"
-     · itin-desc                        → descripción breve (solo días destacados)
+  5. ITINERARIO POR SEMANAS
+     · El itinerario se organiza por semanas o tramos, no por días individuales
+     · itin-label                       → "Semana N · fechas"
+     · itin-title                       → zona geográfica recorrida
+     · itin-desc                        → ciudades principales del tramo
 
   6. SERVICIOS INCLUIDOS Y TRANSPORTE DE EQUIPAJE
      · Personalizar las líneas de "Servicios incluidos" según la ruta, pero
@@ -161,16 +159,15 @@
      · "IVA incluido" NO se asume nunca por defecto — ver variable
        `ivaIncluido` al final del archivo, justo antes de </body>.
 
-  7. PRECIO Y PAGOS
+  7. PRECIO Y PAGOS (3 plazos)
      · <div class="price-amount">       → precio por persona
-     · <div class="price-per">          → "N viajeros · Y noches · Nombre de la ruta"
-     · <div class="price-total-amount"> → total del grupo
+     · <div class="price-per">          → "N viajero/s · Y noches · Nombre de la ruta"
+     · <div class="price-total-amount"> → total (precio × viajeros)
      · <div class="pbox-amount"> ×3     → importes de depósito, segundo pago y pago final
      · Los plazos del segundo pago y el pago final ya NO se escriben a mano:
        se calculan solos a partir de `FECHA_INICIO_VIAJE` y de las semanas de
        antelación configuradas al final del archivo. Si no queda margen
-       suficiente, el texto cambia solo a "antes de iniciar el Camino" en vez
-       de mostrar un plazo que ya no se puede cumplir.
+       suficiente, el texto cambia solo a "antes de iniciar el Camino".
 
   8. FORMA DE PAGO
      · <div class="payment-method">     → ajustar si cambia la modalidad de pago
@@ -206,9 +203,9 @@
     </div>
     <div class="doc-header-right">
       <div class="doc-overline">Propuesta personalizada de viaje</div>
-      <div class="doc-title">Camino de Finisterre a Santiago</div>
-      <div class="doc-subtitle">20 viajeros · 8 días / 7 noches</div>
-      <div class="doc-meta">Ref. <span>ECS-GRP-20271001-001</span> &nbsp;·&nbsp; 8 de julio de 2026</div>
+      <div class="doc-title">Camino Francés Completo · Saint-Jean a Santiago</div>
+      <div class="doc-subtitle">2 viajeros · 33 días / 32 noches</div>
+      <div class="doc-meta">Ref. <span>ECS-CPL-20270501-001</span> &nbsp;·&nbsp; 8 de julio de 2026</div>
     </div>
   </header>
 
@@ -217,19 +214,19 @@
   <main class="doc-body">
 
     <section>
-      <div class="sec-label">Datos del grupo</div>
+      <div class="sec-label">Datos del cliente</div>
       <div class="info-grid">
         <div class="info-cell">
-          <div class="info-key">Contacto principal</div>
-          <div class="info-val">Jeanette McCarthy</div>
+          <div class="info-key">Nombre</div>
+          <div class="info-val">James &amp; Helen Wilson</div>
         </div>
         <div class="info-cell">
           <div class="info-key">Referencia</div>
-          <div class="info-val">ECS-GRP-20271001-001</div>
+          <div class="info-val">ECS-CPL-20270501-001</div>
         </div>
         <div class="info-cell" style="grid-column: span 2;">
           <div class="info-key">Email</div>
-          <div class="info-val light">jay.jackson014@gmail.com</div>
+          <div class="info-val light">helen.wilson@gmail.com</div>
         </div>
       </div>
     </section>
@@ -239,133 +236,129 @@
       <div class="info-grid">
         <div class="info-cell">
           <div class="info-key">Ruta</div>
-          <div class="info-val">Camino de Finisterre a Santiago</div>
+          <div class="info-val">Camino Francés · Saint-Jean-Pied-de-Port a Santiago</div>
         </div>
         <div class="info-cell">
           <div class="info-key">Fechas</div>
-          <div class="info-val">1 – 8 de octubre de 2027</div>
+          <div class="info-val">1 de mayo – 2 de junio de 2027</div>
         </div>
         <div class="info-cell">
-          <div class="info-key">Grupo</div>
-          <div class="info-val">20 viajeros</div>
+          <div class="info-key">Viajeros</div>
+          <div class="info-val">2 personas</div>
         </div>
         <div class="info-cell">
           <div class="info-key">Noches</div>
-          <div class="info-val">7</div>
+          <div class="info-val">32</div>
         </div>
         <div class="info-cell">
-          <div class="info-key">Alojamiento</div>
-          <div class="info-val">Habitaciones privadas · baño privado siempre que sea posible</div>
+          <div class="info-key">Habitación</div>
+          <div class="info-val">Doble privada · camas individuales · baño privado</div>
         </div>
         <div class="info-cell">
           <div class="info-key">Régimen</div>
-          <div class="info-val">Desayuno incluido</div>
+          <div class="info-val">Solo alojamiento · desayuno opcional (+30 €/pers.)</div>
         </div>
         <div class="info-cell">
           <div class="info-key">Transporte de equipaje</div>
-          <div class="info-val">Incluido diariamente</div>
+          <div class="info-val">Incluido los 31 días de caminata</div>
         </div>
         <div class="info-cell">
-          <div class="info-key">Traslados privados</div>
-          <div class="info-val">Aeropuerto Santiago ↔ ruta</div>
+          <div class="info-key">Traslados</div>
+          <div class="info-val">Aeropuerto → Saint-Jean y Santiago → aeropuerto</div>
         </div>
       </div>
     </section>
 
     <section>
-      <div class="sec-label">Propuesta diseñada para vuestro grupo</div>
+      <div class="sec-label">Un Camino que lo cambia todo</div>
       <div class="intro-block">
-        <p class="intro-text">Esta propuesta ha sido preparada exclusivamente para vuestro grupo de 20 viajeros. El itinerario combina etapas a pie desde el confín del mundo en Finisterre hasta la Catedral de Santiago, con una logística completa: alojamiento en exclusiva, equipaje puerta a puerta cada mañana, traslados privados y un contacto dedicado durante todo el recorrido.</p>
+        <p class="intro-text">Esta propuesta os acompaña durante los 800 km del Camino Francés completo, desde los Pirineos hasta la Catedral de Santiago. Con toda la logística organizada para que solo tengáis que caminar: alojamiento privado reservado en cada etapa, mochila transportada cada mañana, seguimiento semanal personalizado y un contacto disponible durante los 33 días del viaje.</p>
       </div>
     </section>
 
     <section>
-      <div class="sec-label">Itinerario</div>
+      <div class="sec-label">Itinerario por semanas</div>
       <div class="itinerary">
 
         <div class="itin-row">
           <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
           <div class="itin-content">
-            <div class="itin-label">Día 1 · Vie 1 oct</div>
-            <div class="itin-title">Llegada — Aeropuerto de Santiago → Finisterre</div>
-            <div class="itin-desc">Traslado privado del grupo. Bienvenida y tarde libre en el faro.</div>
+            <div class="itin-label">Semana 1 · 1–7 may</div>
+            <div class="itin-title">Los Pirineos y Navarra</div>
+            <div class="itin-desc">Saint-Jean-Pied-de-Port → Roncesvalles → Pamplona → Logroño</div>
           </div>
         </div>
 
         <div class="itin-row">
           <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
           <div class="itin-content">
-            <div class="itin-label">Día 2 · Sáb 2 oct</div>
-            <div class="itin-title">Finisterre → Cee</div>
+            <div class="itin-label">Semana 2 · 8–14 may</div>
+            <div class="itin-title">La Rioja y Castilla</div>
+            <div class="itin-desc">Logroño → Santo Domingo de la Calzada → Burgos</div>
           </div>
         </div>
 
         <div class="itin-row">
           <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
           <div class="itin-content">
-            <div class="itin-label">Día 3 · Dom 3 oct</div>
-            <div class="itin-title">Cee → Olveiroa</div>
+            <div class="itin-label">Semana 3 · 15–21 may</div>
+            <div class="itin-title">La Meseta</div>
+            <div class="itin-desc">Burgos → Frómista → Sahagún → León</div>
           </div>
         </div>
 
         <div class="itin-row">
           <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
           <div class="itin-content">
-            <div class="itin-label">Día 4 · Lun 4 oct</div>
-            <div class="itin-title">Olveiroa → Santa Mariña</div>
+            <div class="itin-label">Semana 4 · 22–28 may</div>
+            <div class="itin-title">El Bierzo y las puertas de Galicia</div>
+            <div class="itin-desc">León → Astorga → Ponferrada → O Cebreiro</div>
           </div>
         </div>
 
         <div class="itin-row">
           <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
           <div class="itin-content">
-            <div class="itin-label">Día 5 · Mar 5 oct</div>
-            <div class="itin-title">Santa Mariña → Negreira</div>
+            <div class="itin-label">Semana 5 · 29 may – 1 jun</div>
+            <div class="itin-title">Galicia — La recta final</div>
+            <div class="itin-desc">O Cebreiro → Sarria → Portomarín → Palas de Rei → Santiago de Compostela</div>
           </div>
         </div>
 
         <div class="itin-row">
-          <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
+          <div class="itin-day-col"><div class="itin-dot special"></div><div class="itin-line"></div></div>
           <div class="itin-content">
-            <div class="itin-label">Día 6 · Mié 6 oct</div>
-            <div class="itin-title">Negreira → Augapesada</div>
-          </div>
-        </div>
-
-        <div class="itin-row">
-          <div class="itin-day-col"><div class="itin-dot"></div><div class="itin-line"></div></div>
-          <div class="itin-content">
-            <div class="itin-label">Día 7 · Jue 7 oct</div>
-            <div class="itin-title">Augapesada → Santiago de Compostela</div>
-            <div class="itin-desc">Llegada a la Catedral, recogida de la Compostela y cena de celebración.</div>
+            <div class="itin-label">Día 32 · 1 jun</div>
+            <div class="itin-title">Llegada a Santiago de Compostela</div>
+            <div class="itin-desc">Recogida de la Compostela y Misa del Peregrino en la Catedral.</div>
           </div>
         </div>
 
         <div class="itin-row">
           <div class="itin-day-col"><div class="itin-dot special"></div></div>
           <div class="itin-content">
-            <div class="itin-label">Día 8 · Vie 8 oct</div>
-            <div class="itin-title">Salida — Traslado privado al aeropuerto de Santiago</div>
+            <div class="itin-label">Día 33 · 2 jun</div>
+            <div class="itin-title">Salida — Traslado al aeropuerto de Santiago</div>
           </div>
         </div>
 
       </div>
-      <p class="itin-note">El alojamiento de cada etapa se confirma en el momento de la reserva, según disponibilidad para las fechas y el tamaño del grupo.</p>
+      <p class="itin-note">El itinerario por semanas es orientativo. Las etapas diarias se adaptan al ritmo y las necesidades de cada peregrino. El alojamiento se confirma en el momento de la reserva.</p>
     </section>
 
     <section>
       <div class="sec-label">Servicios incluidos</div>
       <div class="services-grid">
         <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Organización completa del Camino</span></div>
-        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>7 noches de alojamiento en habitaciones dobles privadas</span></div>
-        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Camas individuales</span></div>
-        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Baño privado siempre que sea posible</span></div>
-        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Transporte de equipaje puerta a puerta diario</span></div>
-        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Traslado privado de llegada (aeropuerto → inicio de ruta)</span></div>
-        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Traslado privado de salida (Santiago → aeropuerto)</span></div>
-        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Coordinador dedicado y asistencia durante todo el Camino</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>32 noches de alojamiento en habitaciones dobles privadas con camas individuales</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Transporte de mochila puerta a puerta los 31 días de etapa</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Traslado privado Saint-Jean y Santiago (aeropuerto)</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Seguimiento semanal personalizado con Bibiana</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Asistencia durante todo el Camino</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Adaptación de etapas si el ritmo varía (sin coste)</span></div>
         <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Documentación práctica del viaje</span></div>
         <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Credencial del peregrino</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>Seguro Básico de Viaje incluido</span></div>
         <div class="svc-item" id="svc-iva"><div class="svc-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#56A1A4" stroke-width="1.2"/><path d="M3.5 6.5L5.5 8.5L9.5 4.5" stroke="#56A1A4" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>IVA incluido</span></div>
       </div>
     </section>
@@ -386,40 +379,49 @@
       <div class="noincl-grid">
         <div class="noincl-item"><div class="noincl-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#6b7c7e" stroke-width="1.2"/><path d="M4.5 8.5L8.5 4.5M4.5 4.5L8.5 8.5" stroke="#6b7c7e" stroke-width="1.2" stroke-linecap="round"/></svg></div><span>Vuelos internacionales</span></div>
         <div class="noincl-item"><div class="noincl-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#6b7c7e" stroke-width="1.2"/><path d="M4.5 8.5L8.5 4.5M4.5 4.5L8.5 8.5" stroke="#6b7c7e" stroke-width="1.2" stroke-linecap="round"/></svg></div><span>Comidas y cenas</span></div>
-        <div class="noincl-item"><div class="noincl-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#6b7c7e" stroke-width="1.2"/><path d="M4.5 8.5L8.5 4.5M4.5 4.5L8.5 8.5" stroke="#6b7c7e" stroke-width="1.2" stroke-linecap="round"/></svg></div><span>Seguro de viaje (muy recomendable)</span></div>
         <div class="noincl-item"><div class="noincl-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#6b7c7e" stroke-width="1.2"/><path d="M4.5 8.5L8.5 4.5M4.5 4.5L8.5 8.5" stroke="#6b7c7e" stroke-width="1.2" stroke-linecap="round"/></svg></div><span>Gastos personales y propinas</span></div>
       </div>
     </section>
 
     <section>
+      <div class="sec-label">Servicios opcionales</div>
+      <div class="noincl-grid">
+        <div class="noincl-item"><div class="noincl-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#6b7c7e" stroke-width="1.2"/><path d="M4.5 8.5L8.5 4.5M4.5 4.5L8.5 8.5" stroke="#6b7c7e" stroke-width="1.2" stroke-linecap="round"/></svg></div><span>Desayunos — 30 € por persona, todo el Camino</span></div>
+        <div class="noincl-item"><div class="noincl-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#6b7c7e" stroke-width="1.2"/><path d="M4.5 8.5L8.5 4.5M4.5 4.5L8.5 8.5" stroke="#6b7c7e" stroke-width="1.2" stroke-linecap="round"/></svg></div><span>Traslado Aeropuerto de Vigo → Baiona (cuando proceda) — consultar</span></div>
+        <div class="noincl-item"><div class="noincl-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#6b7c7e" stroke-width="1.2"/><path d="M4.5 8.5L8.5 4.5M4.5 4.5L8.5 8.5" stroke="#6b7c7e" stroke-width="1.2" stroke-linecap="round"/></svg></div><span>Otros traslados — consultar</span></div>
+        <div class="noincl-item"><div class="noincl-mark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="#6b7c7e" stroke-width="1.2"/><path d="M4.5 8.5L8.5 4.5M4.5 4.5L8.5 8.5" stroke="#6b7c7e" stroke-width="1.2" stroke-linecap="round"/></svg></div><span>Seguro Premium — consultar</span></div>
+      </div>
+    </section>
+
+    <section>
       <div class="sec-label">Precio y forma de pago</div>
-      <p style="font-size:0.82rem; color:var(--cinza); margin-bottom:14px; font-style:italic;">Propuesta elaborada para 20 viajeros. Precio sujeto a disponibilidad en el momento de la confirmación.</p>
+      <p style="font-size:0.82rem; color:var(--cinza); margin-bottom:14px; font-style:italic;">Los pagos están escalonados para facilitar la organización de un viaje de larga duración.</p>
       <div class="price-total-row">
         <div>
           <div class="price-label">Precio por persona</div>
-          <div class="price-amount">600 €</div>
-          <div class="price-per">20 viajeros · 7 noches · Camino de Finisterre</div>
+          <div class="price-amount">2.890 €</div>
+          <div class="price-per">2 viajeros · 32 noches · Camino Francés Completo</div>
         </div>
         <div class="price-right">
-          <div class="price-total-label">Total del grupo</div>
-          <div class="price-total-amount" id="precio-total-viaje">12.000 €</div>
+          <div class="price-total-label">Total</div>
+          <div class="price-total-amount" id="precio-total-viaje">5.780 €</div>
         </div>
       </div>
       <div class="payment-grid">
         <div class="payment-box deposit">
           <div class="pbox-label">Depósito al reservar</div>
-          <div class="pbox-amount">3.600 €</div>
-          <div class="pbox-pct">30% · asegura fechas y alojamiento</div>
+          <div class="pbox-amount">1.734 €</div>
+          <div class="pbox-pct">30% · asegura fechas y alojamientos</div>
         </div>
         <div class="payment-box pending">
-          <div class="pbox-label" id="pbox-2-label">Segundo pago · 6 meses antes</div>
-          <div class="pbox-amount">4.800 €</div>
-          <div class="pbox-pct" id="pbox-2-pct">40% · abril de 2027</div>
+          <div class="pbox-label" id="pbox-2-label">Segundo pago · 3 meses antes</div>
+          <div class="pbox-amount">2.312 €</div>
+          <div class="pbox-pct" id="pbox-2-pct">40% · antes del 1 de febrero de 2027</div>
         </div>
         <div class="payment-box pending">
-          <div class="pbox-label" id="pbox-final-label">Pago final · 8 semanas antes</div>
-          <div class="pbox-amount">3.600 €</div>
-          <div class="pbox-pct" id="pbox-final-pct">30% · agosto de 2027</div>
+          <div class="pbox-label" id="pbox-final-label">Pago final · 6 semanas antes</div>
+          <div class="pbox-amount">1.734 €</div>
+          <div class="pbox-pct" id="pbox-final-pct">30% · antes del 19 de marzo de 2027</div>
         </div>
       </div>
       <div class="payment-method">
@@ -458,14 +460,14 @@
 
     <section>
       <div class="sec-label">Condiciones</div>
-      <p class="conditions-text">Los alojamientos están sujetos a disponibilidad en el momento de la confirmación. Si algún establecimiento no estuviera disponible, Easy Camino Santiago ofrecerá una alternativa de igual o superior categoría sin coste adicional.</p>
-      <p class="conditions-text" style="margin-top:8px;"><strong>Cancelación:</strong> más de 90 días → pérdida del depósito · 60–90 días → 50% del total · 30–60 días → 75% · menos de 30 días → 100%. <strong>Mínimo:</strong> 15 viajeros. Si el número final varía, el precio se revisará antes de la confirmación.</p>
+      <p class="conditions-text">Los alojamientos se confirman etapa a etapa y están sujetos a disponibilidad. Si algún establecimiento no estuviera disponible, Easy Camino Santiago ofrecerá una alternativa de igual o superior categoría sin coste adicional.</p>
+      <p class="conditions-text" style="margin-top:8px;"><strong>Cancelación:</strong> más de 90 días → pérdida del depósito · 60–90 días → 50% del total · 30–60 días → 75% · menos de 30 días → 100%. <strong>Adaptación de ritmo:</strong> si el número de etapas varía durante el viaje, los ajustes logísticos no generan coste adicional.</p>
     </section>
 
     <section>
       <div class="sec-label">Próximos pasos</div>
       <div class="intro-block">
-        <p class="intro-text">Una vez recibida vuestra confirmación, gestionaremos la reserva y verificaremos la disponibilidad definitiva de los alojamientos para el grupo. Recibiréis la confirmación completa junto con la documentación y el itinerario definitivo.</p>
+        <p class="intro-text">Una vez confirmada la reserva, recibiréis la documentación completa: plan de etapas detallado, confirmación de alojamientos por tramos, recomendaciones de preparación física y equipo, y un contacto directo con Bibiana para acompañaros en cada semana del viaje.</p>
       </div>
     </section>
 
@@ -478,13 +480,13 @@
   <footer class="doc-footer">
     <div class="footer-sign">
       <div class="sign-name">Bibiana</div>
-      <div class="sign-role">Grupos y Viajes Privados · Easy Camino Santiago</div>
+      <div class="sign-role">Asesoría de Viaje · Easy Camino Santiago</div>
       <div style="font-family:var(--ff-serif); font-style:italic; font-size:0.82rem; color:var(--turq); margin-top:5px;">Tu Camino, nuestra experiencia.</div>
       <div class="sign-contact">info@easycaminosantiago.com<br>+34 982 907 629 &nbsp;·&nbsp; easycaminosantiago.com</div>
     </div>
     <div class="footer-brand">
       <div class="footer-brand-name">Easy Camino Santiago</div>
-      <div class="footer-tagline">We look forward to welcoming your group and sharing our land with you.</div>
+      <div class="footer-tagline">We look forward to walking with you across Spain.</div>
     </div>
   </footer>
 
@@ -499,14 +501,10 @@
   })();
 
   // ─── PLAZOS DE PAGO — se calculan solos, nunca se escribe una fecha fija ─────
-  // FECHA_INICIO_VIAJE: fecha real de inicio del viaje (YYYY-MM-DD).
-  // Cada pago pendiente tiene sus propias semanas de antelación configuradas
-  // en PAGOS_PENDIENTES. Si a fecha de hoy ya no queda ese margen, el texto
-  // de ese pago cambia solo a "antes de iniciar el Camino".
-  const FECHA_INICIO_VIAJE = "2027-10-01";
+  const FECHA_INICIO_VIAJE = "2027-05-01";
   const PAGOS_PENDIENTES = [
-    { labelId: 'pbox-2-label',     pctId: 'pbox-2-pct',     semanas: 26, nombre: 'Segundo pago' },
-    { labelId: 'pbox-final-label', pctId: 'pbox-final-pct', semanas: 8,  nombre: 'Pago final' },
+    { labelId: 'pbox-2-label',     pctId: 'pbox-2-pct',     semanas: 13, nombre: 'Segundo pago' },
+    { labelId: 'pbox-final-label', pctId: 'pbox-final-pct', semanas: 6,  nombre: 'Pago final' },
   ];
   (function () {
     const hoy = new Date();
