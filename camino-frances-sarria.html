@@ -1332,14 +1332,13 @@ function ecsCloseAloj(e){if(!e||e.target===document.getElementById('ecs-aloj-ove
 <script>
 (function(){
   if(!document.getElementById('sarria-map')||typeof L==='undefined')return;
-  var map=L.map('sarria-map',{scrollWheelZoom:false,zoomControl:true});
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    maxZoom:19
+  var map=L.map('sarria-map',{scrollWheelZoom:false,zoomControl:true}).setView([42.855,-7.98],9);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
+    attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains:'abcd',maxZoom:18
   }).addTo(map);
   var route=[[42.7779,-7.4144],[42.7980,-7.5250],[42.8085,-7.6162],[42.8307,-7.7195],[42.8726,-7.8711],[42.9119,-8.0110],[42.9271,-8.1629],[42.9123,-8.2899],[42.9026,-8.3541],[42.8928,-8.4389],[42.8805,-8.5457]];
-  var routeLine=L.polyline(route,{color:'#56A1A4',weight:4,opacity:0.85}).addTo(map);
-  map.fitBounds(routeLine.getBounds(),{padding:[26,26]});
+  L.polyline(route,{color:'#56A1A4',weight:4,opacity:0.85}).addTo(map);
   var bedIconHtml='<div class="sarria-bed-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16" /><path d="M2 8h18a2 2 0 0 1 2 2v10" /><path d="M2 17h20" /><path d="M6 8v9" /></svg></div>';
   var bedIconHtmlOrange='<div class="sarria-bed-icon sarria-bed-icon-orange"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16" /><path d="M2 8h18a2 2 0 0 1 2 2v10" /><path d="M2 17h20" /><path d="M6 8v9" /></svg></div>';
   var stops=[
