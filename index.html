@@ -760,12 +760,12 @@ function ecsHeroSubmit(e){e.preventDefault();var btn=e.target.querySelector('but
 <script>
 (function(){
   var opts = {initialCountry:'es', preferredCountries:['es','pt','fr','de','gb','us','ar','br','mx'], separateDialCode:true, utilsScript:'https://cdn.jsdelivr.net/npm/intl-tel-input@23/build/js/utils.js'};
-  var itiCb = window.intlTelInput(document.getElementById('ecs-cb-tel'), opts);
-  var itiHero = window.intlTelInput(document.getElementById('hf-telefono'), opts);
-  var itiContact = window.intlTelInput(document.getElementById('hf-contact-tel'), opts);
-  window._itiCb = itiCb;
-  window._itiHero = itiHero;
-  window._itiContact = itiContact;
+  var elCb = document.getElementById('ecs-cb-tel');
+  var elHero = document.getElementById('hf-telefono');
+  var elContact = document.getElementById('hf-contact-tel');
+  if (elCb) window._itiCb = window.intlTelInput(elCb, opts);
+  if (elHero) window._itiHero = window.intlTelInput(elHero, opts);
+  if (elContact) window._itiContact = window.intlTelInput(elContact, opts);
 
   // Contact form: store full number before submit
   document.querySelector('form[name="solicitud-info"]').addEventListener('submit', function(){
