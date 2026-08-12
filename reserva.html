@@ -301,6 +301,16 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
         </div>
       </div>
 
+      <!-- Aviso genérico y reutilizable para clientes con presupuesto personalizado ya
+           cerrado (p. ej. Osyris — Camino del Norte + Fisterra/Muxía). Enlaza a
+           pago-servicios.html, que ya soporta importe/concepto/nombre por URL y el
+           depósito del 20% / pago completo. No lleva datos de ningún cliente concreto
+           — el enlace personalizado de cada cliente se le envía aparte, directamente. -->
+      <div class="notice-box" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; font-style:normal;">
+        <span>¿Ya tienes un presupuesto personalizado cerrado con nuestro equipo? Puedes pagar tu depósito o el importe completo directamente, sin rellenar este formulario.</span>
+        <a href="pago-servicios.html" style="background:var(--azul); color:var(--white); border:none; padding:12px 26px; border-radius:8px; font-family:'Raleway',sans-serif; font-weight:800; font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; text-decoration:none; white-space:nowrap; flex-shrink:0;">Pagar mi presupuesto →</a>
+      </div>
+
       <div class="date-grid">
         <div class="field-group">
           <label>Fecha de salida <span class="req">*</span></label>
