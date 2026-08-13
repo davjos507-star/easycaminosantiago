@@ -64,6 +64,11 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
 @media (max-width:540px) { .form-grid-2 { grid-template-columns:1fr; } }
 .field-group .iti { width:100%; }
 
+/* BOOKING CONFIRMATION NOTICE — shown before payment options/button */
+.booking-notice { display:flex; gap:12px; align-items:flex-start; background:#f0f9f9; border-left:4px solid var(--azul); border-radius:0 10px 10px 0; padding:16px 18px; margin:22px 0; }
+.booking-notice .bn-icon { font-size:1.3rem; line-height:1; flex-shrink:0; margin-top:1px; }
+.booking-notice p { font-size:0.85rem; color:var(--azul-dark); line-height:1.6; }
+
 /* PAY AMOUNT PREVIEW */
 .pay-amount { background:#f0f9f9; border-radius:10px; padding:18px 20px; margin:20px 0; }
 .pay-amount .pa-row { display:flex; justify-content:space-between; align-items:center; padding:4px 0; font-size:0.88rem; color:var(--gris); }
@@ -137,6 +142,11 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
     <div class="field-group">
       <label>Agreed amount (€) <span class="req">*</span></label>
       <input type="number" id="importe" min="0" step="0.01" placeholder="45" oninput="updateResumen()">
+    </div>
+
+    <div class="booking-notice">
+      <span class="bn-icon">ℹ️</span>
+      <p>Your booking will remain provisional after payment while Easy Camino Santiago confirms the availability of all accommodations and services. We will confirm your booking in writing within 48 hours. If any requested service is unavailable, we will contact you to offer suitable alternatives or provide a full refund of the amount paid.</p>
     </div>
 
     <label style="font-size:0.8rem;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--gris);display:block;margin-bottom:10px;">How would you like to pay?</label>
