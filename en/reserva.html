@@ -140,6 +140,20 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
 .check-opt input { margin-top:3px; accent-color:var(--azul); width:16px; height:16px; flex-shrink:0; }
 .check-opt a { color:var(--azul); text-decoration:underline; }
 
+/* CUSTOM CAMINO CARD — featured, generic, reusable. Placed just before the page
+   title. Carries no client-specific data; links to en/pago-servicios.html, where
+   each client's own personalised link shows their route, price and payment options. */
+.ccc-wrap { max-width:1100px; margin:24px auto 0; padding:0 20px; }
+.ccc-card { background:var(--azul-dark); border-radius:12px; padding:22px 28px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+.ccc-title { font-family:'Raleway',sans-serif; font-weight:900; font-size:1.05rem; color:var(--white); text-transform:uppercase; letter-spacing:0.8px; margin-bottom:5px; }
+.ccc-desc { color:rgba(255,255,255,0.75); font-size:0.86rem; line-height:1.55; max-width:520px; }
+.ccc-btn { background:var(--naranja); color:var(--white); border:none; padding:14px 28px; border-radius:8px; font-family:'Raleway',sans-serif; font-weight:800; font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; text-decoration:none; white-space:nowrap; flex-shrink:0; transition:filter 0.2s; }
+.ccc-btn:hover { filter:brightness(0.92); }
+@media (max-width:700px) {
+  .ccc-card { flex-direction:column; align-items:stretch; text-align:left; }
+  .ccc-btn { width:100%; text-align:center; }
+}
+
 /* STEP 5 */
 .notice-box { background:#f0f9f9; border-left:4px solid var(--azul); border-radius:0 10px 10px 0; padding:16px 20px; margin-bottom:24px; font-size:0.85rem; color:var(--azul-dark); line-height:1.65; font-style:italic; }
 .pay-amount { margin-bottom:24px; }
@@ -232,6 +246,17 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
     <div class="ps" id="ps3"><div class="ps-num">3</div><span class="ps-label">Options</span></div>
     <div class="ps" id="ps4"><div class="ps-num">4</div><span class="ps-label">Your details</span></div>
     <div class="ps" id="ps5"><div class="ps-num">5</div><span class="ps-label">Payment</span></div>
+  </div>
+</div>
+
+<!-- CUSTOM CAMINO CARD (see .ccc-* rules above for context) -->
+<div class="ccc-wrap">
+  <div class="ccc-card">
+    <div class="ccc-text">
+      <div class="ccc-title">Custom Camino</div>
+      <p class="ccc-desc">Already have a personalized itinerary and quote prepared by our team? Continue with your booking here.</p>
+    </div>
+    <a href="/en/pago-servicios.html" class="ccc-btn">View my custom Camino →</a>
   </div>
 </div>
 
