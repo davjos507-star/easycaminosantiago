@@ -91,7 +91,8 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
 #stripe-error { color:#e53e3e; font-size:0.83rem; margin-top:8px; min-height:20px; }
 
 /* BUTTONS */
-.btn-pay { background:var(--naranja); color:var(--white); border:none; padding:16px 48px; border-radius:8px; font-family:'Raleway',sans-serif; font-weight:800; font-size:1rem; cursor:pointer; text-transform:uppercase; letter-spacing:1px; transition:filter 0.2s; width:100%; margin-top:8px; }
+.btn-pay { background:var(--naranja); color:var(--white); border:none; padding:16px 48px; border-radius:8px; font-family:'Raleway',sans-serif; font-weight:800; font-size:1rem; cursor:pointer; text-transform:uppercase; letter-spacing:1px; transition:filter 0.2s; width:100%; margin-top:8px; display:flex; align-items:center; justify-content:center; gap:10px; }
+.btn-pay::before { content:""; display:inline-block; width:18px; height:18px; flex-shrink:0; background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%221.6%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Crect%20x%3D%225%22%20y%3D%2211%22%20width%3D%2214%22%20height%3D%229%22%20rx%3D%222%22/%3E%3Cpath%20d%3D%22M8%2011V7a4%204%200%200%201%208%200v4%22/%3E%3C/svg%3E") no-repeat center / contain; }
 .btn-pay:hover { filter:brightness(0.9); }
 .btn-pay:disabled { opacity:0.6; cursor:not-allowed; }
 .btn-transfer { background:var(--azul); color:var(--white); border:none; padding:16px 48px; border-radius:8px; font-family:'Raleway',sans-serif; font-weight:800; font-size:1rem; cursor:pointer; text-transform:uppercase; letter-spacing:1px; transition:filter 0.2s; width:100%; margin-top:8px; }
@@ -152,12 +153,12 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
     <label style="font-size:0.8rem;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:var(--gris);display:block;margin-bottom:10px;">How would you like to pay?</label>
     <div class="pay-method-grid">
       <div class="pay-method-opt pm-selected" id="op-20" onclick="selectOpcionPago('20')">
-        <div class="pm-icon">💶</div>
+        <div class="pm-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="19" x2="19" y2="5"/><circle cx="7.5" cy="7.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg></div>
         <div class="pm-name">20% deposit</div>
         <div class="pm-desc">Confirm your booking by paying only the deposit.</div>
       </div>
       <div class="pay-method-opt" id="op-100" onclick="selectOpcionPago('100')">
-        <div class="pm-icon">✅</div>
+        <div class="pm-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M7.5 12.5l3 3l6-6.5"/></svg></div>
         <div class="pm-name">Full payment</div>
         <div class="pm-desc">Pay the full amount in one go.</div>
       </div>
@@ -193,12 +194,12 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
     <h3 class="section-h3">Payment method</h3>
     <div class="pay-method-grid">
       <div class="pay-method-opt pm-selected" id="pm-tarjeta" onclick="selectMetodoPago('tarjeta')">
-        <div class="pm-icon">💳</div>
+        <div class="pm-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="13" rx="2.2"/><line x1="2.5" y1="10.5" x2="21.5" y2="10.5"/><line x1="5.5" y1="15" x2="10.5" y2="15"/></svg></div>
         <div class="pm-name">Card payment</div>
         <div class="pm-desc">Secure payment with Stripe</div>
       </div>
       <div class="pay-method-opt" id="pm-transferencia" onclick="selectMetodoPago('transferencia')">
-        <div class="pm-icon">🏦</div>
+        <div class="pm-icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 L21.5 8 L2.5 8 Z"/><line x1="4.5" y1="8" x2="4.5" y2="18.5"/><line x1="9.5" y1="8" x2="9.5" y2="18.5"/><line x1="14.5" y1="8" x2="14.5" y2="18.5"/><line x1="19.5" y1="8" x2="19.5" y2="18.5"/><line x1="2.5" y1="18.5" x2="21.5" y2="18.5"/><line x1="2" y1="21.5" x2="22" y2="21.5"/></svg></div>
         <div class="pm-name">Bank transfer</div>
         <div class="pm-desc">Santander · No fees</div>
       </div>
@@ -222,7 +223,7 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
       </div>
       <div id="stripe-error"></div>
       <p style="font-size:0.78rem;color:var(--gris);line-height:1.5;text-align:center;margin-top:4px;">Your payment is processed securely via Stripe. Once confirmed, you'll receive an email confirming your service.</p>
-      <button class="btn-pay" id="btn-pay" onclick="procesarPago()">🔒 Pay now</button>
+      <button class="btn-pay" id="btn-pay" onclick="procesarPago()">Pay now</button>
     </div>
 
     <!-- BANK TRANSFER -->
@@ -548,7 +549,7 @@ async function procesarPago(){
       state.cardExpiry.clear();
       state.cardCvc.clear();
       btn.disabled = false;
-      btn.textContent = '🔒 Pay now';
+      btn.textContent = 'Pay now';
     } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
       // The request was already sent to Netlify/HubSpot before the charge (enviarSolicitudReserva).
       // Updating the deal to "deposit paid" is handled by the payment_intent.succeeded webhook.
@@ -574,7 +575,7 @@ async function procesarPago(){
     } else {
       errEl.textContent = 'We could not verify the payment status. Please contact us by phone.';
       btn.disabled = false;
-      btn.textContent = '🔒 Pay now';
+      btn.textContent = 'Pay now';
     }
   } catch (err) {
     errEl.textContent = 'We could not complete the payment. Please try again or contact us.';
@@ -583,7 +584,7 @@ async function procesarPago(){
     state.cardExpiry.clear();
     state.cardCvc.clear();
     btn.disabled = false;
-    btn.textContent = '🔒 Pay now';
+    btn.textContent = 'Pay now';
   }
 }
 </script>
