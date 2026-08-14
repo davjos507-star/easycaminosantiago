@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Provisional Booking Confirmation — {{CLIENT_NAME}} — Easy Camino Santiago</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;600;700;800&family=Lato:wght@300;400;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --turq:    #56A1A4;
+      --azul:    #2D4A52;
+      --crema:   #ECE7E2;
+      --naranja: #F3A949;
+      --cinza:   #6b7c7e;
+      --border:  #dde6e7;
+      --bg:      #f5f9f9;
+      --white:   #ffffff;
+      --ff-serif: 'Playfair Display', Georgia, serif;
+      --ff-label: 'Raleway', sans-serif;
+      --ff-body:  'Lato', sans-serif;
+      --ff-num:   'Montserrat', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #d8e2e3; font-family: var(--ff-body); color: var(--azul); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { width: 210mm; min-height: 297mm; background: var(--white); margin: 28px auto; box-shadow: 0 8px 48px rgba(0,0,0,0.18); display: flex; flex-direction: column; }
+    .doc-header { background: var(--azul); padding: 21px 42px 19px; display: flex; justify-content: space-between; align-items: flex-start; }
+    .logo-wrap { display: flex; align-items: center; padding-top: 2px; }
+    .logo-img { height: 38px; width: auto; display: block; filter: brightness(0) invert(1); opacity: 0.92; }
+    .doc-header-right { text-align: right; }
+    .doc-overline { font-family: var(--ff-label); font-size: 0.56rem; font-weight: 700; letter-spacing: 3.5px; text-transform: uppercase; color: var(--turq); margin-bottom: 7px; }
+    .doc-title { font-family: var(--ff-serif); font-size: 1.37rem; font-weight: 600; color: var(--white); line-height: 1.12; }
+    .doc-meta { font-family: var(--ff-label); font-size: 0.57rem; color: rgba(255,255,255,0.55); margin-top: 7px; letter-spacing: 0.4px; }
+    .doc-meta span { color: rgba(255,255,255,0.78); font-weight: 600; }
+    .accent-band { height: 4px; background: linear-gradient(90deg, var(--turq) 0%, var(--naranja) 100%); }
+    .doc-body { flex: 1; padding: 17px 42px 13px; display: flex; flex-direction: column; gap: 11px; }
+    .sec-label { font-family: var(--ff-label); font-size: 0.58rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--turq); padding-bottom: 4px; border-bottom: 1.5px solid var(--border); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .sec-icon { width: 14px; height: 14px; flex-shrink: 0; display: flex; }
+    .sec-icon svg { width: 100%; height: 100%; }
+
+    .status-banner { display: flex; align-items: center; gap: 13px; background: var(--crema); border-left: 4px solid var(--naranja); border-radius: 0 6px 6px 0; padding: 11px 17px; }
+    .status-icon { width: 23px; height: 23px; flex-shrink: 0; }
+    .status-icon svg { width: 100%; height: 100%; }
+    .status-title { font-family: var(--ff-label); font-size: 0.65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--azul); }
+    .status-desc { font-size: 0.76rem; color: var(--cinza); margin-top: 2px; line-height: 1.42; }
+
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 32px; }
+    .info-cell { display: flex; align-items: flex-start; gap: 7px; }
+    .info-ic { width: 14px; height: 14px; flex-shrink: 0; margin-top: 2px; }
+    .info-ic svg { width: 100%; height: 100%; }
+    .info-key { font-family: var(--ff-label); font-size: 0.59rem; font-weight: 700; color: var(--cinza); text-transform: uppercase; letter-spacing: 0.9px; margin-bottom: 1px; }
+    .info-val { font-size: 0.83rem; font-weight: 700; color: var(--azul); line-height: 1.3; }
+
+    .intro-block { background: var(--crema); border-left: 4px solid var(--turq); border-radius: 0 6px 6px 0; padding: 11px 16px; }
+    .intro-text { font-size: 0.8rem; line-height: 1.5; color: var(--azul); }
+    .intro-text + .intro-text { margin-top: 8px; }
+
+    .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 23px; }
+    .svc-item { display: flex; align-items: flex-start; gap: 8px; font-size: 0.78rem; color: var(--azul); line-height: 1.36; }
+    .svc-mark { width: 15px; height: 15px; flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; }
+    .svc-mark svg { width: 100%; height: 100%; }
+    .svc-note { font-size: 0.72rem; color: var(--cinza); font-style: italic; margin-top: 8px; line-height: 1.42; }
+
+    .price-total-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 19px; background: var(--azul); border-radius: 8px; margin-bottom: 9px; }
+    .price-label { font-family: var(--ff-label); font-size: 0.6rem; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+    .price-amount { font-family: var(--ff-num); font-size: 1.7rem; font-weight: 700; color: var(--white); line-height: 1; margin-top: 3px; }
+    .price-per { font-size: 0.71rem; color: rgba(255,255,255,0.45); font-family: var(--ff-label); margin-top: 3px; }
+
+    .payment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 9px; }
+    .payment-box { border-radius: 8px; padding: 10px 14px; text-align: center; }
+    .payment-box.deposit { background: var(--turq); }
+    .payment-box.pending { background: var(--bg); border: 1.5px solid var(--border); }
+    .pbox-label { font-family: var(--ff-label); font-size: 0.53rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+    .payment-box.deposit .pbox-label { color: rgba(255,255,255,0.82); }
+    .payment-box.pending  .pbox-label { color: var(--cinza); }
+    .pbox-amount { font-family: var(--ff-num); font-size: 1.22rem; font-weight: 700; line-height: 1; margin-bottom: 2px; }
+    .payment-box.deposit .pbox-amount { color: var(--white); }
+    .payment-box.pending  .pbox-amount { color: var(--azul); }
+    .pbox-pct { font-family: var(--ff-label); font-size: 0.56rem; font-weight: 600; }
+    .payment-box.deposit .pbox-pct { color: rgba(255,255,255,0.75); }
+    .payment-box.pending  .pbox-pct { color: var(--cinza); }
+    .payment-method { font-size: 0.77rem; color: var(--cinza); line-height: 1.46; padding: 9px 14px; background: var(--bg); border-radius: 6px; }
+    .payment-method strong { color: var(--azul); }
+
+    .doc-footer { background: var(--crema); border-top: 1.5px solid var(--border); padding: 13px 42px; display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; }
+    .footer-brand-name { font-family: var(--ff-label); font-size: 0.66rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--azul); }
+    .footer-contact { font-size: 0.7rem; color: var(--cinza); margin-top: 4px; line-height: 1.55; }
+    .footer-disclaimer { text-align: right; max-width: 320px; }
+    .footer-disclaimer p { font-family: var(--ff-label); font-size: 0.63rem; color: var(--cinza); line-height: 1.5; font-style: italic; }
+
+    .print-btn { position: fixed; bottom: 28px; right: 28px; background: var(--azul); color: var(--white); font-family: var(--ff-label); font-size: 0.78rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; border: none; border-radius: 40px; padding: 13px 26px; cursor: pointer; box-shadow: 0 4px 20px rgba(45,74,82,0.35); transition: background 0.2s, box-shadow 0.2s; z-index: 100; }
+    .print-btn:hover { background: var(--turq); box-shadow: 0 6px 28px rgba(86,161,164,0.45); }
+    @media print {
+      body { background: none; }
+      .page { margin: 0; box-shadow: none; width: 100%; }
+      .print-btn { display: none; }
+      section { page-break-inside: avoid; }
+      .payment-grid { page-break-inside: avoid; }
+      .price-total-row { page-break-inside: avoid; }
+      .doc-footer { page-break-inside: avoid; }
+      .intro-block { page-break-inside: avoid; }
+      .status-banner { page-break-inside: avoid; }
+      .services-grid { page-break-inside: avoid; }
+      .info-grid { page-break-inside: avoid; }
+    }
+    @page { size: A4; margin: 0; }
+  </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+
+<div class="page">
+
+  <header class="doc-header">
+    <div class="logo-wrap">
+      <img class="logo-img" src="../easy-camino-santiago-logo.png" alt="Easy Camino Santiago">
+    </div>
+    <div class="doc-header-right">
+      <div class="doc-overline">Provisional Booking Confirmation</div>
+      <div class="doc-title">{{CLIENT_NAME}}</div>
+      <div class="doc-meta">Ref. <span>{{BOOKING_REFERENCE}}</span> &nbsp;·&nbsp; Issued <span>{{ISSUE_DATE}}</span></div>
+    </div>
+  </header>
+
+  <div class="accent-band"></div>
+
+  <main class="doc-body">
+
+    <section class="status-banner">
+      <div class="status-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="16.5" x2="12.5" y2="16.5"/></svg>
+      </div>
+      <div>
+        <div class="status-title">{{BOOKING_STATUS}}</div>
+        <div class="status-desc">Your deposit has been received and your booking file is now open. We will send written confirmation of all accommodations and services within {{CONFIRMATION_DEADLINE}}.</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">
+        <span class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="16.5" x2="15" y2="16.5"/></svg></span>
+        Booking Details
+      </div>
+      <div class="info-grid">
+        <div class="info-cell">
+          <div class="info-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.5"/><path d="M12 7.3 L10 14 L13 21"/><path d="M10 14 L7 19"/><path d="M11 9 L15 12"/><path d="M15 12 L17 21"/></svg></div>
+          <div>
+            <div class="info-key">Client</div>
+            <div class="info-val">{{CLIENT_NAME}}</div>
+          </div>
+        </div>
+        <div class="info-cell">
+          <div class="info-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="16.5" x2="15" y2="16.5"/></svg></div>
+          <div>
+            <div class="info-key">Booking Reference</div>
+            <div class="info-val">{{BOOKING_REFERENCE}}</div>
+          </div>
+        </div>
+        <div class="info-cell">
+          <div class="info-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="18" r="1.4"/><circle cx="19" cy="6" r="1.4"/><path d="M6.2 17 C10 12.5 14 11.5 17.8 7"/></svg></div>
+          <div>
+            <div class="info-key">Route</div>
+            <div class="info-val">{{ROUTE}}</div>
+          </div>
+        </div>
+        <div class="info-cell">
+          <div class="info-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.5"/><path d="M12 7.3 L10 14 L13 21"/><path d="M10 14 L7 19"/><path d="M11 9 L15 12"/><path d="M15 12 L17 21"/></svg></div>
+          <div>
+            <div class="info-key">Travellers</div>
+            <div class="info-val">{{TRAVELLERS}}</div>
+          </div>
+        </div>
+        <div class="info-cell">
+          <div class="info-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="14" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="8" y1="4" x2="8" y2="7.5"/><line x1="16" y1="4" x2="16" y2="7.5"/></svg></div>
+          <div>
+            <div class="info-key">Arrival Date</div>
+            <div class="info-val">{{ARRIVAL_DATE}}</div>
+          </div>
+        </div>
+        <div class="info-cell">
+          <div class="info-ic"><svg viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="6" width="16" height="14" rx="2"/><line x1="4" y1="10" x2="20" y2="10"/><line x1="8" y1="4" x2="8" y2="7.5"/><line x1="16" y1="4" x2="16" y2="7.5"/></svg></div>
+          <div>
+            <div class="info-key">Departure Date</div>
+            <div class="info-val">{{DEPARTURE_DATE}}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">
+        <span class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="6.5" y1="14.5" x2="10.5" y2="14.5"/></svg></span>
+        Deposit Received — Booking File Open
+      </div>
+      <div class="intro-block">
+        <p class="intro-text">Thank you for choosing Easy Camino Santiago. We confirm that your deposit of {{DEPOSIT_PAID}} has been received successfully and your booking file is now open.</p>
+        <p class="intro-text">Your booking remains provisional while Easy Camino Santiago confirms the availability of all accommodations and services included in your personalized proposal. We will send you written confirmation within {{CONFIRMATION_DEADLINE}}.</p>
+        <p class="intro-text">If any requested service is unavailable, we will contact you before making changes to offer suitable alternatives. If we are unable to provide an acceptable alternative, you will receive a full refund of the amount paid.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="sec-label">
+        <span class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l8 -6l8 6"/><rect x="5.5" y="10" width="13" height="10.5" rx="1.2"/><rect x="10.5" y="15" width="3" height="5.5" rx="0.8"/><rect x="14.4" y="12.4" width="2.4" height="2.4" rx="0.4"/></svg></span>
+        Contracted Services
+      </div>
+      <div class="services-grid">
+        <div class="svc-item"><div class="svc-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="18" r="1.4"/><circle cx="19" cy="6" r="1.4"/><path d="M6.2 17 C10 12.5 14 11.5 17.8 7"/></svg></div><span>Personalized itinerary, fully coordinated</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l8 -6l8 6"/><rect x="5.5" y="10" width="13" height="10.5" rx="1.2"/><rect x="10.5" y="15" width="3" height="5.5" rx="0.8"/><rect x="14.4" y="12.4" width="2.4" height="2.4" rx="0.4"/></svg></div><span>{{NIGHTS}} nights of accommodation</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l8 -6l8 6"/><rect x="5.5" y="10" width="13" height="10.5" rx="1.2"/><rect x="10.5" y="15" width="3" height="5.5" rx="0.8"/><rect x="14.4" y="12.4" width="2.4" height="2.4" rx="0.4"/></svg></div><span>{{ACCOMMODATION_NOTE}}</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3.3" y="10" width="9" height="8" rx="1.8"/><path d="M6.3 10v-1.5a1.5 1.5 0 0 1 3 0v1.5"/><circle cx="5.8" cy="19" r="0.8"/><circle cx="9.8" cy="19" r="0.8"/><path d="M15 14h5"/><path d="M17.5 11.5l2.5 2.5l-2.5 2.5"/></svg></div><span>Daily luggage transfers according to the confirmed itinerary</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="16.5" x2="15" y2="16.5"/></svg></div><span>Planning and coordination of all booked services</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 13v-1a7.5 7.5 0 0 1 15 0v1"/><rect x="3.2" y="13" width="3.6" height="5.5" rx="1.6"/><rect x="17.2" y="13" width="3.6" height="5.5" rx="1.6"/></svg></div><span>Assistance throughout the Camino</span></div>
+        <div class="svc-item"><div class="svc-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="16.5" x2="15" y2="16.5"/></svg></div><span>Final accommodation details and photographs supplied after confirmation</span></div>
+      </div>
+      <p class="svc-note">The names of specific accommodations will be sent to you as each one is confirmed.</p>
+    </section>
+
+    <section>
+      <div class="sec-label">
+        <span class="sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#56A1A4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="6.5" y1="14.5" x2="10.5" y2="14.5"/></svg></span>
+        Payment Summary
+      </div>
+      <div class="price-total-row">
+        <div>
+          <div class="price-label">Total package price</div>
+          <div class="price-amount">{{TOTAL_PRICE}}</div>
+          <div class="price-per">{{TRAVELLERS}} · {{ROUTE}}</div>
+        </div>
+      </div>
+      <div class="payment-grid">
+        <div class="payment-box deposit">
+          <div class="pbox-label">Deposit received</div>
+          <div class="pbox-amount">{{DEPOSIT_PAID}}</div>
+          <div class="pbox-pct">Paid {{PAYMENT_DATE}} · {{PAYMENT_METHOD}}</div>
+        </div>
+        <div class="payment-box pending">
+          <div class="pbox-label">Balance due</div>
+          <div class="pbox-amount">{{BALANCE_DUE}}</div>
+          <div class="pbox-pct">Payable after confirmation</div>
+        </div>
+      </div>
+      <div class="payment-method">
+        Payment status: <strong>Received</strong>. The balance of {{BALANCE_DUE}} is payable after all services have been confirmed and coordinated, according to the agreed booking conditions.
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="doc-footer">
+    <div class="footer-sign">
+      <div class="footer-brand-name">Easy Camino Santiago</div>
+      <div class="footer-contact">CIF B75750562<br>info@easycaminosantiago.com &nbsp;·&nbsp; +34 982 907 629<br>easycaminosantiago.com</div>
+    </div>
+    <div class="footer-disclaimer">
+      <p>This document confirms receipt of payment and the opening of the booking process. It is not the final confirmation of accommodation availability.</p>
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>
