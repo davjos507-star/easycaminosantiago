@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CERD8SRPBP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CERD8SRPBP');
+  </script>
+<meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#56A1A4">
+<meta name="robots" content="noindex, nofollow">
+<title>Confirma tu reserva | Easy Camino Santiago</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;700;800;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+:root {
+  --azul: #56A1A4;
+  --azul-dark: #2D4A52;
+  --naranja: #F3A949;
+  --crema: #ECE7E2;
+  --gris: #5a6b6a;
+  --bg: #f0f4f4;
+  --white: #ffffff;
+  --border: #d8e8e8;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dark); }
+
+/* NAV */
+.res-nav { background:var(--white); border-bottom:1px solid var(--border); padding:12px 32px; display:flex; align-items:center; }
+.res-nav img { height:40px; width:auto; }
+
+/* PAGE TITLE */
+.page-title-bar { max-width:640px; margin:32px auto 0; padding:0 20px; }
+.page-title-bar h1 { font-family:'Raleway',sans-serif; font-size:1.5rem; font-weight:900; color:var(--azul-dark); text-transform:uppercase; letter-spacing:1px; }
+.page-title-bar p { color:var(--gris); font-size:0.9rem; margin-top:6px; }
+
+/* MAIN */
+.res-main { max-width:640px; margin:24px auto 60px; padding:0 20px; }
+
+/* CARD */
+.res-card { background:var(--white); border-radius:12px; padding:32px; margin-bottom:20px; }
+.section-h3 { font-size:0.95rem; font-weight:700; color:var(--azul-dark); margin:28px 0 16px; padding-bottom:8px; border-bottom:2px solid var(--azul); }
+.section-h3:first-child { margin-top:0; }
+
+/* SUMMARY (client / trip details, read-only) */
+.summary-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px 20px; margin-bottom:4px; }
+.summary-item { display:flex; flex-direction:column; gap:3px; }
+.summary-item.full { grid-column:1 / -1; }
+.summary-key { font-size:0.72rem; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:var(--gris); }
+.summary-val { font-size:0.98rem; font-weight:700; color:var(--azul-dark); overflow-wrap:anywhere; }
+@media (max-width:540px) { .summary-grid { grid-template-columns:1fr; } }
+
+/* PAY AMOUNT PREVIEW */
+.pay-amount { background:#f0f9f9; border-radius:10px; padding:18px 20px; margin:20px 0; }
+.pay-amount .pa-row { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:4px 12px; padding:4px 0; font-size:0.88rem; color:var(--gris); }
+.pay-amount .pa-row strong { color:var(--azul-dark); }
+.pay-amount .pa-now { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:4px 12px; padding-top:10px; margin-top:6px; border-top:1px solid var(--border); }
+.pay-amount .pa-now-label { font-size:0.82rem; color:var(--gris); text-transform:uppercase; letter-spacing:0.5px; font-weight:700; }
+.pay-amount .pa-now-value { font-size:1.8rem; font-weight:900; font-family:'Raleway',sans-serif; color:var(--azul); }
+
+/* PRUDENT NOTE */
+.notice-box { margin-top:16px; padding:14px 16px; background:var(--crema); border-left:4px solid var(--azul); border-radius:0 8px 8px 0; font-size:0.83rem; color:var(--azul-dark); line-height:1.6; }
+
+/* STRIPE */
+.field-group { display:flex; flex-direction:column; gap:6px; margin-bottom:14px; }
+.field-group label { font-size:0.8rem; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:var(--gris); }
+.form-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media (max-width:540px) { .form-grid-2 { grid-template-columns:1fr; } }
+.stripe-field { border:1.5px solid var(--border); border-radius:8px; padding:14px; margin-bottom:16px; background:var(--white); }
+.stripe-field:focus-within { border-color:var(--azul); }
+#stripe-error { color:#e53e3e; font-size:0.83rem; margin-top:8px; min-height:20px; }
+
+/* BUTTON */
+.btn-pay { background:var(--naranja); color:var(--white); border:none; padding:16px 48px; border-radius:8px; font-family:'Raleway',sans-serif; font-weight:800; font-size:1rem; cursor:pointer; text-transform:uppercase; letter-spacing:1px; transition:filter 0.2s; width:100%; margin-top:8px; }
+.btn-pay:hover { filter:brightness(0.9); }
+.btn-pay:disabled { opacity:0.6; cursor:not-allowed; }
+
+/* FOOTER */
+.res-footer { background:var(--azul-dark); padding:20px 32px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+.res-footer p { color:rgba(255,255,255,0.55); font-size:0.78rem; }
+.res-footer a { color:var(--naranja); text-decoration:none; font-size:0.78rem; }
+.pay-logos { display:flex; gap:10px; align-items:center; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="res-nav">
+  <a href="index.html"><img src="easy-camino-santiago-logo.png" alt="Easy Camino Santiago"></a>
+</nav>
+
+<!-- PAGE TITLE -->
+<div class="page-title-bar">
+  <h1>Confirma tu reserva</h1>
+  <p>Camino Francés desde Sarria</p>
+</div>
+
+<!-- MAIN -->
+<div class="res-main">
+
+  <div class="res-card">
+
+    <!-- RESUMEN DE LA RESERVA -->
+    <h3 class="section-h3">Tu reserva</h3>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <span class="summary-key">Cliente</span>
+        <span class="summary-val">Yudai Yasuda</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-key">Referencia</span>
+        <span class="summary-val">ECS-SARRIA-789363</span>
+      </div>
+      <div class="summary-item full">
+        <span class="summary-key">Fechas</span>
+        <span class="summary-val">18–24 septiembre 2026</span>
+      </div>
+    </div>
+
+    <div class="pay-amount">
+      <div class="pa-row"><span>Precio total</span><strong>1.150 €</strong></div>
+      <div class="pa-row"><span>Saldo restante (tras el depósito)</span><strong>920 €</strong></div>
+      <div class="pa-now">
+        <span class="pa-now-label">Depósito a pagar ahora</span>
+        <span class="pa-now-value">230 €</span>
+      </div>
+    </div>
+
+    <p style="font-size:0.85rem; color:var(--gris); line-height:1.6;">Este pago corresponde al depósito del 20% de tu reserva.</p>
+
+    <div class="notice-box">
+      El pago del depósito permite iniciar la confirmación definitiva de los alojamientos. La disponibilidad está sujeta a confirmación.
+    </div>
+
+    <!-- STRIPE -->
+    <h3 class="section-h3">Pago con tarjeta</h3>
+    <div id="stripe-section">
+      <div class="field-group">
+        <label>Número de tarjeta</label>
+        <div class="stripe-field" id="card-number-element"></div>
+      </div>
+      <div class="form-grid-2">
+        <div class="field-group">
+          <label>Fecha de caducidad</label>
+          <div class="stripe-field" id="card-expiry-element"></div>
+        </div>
+        <div class="field-group">
+          <label>Código de seguridad (CVC)</label>
+          <div class="stripe-field" id="card-cvc-element"></div>
+        </div>
+      </div>
+      <div id="stripe-error"></div>
+      <p style="font-size:0.78rem;color:var(--gris);line-height:1.5;text-align:center;margin-top:4px;">Tu pago se procesa de forma segura mediante Stripe. Una vez confirmado, recibirás un correo electrónico con la confirmación de tu depósito.</p>
+      <button class="btn-pay" id="btn-pay" onclick="procesarPago()">🔒 Pagar depósito · 230 €</button>
+    </div>
+
+  </div>
+
+</div><!-- /res-main -->
+
+<!-- NETLIFY FORM (misma definición que reserva.html / pago-servicios.html — reutiliza el
+     formulario "reserva" para no tocar las Netlify Functions ni el resto del backend) -->
+<form name="reserva" netlify netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="reserva">
+  <input type="hidden" name="bot-field">
+  <input type="hidden" name="ruta">
+  <input type="hidden" name="fecha-inicio">
+  <input type="hidden" name="adultos">
+  <input type="hidden" name="ninos">
+  <input type="hidden" name="alojamiento">
+  <input type="hidden" name="nombre">
+  <input type="hidden" name="apellido">
+  <input type="hidden" name="email">
+  <input type="hidden" name="telefono">
+  <input type="hidden" name="total">
+  <input type="hidden" name="deposito">
+  <input type="hidden" name="referencia">
+  <input type="hidden" name="observaciones">
+  <input type="hidden" name="extras">
+  <input type="hidden" name="metodo-pago">
+</form>
+
+<!-- FOOTER -->
+<footer class="res-footer">
+  <p>© 2026 Easy Camino Santiago · <a href="politica-reservas.html">Política de privacidad</a> · <a href="aviso-legal.html">Aviso legal</a></p>
+  <div class="pay-logos">
+    <svg width="44" height="24" viewBox="0 0 44 24"><rect width="44" height="24" rx="4" fill="white" opacity="0.15"/><text x="22" y="16" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="11" fill="rgba(255,255,255,0.85)" letter-spacing="1">VISA</text></svg>
+    <svg width="40" height="24" viewBox="0 0 40 24"><rect width="40" height="24" rx="4" fill="white" opacity="0.1"/><circle cx="15" cy="12" r="8" fill="#EB001B" opacity="0.8"/><circle cx="25" cy="12" r="8" fill="#F79E1B" opacity="0.8"/></svg>
+  </div>
+</footer>
+
+<script>
+// ─── DATOS FIJOS DE ESTA RESERVA — Yudai Yasuda, ECS-SARRIA-789363 ───
+// Página de pago dedicada a un único cliente/depósito. No es un formulario
+// genérico: no hay campos editables de importe ni concepto.
+const RESERVA = {
+  ref:       'ECS-SARRIA-789363',
+  nombre:    'Yudai Yasuda',
+  email:     'yayu.aiueo@gmail.com',
+  telefono:  '+81 80-1172-1198',
+  ruta:      'Camino Francés desde Sarria',
+  fechaInicio: '2026-09-18',
+  total:     1150,
+  deposito:  230
+};
+
+// ─── STRIPE PUBLIC KEY — misma clave pública que reserva.html / pago-servicios.html ───
+const STRIPE_PUBLIC_KEY = 'pk_live_51KHQyDLdy1SiD5iFtf5Vja5WbadI1LJeYXbzUzaL1K2pFV1s9YJg1Pi2UiWQ3scujJp5PEiMxCTRkuRQok3WKoQr00qHl6XbXK';
+// ──────────────────────────────────────────────────────────────────
+
+const state = {
+  solicitudEnviada: false,
+  stripeInstance: null, cardNumber: null, cardExpiry: null, cardCvc: null,
+  stripeInit: false
+};
+
+// ─── ENVÍO AL FORMULARIO NETLIFY "reserva" (misma ruta que pago-servicios.html —
+// reutiliza submission-created.js / HubSpot sin tocar el backend) ───
+function buildNetlifyData(){
+  const form = document.querySelector('form[name="reserva"]');
+  const data = new FormData(form);
+  data.set('form-name', 'reserva');
+  data.set('ruta', RESERVA.ruta);
+  data.set('fecha-inicio', RESERVA.fechaInicio);
+  data.set('adultos', '1');
+  data.set('ninos', '0');
+  data.set('alojamiento', 'Hotel · habitación individual');
+  data.set('nombre', RESERVA.nombre);
+  data.set('apellido', '');
+  data.set('email', RESERVA.email);
+  data.set('telefono', RESERVA.telefono);
+  data.set('total', RESERVA.total + ' €');
+  data.set('deposito', RESERVA.deposito + ' €');
+  data.set('metodo-pago', 'Tarjeta bancaria');
+  data.set('referencia', RESERVA.ref);
+  data.set('observaciones', 'Pago del depósito (20%) de la propuesta personalizada ya enviada — presupuesto ' + RESERVA.total + ' €.');
+  data.set('extras', '');
+  return data;
+}
+
+const SOLICITUD_STORAGE_KEY = 'ecs_pago_yudai_yasuda_solicitud';
+
+function guardarSolicitudEnSesion(){
+  try {
+    sessionStorage.setItem(SOLICITUD_STORAGE_KEY, JSON.stringify({ ref: RESERVA.ref, email: RESERVA.email }));
+  } catch(e) {}
+}
+
+function leerSolicitudDeSesion(){
+  try {
+    const raw = sessionStorage.getItem(SOLICITUD_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch(e) { return null; }
+}
+
+// Se dispara antes de cobrar con tarjeta, así la solicitud llega a Netlify Forms /
+// HubSpot aunque la tarjeta se rechace o se abandone. Persistida en sessionStorage
+// para no reenviar duplicada si el usuario recarga la página.
+async function enviarSolicitudReserva(){
+  if (state.solicitudEnviada) return;
+
+  const guardada = leerSolicitudDeSesion();
+  if (guardada && guardada.ref === RESERVA.ref && guardada.email === RESERVA.email) {
+    state.solicitudEnviada = true;
+    console.log('[Reserva] solicitud ya enviada antes de una recarga — no se reenvía | ref:', RESERVA.ref);
+    return;
+  }
+
+  state.solicitudEnviada = true;
+  try {
+    const data = buildNetlifyData();
+    await fetch('/', { method: 'POST', body: data });
+    guardarSolicitudEnSesion();
+  } catch (e) {
+    state.solicitudEnviada = false;
+    console.error('[Reserva] error al enviar solicitud:', e.message);
+  }
+}
+
+// ─── STRIPE ───
+function initStripe(){
+  if (!STRIPE_PUBLIC_KEY.startsWith('pk_')) { console.warn('Configura STRIPE_PUBLIC_KEY'); return; }
+  state.stripeInstance = Stripe(STRIPE_PUBLIC_KEY);
+  const elements = state.stripeInstance.elements();
+  const style = { base:{ fontFamily:"'Lato',sans-serif", fontSize:'15px', color:'#2D4A52', '::placeholder':{ color:'#9ab5b6' } } };
+  state.cardNumber = elements.create('cardNumber', {style});
+  state.cardExpiry = elements.create('cardExpiry', {style});
+  state.cardCvc   = elements.create('cardCvc', {style});
+  state.cardNumber.mount('#card-number-element');
+  state.cardExpiry.mount('#card-expiry-element');
+  state.cardCvc.mount('#card-cvc-element');
+  state.stripeInit = true;
+}
+requestAnimationFrame(() => { if (!state.stripeInit) initStripe(); });
+
+async function procesarPago(){
+  const btn = document.getElementById('btn-pay');
+  const errEl = document.getElementById('stripe-error');
+  errEl.textContent = '';
+
+  if (!state.stripeInit || !state.stripeInstance) {
+    errEl.textContent = 'Error: Stripe no está configurado. Contáctanos por teléfono.';
+    return;
+  }
+
+  if (!state.solicitudEnviada) {
+    await enviarSolicitudReserva();
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Procesando...';
+
+  try {
+    const res = await fetch('/.netlify/functions/create-payment-intent', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        amount: RESERVA.deposito,
+        description: 'Depósito reserva ' + RESERVA.ref + ' — ' + RESERVA.ruta + ' — Easy Camino Santiago',
+        metadata: {
+          tipo:       'deposito-reserva',
+          ruta:       RESERVA.ruta,
+          cliente:    RESERVA.nombre,
+          nombre:     RESERVA.nombre,
+          email:      RESERVA.email,
+          telefono:   RESERVA.telefono,
+          total:      RESERVA.total,
+          tipo_pago:  'deposito',
+          origen:     'pago-yudai-yasuda-sarria',
+          reserva_id: RESERVA.ref
+        }
+      })
+    });
+
+    const data = await res.json();
+    if (!data.clientSecret) throw new Error(data.error || 'Error al crear el pago');
+
+    const result = await state.stripeInstance.confirmCardPayment(data.clientSecret, {
+      payment_method: {
+        card: state.cardNumber,
+        billing_details: { name: RESERVA.nombre, email: RESERVA.email }
+      }
+    });
+
+    if (result.error) {
+      const errores = {
+        card_declined:      'Tarjeta denegada. Por favor, usa otra tarjeta o contacta con tu banco.',
+        insufficient_funds: 'Fondos insuficientes. Por favor, usa otra tarjeta.',
+        incorrect_cvc:      'Código de seguridad (CVC) incorrecto. Comprueba los datos e inténtalo de nuevo.',
+        expired_card:       'La tarjeta ha caducado. Por favor, usa otra tarjeta.',
+        incorrect_number:   'Número de tarjeta incorrecto. Comprueba los datos e inténtalo de nuevo.',
+        processing_error:   'Error al procesar el pago. Por favor, inténtalo de nuevo.',
+        do_not_honor:       'Pago no autorizado por el banco. Contacta con tu banco o usa otra tarjeta.',
+        generic_decline:    'Tarjeta denegada. Contacta con tu banco o usa otra tarjeta.',
+      };
+      errEl.textContent = errores[result.error.code] || 'No se ha podido completar el pago. Por favor, revisa los datos o usa otra tarjeta.';
+      console.error('[Stripe result.error]', result.error);
+      state.cardNumber.clear();
+      state.cardExpiry.clear();
+      state.cardCvc.clear();
+      btn.disabled = false;
+      btn.textContent = '🔒 Pagar depósito · 230 €';
+    } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
+      // La solicitud ya se envió a Netlify/HubSpot antes del cobro (enviarSolicitudReserva).
+      // Actualizar el negocio a "depósito pagado" lo hace el webhook payment_intent.succeeded.
+      try {
+        fetch('/.netlify/functions/send-booking-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          keepalive: true,
+          body: JSON.stringify({
+            nombre: RESERVA.nombre,
+            email: RESERVA.email,
+            telefono: RESERVA.telefono,
+            ruta: RESERVA.ruta,
+            fechaInicio: RESERVA.fechaInicio,
+            alojamiento: 'Hotel · habitación individual',
+            deposito: RESERVA.deposito,
+            total: RESERVA.total,
+            paymentIntentId: result.paymentIntent.id
+          })
+        });
+      } catch (e) { /* no bloquea */ }
+      window.location.href = 'gracias-yudai-yasuda.html';
+    } else {
+      errEl.textContent = 'No se ha podido verificar el estado del pago. Por favor, contáctanos por teléfono.';
+      btn.disabled = false;
+      btn.textContent = '🔒 Pagar depósito · 230 €';
+    }
+  } catch (err) {
+    errEl.textContent = 'No se ha podido completar el pago. Por favor, inténtalo de nuevo o contacta con nosotros.';
+    console.error('[procesarPago catch]', err);
+    state.cardNumber.clear();
+    state.cardExpiry.clear();
+    state.cardCvc.clear();
+    btn.disabled = false;
+    btn.textContent = '🔒 Pagar depósito · 230 €';
+  }
+}
+</script>
+<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/148622668.js"></script>
+</body>
+</html>
