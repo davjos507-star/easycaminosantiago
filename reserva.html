@@ -67,6 +67,7 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
 
 /* STEP 1 */
 .date-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+@media (max-width:540px) { .date-grid { grid-template-columns:1fr; } }
 .field-group { display:flex; flex-direction:column; gap:6px; }
 .field-group label { font-size:0.8rem; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:var(--gris); }
 .field-group input, .field-group select { padding:12px 14px; border:1.5px solid var(--border); border-radius:8px; font-size:0.92rem; font-family:'Lato',sans-serif; color:var(--azul-dark); background:var(--white); }
@@ -299,16 +300,6 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
             <option value="bicicleta">En Bicicleta</option>
           </select>
         </div>
-      </div>
-
-      <!-- Aviso genérico y reutilizable para clientes con presupuesto personalizado ya
-           cerrado (p. ej. Osyris — Camino del Norte + Fisterra/Muxía). Enlaza a
-           pago-servicios.html, que ya soporta importe/concepto/nombre por URL y el
-           depósito del 20% / pago completo. No lleva datos de ningún cliente concreto
-           — el enlace personalizado de cada cliente se le envía aparte, directamente. -->
-      <div class="notice-box" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; font-style:normal;">
-        <span>¿Ya tienes un presupuesto personalizado cerrado con nuestro equipo? Puedes pagar tu depósito o el importe completo directamente, sin rellenar este formulario.</span>
-        <a href="pago-servicios.html" style="background:var(--azul); color:var(--white); border:none; padding:12px 26px; border-radius:8px; font-family:'Raleway',sans-serif; font-weight:800; font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; text-decoration:none; white-space:nowrap; flex-shrink:0;">Pagar mi presupuesto →</a>
       </div>
 
       <div class="date-grid">
