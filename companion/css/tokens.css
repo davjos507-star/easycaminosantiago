@@ -67,6 +67,9 @@
   /* Altura de la navegación inferior, usada por el mapa/hoja para no solaparse */
   --cc-nav-height: 64px;
 
+  /* Altura visible del bottom sheet colapsado (pantalla MAPA) */
+  --cc-sheet-peek: 88px;
+
   /* Transiciones ligeras */
   --cc-ease: cubic-bezier(0.4, 0, 0.2, 1);
   --cc-duration-fast: 120ms;

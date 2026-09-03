@@ -197,10 +197,18 @@ body.cc-app {
   position: fixed;
   right: var(--cc-space-3);
   bottom: calc(var(--cc-nav-height) + var(--cc-safe-bottom) + var(--cc-space-3));
-  z-index: var(--cc-z-overlay);
+  /* Por encima del bottom sheet (z-index 20): en MAPA, sin este valor más
+     alto, la tarjeta del sheet colapsado tapaba el botón cuando sus áreas
+     coincidían. */
+  z-index: var(--cc-z-nav);
   background: var(--cc-danger);
   color: #fff;
   box-shadow: var(--cc-shadow-md);
+}
+/* En MAPA el sheet colapsado ocupa --cc-sheet-peek por encima de la nav:
+   el FAB debe flotar por encima de esa tarjeta, no solaparla. */
+body[data-active-screen="map"] .cc-help-fab {
+  bottom: calc(var(--cc-nav-height) + var(--cc-safe-bottom) + var(--cc-sheet-peek) + var(--cc-space-3));
 }
 
 /* ---------- Mapa ---------- */
@@ -213,8 +221,12 @@ body.cc-app {
 .cc-map-controls {
   position: absolute;
   right: var(--cc-space-3);
-  bottom: calc(var(--cc-nav-height) + var(--cc-safe-bottom) + var(--cc-space-4));
-  z-index: var(--cc-z-overlay);
+  /* Por encima del sheet colapsado (--cc-sheet-peek), no solo de la nav:
+     antes se calculaba solo con la altura de la nav y el botón de centrar
+     quedaba parcialmente tapado por la tarjeta del sheet. */
+  bottom: calc(var(--cc-nav-height) + var(--cc-safe-bottom) + var(--cc-sheet-peek) + var(--cc-space-2));
+  /* Por encima del bottom sheet (z-index 20), igual que el FAB de ayuda. */
+  z-index: var(--cc-z-nav);
   display: flex;
   flex-direction: column;
   gap: var(--cc-space-2);
@@ -338,7 +350,7 @@ body.cc-app {
   background: var(--cc-surface);
   border-radius: var(--cc-radius-lg) var(--cc-radius-lg) 0 0;
   box-shadow: var(--cc-shadow-lg);
-  transform: translateY(calc(100% - 148px));
+  transform: translateY(calc(100% - var(--cc-sheet-peek)));
   transition: transform var(--cc-duration-base) var(--cc-ease);
   max-height: calc(100vh - var(--cc-nav-height) - var(--cc-safe-top) - 24px);
   display: flex;
@@ -349,7 +361,7 @@ body.cc-app {
 
 .cc-sheet-handle {
   width: 100%;
-  padding: var(--cc-space-3) 0 var(--cc-space-2);
+  padding: 8px 0 6px;
   display: flex;
   justify-content: center;
   cursor: pointer;
@@ -359,12 +371,12 @@ body.cc-app {
 }
 .cc-sheet-handle::before {
   content: "";
-  width: 40px; height: 4px;
+  width: 36px; height: 4px;
   border-radius: var(--cc-radius-pill);
   background: var(--cc-border);
 }
 .cc-sheet-summary {
-  padding: 0 var(--cc-space-5) var(--cc-space-4);
+  padding: 0 var(--cc-space-4) var(--cc-space-3);
   flex: 0 0 auto;
 }
 .cc-sheet-body {

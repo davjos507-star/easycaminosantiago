@@ -11,6 +11,7 @@ function screenFromHash() {
 export function initRouter({ onNavigate } = {}) {
   function render() {
     const screen = screenFromHash();
+    document.body.setAttribute('data-active-screen', screen);
     qsa('[data-screen]').forEach((el) => {
       el.hidden = el.dataset.screen !== screen;
     });
