@@ -57,7 +57,6 @@ export function renderToday(container, { pilgrim, stages }) {
       <button type="button" class="cc-btn cc-btn--primary" id="start-stage-btn" disabled>
         ${icon('walk')} ${t('today.start_stage')}
       </button>
-      <p class="cc-pending" style="text-align:center; margin:8px 0 0; font-size:0.8rem;">${t('more.coming_soon')}</p>
     </div>
 
     <div class="cc-card">

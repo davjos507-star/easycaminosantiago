@@ -23,7 +23,6 @@ export function renderMore(container, { onInstallClick, onLanguageToggle } = {})
         <button type="button" class="cc-more-item" data-action="${item.action || ''}" style="width:100%; display:flex; align-items:center; gap:12px; padding:16px; background:none; border:none; border-bottom:1px solid var(--cc-border); text-align:left; cursor:pointer; color:var(--cc-text); min-height:var(--cc-tap-min)">
           ${icon(item.icon)}
           <span style="flex:1; font-weight:600">${t(item.key)}</span>
-          ${item.action ? '' : `<span class="cc-pending" style="font-size:0.75rem">${t('more.coming_soon')}</span>`}
         </button>`
       ).join('')}
     </div>
