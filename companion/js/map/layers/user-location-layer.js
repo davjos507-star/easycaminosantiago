@@ -34,11 +34,11 @@ export function createUserLocationLayer(mapEngine) {
 
   return {
     setPosition({ lat, lng, accuracy, heading }) {
+      ensureMarker().setLngLat({ lat, lng });
       if (!visible) {
-        ensureMarker().addTo();
+        marker.addTo();
         visible = true;
       }
-      marker.setLngLat({ lat, lng });
 
       dotElement?.classList.toggle('has-heading', heading != null);
       if (heading != null) marker.setRotation(heading);
