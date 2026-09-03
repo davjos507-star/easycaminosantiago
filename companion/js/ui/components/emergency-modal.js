@@ -79,8 +79,9 @@ export function initEmergencyModal() {
     const shareBtn = backdrop.querySelector('#emergency-share');
     shareBtn?.addEventListener('click', async () => {
       if (!coordsText || !navigator.share) return;
+      const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${pos.lat},${pos.lng}`;
       try {
-        await navigator.share({ title: t('emergency.current_location'), text: coordsText });
+        await navigator.share({ title: t('emergency.current_location'), text: coordsText, url: mapsUrl });
       } catch (err) {
         /* el usuario canceló el share sheet, no es un error */
       }
