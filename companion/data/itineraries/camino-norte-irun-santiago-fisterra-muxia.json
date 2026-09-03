@@ -1,0 +1,8 @@
+{
+  "id": "camino-norte-irun-santiago-fisterra-muxia",
+  "name": "Camino del Norte desde Irún + Santiago–Fisterra–Muxía",
+  "caminoId": "camino-norte",
+  "stages": [
+    { "path": "stages/camino-norte/000-pending.json" }
+  ]
+}

@@ -1,0 +1,13 @@
+MapLibre GL JS 5.24.0
+Vendored (self-hosted, no runtime CDN dependency) on 2026-09-03 from:
+https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js
+https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css
+
+License: BSD-3-Clause — see LICENSE.txt in this folder.
+The bundled //# sourceMappingURL comment was stripped from maplibre-gl.js
+since the corresponding .map file is not vendored (dev-only convenience,
+not needed at runtime; avoids a 404 when DevTools has source maps enabled).
+
+To upgrade: replace both files with a newer version's dist output and
+update this file. No other module in the app references MapLibre's
+internals directly except js/map/map-loader.js and js/map/map-engine.js.

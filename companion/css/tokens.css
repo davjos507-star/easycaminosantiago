@@ -1,0 +1,99 @@
+/*
+ * Easy Camino Companion — design tokens.
+ * Espacio de nombres propio (--cc-*) para no colisionar nunca con
+ * las variables globales de easycaminosantiago.com (--azul, --dark, etc.).
+ * Los valores de marca están duplicados intencionadamente aquí: esta app
+ * no importa /style.css del sitio principal.
+ */
+
+:root {
+  /* Marca Easy Camino Santiago */
+  --cc-teal: #56A1A4;
+  --cc-teal-dark: #2D4A52;
+  --cc-teal-light: #8FBECA;
+  --cc-orange: #F3A949;
+  --cc-orange-dark: #D4882A;
+  --cc-cream: #ECE7E2;
+
+  /* Semántica (nuevos, no presentes en el sitio principal) */
+  --cc-danger: #C6433A;
+  --cc-danger-dark: #9A322B;
+  --cc-success: #3C8C63;
+  --cc-warning: #C68A2E;
+
+  /* Superficie / texto — contraste alto pensado para exteriores */
+  --cc-bg: #F7F8F8;
+  --cc-surface: #FFFFFF;
+  --cc-surface-raised: #FFFFFF;
+  --cc-text: #16242A;
+  --cc-text-muted: #4B5C60;
+  --cc-border: #DCE6E7;
+  --cc-overlay: rgba(15, 25, 28, 0.55);
+
+  /* Tipografía (fuentes autoalojadas, ver fonts.css) */
+  --cc-font-heading: 'CC Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --cc-font-body: 'CC Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Espaciado */
+  --cc-space-1: 4px;
+  --cc-space-2: 8px;
+  --cc-space-3: 12px;
+  --cc-space-4: 16px;
+  --cc-space-5: 24px;
+  --cc-space-6: 32px;
+  --cc-space-7: 48px;
+
+  /* Radios y sombra */
+  --cc-radius-sm: 10px;
+  --cc-radius-md: 16px;
+  --cc-radius-lg: 24px;
+  --cc-radius-pill: 999px;
+  --cc-shadow-sm: 0 2px 8px rgba(22, 36, 42, 0.08);
+  --cc-shadow-md: 0 8px 24px rgba(22, 36, 42, 0.14);
+  --cc-shadow-lg: 0 16px 40px rgba(22, 36, 42, 0.20);
+
+  /* Área táctil mínima (WCAG / uso con guantes o caminando) */
+  --cc-tap-min: 48px;
+
+  /* Capas de la interfaz */
+  --cc-z-map: 0;
+  --cc-z-overlay: 10;
+  --cc-z-bottom-sheet: 20;
+  --cc-z-nav: 30;
+  --cc-z-modal: 40;
+  --cc-z-toast: 50;
+  --cc-z-debug: 60;
+
+  /* Altura de la navegación inferior, usada por el mapa/hoja para no solaparse */
+  --cc-nav-height: 64px;
+
+  /* Transiciones ligeras */
+  --cc-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --cc-duration-fast: 120ms;
+  --cc-duration-base: 200ms;
+
+  color-scheme: light;
+}
+
+/* Modo oscuro automático */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cc-bg: #10191C;
+    --cc-surface: #172225;
+    --cc-surface-raised: #1D2A2E;
+    --cc-text: #EDF3F3;
+    --cc-text-muted: #A9BCC0;
+    --cc-border: #2A383C;
+    --cc-overlay: rgba(0, 0, 0, 0.6);
+    --cc-teal-light: #6FA3AC;
+    color-scheme: dark;
+  }
+}
+
+/* Área segura iPhone (notch / home indicator) */
+:root {
+  --cc-safe-top: env(safe-area-inset-top, 0px);
+  --cc-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --cc-safe-left: env(safe-area-inset-left, 0px);
+  --cc-safe-right: env(safe-area-inset-right, 0px);
+}

@@ -1,0 +1,128 @@
+{
+  "app": {
+    "name": "Easy Camino Companion"
+  },
+  "nav": {
+    "today": "Today",
+    "map": "Map",
+    "camino": "Camino",
+    "stays": "Stays",
+    "more": "More"
+  },
+  "onboarding": {
+    "skip": "Skip",
+    "start": "Get started",
+    "next": "Next",
+    "slide1_title": "Your Camino in your pocket",
+    "slide1_body": "Everything you need for each stage, in one place.",
+    "slide2_title": "Route, stays and services",
+    "slide2_body": "Check your route, accommodation and nearby services during each stage.",
+    "slide3_title": "Know where you are",
+    "slide3_body": "Turn on location to see your position on the Camino."
+  },
+  "today": {
+    "greeting": "Good morning, {{name}}",
+    "todays_stage": "TODAY'S STAGE",
+    "km_remaining": "{{km}} remaining",
+    "start_stage": "Start stage",
+    "in_route": "On the way",
+    "accommodation_tonight": "Tonight's accommodation",
+    "arrival_estimate": "Estimated arrival",
+    "next_point": "Next relevant point",
+    "no_stage_today": "No stage is scheduled for today yet.",
+    "distance_walked": "Distance walked",
+    "distance_remaining": "Distance remaining",
+    "walking_time": "Walking time",
+    "average_speed": "Average speed",
+    "progress": "Progress"
+  },
+  "map": {
+    "center_me": "Center on me",
+    "follow_me": "Follow my position",
+    "offline": "Offline — map unavailable",
+    "error_loading": "Map tiles couldn't load",
+    "off_route_title": "Looks like you've strayed from the Camino.",
+    "view_route": "View route",
+    "ignore": "Ignore"
+  },
+  "gps": {
+    "searching": "Locating you…",
+    "denied_title": "Location access denied",
+    "denied_body": "You can enable it again from your browser or system settings.",
+    "unavailable": "Location unavailable right now",
+    "timeout": "Couldn't get a location fix",
+    "stale": "Signal lost — retrying…",
+    "unsupported": "This browser doesn't support location",
+    "accuracy": "± {{m}} m",
+    "updated": "Updated {{time}}"
+  },
+  "camino": {
+    "title": "My Camino",
+    "empty": "Stages will appear here once your itinerary is loaded.",
+    "stage_number": "Stage {{number}}"
+  },
+  "stays": {
+    "title": "My accommodations",
+    "empty": "Your accommodation list will appear here once confirmed.",
+    "check_in": "Check-in",
+    "call": "Call",
+    "view_on_map": "View on map",
+    "take_me_there": "Take me there",
+    "notes": "Notes"
+  },
+  "more": {
+    "title": "More",
+    "profile": "Profile",
+    "assistance": "Assistance",
+    "credential": "Credential & documents",
+    "settings": "Settings",
+    "about": "About",
+    "privacy": "Privacy",
+    "install": "Add Easy Camino to your phone",
+    "language": "Language",
+    "coming_soon": "Coming in a future version"
+  },
+  "emergency": {
+    "title": "Easy Camino Santiago",
+    "call": "Call",
+    "whatsapp": "WhatsApp",
+    "emergency_112": "Emergency — 112",
+    "current_accommodation": "Current accommodation",
+    "current_location": "Current location",
+    "copy_coordinates": "Copy coordinates",
+    "share_location": "Share location",
+    "copied": "Coordinates copied",
+    "disclaimer": "If this is a medical or safety emergency, call 112.",
+    "open": "Help"
+  },
+  "nearby": {
+    "title": "Near me",
+    "empty": "No results yet in this area."
+  },
+  "state": {
+    "loading": "Loading…",
+    "error_title": "Something went wrong",
+    "error_body": "We couldn't load this information. Please try again.",
+    "retry": "Try again",
+    "empty_title": "Nothing here yet"
+  },
+  "connectivity": {
+    "online": "Online",
+    "offline": "No connection"
+  },
+  "common": {
+    "pending": "Pending",
+    "close": "Close"
+  },
+  "privacy": {
+    "location_notice": "Location is used on your device to show your position on the Camino.",
+    "location_consent_body": "Easy Camino uses your location on this device to show where you are on the Camino. Your location is not sent to Easy Camino.",
+    "enable_location": "Enable location",
+    "not_now": "Not now"
+  },
+  "pwa": {
+    "update_available": "New version available",
+    "update_now": "Update",
+    "install_added": "Easy Camino is installed"
+  }
+}

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Easy Camino Companion</title>
+</head>
+<body>
+<!--
+  Este archivo es solo una URL de conveniencia (/companion/osyris/), NO un
+  mecanismo de autenticación ni de privacidad: cualquiera con el enlace
+  puede abrirlo. Ver js/data/pilgrim-resolver.js para el punto de
+  extensión donde una fase futura podrá sustituir esto por un token o
+  identificador seguro emitido por un backend, sin rehacer la app.
+-->
+<script>
+  try { localStorage.setItem('ecc:pilgrim-id', 'osyris'); } catch (e) {}
+  // Reenvía cualquier parámetro adicional (p. ej. ?debug=1) tal cual,
+  // fijando siempre pilgrim=osyris. Este stub sigue sin ser un mecanismo
+  // de autenticación: solo preserva la query string de quien lo abre.
+  var params = new URLSearchParams(location.search);
+  params.set('pilgrim', 'osyris');
+  location.replace('../?' + params.toString());
+</script>
+<p>Redirecting to Easy Camino Companion…</p>
+</body>
+</html>

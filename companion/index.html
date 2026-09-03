@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#2D4A52">
+  <meta name="description" content="Easy Camino Companion: your route, stages, accommodation and assistance during the Camino de Santiago.">
+
+  <title>Easy Camino Companion</title>
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" href="icons/favicon-32.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Companion">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body class="cc-app">
+  <noscript>This app requires JavaScript to run.</noscript>
+
+  <div class="cc-shell">
+
+    <div id="connectivity-banner" class="cc-connectivity-banner" hidden>
+      <span class="cc-connectivity-dot"></span>
+      <span id="connectivity-text"></span>
+    </div>
+
+    <div id="update-toast" class="cc-connectivity-banner" hidden style="top:auto; bottom:calc(var(--cc-nav-height) + var(--cc-safe-bottom) + var(--cc-space-3));">
+      <span id="update-toast-text"></span>
+      <button type="button" id="update-toast-btn" style="background:none;border:none;color:inherit;font-weight:700;text-decoration:underline;cursor:pointer;padding:0;"></button>
+    </div>
+
+    <!-- HOY -->
+    <section class="cc-screen" data-screen="today"></section>
+
+    <!-- MAPA -->
+    <section class="cc-screen cc-screen--map" data-screen="map" hidden>
+      <div id="map-canvas" class="cc-map-canvas"></div>
+      <div id="map-overlay-top" class="cc-map-overlay-top"></div>
+      <div class="cc-map-controls">
+        <button type="button" id="center-me-btn" class="cc-icon-btn" aria-label="Center on me">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7.5 17-7.5-4-7.5 4L12 3Z"/></svg>
+        </button>
+      </div>
+      <div id="today-sheet" class="cc-sheet">
+        <button type="button" class="cc-sheet-handle" aria-expanded="false" aria-label="Expand stage details"></button>
+        <div class="cc-sheet-summary"></div>
+        <div class="cc-sheet-body"></div>
+      </div>
+    </section>
+
+    <!-- CAMINO -->
+    <section class="cc-screen" data-screen="camino" hidden></section>
+
+    <!-- ALOJAMIENTOS -->
+    <section class="cc-screen" data-screen="stays" hidden></section>
+
+    <!-- MÁS -->
+    <section class="cc-screen" data-screen="more" hidden></section>
+
+    <button type="button" class="cc-icon-btn cc-help-fab" data-open-emergency aria-label="Help" data-i18n-aria="emergency.open">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.5 21 19H3L12 4.5Z"/><path d="M12 10.5v4M12 17h.01"/></svg>
+    </button>
+
+    <div id="onboarding" class="cc-onboarding" hidden></div>
+
+    <div id="emergency-modal" class="cc-modal-backdrop" hidden></div>
+
+    <nav class="cc-bottom-nav" aria-label="Main navigation">
+      <button type="button" class="cc-nav-item" data-nav-target="today" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v3.5M16 3v3.5"/><path d="M7.8 13.2l1.9 1.9 3.8-3.9"/></svg>
+        <span data-i18n="nav.today">Today</span>
+      </button>
+      <button type="button" class="cc-nav-item" data-nav-target="map" aria-current="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4.5 4 6.5v13l5-2 6 2 5-2v-13l-5 2-6-2Z"/><path d="M9 4.5v13M15 6.5v13"/></svg>
+        <span data-i18n="nav.map">Map</span>
+      </button>
+      <button type="button" class="cc-nav-item" data-nav-target="camino" aria-current="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="18" r="2.3"/><path d="M6 8.3v3.2a4 4 0 0 0 4 4h4a4 4 0 0 1 4 4"/></svg>
+        <span data-i18n="nav.camino">Camino</span>
+      </button>
+      <button type="button" class="cc-nav-item" data-nav-target="stays" aria-current="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v7"/><path d="M3 18v2.5M21 18v2.5"/><path d="M3 13V8.5a1.5 1.5 0 0 1 1.5-1.5H9a1.5 1.5 0 0 1 1.5 1.5V13"/></svg>
+        <span data-i18n="nav.stays">Stays</span>
+      </button>
+      <button type="button" class="cc-nav-item" data-nav-target="more" aria-current="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg>
+        <span data-i18n="nav.more">More</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+{
+  "app": {
+    "name": "Easy Camino Companion"
+  },
+  "nav": {
+    "today": "Hoy",
+    "map": "Mapa",
+    "camino": "Camino",
+    "stays": "Alojamientos",
+    "more": "Más"
+  },
+  "onboarding": {
+    "skip": "Saltar",
+    "start": "Empezar",
+    "next": "Siguiente",
+    "slide1_title": "Tu Camino en el bolsillo",
+    "slide1_body": "Todo lo que necesitas para cada etapa, en un solo sitio.",
+    "slide2_title": "Ruta, alojamientos y servicios",
+    "slide2_body": "Consulta tu ruta, alojamiento y servicios cercanos durante cada etapa.",
+    "slide3_title": "Sabe dónde estás",
+    "slide3_body": "Activa tu ubicación para saber dónde estás en el Camino."
+  },
+  "today": {
+    "greeting": "Buenos días, {{name}}",
+    "todays_stage": "ETAPA DE HOY",
+    "km_remaining": "{{km}} restantes",
+    "start_stage": "Empezar etapa",
+    "in_route": "En camino",
+    "accommodation_tonight": "Alojamiento de esta noche",
+    "arrival_estimate": "Hora aproximada de llegada",
+    "next_point": "Siguiente punto relevante",
+    "no_stage_today": "Todavía no hay una etapa programada para hoy.",
+    "distance_walked": "Distancia recorrida",
+    "distance_remaining": "Distancia restante",
+    "walking_time": "Tiempo caminando",
+    "average_speed": "Velocidad media",
+    "progress": "Progreso"
+  },
+  "map": {
+    "center_me": "Centrar en mí",
+    "follow_me": "Seguir mi posición",
+    "offline": "Sin conexión — mapa no disponible",
+    "error_loading": "No se han podido cargar los mapas",
+    "off_route_title": "Parece que te has alejado del Camino.",
+    "view_route": "Ver ruta",
+    "ignore": "Ignorar"
+  },
+  "gps": {
+    "searching": "Buscando tu ubicación…",
+    "denied_title": "Acceso a la ubicación denegado",
+    "denied_body": "Puedes volver a activarlo desde los ajustes del navegador o del sistema.",
+    "unavailable": "Ubicación no disponible ahora mismo",
+    "timeout": "No se ha podido obtener tu ubicación",
+    "stale": "Señal perdida — reintentando…",
+    "unsupported": "Este navegador no admite ubicación",
+    "accuracy": "± {{m}} m",
+    "updated": "Actualizado {{time}}"
+  },
+  "camino": {
+    "title": "Mi Camino",
+    "empty": "Las etapas aparecerán aquí en cuanto se cargue tu itinerario.",
+    "stage_number": "Etapa {{number}}"
+  },
+  "stays": {
+    "title": "Mis alojamientos",
+    "empty": "Tu lista de alojamientos aparecerá aquí en cuanto esté confirmada.",
+    "check_in": "Check-in",
+    "call": "Llamar",
+    "view_on_map": "Ver en mapa",
+    "take_me_there": "Llévame al alojamiento",
+    "notes": "Notas"
+  },
+  "more": {
+    "title": "Más",
+    "profile": "Perfil",
+    "assistance": "Asistencia",
+    "credential": "Credencial y documentos",
+    "settings": "Configuración",
+    "about": "Acerca de",
+    "privacy": "Privacidad",
+    "install": "Añadir Easy Camino a tu móvil",
+    "language": "Idioma",
+    "coming_soon": "Disponible en una próxima versión"
+  },
+  "emergency": {
+    "title": "Easy Camino Santiago",
+    "call": "Llamar",
+    "whatsapp": "WhatsApp",
+    "emergency_112": "Emergencia — 112",
+    "current_accommodation": "Alojamiento actual",
+    "current_location": "Ubicación actual",
+    "copy_coordinates": "Copiar coordenadas",
+    "share_location": "Compartir ubicación",
+    "copied": "Coordenadas copiadas",
+    "disclaimer": "Si se trata de una emergencia médica o de seguridad, llama al 112.",
+    "open": "Ayuda"
+  },
+  "nearby": {
+    "title": "Cerca de mí",
+    "empty": "Todavía no hay resultados en esta zona."
+  },
+  "state": {
+    "loading": "Cargando…",
+    "error_title": "Algo ha ido mal",
+    "error_body": "No hemos podido cargar esta información. Inténtalo de nuevo.",
+    "retry": "Reintentar",
+    "empty_title": "Todavía no hay nada aquí"
+  },
+  "connectivity": {
+    "online": "Online",
+    "offline": "Sin conexión"
+  },
+  "common": {
+    "pending": "Pendiente de cargar",
+    "close": "Cerrar"
+  },
+  "privacy": {
+    "location_notice": "La ubicación se utiliza en tu dispositivo para mostrar tu posición durante el Camino.",
+    "location_consent_body": "Easy Camino utiliza tu ubicación en este dispositivo para mostrarte dónde estás en el Camino. Tu ubicación no se envía a Easy Camino.",
+    "enable_location": "Activar ubicación",
+    "not_now": "Ahora no"
+  },
+  "pwa": {
+    "update_available": "Nueva versión disponible",
+    "update_now": "Actualizar",
+    "install_added": "Easy Camino está instalada"
+  }
+}

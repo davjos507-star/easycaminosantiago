@@ -1,0 +1,20 @@
+{
+  "name": "Easy Camino Companion",
+  "short_name": "Companion",
+  "description": "Your Camino de Santiago companion by Easy Camino Santiago: route, stages, accommodation and assistance during your walk.",
+  "start_url": "./?source=pwa",
+  "scope": "./",
+  "id": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "en",
+  "dir": "ltr",
+  "background_color": "#F7F8F8",
+  "theme_color": "#2D4A52",
+  "categories": ["travel", "navigation"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
