@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Pensión Vía Sacra",
     "locality": "Sobrado dos Monxes",
-    "address": null,
-    "phone": null,
+    "address": "Praza do Portal 17, 15813 Sobrado dos Monxes",
+    "phone": "+34981458271",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.0402366,
+      "lng": -8.0232942
+    }
   },
   "notes": null
 }

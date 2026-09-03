@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Irun Rooms",
     "locality": "Irún",
-    "address": null,
-    "phone": null,
+    "address": "Plaza Antzaran 5, B 002, 20301 Irún",
+    "phone": "+34699578282",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.34276565,
+      "lng": -1.79798913
+    }
   },
   "notes": "Arrival day (no walking stage)."
 }

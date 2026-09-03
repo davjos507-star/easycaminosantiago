@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Albergue Casa Pepa",
     "locality": "Santa Mariña (As Maroñas)",
-    "address": null,
-    "phone": null,
+    "address": "Santa Mariña 4, As Maroñas, 15257 Mazaricos",
+    "phone": "+34981852881",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 42.9568412,
+      "lng": -8.9180761
+    }
   },
   "notes": null
 }

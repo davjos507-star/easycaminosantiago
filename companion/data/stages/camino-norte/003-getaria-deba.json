@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Pensión Zumardi",
     "locality": "Deba",
-    "address": null,
-    "phone": null,
+    "address": "Mariñel Kalea 12, 20820 Deba",
+    "phone": "+34943192368",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.2968567,
+      "lng": -2.3533133
+    }
   },
   "notes": null
 }

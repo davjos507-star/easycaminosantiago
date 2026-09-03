@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Bela Muxía",
     "locality": "Muxía",
-    "address": null,
-    "phone": null,
+    "address": "Rúa da Encarnación 30, 15124 Muxía",
+    "phone": "+34981742041",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.1069368,
+      "lng": -9.2175035
+    }
   },
   "notes": null
 }

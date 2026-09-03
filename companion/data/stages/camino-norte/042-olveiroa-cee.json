@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Albergue Moreira",
     "locality": "Cee",
-    "address": null,
-    "phone": null,
+    "address": "Rúa Rosalía de Castro 75, 15270 Cee",
+    "phone": "+34981746282",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 42.9521309,
+      "lng": -9.1869589
+    }
   },
   "notes": null
 }

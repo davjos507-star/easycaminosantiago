@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Hotel Alda Palacio Valdés",
     "locality": "Avilés",
-    "address": null,
-    "phone": null,
+    "address": "Calle Llano Ponte 4, 33401 Avilés",
+    "phone": "+34984091088",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.5542357,
+      "lng": -5.917821
+    }
   },
   "notes": null
 }

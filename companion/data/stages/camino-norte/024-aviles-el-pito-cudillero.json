@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Hotel Álvaro",
     "locality": "El Pito / Cudillero",
-    "address": null,
-    "phone": null,
+    "address": "Avenida Selgas 590, 33150 El Pito, Cudillero",
+    "phone": "+34985590204",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.5504174,
+      "lng": -6.1385493
+    }
   },
   "notes": null
 }

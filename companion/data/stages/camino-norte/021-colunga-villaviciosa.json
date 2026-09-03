@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Hotel Palacio Carlos I",
     "locality": "Villaviciosa",
-    "address": null,
-    "phone": null,
+    "address": "Plaza Carlos I, s/n, 33300 Villaviciosa",
+    "phone": "+34985890121",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.4812572,
+      "lng": -5.435527
+    }
   },
   "notes": "Includes 1 rest day: 26 Sep 2026."
 }

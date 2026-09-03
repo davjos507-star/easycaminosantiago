@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Hotel Liresca",
     "locality": "Lires",
-    "address": null,
-    "phone": null,
+    "address": "Lugar de Lires 31, 15138 Santo Estevo de Lires",
+    "phone": "+34650269144",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 42.9981806,
+      "lng": -9.2439714
+    }
   },
   "notes": null
 }

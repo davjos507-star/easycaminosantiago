@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Hotel Bolina",
     "locality": "Gernika",
-    "address": null,
-    "phone": null,
+    "address": "Barrenkalea 3, 48300 Gernika-Lumo",
+    "phone": "+34946250300",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.3150123,
+      "lng": -2.6775596
+    }
   },
   "notes": null
 }

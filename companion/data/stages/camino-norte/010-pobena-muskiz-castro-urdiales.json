@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Pensión Ardigales 11",
     "locality": "Castro Urdiales",
-    "address": null,
-    "phone": null,
+    "address": "Calle Ardigales 11, 39700 Castro-Urdiales",
+    "phone": "+34942781616",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.3821067,
+      "lng": -3.218732
+    }
   },
   "notes": null
 }

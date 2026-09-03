@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Casa Fernando",
     "locality": "Ballota",
-    "address": null,
-    "phone": null,
+    "address": "Ballota, s/n, 33155 Cudillero",
+    "phone": "+34985598264",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.5434834,
+      "lng": -6.3195762
+    }
   },
   "notes": null
 }

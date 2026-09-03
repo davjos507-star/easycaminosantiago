@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Hostal Terra Chá",
     "locality": "Vilalba",
-    "address": null,
-    "phone": null,
+    "address": "Rúa Domingo Goás 10, 27800 Vilalba",
+    "phone": "+34982511702",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.3019854,
+      "lng": -7.6775679
+    }
   },
   "notes": null
 }

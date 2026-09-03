@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Hotel Puente de los Altos",
     "locality": "Tapia de Casariego",
-    "address": null,
-    "phone": null,
+    "address": "Avenida de Galicia 15, 33740 Tapia de Casariego",
+    "phone": "+34985628155",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.5683125,
+      "lng": -6.9444849
+    }
   },
   "notes": "Distance given as a range in the source: ≈20–22 km."
 }

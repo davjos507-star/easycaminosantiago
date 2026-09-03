@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Pensión La Terraza",
     "locality": "Güemes",
-    "address": null,
-    "phone": null,
+    "address": "Calle Pomero 29, 39160 Güemes",
+    "phone": "+34942621074",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.4543171,
+      "lng": -3.6447685
+    }
   },
   "notes": null
 }

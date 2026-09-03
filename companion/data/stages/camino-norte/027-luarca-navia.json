@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Palacio Arias",
     "locality": "Navia",
-    "address": null,
-    "phone": null,
+    "address": "Avenida de los Emigrantes 11, 33710 Navia",
+    "phone": "+34985473671",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.5352714,
+      "lng": -6.7240735
+    }
   },
   "notes": "Includes 1 rest day: 3 Oct 2026. Distance given as a range in the source: ≈19–20 km."
 }

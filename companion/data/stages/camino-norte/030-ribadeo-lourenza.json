@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Pensión Casa Gloria",
     "locality": "Lourenzá",
-    "address": null,
-    "phone": null,
+    "address": "Rúa Peregrín Otero 3, Vilanova de Lourenzá, 27760 Lourenzá",
+    "phone": "+34982121119",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.4698626,
+      "lng": -7.2956698
+    }
   },
   "notes": null
 }

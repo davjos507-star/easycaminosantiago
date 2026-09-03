@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Hotel Covadonga",
     "locality": "Ribadesella",
-    "address": null,
-    "phone": null,
+    "address": "Calle Manuel Caso de la Villa 6, 33560 Ribadesella",
+    "phone": "+34699255134",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.4634577,
+      "lng": -5.056974
+    }
   },
   "notes": null
 }

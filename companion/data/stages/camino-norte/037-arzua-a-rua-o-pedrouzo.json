@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Pensión Arca Pino",
     "locality": "A Rúa / O Pedrouzo",
-    "address": null,
-    "phone": null,
+    "address": "Calle Mollados 25, Arca, O Pedrouzo, 15820 O Pino",
+    "phone": "+34981511437",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 42.9060039,
+      "lng": -8.3659094
+    }
   },
   "notes": null
 }

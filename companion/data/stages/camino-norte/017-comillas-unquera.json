@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Hostal Río Deva",
     "locality": "Unquera",
-    "address": null,
-    "phone": null,
+    "address": "Calle San Felipe Neri 10, 39560 Unquera",
+    "phone": "+34942717157",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.3724561,
+      "lng": -4.5170497
+    }
   },
   "notes": null
 }

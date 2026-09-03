@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Hotel Los Molinos",
     "locality": "Llanes",
-    "address": null,
-    "phone": null,
+    "address": "Calle Cotiello Bajo 7, 33500 Llanes",
+    "phone": "+34985400707",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.4196979,
+      "lng": -4.7559239
+    }
   },
   "notes": null
 }

@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Pensión Hortas PR",
     "locality": "Santiago de Compostela",
-    "address": null,
-    "phone": null,
+    "address": "Rúa das Hortas 30, 15705 Santiago de Compostela",
+    "phone": "+34881259018",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 42.8806546,
+      "lng": -8.5476883
+    }
   },
   "notes": "Includes 2 rest days: 16 Oct 2026, 17 Oct 2026."
 }

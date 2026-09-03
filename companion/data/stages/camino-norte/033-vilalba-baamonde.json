@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Hotel Km 101",
     "locality": "Baamonde",
-    "address": null,
-    "phone": null,
+    "address": "Rúa Teniente Coronel Teijeiro 3, 27371 Baamonde",
+    "phone": "+34982398160",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.1722528,
+      "lng": -7.7678998
+    }
   },
   "notes": "Includes 1 rest day: 10 Oct 2026."
 }

@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Hotel Itxas Gain",
     "locality": "Getaria",
-    "address": null,
-    "phone": null,
+    "address": "Calle San Roque 1, 20808 Getaria",
+    "phone": "+34943141035",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.303202,
+      "lng": -2.204907
+    }
   },
   "notes": null
 }

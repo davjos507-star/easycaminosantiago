@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Casa Garea",
     "locality": "Arzúa",
-    "address": null,
-    "phone": null,
+    "address": "Lugar da Portela, s/n, 15819 Arzúa",
+    "phone": "+34981500400",
     "checkIn": null,
     "notes": "Breakfast included.",
-    "coordinates": null
+    "coordinates": {
+      "lat": 42.9318254,
+      "lng": -8.1129497
+    }
   },
   "notes": "Distance given as a range in the source: 21–22 km."
 }

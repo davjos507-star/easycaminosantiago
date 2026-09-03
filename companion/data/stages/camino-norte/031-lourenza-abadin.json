@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Xabarín Rooms",
     "locality": "Abadín",
-    "address": null,
-    "phone": null,
+    "address": "Avenida de Galicia 28, 27740 Abadín",
+    "phone": "+34982508025",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.3660474,
+      "lng": -7.4676585
+    }
   },
   "notes": null
 }

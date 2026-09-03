@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Hotel El Haya",
     "locality": "Pobeña / Muskiz",
-    "address": null,
-    "phone": null,
+    "address": "Carretera N-634, km 137, Barrio El Haya, 48550 Muskiz",
+    "phone": "+34942879306",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.3385225,
+      "lng": -3.1510815
+    }
   },
   "notes": "Includes 1 rest day: 12 Sep 2026."
 }

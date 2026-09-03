@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Hostería de Boo",
     "locality": "Arce / Boo",
-    "address": null,
-    "phone": null,
+    "address": "Calle San José 1, 39478 Boo de Piélagos, Santander",
+    "phone": "+34669359044",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.4256894,
+      "lng": -3.9432042
+    }
   },
   "notes": null
 }

@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Casa Loncho",
     "locality": "Olveiroa",
-    "address": null,
-    "phone": null,
+    "address": "Olveiroa, s/n, 15151 Dumbría",
+    "phone": "+34981741673",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 42.9668518,
+      "lng": -9.0396599
+    }
   },
   "notes": null
 }

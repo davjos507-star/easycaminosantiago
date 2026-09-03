@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Pensión Norte",
     "locality": "Portugalete",
-    "address": null,
-    "phone": null,
+    "address": "Ortuño de Alango Kalea 31, 48920 Portugalete",
+    "phone": "+34944830970",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.3236071,
+      "lng": -3.0261905
+    }
   },
   "notes": null
 }

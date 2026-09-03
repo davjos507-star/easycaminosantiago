@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Pensión Kaia",
     "locality": "San Sebastián",
-    "address": null,
-    "phone": null,
+    "address": "Calle Puerto 12, 20003 Donostia/San Sebastián",
+    "phone": "+34943431342",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.3234888,
+      "lng": -1.9859931
+    }
   },
   "notes": null
 }

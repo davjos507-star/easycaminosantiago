@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Albergue San José",
     "locality": "Negreira",
-    "address": null,
-    "phone": null,
+    "address": "Rúa Castelao 20, 15830 Negreira",
+    "phone": "+34881976934",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 42.912093,
+      "lng": -8.7326955
+    }
   },
   "notes": null
 }

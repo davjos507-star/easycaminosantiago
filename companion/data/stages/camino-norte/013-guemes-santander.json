@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Hotel Meve",
     "locality": "Santander",
-    "address": null,
-    "phone": null,
+    "address": "Calle La Fuente 2, 39140 Somo (Santander)",
+    "phone": "+34646758163",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.4534463,
+      "lng": -3.7411702
+    }
   },
   "notes": null
 }

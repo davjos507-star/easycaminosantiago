@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "O Abrigo",
     "locality": "Miraz",
-    "address": null,
-    "phone": null,
+    "address": "As Laxes 30, Santiago de Miraz, 27235 Friol",
+    "phone": "+34982194850",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.1144609,
+      "lng": -7.8596638
+    }
   },
   "notes": null
 }

@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Casa Rural Madarian",
     "locality": "Lezama",
-    "address": null,
+    "address": "Aretxalde Auzoa 88, 48196 Lezama",
     "phone": "+34944554427",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.2742456,
+      "lng": -2.8338992
+    }
   },
   "notes": null
 }

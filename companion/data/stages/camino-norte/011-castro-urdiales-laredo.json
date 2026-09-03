@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Hotel Miramar",
     "locality": "Laredo",
-    "address": null,
-    "phone": null,
+    "address": "Alto de Laredo, s/n, 39770 Laredo",
+    "phone": "+34942416116",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.4082209,
+      "lng": -3.4119241
+    }
   },
   "notes": null
 }

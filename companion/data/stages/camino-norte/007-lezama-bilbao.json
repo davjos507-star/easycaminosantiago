@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Pensión Don Claudio",
     "locality": "Bilbao",
-    "address": null,
-    "phone": null,
+    "address": "Calle Clara Campoamor 10, Bj, 48013 Bilbao",
+    "phone": "+34944905017",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.2777741,
+      "lng": -2.9731783
+    }
   },
   "notes": null
 }

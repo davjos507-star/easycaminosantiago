@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Hotel Mediante",
     "locality": "Ribadeo",
-    "address": null,
-    "phone": null,
+    "address": "Praza de España 16, 27700 Ribadeo",
+    "phone": "+34982130453",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.5365537,
+      "lng": -7.0397843
+    }
   },
   "notes": null
 }

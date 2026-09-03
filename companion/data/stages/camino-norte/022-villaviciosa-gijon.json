@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Boogalow Hostel",
     "locality": "Gijón",
-    "address": null,
-    "phone": null,
+    "address": "Calle Jovellanos 1, 33206 Gijón",
+    "phone": "+34984106684",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.5420623,
+      "lng": -5.6596289
+    }
   },
   "notes": null
 }

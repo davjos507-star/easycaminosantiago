@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Villa de Comillas",
     "locality": "Comillas",
-    "address": null,
-    "phone": null,
+    "address": "Calle Antonio López 22, Bajo, 39520 Comillas",
+    "phone": "+34665309088",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.3868815,
+      "lng": -4.2879306
+    }
   },
   "notes": null
 }

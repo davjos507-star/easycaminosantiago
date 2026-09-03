@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Las Vegas",
     "locality": "Colunga",
-    "address": null,
-    "phone": null,
+    "address": "Avenida Asturias 11, 33320 Colunga",
+    "phone": "+34985856025",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.4854872,
+      "lng": -5.2692714
+    }
   },
   "notes": null
 }

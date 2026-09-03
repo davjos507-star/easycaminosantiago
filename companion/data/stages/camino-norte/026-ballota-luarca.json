@@ -15,11 +15,14 @@
   "accommodation": {
     "name": "Pensión Oria",
     "locality": "Luarca",
-    "address": null,
-    "phone": null,
+    "address": "Calle Crucero 7, 33700 Luarca",
+    "phone": "+34665799500",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.543538,
+      "lng": -6.5347157
+    }
   },
   "notes": null
 }
