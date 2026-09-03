@@ -28,11 +28,14 @@ export const GEOLOCATION_OPTIONS = {
   timeout: 15000,
 };
 
-// Datos de contacto reales de Easy Camino Santiago (confirmados en
+// Datos de contacto de Easy Camino Santiago mostrados en el botón AYUDA.
+// phone: línea directa de Bibi (a petición explícita, sustituye a la
+// línea general de la empresa para el botón "Llamar").
+// whatsapp: línea general de la empresa (confirmada en
 // easycaminosantiago.com — schema.org TravelAgency y botón flotante de
-// WhatsApp del sitio principal). No es información sensible del cliente.
+// WhatsApp del sitio principal), sin cambios.
 export const EASY_CAMINO_CONTACT = {
-  phone: '+34982907629',
+  phone: '+34616371934',
   whatsapp: '34982907629',
 };
 
