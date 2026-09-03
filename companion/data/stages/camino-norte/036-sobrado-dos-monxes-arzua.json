@@ -13,12 +13,12 @@
   "coordinates": null,
   "routeFile": "routes/camino-norte/000-pending.geojson",
   "accommodation": {
-    "name": null,
+    "name": "Pensión Restaurante O'Retiro",
     "locality": "Arzúa",
-    "address": null,
-    "phone": null,
+    "address": "Avenida de Lugo s/n, 15810 Arzúa, España",
+    "phone": "+34659220227",
     "checkIn": null,
-    "notes": "Accommodation confirmed by the supplier; specific name not yet provided in the source.",
+    "notes": "Landline also available: +34981500554. Website: www.oretiroarzua.com",
     "coordinates": null
   },
   "notes": "Distance given as a range in the source: 21–22 km."
