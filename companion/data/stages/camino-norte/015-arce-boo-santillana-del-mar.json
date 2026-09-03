@@ -1,0 +1,25 @@
+{
+  "number": 15,
+  "date": "2026-09-18",
+  "checkOutDate": "2026-09-20",
+  "nights": 2,
+  "origin": "Arce / Boo",
+  "destination": "Santillana del Mar",
+  "km": 20.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": "5–5 h 30",
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Hospedaje Angélica",
+    "locality": "Santillana del Mar",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": "Includes 1 rest day: 19 Sep 2026."
+}

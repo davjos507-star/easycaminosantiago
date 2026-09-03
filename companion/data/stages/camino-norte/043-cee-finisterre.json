@@ -1,0 +1,25 @@
+{
+  "number": 43,
+  "date": "2026-10-22",
+  "checkOutDate": "2026-10-23",
+  "nights": 1,
+  "origin": "Cee",
+  "destination": "Finisterre",
+  "km": 12.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": null,
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Hostal Mariquito",
+    "locality": "Finisterre",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": null
+}

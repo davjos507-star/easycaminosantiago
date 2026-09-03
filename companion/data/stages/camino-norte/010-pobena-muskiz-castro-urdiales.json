@@ -1,0 +1,25 @@
+{
+  "number": 10,
+  "date": "2026-09-13",
+  "checkOutDate": "2026-09-14",
+  "nights": 1,
+  "origin": "Pobeña / Muskiz",
+  "destination": "Castro Urdiales",
+  "km": 22.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": "5 h 30–6 h",
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Pensión Ardigales 11",
+    "locality": "Castro Urdiales",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": null
+}

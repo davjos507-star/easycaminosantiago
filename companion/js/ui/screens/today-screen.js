@@ -1,10 +1,10 @@
 import { t, getLocale } from '../../utils/i18n.js';
-import { formatKm, formatPending, isSameLocalDate } from '../../utils/formatters.js';
+import { formatKm, formatPending, isStageActiveOn } from '../../utils/formatters.js';
 import { icon } from '../components/icons.js';
 import { renderLoading, renderError, renderEmpty } from '../components/state-views.js';
 
 function findTodayStageIndex(stages) {
-  const idx = stages.findIndex((stage) => isSameLocalDate(stage.date));
+  const idx = stages.findIndex((stage) => isStageActiveOn(stage));
   return idx === -1 ? (stages.length ? 0 : -1) : idx;
 }
 

@@ -1,0 +1,25 @@
+{
+  "number": 22,
+  "date": "2026-09-27",
+  "checkOutDate": "2026-09-28",
+  "nights": 1,
+  "origin": "Villaviciosa",
+  "destination": "Gijón",
+  "km": 20.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": "7–7 h 30",
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Boogalow Hostel",
+    "locality": "Gijón",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": null
+}

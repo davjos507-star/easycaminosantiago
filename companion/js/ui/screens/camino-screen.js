@@ -1,5 +1,5 @@
 import { t, getLocale } from '../../utils/i18n.js';
-import { formatPending, isSameLocalDate } from '../../utils/formatters.js';
+import { formatPending, isStageActiveOn } from '../../utils/formatters.js';
 import { icon } from '../components/icons.js';
 import { renderLoading, renderError, renderEmpty } from '../components/state-views.js';
 
@@ -19,7 +19,7 @@ export function renderCamino(container, { stages }) {
     return;
   }
 
-  const todayIdx = stages.findIndex((s) => isSameLocalDate(s.date));
+  const todayIdx = stages.findIndex((s) => isStageActiveOn(s));
 
   const items = stages
     .map((stage, i) => {

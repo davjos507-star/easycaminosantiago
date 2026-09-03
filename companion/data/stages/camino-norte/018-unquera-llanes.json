@@ -1,0 +1,25 @@
+{
+  "number": 18,
+  "date": "2026-09-22",
+  "checkOutDate": "2026-09-23",
+  "nights": 1,
+  "origin": "Unquera",
+  "destination": "Llanes",
+  "km": 25.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": "6–6 h 30",
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Pensión Iberia",
+    "locality": "Llanes",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": null
+}

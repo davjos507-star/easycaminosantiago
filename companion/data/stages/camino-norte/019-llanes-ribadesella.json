@@ -1,0 +1,25 @@
+{
+  "number": 19,
+  "date": "2026-09-23",
+  "checkOutDate": "2026-09-24",
+  "nights": 1,
+  "origin": "Llanes",
+  "destination": "Ribadesella",
+  "km": 30.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": "7 h 30–8 h",
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Hotel Covadonga",
+    "locality": "Ribadesella",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": null
+}

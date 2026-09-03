@@ -1,0 +1,25 @@
+{
+  "number": 0,
+  "date": "2026-09-02",
+  "checkOutDate": "2026-09-03",
+  "nights": 1,
+  "origin": null,
+  "destination": "Irún",
+  "km": null,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": null,
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Pensión Bidasoa",
+    "locality": "Irún",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": "Arrival day (no walking stage)."
+}

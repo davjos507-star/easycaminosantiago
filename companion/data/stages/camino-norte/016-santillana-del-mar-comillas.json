@@ -1,0 +1,25 @@
+{
+  "number": 16,
+  "date": "2026-09-20",
+  "checkOutDate": "2026-09-21",
+  "nights": 1,
+  "origin": "Santillana del Mar",
+  "destination": "Comillas",
+  "km": 22.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": "5 h 30–6 h",
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Villa de Comillas",
+    "locality": "Comillas",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": null
+}

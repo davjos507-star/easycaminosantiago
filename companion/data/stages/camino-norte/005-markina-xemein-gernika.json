@@ -1,0 +1,25 @@
+{
+  "number": 5,
+  "date": "2026-09-07",
+  "checkOutDate": "2026-09-08",
+  "nights": 1,
+  "origin": "Markina-Xemein",
+  "destination": "Gernika",
+  "km": 25.4,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": "6 h 30–7 h",
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Pensión Akelarre",
+    "locality": "Gernika",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": null
+}

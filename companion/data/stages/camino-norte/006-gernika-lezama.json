@@ -1,0 +1,25 @@
+{
+  "number": 6,
+  "date": "2026-09-08",
+  "checkOutDate": "2026-09-09",
+  "nights": 1,
+  "origin": "Gernika",
+  "destination": "Lezama",
+  "km": 19.8,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": "5 h 30–6 h",
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Casa Rural Madarian",
+    "locality": "Lezama",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": null
+}

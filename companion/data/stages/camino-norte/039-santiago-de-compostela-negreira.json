@@ -1,0 +1,25 @@
+{
+  "number": 39,
+  "date": "2026-10-18",
+  "checkOutDate": "2026-10-19",
+  "nights": 1,
+  "origin": "Santiago de Compostela",
+  "destination": "Negreira",
+  "km": 21.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": null,
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Albergue San José",
+    "locality": "Negreira",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": null
+}

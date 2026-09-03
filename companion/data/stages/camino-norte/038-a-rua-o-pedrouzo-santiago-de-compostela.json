@@ -1,0 +1,25 @@
+{
+  "number": 38,
+  "date": "2026-10-15",
+  "checkOutDate": "2026-10-18",
+  "nights": 3,
+  "origin": "A Rúa / O Pedrouzo",
+  "destination": "Santiago de Compostela",
+  "km": 18.8,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": null,
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Loop INN Hotel Santiago",
+    "locality": "Santiago de Compostela",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": "Includes 2 rest days: 16 Oct 2026, 17 Oct 2026."
+}

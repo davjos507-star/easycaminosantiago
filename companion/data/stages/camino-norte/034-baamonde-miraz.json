@@ -1,0 +1,25 @@
+{
+  "number": 34,
+  "date": "2026-10-11",
+  "checkOutDate": "2026-10-12",
+  "nights": 1,
+  "origin": "Baamonde",
+  "destination": "Miraz",
+  "km": 20.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": null,
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "O Abrigo",
+    "locality": "Miraz",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": null
+}

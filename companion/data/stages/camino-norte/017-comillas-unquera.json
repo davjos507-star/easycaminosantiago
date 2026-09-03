@@ -1,0 +1,25 @@
+{
+  "number": 17,
+  "date": "2026-09-21",
+  "checkOutDate": "2026-09-22",
+  "nights": 1,
+  "origin": "Comillas",
+  "destination": "Unquera",
+  "km": 28.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": "7–7 h 30",
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Hostal Río Deva",
+    "locality": "Unquera",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": null
+}

@@ -1,0 +1,25 @@
+{
+  "number": 45,
+  "date": "2026-10-24",
+  "checkOutDate": "2026-10-25",
+  "nights": 1,
+  "origin": "Lires",
+  "destination": "Muxía",
+  "km": 15.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": null,
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Bela Muxía",
+    "locality": "Muxía",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": null
+}

@@ -1,0 +1,25 @@
+{
+  "number": 13,
+  "date": "2026-09-16",
+  "checkOutDate": "2026-09-17",
+  "nights": 1,
+  "origin": "Güemes",
+  "destination": "Santander",
+  "km": 15.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": "4–4 h 30",
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Hotel Meve",
+    "locality": "Santander",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": null
+}

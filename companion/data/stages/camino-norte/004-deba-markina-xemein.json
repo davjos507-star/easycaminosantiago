@@ -1,0 +1,25 @@
+{
+  "number": 4,
+  "date": "2026-09-06",
+  "checkOutDate": "2026-09-07",
+  "nights": 1,
+  "origin": "Deba",
+  "destination": "Markina-Xemein",
+  "km": 24.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": "6 h 30–7 h",
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Casa Abeletxe",
+    "locality": "Markina-Xemein",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": null
+}

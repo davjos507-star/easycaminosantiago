@@ -1,0 +1,25 @@
+{
+  "number": 27,
+  "date": "2026-10-02",
+  "checkOutDate": "2026-10-04",
+  "nights": 2,
+  "origin": "Luarca",
+  "destination": "Navia",
+  "km": null,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": "≈5–5 h 30",
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Palacio Arias",
+    "locality": "Navia",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": "Includes 1 rest day: 3 Oct 2026. Distance given as a range in the source: ≈19–20 km."
+}

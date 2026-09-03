@@ -1,0 +1,25 @@
+{
+  "number": 40,
+  "date": "2026-10-19",
+  "checkOutDate": "2026-10-20",
+  "nights": 1,
+  "origin": "Negreira",
+  "destination": "Santa Mariña (As Maroñas)",
+  "km": 20.7,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": "≈5 h 15–5 h 45",
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Casa Pepa",
+    "locality": "Santa Mariña (As Maroñas)",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": null
+}

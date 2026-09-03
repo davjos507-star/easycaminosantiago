@@ -1,0 +1,25 @@
+{
+  "number": 30,
+  "date": "2026-10-06",
+  "checkOutDate": "2026-10-07",
+  "nights": 1,
+  "origin": "Ribadeo",
+  "destination": "Lourenzá",
+  "km": 28.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": null,
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Pensión Casa Gloria",
+    "locality": "Lourenzá",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": null
+}

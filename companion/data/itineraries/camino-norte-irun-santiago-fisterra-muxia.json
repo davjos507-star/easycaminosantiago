@@ -3,6 +3,143 @@
   "name": "Camino del Norte desde Irún + Santiago–Fisterra–Muxía",
   "caminoId": "camino-norte",
   "stages": [
-    { "path": "stages/camino-norte/000-pending.json" }
+    {
+      "path": "stages/camino-norte/000-irun-arrival.json"
+    },
+    {
+      "path": "stages/camino-norte/001-irun-san-sebastian.json"
+    },
+    {
+      "path": "stages/camino-norte/002-san-sebastian-getaria.json"
+    },
+    {
+      "path": "stages/camino-norte/003-getaria-deba.json"
+    },
+    {
+      "path": "stages/camino-norte/004-deba-markina-xemein.json"
+    },
+    {
+      "path": "stages/camino-norte/005-markina-xemein-gernika.json"
+    },
+    {
+      "path": "stages/camino-norte/006-gernika-lezama.json"
+    },
+    {
+      "path": "stages/camino-norte/007-lezama-bilbao.json"
+    },
+    {
+      "path": "stages/camino-norte/008-bilbao-portugalete.json"
+    },
+    {
+      "path": "stages/camino-norte/009-portugalete-pobena-muskiz.json"
+    },
+    {
+      "path": "stages/camino-norte/010-pobena-muskiz-castro-urdiales.json"
+    },
+    {
+      "path": "stages/camino-norte/011-castro-urdiales-laredo.json"
+    },
+    {
+      "path": "stages/camino-norte/012-laredo-guemes.json"
+    },
+    {
+      "path": "stages/camino-norte/013-guemes-santander.json"
+    },
+    {
+      "path": "stages/camino-norte/014-santander-arce-boo.json"
+    },
+    {
+      "path": "stages/camino-norte/015-arce-boo-santillana-del-mar.json"
+    },
+    {
+      "path": "stages/camino-norte/016-santillana-del-mar-comillas.json"
+    },
+    {
+      "path": "stages/camino-norte/017-comillas-unquera.json"
+    },
+    {
+      "path": "stages/camino-norte/018-unquera-llanes.json"
+    },
+    {
+      "path": "stages/camino-norte/019-llanes-ribadesella.json"
+    },
+    {
+      "path": "stages/camino-norte/020-ribadesella-colunga.json"
+    },
+    {
+      "path": "stages/camino-norte/021-colunga-villaviciosa.json"
+    },
+    {
+      "path": "stages/camino-norte/022-villaviciosa-gijon.json"
+    },
+    {
+      "path": "stages/camino-norte/023-gijon-aviles.json"
+    },
+    {
+      "path": "stages/camino-norte/024-aviles-el-pito-cudillero.json"
+    },
+    {
+      "path": "stages/camino-norte/025-el-pito-cudillero-ballota.json"
+    },
+    {
+      "path": "stages/camino-norte/026-ballota-luarca.json"
+    },
+    {
+      "path": "stages/camino-norte/027-luarca-navia.json"
+    },
+    {
+      "path": "stages/camino-norte/028-navia-tapia-de-casariego.json"
+    },
+    {
+      "path": "stages/camino-norte/029-tapia-de-casariego-ribadeo.json"
+    },
+    {
+      "path": "stages/camino-norte/030-ribadeo-lourenza.json"
+    },
+    {
+      "path": "stages/camino-norte/031-lourenza-abadin.json"
+    },
+    {
+      "path": "stages/camino-norte/032-abadin-vilalba.json"
+    },
+    {
+      "path": "stages/camino-norte/033-vilalba-baamonde.json"
+    },
+    {
+      "path": "stages/camino-norte/034-baamonde-miraz.json"
+    },
+    {
+      "path": "stages/camino-norte/035-miraz-sobrado-dos-monxes.json"
+    },
+    {
+      "path": "stages/camino-norte/036-sobrado-dos-monxes-arzua.json"
+    },
+    {
+      "path": "stages/camino-norte/037-arzua-a-rua-o-pedrouzo.json"
+    },
+    {
+      "path": "stages/camino-norte/038-a-rua-o-pedrouzo-santiago-de-compostela.json"
+    },
+    {
+      "path": "stages/camino-norte/039-santiago-de-compostela-negreira.json"
+    },
+    {
+      "path": "stages/camino-norte/040-negreira-santa-marina-as-maronas.json"
+    },
+    {
+      "path": "stages/camino-norte/041-santa-marina-as-maronas-olveiroa.json"
+    },
+    {
+      "path": "stages/camino-norte/042-olveiroa-cee.json"
+    },
+    {
+      "path": "stages/camino-norte/043-cee-finisterre.json"
+    },
+    {
+      "path": "stages/camino-norte/044-finisterre-lires.json"
+    },
+    {
+      "path": "stages/camino-norte/045-lires-muxia.json"
+    }
   ]
 }

@@ -1,0 +1,25 @@
+{
+  "number": 25,
+  "date": "2026-09-30",
+  "checkOutDate": "2026-10-01",
+  "nights": 1,
+  "origin": "El Pito / Cudillero",
+  "destination": "Ballota",
+  "km": 27.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": "6 h 30–7 h",
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Casa Fernando",
+    "locality": "Ballota",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": null
+}

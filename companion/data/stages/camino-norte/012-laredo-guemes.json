@@ -1,0 +1,25 @@
+{
+  "number": 12,
+  "date": "2026-09-15",
+  "checkOutDate": "2026-09-16",
+  "nights": 1,
+  "origin": "Laredo",
+  "destination": "Güemes",
+  "km": 29.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": "7–7 h 30",
+  "coordinates": null,
+  "routeFile": "routes/camino-norte/000-pending.geojson",
+  "accommodation": {
+    "name": "Pensión La Terraza",
+    "locality": "Güemes",
+    "address": null,
+    "phone": null,
+    "checkIn": null,
+    "notes": null,
+    "coordinates": null
+  },
+  "notes": null
+}

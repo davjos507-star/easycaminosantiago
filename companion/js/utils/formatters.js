@@ -44,3 +44,26 @@ export function isSameLocalDate(isoDate, referenceDate = new Date()) {
     d === referenceDate.getDate()
   );
 }
+
+function toLocalIsoDate(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+/**
+ * True if `referenceDate` falls anywhere within a stage's stay — from
+ * `stage.date` (check-in / walking day) up to but not including
+ * `stage.checkOutDate` — not just on the exact check-in day. Needed for
+ * multi-night stays (rest days): e.g. a 2-night stage is still "today"
+ * on its rest day, not only on the day the peregrino walks in.
+ * Falls back to an exact-day match if the stage has no checkOutDate
+ * (older/placeholder single-date stages).
+ */
+export function isStageActiveOn(stage, referenceDate = new Date()) {
+  if (!stage?.date) return false;
+  if (!stage.checkOutDate) return isSameLocalDate(stage.date, referenceDate);
+  const ref = toLocalIsoDate(referenceDate);
+  return ref >= stage.date && ref < stage.checkOutDate;
+}

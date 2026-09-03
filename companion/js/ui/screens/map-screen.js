@@ -1,5 +1,5 @@
 import { t, getLocale } from '../../utils/i18n.js';
-import { formatKm, formatPending, formatTime, isSameLocalDate } from '../../utils/formatters.js';
+import { formatKm, formatPending, formatTime, isStageActiveOn } from '../../utils/formatters.js';
 import { initBottomSheet } from '../components/bottom-sheet.js';
 import { renderLocationConsentCard } from '../components/location-consent.js';
 import { createMapEngine } from '../../map/map-engine.js';
@@ -180,7 +180,7 @@ export function renderMapSheet({ pilgrim, stages }) {
     return;
   }
 
-  const idx = stages.findIndex((s) => isSameLocalDate(s.date));
+  const idx = stages.findIndex((s) => isStageActiveOn(s));
   const stage = stages[idx === -1 ? 0 : idx];
   const accommodation = stage.accommodation || {};
 
