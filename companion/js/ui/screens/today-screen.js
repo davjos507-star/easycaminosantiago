@@ -50,7 +50,7 @@ export function renderToday(container, { pilgrim, stages }) {
     <div class="cc-card">
       <div style="display:flex; align-items:center; gap:8px; font-family:var(--cc-font-heading); font-weight:800; font-size:1.15rem; margin-bottom:8px;">
         <span class="${isPendingOrigin ? 'cc-pending' : ''}">${stage.origin || formatPending(locale)}</span>
-        ${icon('chevronRight')}
+        <span class="cc-icon-chevron">${icon('chevronRight')}</span>
         <span class="${isPendingDest ? 'cc-pending' : ''}">${stage.destination || formatPending(locale)}</span>
       </div>
       <p style="margin-bottom:16px">${t('today.km_remaining', { km: formatKm(stage.km, locale) })}</p>

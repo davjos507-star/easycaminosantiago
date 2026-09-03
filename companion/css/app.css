@@ -26,6 +26,32 @@ body.cc-app {
 .cc-app a { color: var(--cc-teal-dark); }
 .cc-app img { max-width: 100%; display: block; }
 
+/*
+ * Salvaguarda de tamaño de icono (causa raíz del bug de "iconos gigantes").
+ * Nuestros SVG en línea (js/ui/components/icons.js) llevan `viewBox` pero
+ * NUNCA width/height como atributo — es intencional, para poder colorear y
+ * dimensionar por CSS. El problema: un <svg> sin width/height ni CSS que lo
+ * limite cae al tamaño por defecto del navegador para elementos
+ * reemplazados, 300×150px. Varias reglas ya daban un tamaño explícito
+ * (.cc-nav-item svg, .cc-icon-btn svg, etc.), pero cualquier icono
+ * insertado dentro de un contenedor SIN esa regla (botones .cc-btn del
+ * modal de Ayuda, ítems de MÁS, la flecha de HOY, acciones de
+ * ALOJAMIENTOS, la tarjeta de consentimiento GPS) se quedaba sin ningún
+ * límite y se renderizaba a 300×150px.
+ * Esta regla es la solución de raíz: da un tamaño "normal" por defecto a
+ * CUALQUIER SVG de la app. Las reglas más específicas de abajo (mismo
+ * archivo, con selectores de clase) siguen ganando por especificidad CSS
+ * allí donde el icono deba ser distinto (navegación, marcadores de
+ * timeline, estados vacíos, onboarding).
+ */
+.cc-app svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .cc-visually-hidden {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
@@ -130,7 +156,7 @@ body.cc-app {
   box-shadow: var(--cc-shadow-sm);
 }
 .cc-icon-btn:focus-visible { outline: 3px solid var(--cc-teal-light); outline-offset: 2px; }
-.cc-icon-btn svg { width: 22px; height: 22px; }
+.cc-icon-btn svg { width: 20px; height: 20px; }
 
 /* ---------- Navegación inferior ---------- */
 .cc-bottom-nav {
@@ -162,7 +188,7 @@ body.cc-app {
   font-size: 0.68rem;
   letter-spacing: 0.01em;
 }
-.cc-nav-item svg { width: 24px; height: 24px; }
+.cc-nav-item svg { width: 20px; height: 20px; }
 .cc-nav-item[aria-current="page"] { color: var(--cc-teal-dark); }
 .cc-nav-item:focus-visible { outline: 3px solid var(--cc-teal-light); outline-offset: -3px; }
 
@@ -184,16 +210,6 @@ body.cc-app {
   background: var(--cc-cream);
   overflow: hidden;
 }
-.cc-map-placeholder {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: var(--cc-space-3);
-  text-align: center;
-  padding: var(--cc-space-6);
-  color: var(--cc-text-muted);
-}
-.cc-map-placeholder svg { width: 56px; height: 56px; color: var(--cc-teal); }
-
 .cc-map-controls {
   position: absolute;
   right: var(--cc-space-3);
@@ -497,6 +513,9 @@ body.cc-app {
 .cc-timeline-item--current .cc-timeline-marker { border-color: var(--cc-orange); }
 .cc-timeline-item--current .cc-timeline-marker::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--cc-orange); }
 .cc-timeline-marker svg { width: 14px; height: 14px; }
+
+/* Chevrons/flechas: más pequeños que un icono "normal" (20px) */
+.cc-icon-chevron svg { width: 17px; height: 17px; }
 .cc-timeline-content { flex: 1 1 auto; }
 .cc-timeline-content button { width: 100%; text-align: left; background: none; border: none; padding: 0; cursor: pointer; color: inherit; font-family: inherit; }
 
