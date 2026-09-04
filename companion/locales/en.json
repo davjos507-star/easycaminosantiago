@@ -60,7 +60,9 @@
     "off_route_title": "Looks like you've strayed from the Camino.",
     "view_route": "View route",
     "ignore": "Ignore",
-    "back_to_today": "Back to TODAY"
+    "back_to_today": "Back to TODAY",
+    "on_camino": "On the Camino",
+    "distance_to_camino": "{{m}} m from the Camino"
   },
   "nav": {
     "title": "GO TO ACCOMMODATION",

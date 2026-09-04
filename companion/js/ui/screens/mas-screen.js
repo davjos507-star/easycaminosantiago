@@ -37,6 +37,7 @@ export function renderMore(container, { onInstallClick, onLanguageToggle } = {})
     </button>
 
     <p class="cc-pending" style="text-align:center; font-size:0.78rem">Easy Camino Companion · v${APP_VERSION}</p>
+    <p class="cc-pending" style="text-align:center; font-size:0.7rem">Obra derivada de Rutas de Caminos de Santiago 2020-2026 CC-BY 4.0 <a href="https://www.caminosantiago.org/cpperegrino/comun/inicio.asp" target="_blank" rel="noopener">FEAACS</a></p>
   `;
 
   container.querySelectorAll('[data-action="emergency"]').forEach((btn) => {

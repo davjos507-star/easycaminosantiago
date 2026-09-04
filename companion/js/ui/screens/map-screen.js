@@ -1,6 +1,7 @@
 import { t, getLocale } from '../../utils/i18n.js';
 import { formatKm, formatPending, formatTime, formatDistanceMeters, isStageActiveOn } from '../../utils/formatters.js';
 import { haversineDistanceMeters } from '../../map/geo-utils.js';
+import { projectPointOnLine } from '../../map/route-projection.js';
 import { initBottomSheet } from '../components/bottom-sheet.js';
 import { renderLocationConsentCard } from '../components/location-consent.js';
 import { createMapEngine } from '../../map/map-engine.js';
@@ -27,10 +28,22 @@ let mapEngine = null;
 let userLocationLayer = null;
 let accommodationLayer = null;
 let navRouteLayer = null;
+let routeLayer = null;
 let mountPromise = null;
 let consentDismissed = false;
 let viewingAccommodation = null; // { name, lat, lng } — "Ver en mapa" sin navegación activa
 let lastDrawnRouteCoords = null;
+
+// Trazado oficial del Camino (CNIG/FEAACS, ver route-layer.js) — cada
+// elemento es el array de coordenadas [lng,lat] de UNA geometría
+// oficialmente continua (una LineString del GeoJSON). Se guardan por
+// separado, nunca concatenadas entre sí, para no crear segmentos
+// fantasma entre tramos que en la fuente real no están unidos.
+let officialRouteLines = null;
+let lastCaminoDistanceM = null;
+let lastCaminoCheckAt = 0;
+const CAMINO_CHECK_THROTTLE_MS = 5000;
+const ON_CAMINO_THRESHOLD_M = 50;
 
 export function initMapScreen() {
   sheet = initBottomSheet('today-sheet');
@@ -72,6 +85,60 @@ function renderOverlay() {
   }
 
   overlay.innerHTML = renderGpsChip(gps);
+  appendCaminoDistanceChip(overlay, gps);
+}
+
+/**
+ * "En el Camino" / "A X m del Camino" — proyecta la posición GPS sobre el
+ * trazado oficial ya cargado (route-projection.js, reutilizado tal cual).
+ * Nunca calcula nada con ORS. Si algo falla o el trazado no ha cargado
+ * todavía, no muestra nada — nunca rompe el resto del overlay.
+ */
+function appendCaminoDistanceChip(overlay, gps) {
+  try {
+    if (gps.status !== 'active' || !gps.lastPosition || !officialRouteLines) return;
+    const now = Date.now();
+    if (lastCaminoDistanceM === null || now - lastCaminoCheckAt > CAMINO_CHECK_THROTTLE_MS) {
+      let best = null;
+      for (const coords of officialRouteLines) {
+        const proj = projectPointOnLine(gps.lastPosition, coords);
+        if (proj && (best === null || proj.offsetMeters < best)) best = proj.offsetMeters;
+      }
+      lastCaminoDistanceM = best;
+      lastCaminoCheckAt = now;
+    }
+    if (lastCaminoDistanceM == null) return;
+    const label =
+      lastCaminoDistanceM <= ON_CAMINO_THRESHOLD_M
+        ? t('map.on_camino')
+        : t('map.distance_to_camino', { m: Math.round(lastCaminoDistanceM) });
+    const chip = document.createElement('div');
+    chip.className = 'cc-gps-chip';
+    chip.innerHTML = `<span class="cc-gps-chip-dot" style="background:var(--cc-teal-dark)"></span>${label}`;
+    overlay.appendChild(chip);
+  } catch (err) {
+    console.warn('[map-screen] distancia al Camino no disponible:', err.message);
+  }
+}
+
+/**
+ * Carga el trazado oficial (CNIG/FEAACS) y lo dibuja. No bloquea el
+ * montaje del mapa: se lanza en paralelo, sin esperar a mapEngine.mount().
+ * Si falla (sin red, 404, JSON corrupto), el mapa sigue funcionando
+ * normalmente sin línea — nunca rompe la pantalla.
+ */
+async function loadOfficialRoute() {
+  try {
+    const res = await fetch('data/routes/osyris-camino.geojson', { cache: 'force-cache' });
+    if (!res.ok) return;
+    const geojson = await res.json();
+    routeLayer?.setRoute(geojson);
+    officialRouteLines = (geojson.features || [])
+      .filter((f) => f.properties?.group !== 'ramal-opcional-cabo-fisterra')
+      .map((f) => f.geometry.coordinates);
+  } catch (err) {
+    console.warn('[map-screen] no se pudo cargar el trazado oficial del Camino:', err.message);
+  }
 }
 
 function renderGpsChip(gps) {
@@ -124,16 +191,21 @@ async function mountMap() {
   userLocationLayer = createUserLocationLayer(mapEngine);
   accommodationLayer = createAccommodationLayer(mapEngine);
   navRouteLayer = createNavRouteLayer(mapEngine);
+  routeLayer = createRouteLayer(mapEngine);
   // Instanciadas para dejar la composición de capas completa y lista
-  // (CAMINO ROUTE / STAGES / ACCESO AL ALOJAMIENTO / POIs); su
-  // implementación real llega en fases posteriores, cuando haya datos
-  // que pintar (ver doc-comment de cada archivo para la especificación).
-  createRouteLayer(mapEngine);
+  // (STAGES / ACCESO AL ALOJAMIENTO / POIs); su implementación real
+  // llega en fases posteriores, cuando haya datos que pintar (ver
+  // doc-comment de cada archivo para la especificación).
   createStageLayer(mapEngine);
   createAccommodationAccessLayer(mapEngine);
   createPoiLayer(mapEngine);
 
   initGpsController({ mapEngine, userLocationLayer });
+  // Se añade nada más montar, ANTES de que ningún marcador tenga
+  // posición real: en MapLibre las capas se apilan en el orden en que se
+  // añaden, así que el trazado del Camino queda siempre por debajo del
+  // punto azul, el marcador de alojamiento y los controles flotantes.
+  loadOfficialRoute();
 
   mapEngine.on('error', () => {
     const overlay = document.getElementById('map-overlay-top');

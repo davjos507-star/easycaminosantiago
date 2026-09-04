@@ -60,7 +60,9 @@
     "off_route_title": "Parece que te has alejado del Camino.",
     "view_route": "Ver ruta",
     "ignore": "Ignorar",
-    "back_to_today": "Volver a HOY"
+    "back_to_today": "Volver a HOY",
+    "on_camino": "En el Camino",
+    "distance_to_camino": "A {{m}} m del Camino"
   },
   "nav": {
     "title": "IR AL ALOJAMIENTO",

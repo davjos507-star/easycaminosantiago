@@ -1,61 +1,63 @@
 /*
- * Capa CAMINO ROUTE — geometría GPX/GeoJSON del Camino sobre el mapa base.
- * Responsabilidad única: dibujar la ruta y distinguir etapa actual /
- * completadas / próximas / variantes. No conoce POIs, GPS ni alojamiento.
+ * Capa CAMINO ROUTE — trazado oficial del Camino sobre el mapa base.
  *
- * BLOQUEADA hasta que exista GeoJSON real por etapa: hoy `stage.routeFile`
- * apunta a `routes/camino-norte/000-pending.geojson` en todas las etapas
- * (ver companion/data/stages/**). Nunca dibujar una línea recta entre
- * origen y destino como si fuera el trazado — eso sería inventar un dato.
- * En cuanto haya GPX/GeoJSON real confirmado por etapa, implementar aquí:
+ * Fuente: CNIG/IGN, dataset "Rutas de Caminos de Santiago 2020-2026"
+ * (datos FEAACS), CC-BY 4.0. Geometría real descargada y validada
+ * (continuidad, orientación, cruce contra alojamientos de Osyris) antes
+ * de integrarse aquí — nunca una línea recta entre pueblos.
+ * companion/data/routes/osyris-camino.geojson.
  *
- * ESPECIFICACIÓN (capturada 2026-09, "TRAZADO VISIBLE" — próxima fase):
+ * Atribución obligatoria (mostrada en Más → Acerca de):
+ *   "Obra derivada de Rutas de Caminos de Santiago 2020-2026 CC-BY 4.0 FEAACS"
  *
- * 1. CAMINO PRINCIPAL
- *    - Línea azul destacada, con contraste suficiente sobre los tiles de
- *      OpenFreeMap tanto en tramo urbano como en zona rural (el estilo
- *      "Liberty" usa tonos claros/crema — un azul saturado tipo #1A56DB
- *      o similar es buen punto de partida, a confirmar visualmente sobre
- *      el estilo real antes de fijarlo).
- *    - Geometría SIEMPRE tomada del GPX/GeoJSON real de la etapa — nunca
- *      una línea recta entre pueblos ni una aproximación.
- *    - setRoute(geojson): dibuja el trazado completo de la etapa activa.
- *    - setStageProgress(completedStageIds, currentStageId): la etapa
- *      ACTUAL se resalta (más gruesa/opaca); las etapas FUTURAS se pintan
- *      más discretas (menor opacidad o línea más fina) — nunca con el
- *      mismo peso visual que la etapa activa, para que se entienda de un
- *      vistazo "hacia dónde voy" frente al resto del itinerario.
- *    - El tramo ya recorrido dentro de la etapa activa, diferenciado
- *      visualmente del tramo pendiente, queda para una fase POSTERIOR a
- *      esta (no implementar todavía; requiere proyectar la posición GPS
- *      sobre la geometría real — ver map/route-projection.js, ya
- *      implementado y reutilizable para ese cálculo cuando toque).
- *    - Nunca el mismo estilo que ACCESO AL ALOJAMIENTO (línea secundaria,
- *      visualmente distinta — ver nav-route-layer.js: color naranja
- *      #D4882A, más fina). El Camino principal debe leerse siempre como
- *      "la ruta oficial", distinto de cualquier tramo de acceso puntual.
+ * Anomalías conocidas y documentadas (no corregidas automáticamente —
+ * ver informe de validación de la fase de investigación GPX): huecos de
+ * continuidad sin explicar en Deba/Markina (~122 m), Santillana/San
+ * Vicente-Llanes (~312 m), Cadavedo/Luarca (~160 m) y en la convergencia
+ * Sobrado/Arzúa con el Camino Francés (~293 m); varios alojamientos
+ * (Gijón, Tapia de Casariego, Arzúa, Güemes, Miraz) quedan a más
+ * distancia del trazado de la esperada — pendiente de una segunda fase
+ * de investigación, no bloquea esta integración inicial.
  *
- * 2. Marcadores (podrían vivir aquí o en stage-layer.js — a decidir en la
- *    implementación, pero deben coexistir sin duplicar lógica con
- *    accommodation-layer.js, que ya pinta el marcador del alojamiento):
- *    - Marcador de INICIO de etapa.
- *    - Marcador de DESTINO de etapa.
- *    (El marcador de alojamiento ya existe: map/layers/accommodation-layer.js.)
- *
- * Nada de esto se activa solo con tener el GeoJSON: sigue habiendo que
- * decidir el color exacto contra el estilo real, y verificar legibilidad
- * en dispositivo antes de dar la fase por cerrada.
+ * Hoy se dibuja el trazado COMPLETO (sin resaltar la etapa activa ni
+ * distinguir tramo recorrido): setStageProgress() queda para una fase
+ * posterior, cuando haya forma fiable de identificar qué tramo exacto
+ * corresponde a la etapa de hoy sin arriesgar la entrega.
  */
+const ROUTE_SOURCE = 'ecc-camino-oficial';
+const ROUTE_LINE_LAYER = 'ecc-camino-oficial-line';
+
 export function createRouteLayer(mapEngine) {
+  let visible = false;
+
   return {
-    setRoute(_geojson) {
-      /* Fase 3 — bloqueado por falta de GeoJSON real, ver cabecera */
+    setRoute(geojson) {
+      if (!geojson) return;
+      mapEngine.setGeoJSONSource(ROUTE_SOURCE, geojson);
+      if (!visible) {
+        mapEngine.ensureLayer({
+          id: ROUTE_LINE_LAYER,
+          type: 'line',
+          source: ROUTE_SOURCE,
+          layout: { 'line-cap': 'round', 'line-join': 'round' },
+          paint: {
+            'line-color': '#2D4A52',
+            'line-width': ['interpolate', ['linear'], ['zoom'], 10, 3, 16, 5],
+            'line-opacity': 0.82,
+          },
+        });
+        visible = true;
+      }
     },
+
     setStageProgress(_completedStageIds, _currentStageId) {
-      /* Fase 3 — bloqueado por falta de GeoJSON real, ver cabecera */
+      /* Fase posterior — ver cabecera del archivo */
     },
+
     clear() {
-      /* Fase 3 */
+      mapEngine.removeLayer(ROUTE_LINE_LAYER);
+      mapEngine.removeSource(ROUTE_SOURCE);
+      visible = false;
     },
   };
 }
