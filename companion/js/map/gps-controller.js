@@ -11,7 +11,7 @@
  * activado explícitamente (nunca por defecto). Hoy ese servicio no
  * existe y no se invoca nada.
  */
-import { isGeolocationSupported, getPermissionState, watchPosition } from './geolocation.js';
+import { isGeolocationSupported, getPermissionState, subscribeToGps } from './gps-service.js';
 import { requestOrientationPermission, watchHeading } from './orientation.js';
 import { appStore } from '../state/store.js';
 
@@ -87,7 +87,7 @@ export function requestAndStartWatch() {
   });
 
   setGpsState({ status: 'searching' });
-  stopWatch = watchPosition(handleFix, handleGeoError);
+  stopWatch = subscribeToGps(handleFix, handleGeoError);
 }
 
 export function stopWatchPosition() {

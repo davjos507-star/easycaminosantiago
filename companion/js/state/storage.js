@@ -1,11 +1,15 @@
 /*
  * Envoltorio de localStorage con espacio de nombres propio.
  *
- * Regla de arquitectura (no negociable): este módulo NUNCA debe ganar un
- * método para persistir histórico de GPS. La posición en vivo vive solo en
- * memoria (ver state/store.js) y desaparece al cerrar la app. Cualquier
- * envío futuro de ubicación a un servidor requiere consentimiento explícito
- * y no pasa por aquí.
+ * Regla de arquitectura (no negociable): este módulo no persiste
+ * histórico de GPS en segundo plano ni indefinido. La única excepción
+ * explícita es la sesión de etapa en curso (ver js/stage/stage-session.js,
+ * clave KEYS.STAGE_SESSION): un registro acotado, iniciado siempre por
+ * una acción deliberada del peregrino ("Empezar etapa"), que se borra al
+ * pulsar "Finalizar etapa". Nunca se activa solo, nunca se envía a
+ * ningún servidor. Fuera de esa sesión, la posición en vivo sigue
+ * viviendo solo en memoria (ver state/store.js) y desaparece al cerrar
+ * la app.
  */
 
 const PREFIX = 'ecc:'; // Easy Camino Companion
@@ -68,4 +72,5 @@ export const KEYS = {
   PILGRIM_ID: 'pilgrim-id',
   LOCALE: 'locale',
   COMPLETED_STAGE_IDS: 'completed-stage-ids',
+  STAGE_SESSION: 'stage-session',
 };

@@ -11,7 +11,8 @@ import { initConnectivityBanner } from './ui/components/connectivity-banner.js';
 import { initEmergencyModal } from './ui/components/emergency-modal.js';
 import { registerServiceWorker } from './pwa/register-sw.js';
 import { initInstallPrompt, promptInstall, isRunningStandalone } from './pwa/install-prompt.js';
-import { renderTodayLoading, renderTodayError, renderToday } from './ui/screens/today-screen.js';
+import { renderTodayLoading, renderTodayError, renderToday, initTodayScreen } from './ui/screens/today-screen.js';
+import { hydrateStageSession } from './stage/stage-session.js';
 import { initMapScreen, onMapScreenShown, renderMapSheet } from './ui/screens/map-screen.js';
 import { renderCaminoLoading, renderCaminoError, renderCamino } from './ui/screens/camino-screen.js';
 import { renderStaysLoading, renderStaysError, renderStays } from './ui/screens/alojamientos-screen.js';
@@ -71,6 +72,8 @@ async function boot() {
   initMapScreen();
   initEmergencyModal();
   initDebugPanel();
+  initTodayScreen();
+  hydrateStageSession();
 
   renderTodayLoading(screens.today());
   renderCaminoLoading(screens.camino());
