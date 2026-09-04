@@ -18,6 +18,16 @@
 // Si la variable no está configurada, la función responde 503 de forma
 // controlada; el frontend (companion/js/accommodation/accommodation-nav.js)
 // ya sabe mostrar "no se ha podido calcular la ruta a pie" sin romper nada.
+//
+// Endpoint: api.heigit.org (no api.openrouteservice.org).
+// HeiGIT anunció la migración de "api.openrouteservice.org" a
+// "api.heigit.org/openrouteservice" (mismo servicio, misma API key, solo
+// cambia la URL): cuota del host antiguo reducida al 10% desde el
+// 27/08/2026 y apagado total previsto el 28/09/2026. Ver
+// https://ask.openrouteservice.org/t/deprecating-api-openrouteservice-org-in-favour-of-api-heigit-org/7912
+// Confirmado en producción: con el host antiguo, la función devolvía 502
+// (ORS rechazaba la petición por la cuota reducida) pese a tener una
+// ORS_API_KEY válida configurada.
 
 const https = require('https');
 
@@ -33,8 +43,8 @@ function requestOpenRouteService(apiKey, coordinates) {
   return new Promise((resolve, reject) => {
     const data = JSON.stringify({ coordinates });
     const options = {
-      hostname: 'api.openrouteservice.org',
-      path: '/v2/directions/foot-walking/geojson',
+      hostname: 'api.heigit.org',
+      path: '/openrouteservice/v2/directions/foot-walking/geojson',
       method: 'POST',
       headers: {
         'Authorization': apiKey,
