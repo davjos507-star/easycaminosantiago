@@ -8,6 +8,7 @@ import { createRouteLayer } from '../../map/layers/route-layer.js';
 import { createStageLayer } from '../../map/layers/stage-layer.js';
 import { createAccommodationLayer } from '../../map/layers/accommodation-layer.js';
 import { createNavRouteLayer } from '../../map/layers/nav-route-layer.js';
+import { createAccommodationAccessLayer } from '../../map/layers/accommodation-access-layer.js';
 import { createPoiLayer } from '../../map/layers/poi-layer.js';
 import {
   initGpsController,
@@ -123,10 +124,12 @@ async function mountMap() {
   accommodationLayer = createAccommodationLayer(mapEngine);
   navRouteLayer = createNavRouteLayer(mapEngine);
   // Instanciadas para dejar la composición de capas completa y lista
-  // (CAMINO ROUTE / STAGES / POIs); su implementación real llega en fases
-  // posteriores, cuando haya datos que pintar.
+  // (CAMINO ROUTE / STAGES / ACCESO AL ALOJAMIENTO / POIs); su
+  // implementación real llega en fases posteriores, cuando haya datos
+  // que pintar (ver doc-comment de cada archivo para la especificación).
   createRouteLayer(mapEngine);
   createStageLayer(mapEngine);
+  createAccommodationAccessLayer(mapEngine);
   createPoiLayer(mapEngine);
 
   initGpsController({ mapEngine, userLocationLayer });
