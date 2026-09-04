@@ -74,7 +74,11 @@ exports.handler = async function (event) {
     return jsonResponse(405, { error: 'Método no permitido' });
   }
 
-  const apiKey = process.env.ORS_API_KEY;
+  // .trim(): variables de entorno pegadas desde el panel de Netlify a veces
+  // arrastran un salto de línea o espacio final invisible, que convierte una
+  // key por lo demás válida en una cadena distinta que el gateway rechaza.
+  const rawApiKey = process.env.ORS_API_KEY;
+  const apiKey = rawApiKey ? rawApiKey.trim() : rawApiKey;
   if (!apiKey) {
     console.error('[walking-route] ORS_API_KEY no configurada en el sitio');
     return jsonResponse(503, { error: 'Routing no configurado todavía' });
@@ -107,6 +111,10 @@ exports.handler = async function (event) {
         error: 'No se ha podido calcular la ruta a pie',
         upstreamStatus: result.status || null,
         upstreamError: result.body ? JSON.stringify(result.body).slice(0, 300) : null,
+        // Diagnóstico seguro de la key (nunca su valor): solo para localizar
+        // un espacio/salto de línea accidental en la variable de entorno.
+        apiKeyLength: apiKey.length,
+        apiKeyHadWhitespace: rawApiKey !== apiKey,
       });
     }
 
