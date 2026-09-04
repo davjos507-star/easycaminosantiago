@@ -101,7 +101,13 @@ exports.handler = async function (event) {
 
     if (result.status >= 400 || !result.body) {
       console.error('[walking-route] OpenRouteService rechazó la petición:', result.status, JSON.stringify(result.body));
-      return jsonResponse(502, { error: 'No se ha podido calcular la ruta a pie' });
+      // upstreamStatus/upstreamError son diagnóstico seguro (nunca la key):
+      // el estado y el mensaje de error que devuelve el proveedor de routing.
+      return jsonResponse(502, {
+        error: 'No se ha podido calcular la ruta a pie',
+        upstreamStatus: result.status || null,
+        upstreamError: result.body ? JSON.stringify(result.body).slice(0, 300) : null,
+      });
     }
 
     const feature = result.body.features && result.body.features[0];
@@ -119,6 +125,6 @@ exports.handler = async function (event) {
     });
   } catch (err) {
     console.error('[walking-route] error:', err.message);
-    return jsonResponse(502, { error: 'Error al calcular la ruta a pie' });
+    return jsonResponse(502, { error: 'Error al calcular la ruta a pie', upstreamError: err.message });
   }
 };
