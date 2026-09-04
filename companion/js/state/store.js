@@ -61,6 +61,24 @@ export const appStore = createStore({
     lastFix: null,
     gpsStatus: 'idle',
   },
+  // "IR AL ALOJAMIENTO" (ver js/accommodation/accommodation-nav.js).
+  // Independiente de stageSession: distinta función (navegación peatonal,
+  // no registro de etapa), distinto ciclo de vida. Solo en memoria — no
+  // necesita sobrevivir a una recarga, a diferencia de la sesión de etapa.
+  accommodationNav: {
+    status: 'idle', // 'idle' | 'active' | 'arrived'
+    accommodation: null,
+    routeStatus: 'idle', // 'idle' | 'loading' | 'ok' | 'failed'
+    routeCoordinates: null,
+    routeDistanceMeters: null,
+    routeDurationSeconds: null,
+    remainingMeters: null,
+    offRouteMeters: null,
+    consecutiveOffRoute: 0,
+    lastFix: null,
+    gpsStatus: 'idle',
+    lastRouteFetchAt: null,
+  },
   loading: {
     pilgrim: false,
     itinerary: false,

@@ -9,6 +9,16 @@ export function formatKm(value, locale = 'en') {
   return `${value.toFixed(1)} km`;
 }
 
+// Distancia medida realmente (GPS registrado en EN CAMINO, o restante por
+// una ruta calculada en "Llévame al alojamiento") — nunca una distancia
+// oficial del Camino ni un porcentaje. Ver stage/stage-session.js y
+// accommodation/accommodation-nav.js.
+export function formatDistanceMeters(meters, locale = 'en') {
+  if (!Number.isFinite(meters)) return formatPending(locale);
+  if (meters < 1000) return `${Math.round(meters)} m`;
+  return `${(meters / 1000).toFixed(2)} km`;
+}
+
 export function formatPercentage(value) {
   if (value === null || value === undefined || Number.isNaN(value)) return '—';
   return `${Math.round(value)}%`;

@@ -59,7 +59,18 @@
     "error_loading": "No se han podido cargar los mapas",
     "off_route_title": "Parece que te has alejado del Camino.",
     "view_route": "Ver ruta",
-    "ignore": "Ignorar"
+    "ignore": "Ignorar",
+    "back_to_today": "Volver a HOY"
+  },
+  "nav": {
+    "title": "IR AL ALOJAMIENTO",
+    "distance_remaining": "Distancia restante (ruta)",
+    "recenter": "RECENTRAR",
+    "finish": "TERMINAR",
+    "close": "CERRAR",
+    "arrived": "Has llegado a {{name}}",
+    "route_loading": "Calculando ruta a pie…",
+    "route_failed": "No se ha podido calcular la ruta a pie ahora mismo. Puedes seguir viendo tu posición y el alojamiento en el mapa."
   },
   "gps": {
     "searching": "Buscando tu ubicación…",

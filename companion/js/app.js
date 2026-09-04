@@ -13,12 +13,19 @@ import { registerServiceWorker } from './pwa/register-sw.js';
 import { initInstallPrompt, promptInstall, isRunningStandalone } from './pwa/install-prompt.js';
 import { renderTodayLoading, renderTodayError, renderToday, initTodayScreen } from './ui/screens/today-screen.js';
 import { hydrateStageSession } from './stage/stage-session.js';
-import { initMapScreen, onMapScreenShown, renderMapSheet } from './ui/screens/map-screen.js';
+import {
+  initMapScreen,
+  onMapScreenShown,
+  renderMapSheet,
+  focusAccommodationOnMap,
+  startAccommodationNavigation,
+} from './ui/screens/map-screen.js';
 import { renderCaminoLoading, renderCaminoError, renderCamino } from './ui/screens/camino-screen.js';
 import { renderStaysLoading, renderStaysError, renderStays } from './ui/screens/alojamientos-screen.js';
 import { renderMore } from './ui/screens/mas-screen.js';
 import { initDebugPanel } from './ui/components/debug-panel.js';
 import { qs } from './utils/dom.js';
+import { navigateTo } from './router.js';
 
 const screens = {
   today: () => qs('[data-screen="today"]'),
@@ -34,7 +41,19 @@ function renderAllData() {
   renderToday(screens.today(), state);
   renderMapSheet(state);
   renderCamino(screens.camino(), state);
-  renderStays(screens.stays(), state);
+  renderStays(screens.stays(), state, {
+    // "Ver en mapa" y "Llévame al alojamiento" ocurren siempre dentro del
+    // mapa MapLibre de Companion (nunca Google/Apple Maps ni pestañas
+    // externas): navegamos a la pantalla MAPA y delegamos en map-screen.js.
+    onViewOnMap: (acc) => {
+      navigateTo('map');
+      focusAccommodationOnMap(acc);
+    },
+    onNavigateTo: (acc) => {
+      navigateTo('map');
+      startAccommodationNavigation(acc);
+    },
+  });
   renderMoreScreen();
 }
 

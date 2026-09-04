@@ -1,5 +1,5 @@
 import { t, getLocale } from '../../utils/i18n.js';
-import { formatKm, formatPending, formatTime, isStageActiveOn } from '../../utils/formatters.js';
+import { formatKm, formatPending, formatTime, formatDistanceMeters, isStageActiveOn } from '../../utils/formatters.js';
 import { icon } from '../components/icons.js';
 import { renderLoading, renderError, renderEmpty } from '../components/state-views.js';
 import { appStore } from '../../state/store.js';
@@ -37,16 +37,6 @@ function formatElapsed(ms) {
   const s = totalSeconds % 60;
   const pad = (n) => String(n).padStart(2, '0');
   return h > 0 ? `${pad(h)}:${pad(m)}:${pad(s)}` : `${pad(m)}:${pad(s)}`;
-}
-
-// Distancia REALMENTE registrada por el GPS del dispositivo durante la
-// sesión — nunca un porcentaje ni una distancia "oficial" del Camino
-// (eso depende de la geometría GPX, que todavía no existe). Ver
-// js/stage/geo-filter.js para las reglas de aceptación de cada tramo.
-function formatDistanceMeters(meters) {
-  if (!Number.isFinite(meters)) return formatPending(getLocale());
-  if (meters < 1000) return `${Math.round(meters)} m`;
-  return `${(meters / 1000).toFixed(2)} km`;
 }
 
 function renderSessionGpsLine(session) {

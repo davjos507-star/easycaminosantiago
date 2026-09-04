@@ -59,7 +59,18 @@
     "error_loading": "Map tiles couldn't load",
     "off_route_title": "Looks like you've strayed from the Camino.",
     "view_route": "View route",
-    "ignore": "Ignore"
+    "ignore": "Ignore",
+    "back_to_today": "Back to TODAY"
+  },
+  "nav": {
+    "title": "GO TO ACCOMMODATION",
+    "distance_remaining": "Distance remaining (route)",
+    "recenter": "RECENTER",
+    "finish": "FINISH",
+    "close": "CLOSE",
+    "arrived": "You've arrived at {{name}}",
+    "route_loading": "Calculating walking route…",
+    "route_failed": "Couldn't calculate a walking route right now. You can still see your position and the accommodation on the map."
   },
   "gps": {
     "searching": "Locating you…",
