@@ -201,14 +201,29 @@ body.cc-app {
      alto, la tarjeta del sheet colapsado tapaba el botón cuando sus áreas
      coincidían. */
   z-index: var(--cc-z-nav);
-  background: var(--cc-danger);
+  background: var(--cc-teal-dark);
   color: #fff;
   box-shadow: var(--cc-shadow-md);
 }
-/* En MAPA el sheet colapsado ocupa --cc-sheet-peek por encima de la nav:
-   el FAB debe flotar por encima de esa tarjeta, no solaparla. */
+/*
+ * En MAPA, la hoja inferior puede estar colapsada (--cc-sheet-peek) o
+ * expandida a cualquier altura según su contenido ("Cargando…", una
+ * distancia, el chip de GPS, un aviso de error…) — nunca una cifra fija.
+ * bottom-sheet.js mide el DOM real y publica --cc-sheet-live-height; si
+ * por lo que sea no está disponible (JS no ha corrido aún), se usa el
+ * peek como valor de reserva para no romper el layout.
+ *
+ * El FAB se apila POR ENCIMA del botón de centrar (--cc-map-controls):
+ * mismo punto de partida (borde superior de la hoja) + un hueco + el alto
+ * del botón de centrar + otro hueco, así nunca se solapan entre sí ni con
+ * la hoja, sea cual sea su contenido o el ancho de pantalla.
+ */
 body[data-active-screen="map"] .cc-help-fab {
-  bottom: calc(var(--cc-nav-height) + var(--cc-safe-bottom) + var(--cc-sheet-peek) + var(--cc-space-3));
+  bottom: calc(
+    var(--cc-nav-height) + var(--cc-safe-bottom) +
+    var(--cc-sheet-live-height, var(--cc-sheet-peek)) +
+    var(--cc-space-2) + var(--cc-tap-min) + var(--cc-space-2)
+  );
 }
 
 /* ---------- Mapa ---------- */
@@ -221,10 +236,12 @@ body[data-active-screen="map"] .cc-help-fab {
 .cc-map-controls {
   position: absolute;
   right: var(--cc-space-3);
-  /* Por encima del sheet colapsado (--cc-sheet-peek), no solo de la nav:
-     antes se calculaba solo con la altura de la nav y el botón de centrar
-     quedaba parcialmente tapado por la tarjeta del sheet. */
-  bottom: calc(var(--cc-nav-height) + var(--cc-safe-bottom) + var(--cc-sheet-peek) + var(--cc-space-2));
+  /* Ver comentario de .cc-help-fab: mismo cálculo dinámico, un solo hueco
+     por encima de la hoja (este es el control más cercano a ella). */
+  bottom: calc(
+    var(--cc-nav-height) + var(--cc-safe-bottom) +
+    var(--cc-sheet-live-height, var(--cc-sheet-peek)) + var(--cc-space-2)
+  );
   /* Por encima del bottom sheet (z-index 20), igual que el FAB de ayuda. */
   z-index: var(--cc-z-nav);
   display: flex;

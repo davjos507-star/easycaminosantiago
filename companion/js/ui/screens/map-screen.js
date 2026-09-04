@@ -268,14 +268,14 @@ function renderNavigatingSheet(nav) {
 
     sheet.setBody(`
       ${nav.routeStatus === 'failed' ? `<p class="cc-pending" style="margin:0 0 10px">${t('nav.route_failed')}</p>` : ''}
-      <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:2px 12px; margin-bottom:6px;">
         <span style="color:var(--cc-text-muted)">${t('nav.distance_remaining')}</span>
-        <strong>${distanceLine}</strong>
+        <strong style="text-align:right;">${distanceLine}</strong>
       </div>
       <div style="margin-bottom:12px;">${renderNavGpsLine(nav)}</div>
-      <div style="display:flex; gap:8px;">
-        <button type="button" class="cc-btn cc-btn--secondary" id="nav-recenter-btn">${t('nav.recenter')}</button>
-        <button type="button" class="cc-btn cc-btn--danger" id="nav-close-btn">${t('nav.finish')}</button>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <button type="button" class="cc-btn cc-btn--secondary" id="nav-recenter-btn" style="flex:1 1 120px;">${t('nav.recenter')}</button>
+        <button type="button" class="cc-btn cc-btn--primary" id="nav-close-btn" style="flex:1 1 120px;">${t('nav.finish')}</button>
       </div>
     `);
   }
