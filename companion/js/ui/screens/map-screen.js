@@ -1,5 +1,6 @@
 import { t, getLocale } from '../../utils/i18n.js';
 import { formatKm, formatPending, formatTime, formatDistanceMeters, isStageActiveOn } from '../../utils/formatters.js';
+import { haversineDistanceMeters } from '../../map/geo-utils.js';
 import { initBottomSheet } from '../components/bottom-sheet.js';
 import { renderLocationConsentCard } from '../components/location-consent.js';
 import { createMapEngine } from '../../map/map-engine.js';
@@ -260,26 +261,34 @@ function renderNavigatingSheet(nav) {
       <button type="button" class="cc-btn cc-btn--secondary" id="nav-close-btn">${t('nav.close')}</button>
     `);
   } else {
+    const routeFailed = nav.routeStatus === 'failed';
+    // Nunca en línea recta como si fuera la ruta a pie: si falla el motor
+    // de routing, se ofrece como mucho la distancia directa, siempre
+    // etiquetada como aproximada (ver formato más abajo).
+    const directMeters = routeFailed && nav.lastFix ? haversineDistanceMeters(nav.lastFix, nav.accommodation) : null;
+
+    const distanceLabel = routeFailed ? t('nav.distance_approx') : t('nav.distance_remaining');
     const distanceLine =
       nav.remainingMeters != null
         ? formatDistanceMeters(nav.remainingMeters, getLocale())
         : nav.routeStatus === 'loading'
         ? t('nav.route_loading')
-        : nav.routeStatus === 'failed'
-        ? '—'
-        : t('state.loading');
+        : directMeters != null
+        ? `${formatDistanceMeters(directMeters, getLocale())} (${t('nav.approx_straight_line')})`
+        : '—';
 
     sheet.setBody(`
-      ${nav.routeStatus === 'failed' ? `<p class="cc-pending" style="margin:0 0 10px">${t('nav.route_failed')}</p>` : ''}
+      ${routeFailed ? `<p class="cc-pending" style="margin:0 0 10px">${t('nav.route_failed')}</p>` : ''}
       <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:2px 12px; margin-bottom:6px;">
-        <span style="color:var(--cc-text-muted)">${t('nav.distance_remaining')}</span>
+        <span style="color:var(--cc-text-muted)">${distanceLabel}</span>
         <strong style="text-align:right;">${distanceLine}</strong>
       </div>
       <div style="margin-bottom:12px;">${renderNavGpsLine(nav)}</div>
-      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+      <div style="display:flex; flex-wrap:wrap; gap:8px; ${routeFailed ? 'margin-bottom:12px;' : ''}">
         <button type="button" class="cc-btn cc-btn--secondary" id="nav-recenter-btn" style="flex:1 1 120px;">${t('nav.recenter')}</button>
         <button type="button" class="cc-btn cc-btn--primary" id="nav-close-btn" style="flex:1 1 120px;">${t('nav.finish')}</button>
       </div>
+      ${routeFailed ? renderOpenInMapsFallback(nav.accommodation) : ''}
     `);
   }
 
@@ -294,12 +303,45 @@ function renderNavigatingSheet(nav) {
   });
 }
 
+/**
+ * Fallback SECUNDARIO cuando el motor de routing propio falla: nunca es
+ * el flujo principal ni se abre solo — solo dos enlaces discretos
+ * (cc-btn--ghost) para que el peregrino, si quiere, elija salir a Google
+ * Maps o Apple Maps por su cuenta. Companion sigue mostrando el
+ * alojamiento en el mapa mientras tanto.
+ */
+function renderOpenInMapsFallback(accommodation) {
+  const { lat, lng } = accommodation;
+  const googleUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=walking`;
+  const appleUrl = `https://maps.apple.com/?daddr=${lat},${lng}&dirflg=w`;
+  return `
+    <div style="border-top:1px solid var(--cc-border); padding-top:10px;">
+      <div class="cc-eyebrow" style="margin-bottom:8px">${t('nav.open_in_maps')}</div>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <a class="cc-btn cc-btn--ghost cc-btn--sm" style="flex:1 1 120px; border:1px solid var(--cc-border);" href="${googleUrl}" target="_blank" rel="noopener">${t('nav.open_in_google_maps')}</a>
+        <a class="cc-btn cc-btn--ghost cc-btn--sm" style="flex:1 1 120px; border:1px solid var(--cc-border);" href="${appleUrl}" target="_blank" rel="noopener">${t('nav.open_in_apple_maps')}</a>
+      </div>
+    </div>
+  `;
+}
+
 function renderViewingSheet(accommodation) {
+  const currentPos = appStore.getState().gps.lastPosition;
+  // Distancia directa (nunca una ruta): solo se muestra si ya tenemos una
+  // posición GPS real — nada de estimarla ni inventarla si no la hay.
+  const distanceRow = currentPos
+    ? `<div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:2px 12px; margin-bottom:12px;">
+        <span style="color:var(--cc-text-muted)">${t('nav.distance_approx')}</span>
+        <strong style="text-align:right;">${formatDistanceMeters(haversineDistanceMeters(currentPos, accommodation), getLocale())} (${t('nav.approx_straight_line')})</strong>
+      </div>`
+    : '';
+
   sheet.setSummary(`
     <div class="cc-eyebrow">${t('stays.view_on_map')}</div>
     <strong>${accommodation.name}</strong>
   `);
   sheet.setBody(`
+    ${distanceRow}
     <button type="button" class="cc-btn cc-btn--secondary" id="map-back-to-today-btn">${t('map.back_to_today')}</button>
   `);
   sheet.expand();

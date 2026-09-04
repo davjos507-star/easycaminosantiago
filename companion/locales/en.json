@@ -70,7 +70,12 @@
     "close": "CLOSE",
     "arrived": "You've arrived at {{name}}",
     "route_loading": "Calculating walking route…",
-    "route_failed": "Couldn't calculate a walking route right now. You can still see your position and the accommodation on the map."
+    "route_failed": "We couldn't calculate a walking route to the accommodation.",
+    "distance_approx": "Approximate distance",
+    "approx_straight_line": "approx., straight line",
+    "open_in_maps": "Open in maps",
+    "open_in_google_maps": "Google Maps",
+    "open_in_apple_maps": "Apple Maps"
   },
   "gps": {
     "searching": "Locating you…",

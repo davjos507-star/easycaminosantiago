@@ -11,6 +11,19 @@
  * Solo viajan al servidor las dos coordenadas estrictamente necesarias
  * para calcular la ruta (origen y destino) — nunca un histórico de
  * posiciones (ver CLAUDE.md / condición de privacidad del proyecto).
+ *
+ * MapProvider / RouteProvider — separación arquitectónica (2026-09):
+ * este módulo (RouteProvider, el "de dónde sale la geometría de la
+ * ruta") es completamente independiente de map/config.js (MapProvider,
+ * "de dónde salen los tiles del mapa"). Ningún módulo de mapa/capas
+ * importa nada de aquí, y este archivo no importa nada de map/ — solo
+ * habla con accommodation-nav.js (que a su vez entrega la geometría a
+ * map/layers/nav-route-layer.js para dibujarla). Cambiar de proveedor de
+ * mapas (OpenFreeMap → otro) nunca debería requerir tocar este archivo,
+ * y cambiar de motor de routing (hoy OpenRouteService, vía la función
+ * Netlify) nunca debería requerir tocar map/config.js ni las capas del
+ * mapa. Ver netlify/functions/walking-route.js para el lado servidor de
+ * esta misma garantía.
  */
 
 const ROUTE_ENDPOINT = '/.netlify/functions/walking-route';

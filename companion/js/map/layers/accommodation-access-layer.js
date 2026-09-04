@@ -17,20 +17,16 @@
  *   walking-route.js, perfil foot-walking de OpenRouteService/HeiGIT).
  *   Nunca dibujar una línea recta como si fuera la ruta a pie — si el
  *   routing falla o no es fiable, no forzar una geometría aproximada.
- * - Fallback si no hay routing fiable: mostrar el alojamiento solo como
- *   marcador (ya implementado, ver accommodation-layer.js), sin línea.
- *
- *   ⚠ CONTRADICCIÓN A RESOLVER ANTES DE IMPLEMENTAR: el encargo original
- *   de esta fase pide que, en ese caso, "el botón 'Llévame al
- *   alojamiento' abra Google Maps / Apple Maps". Eso choca directamente
- *   con el mandato explícito y ya implementado en accommodation-nav.js /
- *   map-screen.js: Osyris NO debe salir nunca de Companion, ningún botón
- *   abre Google Maps ni Apple Maps (verificado con pruebas dedicadas).
- *   No añadir ese fallback externo sin confirmación expresa — si hace
- *   falta un plan B para routing no fiable, debe ser dentro del propio
- *   mapa (marcador + distancia en línea recta claramente etiquetada como
- *   aproximada, nunca como recorrido a pie — ver regla general del
- *   proyecto), no una fuga a una app de mapas externa.
+ * - Fallback si no hay routing fiable (RESUELTO 2026-09, ver
+ *   map-screen.js#renderOpenInMapsFallback para la versión ya
+ *   implementada en la navegación activa — reutilizar el mismo patrón
+ *   aquí): mostrar el alojamiento solo como marcador (ya implementado,
+ *   ver accommodation-layer.js), sin línea, con el mensaje "No se ha
+ *   podido calcular la ruta peatonal al alojamiento." Companion nunca
+ *   sale sola a Google Maps / Apple Maps. Solo como respaldo SECUNDARIO,
+ *   explícito y no automático, se puede ofrecer un enlace discreto
+ *   "Abrir en mapas" con las dos opciones (Google/Apple) — nunca el
+ *   flujo principal.
  *
  * No confundir con nav-route-layer.js: esa capa dibuja la ruta SOLO
  * mientras la navegación activa "Llévame al alojamiento" está en curso

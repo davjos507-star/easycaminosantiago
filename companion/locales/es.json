@@ -70,7 +70,12 @@
     "close": "CERRAR",
     "arrived": "Has llegado a {{name}}",
     "route_loading": "Calculando ruta a pie…",
-    "route_failed": "No se ha podido calcular la ruta a pie ahora mismo. Puedes seguir viendo tu posición y el alojamiento en el mapa."
+    "route_failed": "No se ha podido calcular la ruta peatonal al alojamiento.",
+    "distance_approx": "Distancia aproximada",
+    "approx_straight_line": "aprox., línea recta",
+    "open_in_maps": "Abrir en mapas",
+    "open_in_google_maps": "Google Maps",
+    "open_in_apple_maps": "Apple Maps"
   },
   "gps": {
     "searching": "Buscando tu ubicación…",

@@ -32,6 +32,17 @@
 // la variable de entorno en el panel de Netlify contenga por error el
 // texto "ORS_API_KEY" en vez de la clave real (~150+ caracteres, formato
 // JWT) — se detecta porque el log muestra "longitud de ORS_API_KEY: 11".
+//
+// MapProvider / RouteProvider (2026-09): esta función es el único punto
+// donde vive el motor de routing peatonal (RouteProvider). No sabe nada
+// del proveedor de mapas (MapProvider, ver companion/js/map/config.js) ni
+// de MapLibre. Cambiar de motor de routing en el futuro (p. ej. Valhalla
+// o GraphHopper) significa reescribir SOLO requestOpenRouteService() y su
+// llamada más abajo — el frontend (routing-service.js) y las capas del
+// mapa no cambian, porque solo conocen el contrato {coordinates,
+// distanceMeters, durationSeconds} que devuelve esta función, no el
+// proveedor concreto. No se implementa todavía ningún proveedor de pago:
+// esto es solo la garantía de que hacerlo no obligaría a tocar el mapa.
 
 const https = require('https');
 
