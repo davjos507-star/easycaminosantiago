@@ -25,9 +25,13 @@
 // cambia la URL): cuota del host antiguo reducida al 10% desde el
 // 27/08/2026 y apagado total previsto el 28/09/2026. Ver
 // https://ask.openrouteservice.org/t/deprecating-api-openrouteservice-org-in-favour-of-api-heigit-org/7912
-// Confirmado en producción: con el host antiguo, la función devolvía 502
-// (ORS rechazaba la petición por la cuota reducida) pese a tener una
-// ORS_API_KEY válida configurada.
+//
+// Si "walking-route" devuelve 502 en producción, revisar los logs de esta
+// función en Netlify (nunca imprimimos la key, pero sí su longitud y el
+// error/status que devuelve ORS): un error típico es que el campo VALOR de
+// la variable de entorno en el panel de Netlify contenga por error el
+// texto "ORS_API_KEY" en vez de la clave real (~150+ caracteres, formato
+// JWT) — se detecta porque el log muestra "longitud de ORS_API_KEY: 11".
 
 const https = require('https');
 
@@ -104,18 +108,16 @@ exports.handler = async function (event) {
     const result = await requestOpenRouteService(apiKey, [[fromLng, fromLat], [toLng, toLat]]);
 
     if (result.status >= 400 || !result.body) {
-      console.error('[walking-route] OpenRouteService rechazó la petición:', result.status, JSON.stringify(result.body));
-      // upstreamStatus/upstreamError son diagnóstico seguro (nunca la key):
-      // el estado y el mensaje de error que devuelve el proveedor de routing.
-      return jsonResponse(502, {
-        error: 'No se ha podido calcular la ruta a pie',
-        upstreamStatus: result.status || null,
-        upstreamError: result.body ? JSON.stringify(result.body).slice(0, 300) : null,
-        // Diagnóstico seguro de la key (nunca su valor): solo para localizar
-        // un espacio/salto de línea accidental en la variable de entorno.
-        apiKeyLength: apiKey.length,
-        apiKeyHadWhitespace: rawApiKey !== apiKey,
-      });
+      // Detalle completo solo en los logs del servidor (Netlify function
+      // logs) para poder diagnosticar sin exponer nada al navegador: ni el
+      // error de ORS ni metadatos de la key salen en la respuesta HTTP.
+      console.error(
+        '[walking-route] OpenRouteService rechazó la petición:',
+        result.status,
+        JSON.stringify(result.body),
+        '| longitud de ORS_API_KEY:', apiKey.length,
+      );
+      return jsonResponse(502, { error: 'No se ha podido calcular la ruta a pie' });
     }
 
     const feature = result.body.features && result.body.features[0];
@@ -133,6 +135,6 @@ exports.handler = async function (event) {
     });
   } catch (err) {
     console.error('[walking-route] error:', err.message);
-    return jsonResponse(502, { error: 'Error al calcular la ruta a pie', upstreamError: err.message });
+    return jsonResponse(502, { error: 'Error al calcular la ruta a pie' });
   }
 };
