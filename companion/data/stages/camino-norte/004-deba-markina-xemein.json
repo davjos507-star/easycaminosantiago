@@ -19,7 +19,10 @@
     "phone": "+34689683744",
     "checkIn": null,
     "notes": null,
-    "coordinates": null
+    "coordinates": {
+      "lat": 43.266605,
+      "lng": -2.505174
+    }
   },
   "notes": null
 }
