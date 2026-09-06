@@ -13,15 +13,15 @@
   "coordinates": null,
   "routeFile": "routes/camino-norte/000-pending.geojson",
   "accommodation": {
-    "name": "Casa Garea",
+    "name": "Pensión O Retiro",
     "locality": "Arzúa",
-    "address": "Lugar da Portela, s/n, 15819 Arzúa",
-    "phone": "+34981500400",
+    "address": "Rúa Lugo, s/n, 15810 Arzúa (A Coruña)",
+    "phone": "+34981500554",
     "checkIn": null,
     "notes": "Breakfast included.",
     "coordinates": {
-      "lat": 42.9318254,
-      "lng": -8.1129497
+      "lat": 42.929713170898495,
+      "lng": -8.148247341001117
     }
   },
   "notes": "Distance given as a range in the source: 21–22 km."
