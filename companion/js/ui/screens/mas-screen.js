@@ -3,12 +3,12 @@ import { icon } from '../components/icons.js';
 import { APP_VERSION } from '../../config.js';
 
 const MENU_ITEMS = [
-  { key: 'more.profile', icon: 'today', action: null },
+  { key: 'more.profile', icon: 'today', action: 'info', infoKind: 'profile' },
   { key: 'more.assistance', icon: 'phone', action: 'emergency' },
-  { key: 'more.credential', icon: 'shield', action: null },
-  { key: 'more.settings', icon: 'more', action: null },
-  { key: 'more.about', icon: 'info', action: null },
-  { key: 'more.privacy', icon: 'shield', action: null },
+  { key: 'more.credential', icon: 'shield', action: 'info', infoKind: 'credential' },
+  { key: 'more.settings', icon: 'more', action: 'info', infoKind: 'settings' },
+  { key: 'more.about', icon: 'info', action: 'info', infoKind: 'about' },
+  { key: 'more.privacy', icon: 'shield', action: 'info', infoKind: 'privacy' },
 ];
 
 export function renderMore(container, { onInstallClick, onLanguageToggle } = {}) {
@@ -20,10 +20,9 @@ export function renderMore(container, { onInstallClick, onLanguageToggle } = {})
     <div class="cc-card cc-card--flush">
       ${MENU_ITEMS.map(
         (item) => `
-        <button type="button" class="cc-more-item" data-action="${item.action || ''}" ${item.action ? '' : 'disabled'} style="width:100%; display:flex; align-items:center; gap:12px; padding:16px; background:none; border:none; border-bottom:1px solid var(--cc-border); text-align:left; color:var(--cc-text); min-height:var(--cc-tap-min); ${item.action ? 'cursor:pointer;' : 'cursor:default; opacity:0.55;'}">
+        <button type="button" class="cc-more-item" data-action="${item.action}" ${item.infoKind ? `data-info-kind="${item.infoKind}"` : ''} style="width:100%; display:flex; align-items:center; gap:12px; padding:16px; background:none; border:none; border-bottom:1px solid var(--cc-border); text-align:left; cursor:pointer; color:var(--cc-text); min-height:var(--cc-tap-min)">
           ${icon(item.icon)}
           <span style="flex:1; font-weight:600">${t(item.key)}</span>
-          ${item.action ? '' : `<span class="cc-pending" style="font-size:0.72rem; font-style:normal;">${t('more.coming_soon')}</span>`}
         </button>`
       ).join('')}
     </div>
@@ -43,6 +42,9 @@ export function renderMore(container, { onInstallClick, onLanguageToggle } = {})
 
   container.querySelectorAll('[data-action="emergency"]').forEach((btn) => {
     btn.setAttribute('data-open-emergency', '');
+  });
+  container.querySelectorAll('[data-action="info"]').forEach((btn) => {
+    btn.setAttribute('data-open-info', btn.getAttribute('data-info-kind'));
   });
 
   container.querySelector('#install-btn')?.addEventListener('click', () => onInstallClick?.());

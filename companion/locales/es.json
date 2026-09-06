@@ -149,10 +149,35 @@
     "close": "Cerrar"
   },
   "privacy": {
+    "title": "Privacidad",
     "location_notice": "La ubicación se utiliza en tu dispositivo para mostrar tu posición durante el Camino.",
     "location_consent_body": "Easy Camino utiliza tu ubicación en este dispositivo para mostrarte dónde estás en el Camino. Tu ubicación no se envía a Easy Camino.",
     "enable_location": "Activar ubicación",
-    "not_now": "Ahora no"
+    "not_now": "Ahora no",
+    "stage_session_detail": "Mientras registras una etapa (\"En camino\"), tu posición y la distancia recorrida se guardan solo en este dispositivo (su almacenamiento local) — nunca en un servidor.",
+    "routing_detail": "La navegación a pie hasta tu alojamiento solo envía las dos coordenadas necesarias para calcular la ruta (tu posición y el alojamiento) — nunca un historial de tus movimientos."
+  },
+  "profile": {
+    "title": "Perfil",
+    "pilgrim": "Peregrino",
+    "itinerary": "Itinerario",
+    "language": "Idioma",
+    "start_date": "Fecha de inicio",
+    "total_stages": "Etapas totales"
+  },
+  "credential": {
+    "title": "Credencial y documentos",
+    "body": "Aquí vivirá tu credencial de peregrino y tus documentos de viaje. Todavía no está disponible en esta versión — llegará en una próxima actualización."
+  },
+  "settings": {
+    "title": "Configuración",
+    "language_current": "Idioma actual",
+    "more_soon": "Más opciones de configuración estarán disponibles en una próxima versión."
+  },
+  "about": {
+    "title": "Acerca de",
+    "description": "Easy Camino Companion reúne tu ruta, etapas, alojamiento y asistencia para el Camino de Santiago, en un solo sitio.",
+    "website": "Visitar easycaminosantiago.com"
   },
   "pwa": {
     "update_available": "Nueva versión disponible",

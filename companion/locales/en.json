@@ -149,10 +149,35 @@
     "close": "Close"
   },
   "privacy": {
+    "title": "Privacy",
     "location_notice": "Location is used on your device to show your position on the Camino.",
     "location_consent_body": "Easy Camino uses your location on this device to show where you are on the Camino. Your location is not sent to Easy Camino.",
     "enable_location": "Enable location",
-    "not_now": "Not now"
+    "not_now": "Not now",
+    "stage_session_detail": "While recording a stage (\"On the way\") your position and the distance walked are saved only on this device (its local storage) — never on a server.",
+    "routing_detail": "Walking directions to your accommodation only send the two points needed to calculate the route (your position and the accommodation) — never a history of your movements."
+  },
+  "profile": {
+    "title": "Profile",
+    "pilgrim": "Pilgrim",
+    "itinerary": "Itinerary",
+    "language": "Language",
+    "start_date": "Start date",
+    "total_stages": "Total stages"
+  },
+  "credential": {
+    "title": "Credential & documents",
+    "body": "This section will hold your pilgrim credential and travel documents. Not available yet in this version — coming in a future update."
+  },
+  "settings": {
+    "title": "Settings",
+    "language_current": "Current language",
+    "more_soon": "More settings will be available in a future version."
+  },
+  "about": {
+    "title": "About",
+    "description": "Easy Camino Companion brings together your route, stages, accommodation and assistance for the Camino de Santiago, in one place.",
+    "website": "Visit easycaminosantiago.com"
   },
   "pwa": {
     "update_available": "New version available",

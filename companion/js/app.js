@@ -9,6 +9,7 @@ import { loadItinerary, loadAllStages } from './data/itinerary-loader.js';
 import { initOnboarding } from './ui/components/onboarding.js';
 import { initConnectivityBanner } from './ui/components/connectivity-banner.js';
 import { initEmergencyModal } from './ui/components/emergency-modal.js';
+import { initInfoModal } from './ui/components/info-modal.js';
 import { registerServiceWorker } from './pwa/register-sw.js';
 import { initInstallPrompt, promptInstall, isRunningStandalone } from './pwa/install-prompt.js';
 import { renderTodayLoading, renderTodayError, renderToday, initTodayScreen } from './ui/screens/today-screen.js';
@@ -57,17 +58,19 @@ function renderAllData() {
   renderMoreScreen();
 }
 
+async function handleLanguageToggle(nextLocale) {
+  setString(KEYS.LOCALE, nextLocale);
+  await initI18n(nextLocale);
+  renderAllData();
+}
+
 function renderMoreScreen() {
   renderMore(screens.more(), {
     onInstallClick: async () => {
       if (isRunningStandalone()) return;
       await promptInstall();
     },
-    onLanguageToggle: async (nextLocale) => {
-      setString(KEYS.LOCALE, nextLocale);
-      await initI18n(nextLocale);
-      renderAllData();
-    },
+    onLanguageToggle: handleLanguageToggle,
   });
 }
 
@@ -90,6 +93,7 @@ async function boot() {
   initInstallPrompt();
   initMapScreen();
   initEmergencyModal();
+  initInfoModal({ onLanguageToggle: handleLanguageToggle });
   initDebugPanel();
   initTodayScreen();
   hydrateStageSession();
