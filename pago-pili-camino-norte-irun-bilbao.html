@@ -178,6 +178,11 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
       <div class="seguro-cost">84,75 €</div>
     </div>
 
+    <div class="notice-box" id="proteccion-mensaje" style="display:none;">
+      Protección de cancelación seleccionada. Los 84,75 € no se cobrarán ahora. Se añadirán posteriormente al saldo pendiente de tu reserva.<br><br>
+      <strong>Saldo pendiente con protección: 1.440,75 €</strong>
+    </div>
+
     <!-- STRIPE -->
     <h3 class="section-h3">Pago con tarjeta</h3>
     <div id="stripe-section">
@@ -278,6 +283,7 @@ function toggleProteccion(){
   state.proteccionInteres = !state.proteccionInteres;
   document.getElementById('proteccion-check').checked = state.proteccionInteres;
   document.getElementById('proteccion-box').classList.toggle('selected', state.proteccionInteres);
+  document.getElementById('proteccion-mensaje').style.display = state.proteccionInteres ? 'block' : 'none';
 }
 
 // ─── ENVÍO AL FORMULARIO NETLIFY "reserva" (misma ruta que pago-servicios.html —
