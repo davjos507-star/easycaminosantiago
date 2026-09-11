@@ -1,8 +1,8 @@
 {
   "number": 10,
-  "date": "2026-09-13",
+  "date": "2026-09-12",
   "checkOutDate": "2026-09-14",
-  "nights": 1,
+  "nights": 2,
   "origin": "Pobeña / Muskiz",
   "destination": "Castro Urdiales",
   "km": 22.0,
@@ -13,16 +13,16 @@
   "coordinates": null,
   "routeFile": "routes/camino-norte/000-pending.geojson",
   "accommodation": {
-    "name": "Pensión Ardigales 11",
+    "name": "Pensión La Mar",
     "locality": "Castro Urdiales",
-    "address": "Calle Ardigales 11, 39700 Castro-Urdiales",
-    "phone": "+34942781616",
+    "address": "Calle La Mar 27, 39700 Castro Urdiales",
+    "phone": "+34942870524",
     "checkIn": null,
     "notes": null,
     "coordinates": {
-      "lat": 43.3821067,
-      "lng": -3.218732
+      "lat": 43.3811528,
+      "lng": -3.2180267
     }
   },
-  "notes": null
+  "notes": "Includes 1 rest day: 13 Sep 2026."
 }
