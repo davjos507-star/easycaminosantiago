@@ -73,11 +73,15 @@
     "arrived": "Has llegado a {{name}}",
     "route_loading": "Calculando ruta a pie…",
     "route_failed": "No se ha podido calcular la ruta peatonal al alojamiento.",
+    "gps_out_of_context": "GPS no disponible para navegación en esta etapa",
     "distance_approx": "Distancia aproximada",
     "approx_straight_line": "aprox., línea recta",
     "open_in_maps": "Abrir en mapas",
     "open_in_google_maps": "Google Maps",
-    "open_in_apple_maps": "Apple Maps"
+    "open_in_apple_maps": "Apple Maps",
+    "distance_from_camino": "Distancia desde el Camino",
+    "walking_time_estimate": "Tiempo estimado andando",
+    "calculating_access": "Buscando el acceso más corto desde el Camino…"
   },
   "gps": {
     "searching": "Buscando tu ubicación…",

@@ -20,6 +20,7 @@ import {
   isFollowMode,
 } from '../../map/gps-controller.js';
 import { startAccommodationNav, stopAccommodationNav } from '../../accommodation/accommodation-nav.js';
+import { findBestCaminoAccess, MAX_CANDIDATE_STRAIGHT_LINE_M } from '../../accommodation/camino-access-finder.js';
 import { appStore } from '../../state/store.js';
 import { setDebugMapEngine } from '../components/debug-panel.js';
 
@@ -29,10 +30,21 @@ let userLocationLayer = null;
 let accommodationLayer = null;
 let navRouteLayer = null;
 let routeLayer = null;
+let accommodationAccessLayer = null;
 let mountPromise = null;
 let consentDismissed = false;
 let viewingAccommodation = null; // { name, lat, lng } — "Ver en mapa" sin navegación activa
 let lastDrawnRouteCoords = null;
+
+// "Desvío al alojamiento" (acceso más corto desde el Camino) — calculado
+// una vez por alojamiento y cacheado por coordenadas, nunca recalculado
+// en cada tick de GPS. Valores posibles por clave "lat,lng":
+//   ausente  -> todavía no solicitado
+//   'loading'-> cálculo en curso (ver caminoAccessLoading)
+//   null     -> calculado, sin acceso fiable encontrado
+//   objeto   -> { exitPoint, routeCoordinates, distanceMeters, durationSeconds }
+const caminoAccessCache = new Map();
+const caminoAccessLoading = new Set();
 
 // Trazado oficial del Camino (CNIG/FEAACS, ver route-layer.js) — cada
 // elemento es el array de coordenadas [lng,lat] de UNA geometría
@@ -44,6 +56,32 @@ let lastCaminoDistanceM = null;
 let lastCaminoCheckAt = 0;
 const CAMINO_CHECK_THROTTLE_MS = 5000;
 const ON_CAMINO_THRESHOLD_M = 50;
+
+// Si el GPS en vivo está más lejos que esto de TODO el trazado oficial del
+// Camino, la distancia recta al alojamiento (fallback de
+// renderNavigatingSheet cuando ORS no puede calcular ruta) deja de ser una
+// referencia útil de navegación y puede leerse como un error de la app —
+// p. ej. los "480,77 km" vistos al probar desde un ordenador de
+// escritorio con el GPS lejos de Laredo. Margen: 5x el tope ya usado para
+// buscar accesos al alojamiento (MAX_CANDIDATE_STRAIGHT_LINE_M, 3 km) — de
+// sobra para cualquier desvío real a pie, imprecisión de GPS o estar en el
+// pueblo de la etapa, pero muy por debajo de una distancia que solo se
+// explica por no estar en el contexto de esta etapa.
+const GPS_NAV_CONTEXT_MAX_M = MAX_CANDIDATE_STRAIGHT_LINE_M * 5;
+
+/** Distancia (m) de `position` al punto más cercano de TODO el trazado
+ * oficial ya cargado — mismo cálculo que appendCaminoDistanceChip, pero
+ * expuesto aparte para poder usarlo también como comprobación de
+ * contexto antes de mostrar una distancia recta al alojamiento. */
+function distanceToOfficialRouteM(position) {
+  if (!officialRouteLines || !position) return null;
+  let best = null;
+  for (const coords of officialRouteLines) {
+    const proj = projectPointOnLine(position, coords);
+    if (proj && (best === null || proj.offsetMeters < best)) best = proj.offsetMeters;
+  }
+  return best;
+}
 
 export function initMapScreen() {
   sheet = initBottomSheet('today-sheet');
@@ -141,6 +179,90 @@ async function loadOfficialRoute() {
   }
 }
 
+function caminoAccessKey(accommodation) {
+  return `${accommodation.lat},${accommodation.lng}`;
+}
+
+function getCaminoAccessState(accommodation) {
+  const key = caminoAccessKey(accommodation);
+  if (caminoAccessLoading.has(key)) return 'loading';
+  if (caminoAccessCache.has(key)) return caminoAccessCache.get(key); // null (sin acceso) u objeto
+  return undefined; // todavía no solicitado
+}
+
+/**
+ * Calcula (una vez, cacheado) el mejor punto de salida del Camino hacia
+ * `accommodation` y la ruta peatonal real hasta él — ver
+ * accommodation/camino-access-finder.js para el algoritmo. Dibuja el
+ * resultado en el mapa y repinta la hoja inferior para mostrarlo. Nunca
+ * bloquea nada si falla: sin acceso encontrado, la app sigue mostrando
+ * el Camino y el alojamiento con normalidad.
+ */
+async function ensureCaminoAccess(accommodation) {
+  const key = caminoAccessKey(accommodation);
+  if (caminoAccessCache.has(key) || caminoAccessLoading.has(key)) {
+    // Ya calculado (o en curso): solo asegurar que el dibujo refleja el resultado actual.
+    const cached = caminoAccessCache.get(key);
+    if (cached) accommodationAccessLayer?.setAccess(cached);
+    return;
+  }
+  if (!officialRouteLines) return; // el trazado oficial aún no ha cargado
+
+  caminoAccessLoading.add(key);
+  renderMapSheet(appStore.getState());
+  try {
+    const access = await findBestCaminoAccess({ accommodation, caminoLines: officialRouteLines });
+    caminoAccessCache.set(key, access);
+    accommodationAccessLayer?.setAccess(access);
+  } catch (err) {
+    console.warn('[map-screen] no se pudo calcular el acceso al alojamiento:', err.message);
+    caminoAccessCache.set(key, null);
+  } finally {
+    caminoAccessLoading.delete(key);
+    renderMapSheet(appStore.getState());
+  }
+}
+
+function formatWalkingDuration(seconds) {
+  if (!Number.isFinite(seconds)) return null;
+  const minutes = Math.max(1, Math.round(seconds / 60));
+  return `${minutes} min`;
+}
+
+/**
+ * Bloque "Distancia desde el Camino" / "Tiempo estimado andando" —
+ * fuente SIEMPRE camino-access-finder.js (geometría oficial + ORS),
+ * nunca la posición GPS en vivo. Se muestra por separado del bloque de
+ * navegación activa para que cada dato tenga una fuente inequívoca.
+ */
+function renderCaminoAccessBlock(accommodation) {
+  const access = getCaminoAccessState(accommodation);
+  if (access === undefined) return '';
+  if (access === 'loading') {
+    return `<div style="margin-bottom:12px;"><div class="cc-gps-chip"><span class="cc-gps-chip-dot"></span>${t('nav.calculating_access')}</div></div>`;
+  }
+  if (access === null) {
+    return `<p class="cc-pending" style="margin:0 0 12px">${t('nav.route_failed')}</p>`;
+  }
+  const duration = formatWalkingDuration(access.durationSeconds);
+  return `
+    <div style="border:1px solid var(--cc-border); border-radius:var(--cc-radius-md); padding:12px; margin-bottom:12px;">
+      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:2px 12px; margin-bottom:${duration ? '6px' : '0'};">
+        <span style="color:var(--cc-text-muted)">${t('nav.distance_from_camino')}</span>
+        <strong style="text-align:right;">${formatDistanceMeters(access.distanceMeters, getLocale())}</strong>
+      </div>
+      ${
+        duration
+          ? `<div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:2px 12px;">
+              <span style="color:var(--cc-text-muted)">${t('nav.walking_time_estimate')}</span>
+              <strong style="text-align:right;">${duration}</strong>
+            </div>`
+          : ''
+      }
+    </div>
+  `;
+}
+
 function renderGpsChip(gps) {
   const locale = getLocale();
   let label = '';
@@ -192,12 +314,11 @@ async function mountMap() {
   accommodationLayer = createAccommodationLayer(mapEngine);
   navRouteLayer = createNavRouteLayer(mapEngine);
   routeLayer = createRouteLayer(mapEngine);
+  accommodationAccessLayer = createAccommodationAccessLayer(mapEngine);
   // Instanciadas para dejar la composición de capas completa y lista
-  // (STAGES / ACCESO AL ALOJAMIENTO / POIs); su implementación real
-  // llega en fases posteriores, cuando haya datos que pintar (ver
-  // doc-comment de cada archivo para la especificación).
+  // (STAGES / POIs); su implementación real llega en fases posteriores,
+  // cuando haya datos que pintar (ver doc-comment de cada archivo).
   createStageLayer(mapEngine);
-  createAccommodationAccessLayer(mapEngine);
   createPoiLayer(mapEngine);
 
   initGpsController({ mapEngine, userLocationLayer });
@@ -277,11 +398,13 @@ export async function focusAccommodationOnMap(accommodation) {
   accommodationLayer.setAccommodation(accommodation);
   mapEngine.setCenter({ lat: accommodation.lat, lng: accommodation.lng }, { animate: true, zoom: 16 });
   renderMapSheet(appStore.getState());
+  ensureCaminoAccess(accommodation);
 }
 
 function clearAccommodationView() {
   viewingAccommodation = null;
   accommodationLayer?.clear();
+  accommodationAccessLayer?.clear();
   renderMapSheet(appStore.getState());
 }
 
@@ -303,6 +426,7 @@ export async function startAccommodationNavigation(accommodation) {
   requestAndStartWatch();
   startAccommodationNav(accommodation);
   renderMapSheet(appStore.getState());
+  ensureCaminoAccess(accommodation);
 }
 
 /** Botón "Terminar"/"Cerrar": no toca EN CAMINO ni ningún otro estado. */
@@ -310,6 +434,7 @@ export function stopAccommodationNavigation() {
   stopAccommodationNav();
   navRouteLayer?.clear();
   accommodationLayer?.clear();
+  accommodationAccessLayer?.clear();
   lastDrawnRouteCoords = null;
   viewingAccommodation = null;
   renderMapSheet(appStore.getState());
@@ -338,6 +463,15 @@ function renderNavigatingSheet(nav) {
     // de routing, se ofrece como mucho la distancia directa, siempre
     // etiquetada como aproximada (ver formato más abajo).
     const directMeters = routeFailed && nav.lastFix ? haversineDistanceMeters(nav.lastFix, nav.accommodation) : null;
+    // Si además ese GPS está claramente fuera del contexto de esta etapa
+    // (lejos de todo el trazado oficial, no solo de este tramo), esa
+    // distancia recta no ayuda a navegar y puede parecer un error de la
+    // app — se sustituye por un aviso claro en vez de un número engañoso.
+    const gpsOutOfStageContext =
+      directMeters != null && (() => {
+        const toRoute = distanceToOfficialRouteM(nav.lastFix);
+        return toRoute != null && toRoute > GPS_NAV_CONTEXT_MAX_M;
+      })();
 
     const distanceLabel = routeFailed ? t('nav.distance_approx') : t('nav.distance_remaining');
     const distanceLine =
@@ -350,11 +484,16 @@ function renderNavigatingSheet(nav) {
         : '—';
 
     sheet.setBody(`
+      ${renderCaminoAccessBlock(nav.accommodation)}
       ${routeFailed ? `<p class="cc-pending" style="margin:0 0 10px">${t('nav.route_failed')}</p>` : ''}
-      <div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:2px 12px; margin-bottom:6px;">
+      ${
+        gpsOutOfStageContext
+          ? `<p class="cc-pending" style="margin:0 0 10px">${t('nav.gps_out_of_context')}</p>`
+          : `<div style="display:flex; flex-wrap:wrap; justify-content:space-between; gap:2px 12px; margin-bottom:6px;">
         <span style="color:var(--cc-text-muted)">${distanceLabel}</span>
         <strong style="text-align:right;">${distanceLine}</strong>
-      </div>
+      </div>`
+      }
       <div style="margin-bottom:12px;">${renderNavGpsLine(nav)}</div>
       <div style="display:flex; flex-wrap:wrap; gap:8px; ${routeFailed ? 'margin-bottom:12px;' : ''}">
         <button type="button" class="cc-btn cc-btn--secondary" id="nav-recenter-btn" style="flex:1 1 120px;">${t('nav.recenter')}</button>
@@ -413,6 +552,7 @@ function renderViewingSheet(accommodation) {
     <strong>${accommodation.name}</strong>
   `);
   sheet.setBody(`
+    ${renderCaminoAccessBlock(accommodation)}
     ${distanceRow}
     <button type="button" class="cc-btn cc-btn--secondary" id="map-back-to-today-btn">${t('map.back_to_today')}</button>
   `);

@@ -26,7 +26,15 @@ export function createMapEngine({ container } = {}) {
   }
 
   function runWhenStyleReady(task) {
-    if (ready && map?.isStyleLoaded()) task();
+    // Solo hace falta esperar a isStyleLoaded() ANTES del primer 'load'
+    // (todavía no hay estilo al que añadir nada). Una vez `ready`, MapLibre
+    // admite llamar addSource/addLayer de forma síncrona en cualquier
+    // momento — comprobar isStyleLoaded() en cada llamada es un error: una
+    // fuente recién añadida deja isStyleLoaded() en `false` en el mismo
+    // tick síncrono, así que una capa añadida justo después (misma fuente)
+    // se aplazaba a pendingStyleTasks y nunca se pintaba, porque ese array
+    // solo se vacía una vez, dentro del 'load' inicial.
+    if (ready) task();
     else pendingStyleTasks.push(task);
   }
 

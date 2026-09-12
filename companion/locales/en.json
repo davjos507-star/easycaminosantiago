@@ -73,11 +73,15 @@
     "arrived": "You've arrived at {{name}}",
     "route_loading": "Calculating walking route…",
     "route_failed": "We couldn't calculate a walking route to the accommodation.",
+    "gps_out_of_context": "GPS unavailable for live navigation on this stage",
     "distance_approx": "Approximate distance",
     "approx_straight_line": "approx., straight line",
     "open_in_maps": "Open in maps",
     "open_in_google_maps": "Google Maps",
-    "open_in_apple_maps": "Apple Maps"
+    "open_in_apple_maps": "Apple Maps",
+    "distance_from_camino": "Distance from the Camino",
+    "walking_time_estimate": "Estimated walking time",
+    "calculating_access": "Finding the shortest access from the Camino…"
   },
   "gps": {
     "searching": "Locating you…",

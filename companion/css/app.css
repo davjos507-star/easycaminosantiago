@@ -358,6 +358,16 @@ body[data-active-screen="map"] .cc-help-fab {
 }
 .cc-accommodation-pin svg { width: 34px; height: 34px; }
 
+/* Punto de salida del Camino hacia el alojamiento (desvío en preview) */
+.cc-access-exit-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #D4882A;
+  border: 2.5px solid #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.35);
+}
+
 /* MapLibre: atribución compacta, coherente con nuestra paleta */
 .maplibregl-ctrl-attrib {
   font-family: var(--cc-font-body);
