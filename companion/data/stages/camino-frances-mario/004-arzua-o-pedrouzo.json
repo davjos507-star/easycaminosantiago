@@ -12,6 +12,6 @@
   "estimatedTime": "4–5 h",
   "coordinates": { "start": { "lat": 42.926332, "lng": -8.162795 }, "end": { "lat": 42.912301, "lng": -8.357313 } },
   "routeFile": "routes/camino-frances/004-arzua-o-pedrouzo.geojson",
-  "accommodation": { "name": null, "locality": "O Pedrouzo", "address": null, "phone": null, "checkIn": null, "notes": "Pendiente de confirmación.", "coordinates": null },
+  "accommodation": { "name": "Pensión A Solaina", "locality": "O Pedrouzo", "address": "O Pedrouzo, 15821 O Pino, A Coruña", "phone": "+34 616 24 19 11", "checkIn": null, "notes": "Alojamiento confirmado.", "coordinates": null },
   "notes": null
 }
