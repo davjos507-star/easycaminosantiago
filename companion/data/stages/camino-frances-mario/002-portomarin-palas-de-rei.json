@@ -12,6 +12,6 @@
   "estimatedTime": "6–7 h",
   "coordinates": { "start": { "lat": 42.804966, "lng": -7.616855 }, "end": { "lat": 42.873217, "lng": -7.868968 } },
   "routeFile": "routes/camino-frances/002-portomarin-palas-de-rei.geojson",
-  "accommodation": { "name": "Estrela do Camiño", "locality": "Palas de Rei", "address": "Parque Empresarial de Palas de Rei, parcelas 2-4, 27200 Palas de Rei, Lugo", "phone": "+34 621 12 23 67", "checkIn": null, "notes": "Alojamiento confirmado.", "coordinates": null },
+  "accommodation": { "name": "Estrela do Camiño", "locality": "Palas de Rei", "address": "Parque Empresarial de Palas de Rei, parcelas 2-4, 27200 Palas de Rei, Lugo", "phone": "+34 621 12 23 67", "checkIn": null, "notes": "Alojamiento confirmado.", "coordinates": { "lat": 42.8728001, "lng": -7.8770982 } },
   "notes": null
 }

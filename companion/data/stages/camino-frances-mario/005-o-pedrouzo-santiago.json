@@ -12,6 +12,6 @@
   "estimatedTime": "5–6 h",
   "coordinates": { "start": { "lat": 42.912301, "lng": -8.357313 }, "end": { "lat": 42.880928, "lng": -8.544470 } },
   "routeFile": "routes/camino-frances/005-o-pedrouzo-santiago.geojson",
-  "accommodation": { "name": "Nest El Camino", "locality": "Santiago de Compostela", "address": "Avenida Rosalía de Castro, 104, 15706 Santiago de Compostela, A Coruña", "phone": "+34 673 68 21 85", "checkIn": null, "notes": "Alojamiento confirmado.", "coordinates": null },
+  "accommodation": { "name": "Nest El Camino", "locality": "Santiago de Compostela", "address": "Avenida Rosalía de Castro, 104, 15706 Santiago de Compostela, A Coruña", "phone": "+34 673 68 21 85", "checkIn": null, "notes": "Alojamiento confirmado.", "coordinates": { "lat": 42.873481, "lng": -8.553104 } },
   "notes": null
 }

@@ -12,6 +12,6 @@
   "estimatedTime": "7–8 h",
   "coordinates": { "start": { "lat": 42.873217, "lng": -7.868968 }, "end": { "lat": 42.926332, "lng": -8.162795 } },
   "routeFile": "routes/camino-frances/003-palas-de-rei-arzua.geojson",
-  "accommodation": { "name": "Casa Garea", "locality": "Castañeda (Arzúa)", "address": "Lugar da Portela s/n, Castañeda, 15810 Arzúa, A Coruña", "phone": "+34 981 50 04 00", "checkIn": null, "notes": "Alojamiento confirmado. Está en Castañeda, antes del núcleo de Arzúa siguiendo el Camino.", "coordinates": null },
+  "accommodation": { "name": "Casa Garea", "locality": "Castañeda (Arzúa)", "address": "Lugar da Portela s/n, Castañeda, 15810 Arzúa, A Coruña", "phone": "+34 981 50 04 00", "checkIn": null, "notes": "Alojamiento confirmado. Está en Castañeda, antes del núcleo de Arzúa siguiendo el Camino.", "coordinates": { "lat": 42.9318935, "lng": -8.1135139 } },
   "notes": "La etapa pasa por Melide."
 }
