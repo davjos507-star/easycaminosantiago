@@ -12,6 +12,6 @@
   "estimatedTime": "5–6 h",
   "coordinates": { "start": { "lat": 42.777421, "lng": -7.414834 }, "end": { "lat": 42.804966, "lng": -7.616855 } },
   "routeFile": "routes/camino-frances/001-sarria-portomarin.geojson",
-  "accommodation": { "name": null, "locality": "Portomarín", "address": null, "phone": null, "checkIn": null, "notes": "Pendiente de confirmación.", "coordinates": null },
+  "accommodation": { "name": "Hotel Villajardín", "locality": "Portomarín", "address": "Rúa do Miño, 14, 27178 Portomarín, Lugo", "phone": "+34 982 54 50 54", "checkIn": null, "notes": "Alojamiento confirmado.", "coordinates": null },
   "notes": null
 }
