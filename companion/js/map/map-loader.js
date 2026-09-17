@@ -1,13 +1,14 @@
 /*
  * Carga perezosa de MapLibre GL JS.
  *
- * MapLibre solo se descarga la primera vez que el peregrino abre la
- * pestaña MAPA, nunca en el arranque de la app (HOY, CAMINO,
- * ALOJAMIENTOS y MÁS no lo necesitan). Se sirve vendorizado desde
- * /companion/vendor/maplibre-gl/ — nunca desde un CDN externo.
+ * Los assets se resuelven SIEMPRE desde la raíz /companion/. Esto es
+ * imprescindible porque cada peregrino puede entrar por una URL anidada
+ * como /companion/mario-jasso/; las rutas relativas antiguas intentaban
+ * cargar /companion/mario-jasso/vendor/... y el mapa no arrancaba.
  */
 
 let loadPromise = null;
+const COMPANION_ROOT = '/companion/';
 
 function loadStylesheet(href) {
   return new Promise((resolve, reject) => {
@@ -40,8 +41,6 @@ function loadScript(src) {
 }
 
 function preconnectTileProvider() {
-  // Calienta la conexión al dominio de tiles justo cuando se necesita el
-  // mapa (nunca antes, para no gastar datos si el peregrino no abre MAPA).
   const link = document.createElement('link');
   link.rel = 'preconnect';
   link.href = 'https://tiles.openfreemap.org';
@@ -53,8 +52,8 @@ export function loadMapLibre() {
   if (loadPromise) return loadPromise;
   preconnectTileProvider();
   loadPromise = Promise.all([
-    loadStylesheet('vendor/maplibre-gl/maplibre-gl.css'),
-    loadScript('vendor/maplibre-gl/maplibre-gl.js'),
+    loadStylesheet(`${COMPANION_ROOT}vendor/maplibre-gl/maplibre-gl.css`),
+    loadScript(`${COMPANION_ROOT}vendor/maplibre-gl/maplibre-gl.js`),
   ]).then(() => {
     if (!window.maplibregl) throw new Error('maplibre-gl no se inicializó correctamente');
     return window.maplibregl;
