@@ -1,0 +1,13 @@
+{
+  "id": "camino-frances-sarria-santiago-mario",
+  "name": "Camino Francés desde Sarria hasta Santiago",
+  "caminoId": "camino-frances",
+  "routeFile": "routes/mario-camino-frances.geojson",
+  "stages": [
+    { "path": "stages/camino-frances-mario/001-sarria-portomarin.json" },
+    { "path": "stages/camino-frances-mario/002-portomarin-palas-de-rei.json" },
+    { "path": "stages/camino-frances-mario/003-palas-de-rei-arzua.json" },
+    { "path": "stages/camino-frances-mario/004-arzua-o-pedrouzo.json" },
+    { "path": "stages/camino-frances-mario/005-o-pedrouzo-santiago.json" }
+  ]
+}

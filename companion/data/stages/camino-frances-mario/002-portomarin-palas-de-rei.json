@@ -1,0 +1,17 @@
+{
+  "number": 2,
+  "date": "2026-09-20",
+  "checkOutDate": "2026-09-21",
+  "nights": 1,
+  "origin": "Portomarín",
+  "destination": "Palas de Rei",
+  "km": 25.0,
+  "elevationGain": 640,
+  "elevationLoss": null,
+  "difficulty": "Moderada",
+  "estimatedTime": "6–7 h",
+  "coordinates": { "start": { "lat": 42.804966, "lng": -7.616855 }, "end": { "lat": 42.873217, "lng": -7.868968 } },
+  "routeFile": "routes/camino-frances/002-portomarin-palas-de-rei.geojson",
+  "accommodation": { "name": null, "locality": "Palas de Rei", "address": null, "phone": null, "checkIn": null, "notes": "Pendiente de confirmación.", "coordinates": null },
+  "notes": null
+}

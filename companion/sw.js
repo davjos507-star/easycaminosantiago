@@ -8,7 +8,7 @@
  * No usar imports/módulos aquí (compatibilidad amplia con Safari iOS).
  */
 
-const CACHE_VERSION = 'easy-camino-companion-v1';
+const CACHE_VERSION = 'easy-camino-companion-v2';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 const DATA_CACHE = `${CACHE_VERSION}-data`;

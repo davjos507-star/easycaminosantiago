@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Easy Camino Companion</title>
+</head>
+<body>
+<script>
+  try { localStorage.setItem('ecc:pilgrim-id', 'mario-jasso'); } catch (e) {}
+  var params = new URLSearchParams(location.search);
+  params.set('pilgrim', 'mario-jasso');
+  location.replace('../?' + params.toString());
+</script>
+<p>Abriendo Easy Camino Companion…</p>
+</body>
+</html>

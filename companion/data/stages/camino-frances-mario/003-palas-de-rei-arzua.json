@@ -1,0 +1,17 @@
+{
+  "number": 3,
+  "date": "2026-09-21",
+  "checkOutDate": "2026-09-22",
+  "nights": 1,
+  "origin": "Palas de Rei",
+  "destination": "Arzúa",
+  "km": 28.9,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": "Exigente",
+  "estimatedTime": "7–8 h",
+  "coordinates": { "start": { "lat": 42.873217, "lng": -7.868968 }, "end": { "lat": 42.926332, "lng": -8.162795 } },
+  "routeFile": "routes/camino-frances/003-palas-de-rei-arzua.geojson",
+  "accommodation": { "name": null, "locality": "Arzúa", "address": null, "phone": null, "checkIn": null, "notes": "Pendiente de confirmación.", "coordinates": null },
+  "notes": "La etapa pasa por Melide."
+}

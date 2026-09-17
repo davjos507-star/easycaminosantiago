@@ -167,7 +167,8 @@ function appendCaminoDistanceChip(overlay, gps) {
  */
 async function loadOfficialRoute() {
   try {
-    const res = await fetch('data/routes/osyris-camino.geojson', { cache: 'force-cache' });
+    const routeFile = appStore.getState().itinerary?.routeFile || 'routes/osyris-camino.geojson';
+    const res = await fetch(`data/${routeFile}`, { cache: 'force-cache' });
     if (!res.ok) return;
     const geojson = await res.json();
     routeLayer?.setRoute(geojson);
