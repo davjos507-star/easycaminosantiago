@@ -8,15 +8,12 @@
  * No usar imports/módulos aquí (compatibilidad amplia con Safari iOS).
  */
 
-const CACHE_VERSION = 'easy-camino-companion-v2';
+const CACHE_VERSION = 'easy-camino-companion-v3';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 const DATA_CACHE = `${CACHE_VERSION}-data`;
 const CURRENT_CACHES = [SHELL_CACHE, RUNTIME_CACHE, DATA_CACHE];
 
-// Núcleo mínimo de la app shell. El resto de módulos JS y datos se cachean
-// en tiempo de ejecución (ver fetch handler) para no tener que mantener
-// aquí una lista manual que crecerá en cada fase.
 const PRECACHE_URLS = [
   './',
   './index.html',
@@ -37,6 +34,7 @@ self.addEventListener('install', (event) => {
       .open(SHELL_CACHE)
       .then((cache) => cache.addAll(PRECACHE_URLS))
       .catch((err) => console.warn('[sw] precache incompleto:', err.message))
+      .then(() => self.skipWaiting())
   );
 });
 
@@ -49,8 +47,6 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Permite que register-sw.js fuerce la activación inmediata del worker en
-// espera cuando el usuario acepta actualizar (evita quedarse en versión vieja).
 self.addEventListener('message', (event) => {
   if (event.data?.type === 'SKIP_WAITING') self.skipWaiting();
 });
@@ -90,13 +86,7 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET') return;
 
   const url = new URL(request.url);
-
-  // Nunca interceptar peticiones fuera de nuestro propio origen (mapas,
-  // POIs, etc. en fases futuras): sin caché offline para esas todavía.
   if (url.origin !== self.location.origin) return;
-
-  // Fuera de /companion/, este service worker no debe actuar nunca
-  // (aislamiento respecto al resto del sitio).
   if (!url.pathname.startsWith('/companion/')) return;
 
   if (isDataRequest(url)) {
