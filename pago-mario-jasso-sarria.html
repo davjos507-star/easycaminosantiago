@@ -37,7 +37,7 @@
         <div class="summary-item full"><span class="summary-key">Fechas</span><span class="summary-val">18–24 septiembre 2026</span></div>
         <div class="summary-item full"><span class="summary-key">Reserva</span><span class="summary-val">3 adultos · 6 noches · 5 etapas</span></div>
         <div class="summary-item full"><span class="summary-key">Alojamiento</span><span class="summary-val">Habitación triple con baño privado</span></div>
-        <div class="summary-item full"><span class="summary-key">Incluye</span><span class="summary-val">Desayuno, traslado diario de 3 equipajes (hasta 18 kg), seguro de viaje, credenciales, asistencia e itinerario/app GPS</span></div>
+        <div class="summary-item full"><span class="summary-key">Incluye</span><span class="summary-val">Traslado diario de 3 equipajes (hasta 18 kg), seguro de viaje, credenciales, asistencia e itinerario/app GPS</span></div>
       </div>
       <div class="pay-amount">
         <div class="pa-row"><span>Precio por persona</span><strong>495 €</strong></div>
@@ -67,7 +67,7 @@
     const RESERVA={ref:'ECS-SARRIA-060173',nombre:'Mario Jasso',email:'mario.badillo7@gmail.com',telefono:'+52 444 825 1019',ruta:'Camino Francés desde Sarria',fechaInicio:'2026-09-19',total:1485,deposito:1485};
     const STRIPE_PUBLIC_KEY='pk_live_51KHQyDLdy1SiD5iFtf5Vja5WbadI1LJeYXbzUzaL1K2pFV1s9YJg1Pi2UiWQ3scujJp5PEiMxCTRkuRQok3WKoQr00qHl6XbXK';
     const state={solicitudEnviada:false,stripeInstance:null,cardNumber:null,cardExpiry:null,cardCvc:null,stripeInit:false};
-    function buildNetlifyData(){const data=new FormData(document.querySelector('form[name="reserva"]'));data.set('form-name','reserva');data.set('ruta',RESERVA.ruta);data.set('fecha-inicio',RESERVA.fechaInicio);data.set('adultos','3');data.set('ninos','0');data.set('alojamiento','Habitación triple con baño privado');data.set('nombre',RESERVA.nombre);data.set('apellido','');data.set('email',RESERVA.email);data.set('telefono',RESERVA.telefono);data.set('total',RESERVA.total+' €');data.set('deposito',RESERVA.deposito+' €');data.set('metodo-pago','Tarjeta bancaria');data.set('referencia',RESERVA.ref);data.set('observaciones','Pago total (100%) de la reserva');data.set('extras','Desayuno | Traslado diario de 3 equipajes de hasta 18 kg | Seguro de viaje | Credenciales | Asistencia | Itinerario/app GPS');return data}
+    function buildNetlifyData(){const data=new FormData(document.querySelector('form[name="reserva"]'));data.set('form-name','reserva');data.set('ruta',RESERVA.ruta);data.set('fecha-inicio',RESERVA.fechaInicio);data.set('adultos','3');data.set('ninos','0');data.set('alojamiento','Habitación triple con baño privado');data.set('nombre',RESERVA.nombre);data.set('apellido','');data.set('email',RESERVA.email);data.set('telefono',RESERVA.telefono);data.set('total',RESERVA.total+' €');data.set('deposito',RESERVA.deposito+' €');data.set('metodo-pago','Tarjeta bancaria');data.set('referencia',RESERVA.ref);data.set('observaciones','Pago total (100%) de la reserva');data.set('extras','Traslado diario de 3 equipajes de hasta 18 kg | Seguro de viaje | Credenciales | Asistencia | Itinerario/app GPS');return data}
     const SOLICITUD_STORAGE_KEY='ecs_pago_mario_jasso_solicitud';
     function guardarSolicitudEnSesion(){try{sessionStorage.setItem(SOLICITUD_STORAGE_KEY,JSON.stringify({ref:RESERVA.ref,email:RESERVA.email}))}catch(e){}}
     function leerSolicitudDeSesion(){try{const raw=sessionStorage.getItem(SOLICITUD_STORAGE_KEY);return raw?JSON.parse(raw):null}catch(e){return null}}
