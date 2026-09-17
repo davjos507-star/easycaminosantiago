@@ -36,6 +36,19 @@ const screens = {
   more: () => qs('[data-screen="more"]'),
 };
 
+// Cambia primero a la pantalla MAPA y espera a que el router haya mostrado
+// el contenedor antes de montar/centrar MapLibre. Evita montar el mapa en un
+// elemento hidden (0x0), que hacía que los botones de alojamientos parecieran
+// no responder en algunos móviles.
+function openMapThen(action, accommodation) {
+  navigateTo('map');
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      action(accommodation).catch((err) => console.error('[app] acción de alojamiento:', err));
+    });
+  });
+}
+
 function renderAllData() {
   applyStaticI18n();
   const state = appStore.getState();
@@ -43,17 +56,8 @@ function renderAllData() {
   renderMapSheet(state);
   renderCamino(screens.camino(), state);
   renderStays(screens.stays(), state, {
-    // "Ver en mapa" y "Llévame al alojamiento" ocurren siempre dentro del
-    // mapa MapLibre de Companion (nunca Google/Apple Maps ni pestañas
-    // externas): navegamos a la pantalla MAPA y delegamos en map-screen.js.
-    onViewOnMap: (acc) => {
-      navigateTo('map');
-      focusAccommodationOnMap(acc);
-    },
-    onNavigateTo: (acc) => {
-      navigateTo('map');
-      startAccommodationNavigation(acc);
-    },
+    onViewOnMap: (acc) => openMapThen(focusAccommodationOnMap, acc),
+    onNavigateTo: (acc) => openMapThen(startAccommodationNavigation, acc),
   });
   renderMoreScreen();
 }
