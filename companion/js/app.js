@@ -49,34 +49,25 @@ function openMapThen(action, accommodation) {
   });
 }
 
-function getTripEndDate(stages = []) {
-  const dates = stages
-    .map((stage) => stage.checkOutDate || stage.date)
-    .filter(Boolean)
-    .sort();
+function getCaminoCompletionDate(stages = []) {
+  const dates = stages.map((stage) => stage.date).filter(Boolean).sort();
   return dates.length ? dates[dates.length - 1] : null;
 }
 
 function isTripCompleted(stages = []) {
-  const endDate = getTripEndDate(stages);
-  if (!endDate) return false;
+  const completionDate = getCaminoCompletionDate(stages);
+  if (!completionDate) return false;
   const today = new Date();
   const localToday = [
     today.getFullYear(),
     String(today.getMonth() + 1).padStart(2, '0'),
     String(today.getDate()).padStart(2, '0'),
   ].join('-');
-  return localToday > endDate;
+  return localToday > completionDate;
 }
 
 function renderCompletedJourney(state) {
-  const { pilgrim, itinerary, stages = [] } = state;
   const todayScreen = screens.today();
-  const name = pilgrim?.name || 'Peregrino';
-  const routeName = itinerary?.name || 'Camino de Santiago';
-  const stageRows = stages.map((stage) =>
-    `<li style="margin:.65rem 0;"><strong>${stage.origin} → ${stage.destination}</strong><br><span style="opacity:.72;">${stage.km ? `${stage.km} km` : ''}</span></li>`
-  ).join('');
 
   ['map', 'camino', 'stays', 'more'].forEach((key) => {
     const el = screens[key]();
@@ -88,19 +79,15 @@ function renderCompletedJourney(state) {
   if (!todayScreen) return;
   todayScreen.hidden = false;
   todayScreen.innerHTML = `
-    <div style="max-width:680px;margin:0 auto;padding:3rem 1.25rem 5rem;text-align:center;">
+    <div style="max-width:620px;margin:0 auto;padding:4rem 1.25rem 5rem;text-align:center;">
       <div style="font-size:3rem;line-height:1;margin-bottom:1rem;">🥾</div>
       <p style="margin:0 0 .5rem;letter-spacing:.14em;text-transform:uppercase;font-size:.78rem;opacity:.65;">Easy Camino Santiago</p>
-      <h1 style="margin:.25rem 0 1rem;">¡Enhorabuena, habéis completado vuestro Camino!</h1>
-      <p style="line-height:1.55;margin:0 auto 1.5rem;max-width:540px;">${name}, esperamos que os llevéis un gran recuerdo de esta experiencia. La parte operativa de vuestra Companion ha finalizado.</p>
-      <div style="text-align:left;background:var(--cc-color-surface, #fff);border-radius:18px;padding:1.25rem;margin:1.25rem 0;box-shadow:0 4px 18px rgba(0,0,0,.06);">
-        <h2 style="margin-top:0;font-size:1.05rem;">Itinerario realizado</h2>
-        <p style="margin:.25rem 0 1rem;opacity:.72;">${routeName}</p>
-        <ol style="padding-left:1.35rem;margin:0;">${stageRows}</ol>
-      </div>
-      <p style="line-height:1.5;">Si necesitáis cualquier cosa después del viaje, seguimos a vuestra disposición.</p>
+      <h1 style="margin:.25rem 0 1rem;">¡Camino completado!</h1>
+      <p style="line-height:1.6;margin:0 auto 1.5rem;max-width:500px;">Esperamos que hayáis disfrutado de esta experiencia. Vuestra Easy Camino Companion ha finalizado junto con vuestro viaje.</p>
+      <p style="line-height:1.6;margin:0 auto 1.5rem;max-width:500px;">Por privacidad y seguridad, la información operativa del viaje ya no está disponible.</p>
+      <p style="margin-top:1.5rem;">Si necesitáis cualquier cosa, seguimos a vuestra disposición.</p>
       <p style="margin-top:1.25rem;"><a href="tel:+34625875316" style="font-weight:700;">+34 625 875 316</a><br><a href="mailto:info@easycaminosantiago.com">info@easycaminosantiago.com</a></p>
-      <p style="margin-top:2rem;font-weight:700;">Buen Camino y gracias por confiar en Easy Camino Santiago.</p>
+      <p style="margin-top:2rem;font-weight:700;">Gracias por confiar en Easy Camino Santiago.<br>¡Buen Camino!</p>
     </div>`;
 }
 
