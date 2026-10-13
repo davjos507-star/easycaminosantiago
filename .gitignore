@@ -6,3 +6,12 @@ backup-*/
 .DS_Store
 downloaded_images/.DS_Store
 img/.DS_Store
+
+# Variables de entorno locales — claves de Stripe TEST para `netlify dev`,
+# nunca deben llegar a un commit (ver procedimiento de pruebas del saldo final).
+.env
+.env.*
+!.env.*.example
+
+# Páginas de prueba locales (Stripe TEST mode) — nunca deben publicarse.
+_test/

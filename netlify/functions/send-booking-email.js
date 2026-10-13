@@ -48,19 +48,47 @@ exports.handler = async function(event) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Invalid request body' }) };
   }
 
-  const { nombre, email, telefono, ruta, fechaInicio, alojamiento, deposito, total, paymentIntentId } = booking;
-  console.log('[send-booking-email] reserva:', { ruta, email: email ? '***' : 'VACÍO', paymentIntentId });
+  const { nombre, email, telefono, ruta, fechaInicio, alojamiento, deposito, total, paymentIntentId, tipoPago } = booking;
+  console.log('[send-booking-email] reserva:', { ruta, email: email ? '***' : 'VACÍO', paymentIntentId, tipoPago: tipoPago || 'deposito' });
+
+  // tipoPago === 'saldo' identifica el pago FINAL de una reserva (el depósito ya se
+  // cobró antes). 'deposito' (valor por defecto cuando no se envía el campo) es el
+  // comportamiento histórico de esta función — no cambia para ninguna llamada existente.
+  const esSaldoFinal = tipoPago === 'saldo';
+  const importeEtiquetaAdmin   = esSaldoFinal ? 'Saldo final cobrado' : 'Depósito cobrado';
+  const importeEtiquetaCliente = esSaldoFinal ? 'Saldo final pagado'  : 'Depósito pagado';
+
+  // Deduplicado de email — SOLO para el saldo final (otros clientes no se ven
+  // afectados: no envían tipoPago, así que esta rama ni se ejecuta). Usa el
+  // mismo almacén atómico onlyIfNew que el bloqueo de cobros duplicados
+  // (kv-store.js / Netlify Blobs), por PaymentIntent ID.
+  if (esSaldoFinal && paymentIntentId) {
+    try {
+      const { getStore } = require('./lib/kv-store');
+      const store = getStore('saldo-final-emails' + (process.env.BLOBS_NAMESPACE_SUFFIX || ''));
+      const result = await store.set(paymentIntentId, { sentAt: new Date().toISOString() }, { onlyIfNew: true });
+      if (!result || !result.modified) {
+        console.log('[send-booking-email] email de saldo final ya enviado antes para este PaymentIntent — omitido:', paymentIntentId);
+        return { statusCode: 200, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ok: true, note: 'duplicate — already sent' }) };
+      }
+    } catch (err) {
+      console.warn('[send-booking-email] no se pudo comprobar/marcar el deduplicado de email — se continúa igualmente:', err.message);
+    }
+  }
 
   const fromAddress = 'Easy Camino Santiago <info@easycaminosantiago.com>';
   const adminEmail  = 'info@easycaminosantiago.com';
   const firstName   = nombre ? nombre.split(' ')[0] : 'Peregrino';
-  const restoPendiente = (Number(total) - Number(deposito)) || 0;
+  // Si es el saldo final, la reserva queda completamente abonada (0 € pendiente) —
+  // no se recalcula como total - deposito, porque aquí "deposito" contiene el importe
+  // de ESTA transacción (el saldo), no el depósito original.
+  const restoPendiente = esSaldoFinal ? 0 : ((Number(total) - Number(deposito)) || 0);
 
   // ── Email interno ──────────────────────────────────────────────────────────
   const adminHtml = `
     <div style="font-family:Arial,sans-serif;max-width:600px">
       <h2 style="color:#2D4A52;border-bottom:2px solid #56A1A4;padding-bottom:8px">
-        ✅ Nueva reserva pagada con tarjeta — ${ruta || '—'}
+        ✅ ${esSaldoFinal ? 'Saldo final cobrado' : 'Nueva reserva pagada con tarjeta'} — ${ruta || '—'}
       </h2>
       <table style="font-size:14px;border-collapse:collapse;width:100%">
         <tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888;width:140px">Cliente</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold">${nombre || '—'}</td></tr>
@@ -69,7 +97,7 @@ exports.handler = async function(event) {
         <tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Ruta</td><td style="padding:8px;border-bottom:1px solid #eee">${ruta || '—'}</td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Fecha inicio</td><td style="padding:8px;border-bottom:1px solid #eee">${fechaInicio || '—'}</td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Alojamiento</td><td style="padding:8px;border-bottom:1px solid #eee">${alojamiento || '—'}</td></tr>
-        <tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Depósito cobrado</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;color:#0e7b5c">${deposito} €</td></tr>
+        <tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">${importeEtiquetaAdmin}</td><td style="padding:8px;border-bottom:1px solid #eee;font-weight:bold;color:#0e7b5c">${deposito} €</td></tr>
         <tr><td style="padding:8px;border-bottom:1px solid #eee;color:#888">Total reserva</td><td style="padding:8px;border-bottom:1px solid #eee">${total} €</td></tr>
         <tr><td style="padding:8px;color:#888">Stripe Payment ID</td><td style="padding:8px;font-family:monospace;font-size:12px">${paymentIntentId || '—'}</td></tr>
       </table>
@@ -82,7 +110,7 @@ exports.handler = async function(event) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Depósito recibido — Easy Camino Santiago</title>
+  <title>${esSaldoFinal ? 'Saldo final recibido' : 'Depósito recibido'} — Easy Camino Santiago</title>
 </head>
 <body style="margin:0;padding:0;background:#f0f4f4;font-family:Arial,Helvetica,sans-serif;">
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#f0f4f4;padding:32px 16px;">
@@ -104,7 +132,7 @@ exports.handler = async function(event) {
     <tr>
       <td style="background:#2D4A52;padding:20px 32px 26px;text-align:center;">
         <p style="margin:0;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,0.55);text-transform:uppercase;font-weight:700;">Easy Camino Santiago</p>
-        <p style="margin:6px 0 0;font-size:21px;font-weight:700;color:#ffffff;line-height:1.3;">Depósito recibido ✓</p>
+        <p style="margin:6px 0 0;font-size:21px;font-weight:700;color:#ffffff;line-height:1.3;">${esSaldoFinal ? 'Saldo final recibido ✓' : 'Depósito recibido ✓'}</p>
       </td>
     </tr>
 
@@ -113,7 +141,9 @@ exports.handler = async function(event) {
       <td style="padding:28px 32px 20px;">
         <p style="margin:0 0 6px;font-size:16px;color:#2D4A52;font-weight:700;">Hola, ${firstName}.</p>
         <p style="margin:0;font-size:15px;color:#4a5568;line-height:1.65;">
-          Hemos recibido tu depósito correctamente. Ya estamos revisando tu solicitud y coordinaremos todos los servicios para tu Camino. En menos de 24 horas laborables te enviaremos la confirmación definitiva con toda la documentación.
+          ${esSaldoFinal
+            ? 'Hemos recibido tu saldo final correctamente. Tu reserva queda <strong>completamente abonada</strong>. En menos de 24 horas laborables te enviaremos la documentación final de tu Camino.'
+            : 'Hemos recibido tu depósito correctamente. Ya estamos revisando tu solicitud y coordinaremos todos los servicios para tu Camino. En menos de 24 horas laborables te enviaremos la confirmación definitiva con toda la documentación.'}
         </p>
       </td>
     </tr>
@@ -127,7 +157,7 @@ exports.handler = async function(event) {
             ${ruta ? `<tr><td style="padding:9px 14px;font-size:13px;color:#6b7c7e;white-space:nowrap;border-bottom:1px solid #eef0f1;">Ruta</td><td style="padding:9px 14px;font-size:13px;color:#2D4A52;font-weight:600;border-bottom:1px solid #eef0f1;">${ruta}</td></tr>` : ''}
             ${fechaInicio ? `<tr><td style="padding:9px 14px;font-size:13px;color:#6b7c7e;white-space:nowrap;border-bottom:1px solid #eef0f1;">Fecha de inicio</td><td style="padding:9px 14px;font-size:13px;color:#2D4A52;font-weight:600;border-bottom:1px solid #eef0f1;">${fechaInicio}</td></tr>` : ''}
             ${alojamiento ? `<tr><td style="padding:9px 14px;font-size:13px;color:#6b7c7e;white-space:nowrap;border-bottom:1px solid #eef0f1;">Alojamiento</td><td style="padding:9px 14px;font-size:13px;color:#2D4A52;font-weight:600;border-bottom:1px solid #eef0f1;">${alojamiento}</td></tr>` : ''}
-            <tr><td style="padding:9px 14px;font-size:13px;color:#6b7c7e;white-space:nowrap;border-bottom:1px solid #eef0f1;">Depósito pagado</td><td style="padding:9px 14px;font-size:13px;color:#0e7b5c;font-weight:700;border-bottom:1px solid #eef0f1;">${deposito} €</td></tr>
+            <tr><td style="padding:9px 14px;font-size:13px;color:#6b7c7e;white-space:nowrap;border-bottom:1px solid #eef0f1;">${importeEtiquetaCliente}</td><td style="padding:9px 14px;font-size:13px;color:#0e7b5c;font-weight:700;border-bottom:1px solid #eef0f1;">${deposito} €</td></tr>
             <tr><td style="padding:9px 14px;font-size:13px;color:#6b7c7e;white-space:nowrap;">Resto pendiente</td><td style="padding:9px 14px;font-size:13px;color:#2D4A52;font-weight:600;">${restoPendiente} €</td></tr>
           </tbody>
         </table>
@@ -142,8 +172,9 @@ exports.handler = async function(event) {
             <td style="background:#edf6f7;border-left:3px solid #56A1A4;border-radius:0 5px 5px 0;padding:12px 16px;">
               <p style="margin:0;font-size:14px;color:#2D4A52;line-height:1.55;">
                 <strong>¿Qué pasa ahora?</strong><br>
-                Nuestro equipo revisará tu solicitud y coordinará los alojamientos y servicios. Recibirás la confirmación definitiva con el itinerario y la documentación en menos de 24 horas laborables.<br><br>
-                El resto del importe se abonará una vez confirmemos todos los detalles contigo.
+                ${esSaldoFinal
+                  ? 'Tu Camino está completamente abonado. En menos de 24 horas laborables recibirás (o confirmaremos que ya tienes) la documentación final: itinerario definitivo, alojamientos y contacto de asistencia durante el Camino.'
+                  : 'Nuestro equipo revisará tu solicitud y coordinará los alojamientos y servicios. Recibirás la confirmación definitiva con el itinerario y la documentación en menos de 24 horas laborables.<br><br>El resto del importe se abonará una vez confirmemos todos los detalles contigo.'}
               </p>
             </td>
           </tr>
@@ -192,7 +223,7 @@ exports.handler = async function(event) {
     const adminResult = await resendPost({
       from: fromAddress,
       to: [adminEmail],
-      subject: `Nueva reserva (tarjeta) — ${ruta || '—'} — ${nombre || '—'}`,
+      subject: `${esSaldoFinal ? 'Saldo final cobrado' : 'Nueva reserva'} (tarjeta) — ${ruta || '—'} — ${nombre || '—'}`,
       html: adminHtml
     }, apiKey);
     console.log('[send-booking-email] email interno:', adminResult.status, JSON.stringify(adminResult.body));
@@ -211,7 +242,7 @@ exports.handler = async function(event) {
     const clientResult = await resendPost({
       from: fromAddress,
       to: [email],
-      subject: 'Depósito recibido — Empezamos a organizar tu Camino',
+      subject: esSaldoFinal ? 'Saldo final recibido — Tu Camino está completamente abonado' : 'Depósito recibido — Empezamos a organizar tu Camino',
       html: clientHtml
     }, apiKey);
     console.log('[send-booking-email] email cliente:', clientResult.status, JSON.stringify(clientResult.body));

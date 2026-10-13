@@ -11,6 +11,7 @@
 
 const https  = require('https');
 const crypto = require('crypto');
+const { marcarSaldoFinalConfirmado } = require('./lib/final-payment-store');
 
 // ── Verificación de firma Stripe ────────────────────────────────────────────
 // Stripe firma el payload con HMAC-SHA256 usando el webhook secret.
@@ -187,6 +188,13 @@ async function findDealForContact(token, contactId, pipelinesInfo) {
 }
 
 async function updateDealOnPaymentSuccess(token, contactId, pi) {
+  // tipo_pago === 'saldo' identifica el pago FINAL de una reserva (vs. el depósito
+  // inicial). No existe en el pipeline una etapa "pagado completo" — por eso, a
+  // diferencia del depósito, el saldo final no mueve el negocio de etapa
+  // automáticamente, solo deja constancia en la nota. Cambiar la etapa a mano
+  // sigue siendo decisión del equipo.
+  const esSaldoFinal = !!(pi.metadata && pi.metadata.tipo_pago === 'saldo');
+
   const pipelinesInfo = await getPipelinesInfo(token);
   if (!pipelinesInfo) {
     console.warn('[STRIPE-WEBHOOK] no se pudo obtener info de pipelines — negocio no actualizado');
@@ -199,24 +207,28 @@ async function updateDealOnPaymentSuccess(token, contactId, pi) {
     return;
   }
 
-  const info = target.pipelineId ? pipelinesInfo.get(target.pipelineId) : null;
-  if (info && info.depositStageId) {
-    const upd = await hubspotRequest('PATCH', '/crm/v3/objects/deals/' + target.dealId, token, {
-      properties: { dealstage: info.depositStageId },
-    });
-    if (upd.status >= 400) {
-      console.error('[STRIPE-WEBHOOK] error al mover etapa del negocio — status:', upd.status, JSON.stringify(upd.body));
-    } else {
-      console.log('[STRIPE-WEBHOOK] negocio movido a etapa "depósito pagado" | negocio:', target.dealId);
-    }
+  if (esSaldoFinal) {
+    console.log('[STRIPE-WEBHOOK] pago de saldo final — no se cambia de etapa (sin etapa "pagado completo" configurada) | negocio:', target.dealId);
   } else {
-    console.warn('[STRIPE-WEBHOOK] no se encontró etapa "depósito pagado" en el pipeline — negocio no cambia de etapa | negocio:', target.dealId);
+    const info = target.pipelineId ? pipelinesInfo.get(target.pipelineId) : null;
+    if (info && info.depositStageId) {
+      const upd = await hubspotRequest('PATCH', '/crm/v3/objects/deals/' + target.dealId, token, {
+        properties: { dealstage: info.depositStageId },
+      });
+      if (upd.status >= 400) {
+        console.error('[STRIPE-WEBHOOK] error al mover etapa del negocio — status:', upd.status, JSON.stringify(upd.body));
+      } else {
+        console.log('[STRIPE-WEBHOOK] negocio movido a etapa "depósito pagado" | negocio:', target.dealId);
+      }
+    } else {
+      console.warn('[STRIPE-WEBHOOK] no se encontró etapa "depósito pagado" en el pipeline — negocio no cambia de etapa | negocio:', target.dealId);
+    }
   }
 
   const importeRecibido = typeof pi.amount_received === 'number' ? pi.amount_received / 100 : undefined;
   const dealNoteLines = [
     'Evento Stripe: payment_intent.succeeded',
-    'Depósito pagado vía Stripe',
+    esSaldoFinal ? 'Saldo final pagado vía Stripe' : 'Depósito pagado vía Stripe',
     'PaymentIntent ID: ' + pi.id,
     importeRecibido !== undefined ? 'Importe recibido: ' + importeRecibido + ' €' : null,
     pi.metadata && pi.metadata.reserva_id ? 'Referencia reserva: ' + pi.metadata.reserva_id : null,
@@ -275,8 +287,18 @@ exports.handler = async function(event) {
     return { statusCode: 500, body: 'Webhook secret not configured' };
   }
 
+  // TEST_SKIP_HUBSPOT: SOLO para pruebas locales (netlify dev + Stripe CLI en
+  // modo test) — permite probar el bloqueo de cobros duplicados del saldo
+  // final sin escribir nada en el HubSpot real. Nunca debe estar activa en
+  // producción (no se define ahí, así que por defecto este bloque no cambia
+  // nada del comportamiento actual).
+  const skipHubspot = process.env.TEST_SKIP_HUBSPOT === 'true';
+  if (skipHubspot) {
+    console.warn('[STRIPE-WEBHOOK] TEST_SKIP_HUBSPOT=true — modo de pruebas locales, no se tocará HubSpot');
+  }
+
   const hubspotToken = process.env.HUBSPOT_TOKEN;
-  if (!hubspotToken) {
+  if (!hubspotToken && !skipHubspot) {
     console.error('[STRIPE-WEBHOOK] HUBSPOT_TOKEN no configurado');
     return { statusCode: 500, body: 'HubSpot token not configured' };
   }
@@ -327,13 +349,15 @@ exports.handler = async function(event) {
   // Se usa pi.id + eventType (no solo pi.id) porque un mismo PaymentIntent reutilizado
   // en reintentos de pago puede tener legítimamente un evento "failed" y luego uno
   // "succeeded" — eso no es un duplicado, son dos eventos distintos y deben registrarse.
-  try {
-    if (await isEventAlreadyProcessed(hubspotToken, pi.id, eventType)) {
-      console.log('[STRIPE-WEBHOOK] evento ya procesado (nota existente) — omitido | pi:', pi.id, '| evento:', eventType);
-      return { statusCode: 200, body: 'already processed' };
+  if (!skipHubspot) {
+    try {
+      if (await isEventAlreadyProcessed(hubspotToken, pi.id, eventType)) {
+        console.log('[STRIPE-WEBHOOK] evento ya procesado (nota existente) — omitido | pi:', pi.id, '| evento:', eventType);
+        return { statusCode: 200, body: 'already processed' };
+      }
+    } catch (err) {
+      console.warn('[STRIPE-WEBHOOK] no se pudo verificar idempotencia, se continúa de todas formas:', err.message);
     }
-  } catch (err) {
-    console.warn('[STRIPE-WEBHOOK] no se pudo verificar idempotencia, se continúa de todas formas:', err.message);
   }
 
   // ── Extraer email (orden de prioridad) ───────────────────────────────────
@@ -356,22 +380,41 @@ exports.handler = async function(event) {
   if (eventType === 'payment_intent.succeeded') {
     console.log('[STRIPE-WEBHOOK] pago correcto | pi:', pi.id, '| email:', email);
 
+    // tipo_pago === 'saldo' identifica el pago FINAL de una reserva (el resto del
+    // importe tras un depósito ya cobrado). Se distingue para no sobrescribir
+    // importe_deposito (que ya refleja el depósito real) con el importe del saldo,
+    // y para que estado_reserva / la nota no digan "depósito" sobre un pago que no
+    // lo es.
+    const esSaldoFinal = !!(pi.metadata && pi.metadata.tipo_pago === 'saldo');
+
+    // Se marca "saldo confirmado" aquí — justo tras verificar la firma de Stripe
+    // y antes de tocar HubSpot — para que el bloqueo de cobros duplicados en
+    // create-payment-intent.js no dependa de que HubSpot esté disponible.
+    if (esSaldoFinal && pi.metadata.reserva_id) {
+      try {
+        await marcarSaldoFinalConfirmado(pi.metadata.reserva_id, pi.id);
+        console.log('[STRIPE-WEBHOOK] saldo final marcado como confirmado | reserva:', pi.metadata.reserva_id, '| pi:', pi.id);
+      } catch (err) {
+        console.error('[STRIPE-WEBHOOK] no se pudo marcar el saldo final como confirmado:', err.message);
+      }
+    }
+
     const importeRecibido = typeof pi.amount_received === 'number'
       ? pi.amount_received / 100
       : undefined;
 
     properties = {
-      estado_reserva:       'deposito_pagado',
+      estado_reserva:       esSaldoFinal ? 'saldo_pagado' : 'deposito_pagado',
       stripe_payment_id:    pi.id,
       metodo_pago_reserva:  'Tarjeta bancaria',
-      ...(importeRecibido !== undefined && { importe_deposito: importeRecibido }),
+      ...(!esSaldoFinal && importeRecibido !== undefined && { importe_deposito: importeRecibido }),
     };
 
     noteLines = [
       'Evento Stripe: payment_intent.succeeded',
-      'Estado aplicado: deposito_pagado',
+      'Estado aplicado: ' + (esSaldoFinal ? 'saldo_pagado' : 'deposito_pagado'),
       'PaymentIntent ID: ' + pi.id,
-      importeRecibido !== undefined ? 'Importe recibido: ' + importeRecibido + ' €' : null,
+      importeRecibido !== undefined ? (esSaldoFinal ? 'Importe recibido (saldo final): ' : 'Importe recibido: ') + importeRecibido + ' €' : null,
       pi.metadata && pi.metadata.reserva_id ? 'Referencia reserva: ' + pi.metadata.reserva_id : null,
       'Email: ' + email,
       'Fecha: ' + fechaEvento,
@@ -400,6 +443,15 @@ exports.handler = async function(event) {
       'Email: ' + email,
       'Fecha: ' + fechaEvento,
     ];
+  }
+
+  if (skipHubspot) {
+    console.log('[STRIPE-WEBHOOK] TEST_SKIP_HUBSPOT=true — se omite toda escritura en HubSpot | evento:', eventType);
+    return {
+      statusCode: 200,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ received: true, event: eventType, testSkippedHubspot: true }),
+    };
   }
 
   // ── Actualizar HubSpot ────────────────────────────────────────────────────

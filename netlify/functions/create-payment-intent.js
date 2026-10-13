@@ -1,6 +1,14 @@
 const https = require('https');
+const FINAL_PAYMENTS_REGISTRY = require('./lib/final-payments-registry');
+const { obtenerSaldoFinalConfirmado } = require('./lib/final-payment-store');
 
-function stripePost(path, payload, secretKey) {
+// idempotencyKey (opcional): cuando se pasa, Stripe garantiza que varias
+// llamadas con la MISMA clave devuelven siempre el MISMO PaymentIntent en vez
+// de crear uno nuevo — es el mecanismo propio de Stripe para solicitudes
+// concurrentes/duplicadas. No se usa en las llamadas existentes (depósito,
+// pago total, etc.) — solo se añade para tipo_pago === 'saldo', así que su
+// comportamiento no cambia para ningún otro cliente.
+function stripePost(path, payload, secretKey, idempotencyKey) {
   return new Promise((resolve, reject) => {
     const body = new URLSearchParams(payload).toString();
     const options = {
@@ -10,7 +18,8 @@ function stripePost(path, payload, secretKey) {
       headers: {
         'Authorization': 'Bearer ' + secretKey,
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Content-Length': Buffer.byteLength(body)
+        'Content-Length': Buffer.byteLength(body),
+        ...(idempotencyKey && { 'Idempotency-Key': idempotencyKey }),
       }
     };
     const req = https.request(options, res => {
@@ -45,6 +54,20 @@ exports.handler = async function(event) {
     };
   }
 
+  // Guardarraíl de pruebas — SEGUNDO nivel, independiente de que el .env local
+  // tenga prioridad o no: si TEST_MODE_REQUIRE_TEST_KEYS=true está activo (solo
+  // en entornos de prueba, nunca en producción) y la clave resuelta NO es de
+  // test, se aborta aquí mismo, antes de llamar a Stripe. No depende de ningún
+  // otro mecanismo de precedencia de variables de entorno.
+  if (process.env.TEST_MODE_REQUIRE_TEST_KEYS === 'true' && !secretKey.startsWith('sk_test_')) {
+    console.error('[create-payment-intent] TEST_MODE_REQUIRE_TEST_KEYS=true pero STRIPE_SECRET_KEY no es sk_test_ — abortado por seguridad, no se llama a Stripe');
+    return {
+      statusCode: 500,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ error: 'Modo de pruebas activo pero la clave de Stripe configurada no es de test. Abortado por seguridad — no se ha llamado a Stripe.' })
+    };
+  }
+
   let amount, description, metadata;
   try {
     ({ amount, description, metadata } = JSON.parse(event.body));
@@ -75,6 +98,58 @@ exports.handler = async function(event) {
     };
   }
 
+  // ── Pagos de SALDO FINAL (tipo_pago === 'saldo') — validación server-side ──
+  // Este bloque solo se activa para metadata.tipo_pago === 'saldo'. Ningún otro
+  // flujo (depósito, pago total, etc.) lo atraviesa, así que su comportamiento
+  // no cambia para ningún otro cliente.
+  let idempotencyKey;
+  if (metadata && metadata.tipo_pago === 'saldo') {
+    const reservaId = typeof metadata.reserva_id === 'string' ? metadata.reserva_id.trim() : '';
+    const reserva = reservaId && FINAL_PAYMENTS_REGISTRY[reservaId];
+
+    // La referencia debe existir en el registro server-side — una reserva no
+    // registrada no puede cobrarse como saldo final (falla cerrado). Esto
+    // impide inventar/cambiar la referencia desde el navegador.
+    if (!reserva) {
+      return {
+        statusCode: 400,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: 'Reserva no reconocida para pago de saldo final' })
+      };
+    }
+
+    // El importe SIEMPRE sale del registro server-side, nunca del navegador —
+    // si el importe recibido no coincide, se registra mismo así (puede indicar
+    // una página desincronizada) pero se cobra el importe correcto igualmente.
+    if (amount !== reserva.amountEUR) {
+      console.warn('[create-payment-intent] importe recibido no coincide con el registrado — se usa el del registro:', { reservaId, recibido: amount, registrado: reserva.amountEUR });
+    }
+    amount = reserva.amountEUR;
+
+    // Comprobación de "ya pagado" — fuente de verdad: el registro que escribe
+    // stripe-webhook.js tras verificar un payment_intent.succeeded real y
+    // firmado por Stripe. Si falla la consulta (p. ej. Blobs no disponible un
+    // instante), no bloqueamos el primer intento legítimo de pago — el resto
+    // de capas (Idempotency-Key + el propio webhook) siguen protegiendo.
+    try {
+      const yaConfirmado = await obtenerSaldoFinalConfirmado(reservaId);
+      if (yaConfirmado) {
+        return {
+          statusCode: 409,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ error: 'Esta reserva ya tiene el saldo final pagado.', alreadyPaid: true })
+        };
+      }
+    } catch (err) {
+      console.warn('[create-payment-intent] no se pudo comprobar el registro de saldo final confirmado, se continúa:', err.message);
+    }
+
+    // Clave de idempotencia determinista: si dos solicitudes llegan casi a la
+    // vez para la misma reserva (doble clic, dos pestañas, recarga), Stripe
+    // las resuelve devolviendo el MISMO PaymentIntent en vez de crear dos.
+    idempotencyKey = 'saldo-final:' + reservaId;
+  }
+
   // El frontend envía euros; Stripe requiere céntimos
   const amountCents = Math.round(amount * 100);
 
@@ -92,7 +167,7 @@ exports.handler = async function(event) {
   }
 
   try {
-    const { status, body: stripe } = await stripePost('/v1/payment_intents', payload, secretKey);
+    const { status, body: stripe } = await stripePost('/v1/payment_intents', payload, secretKey, idempotencyKey);
 
     if (status !== 200 || !stripe.client_secret) {
       return {
