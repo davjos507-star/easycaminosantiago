@@ -1,0 +1,26 @@
+{
+  "number": 1,
+  "date": "2026-10-26",
+  "checkOutDate": "2026-10-27",
+  "nights": 1,
+  "origin": "Sarria",
+  "destination": "Portomarín",
+  "km": 22.0,
+  "elevationGain": 440,
+  "elevationLoss": null,
+  "difficulty": "Moderada",
+  "estimatedTime": "5–6 h",
+  "coordinates": { "start": { "lat": 42.777421, "lng": -7.414834 }, "end": { "lat": 42.804966, "lng": -7.616855 } },
+  "routeFile": "routes/camino-frances/001-sarria-portomarin.geojson",
+  "accommodation": {
+    "name": "Pensión Pons Minea",
+    "locality": "Portomarín",
+    "address": "Avenida de Sarria, 11, Portomarín, Lugo",
+    "phone": "+34 610 737 995",
+    "checkIn": null,
+    "confirmationStatus": "confirmed",
+    "notes": "Reserva confirmada. Cama en dormitorio compartido. Desayuno incluido. Sábana bajera y mantas disponibles.",
+    "coordinates": { "lat": 42.806010, "lng": -7.617190 }
+  },
+  "notes": "Transporte de mochila incluido para esta etapa."
+}

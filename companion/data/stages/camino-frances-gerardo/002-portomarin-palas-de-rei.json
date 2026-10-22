@@ -1,0 +1,26 @@
+{
+  "number": 2,
+  "date": "2026-10-27",
+  "checkOutDate": "2026-10-28",
+  "nights": 1,
+  "origin": "Portomarín",
+  "destination": "Palas de Rei",
+  "km": 25.0,
+  "elevationGain": 640,
+  "elevationLoss": null,
+  "difficulty": "Moderada",
+  "estimatedTime": "6–7 h",
+  "coordinates": { "start": { "lat": 42.804966, "lng": -7.616855 }, "end": { "lat": 42.873217, "lng": -7.868968 } },
+  "routeFile": "routes/camino-frances/002-portomarin-palas-de-rei.geojson",
+  "accommodation": {
+    "name": "Albergue San Marcos",
+    "locality": "Palas de Rei",
+    "address": "Travesía da Igrexa, s/n, 27200 Palas de Rei, Lugo",
+    "phone": "+34 606 726 356",
+    "checkIn": null,
+    "confirmationStatus": "confirmed",
+    "notes": "Reserva confirmada. Teléfono alternativo: +34 982 380 711. Cama en dormitorio compartido. Desayuno no incluido. Sábana bajera, funda de almohada y mantas disponibles.",
+    "coordinates": { "lat": 42.872586, "lng": -7.868204 }
+  },
+  "notes": "Transporte de mochila incluido para esta etapa."
+}

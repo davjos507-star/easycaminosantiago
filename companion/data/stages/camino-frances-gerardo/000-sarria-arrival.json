@@ -1,0 +1,26 @@
+{
+  "number": 0,
+  "date": "2026-10-25",
+  "checkOutDate": "2026-10-26",
+  "nights": 1,
+  "origin": null,
+  "destination": "Sarria",
+  "km": null,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": null,
+  "estimatedTime": null,
+  "coordinates": null,
+  "routeFile": null,
+  "accommodation": {
+    "name": "Pensión Albergue Don Álvaro",
+    "locality": "Sarria",
+    "address": "Rúa Maior, 10, 27600 Sarria, Lugo",
+    "phone": "+34 686 468 803",
+    "checkIn": null,
+    "confirmationStatus": "confirmed",
+    "notes": "Reserva pagada. Teléfono alternativo: +34 982 531 592. Cama en dormitorio compartido. Desayuno no incluido. Sábana bajera y mantas disponibles.",
+    "coordinates": { "lat": 42.776973, "lng": -7.416838 }
+  },
+  "notes": "Día de llegada, sin caminata."
+}

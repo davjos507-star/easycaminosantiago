@@ -1,0 +1,26 @@
+{
+  "number": 4,
+  "date": "2026-10-29",
+  "checkOutDate": "2026-10-30",
+  "nights": 1,
+  "origin": "Casa Garea (Castañeda)",
+  "destination": "O Pedrouzo",
+  "km": 23.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": "Moderada",
+  "estimatedTime": "5–6 h",
+  "coordinates": { "start": { "lat": 42.9318935, "lng": -8.1135139 }, "end": { "lat": 42.912301, "lng": -8.357313 } },
+  "routeFile": "routes/camino-frances/004-arzua-o-pedrouzo.geojson",
+  "accommodation": {
+    "name": "Albergue Mirador de Pedrouzo",
+    "locality": "O Pedrouzo",
+    "address": "Avenida de Lugo, 27, 15821 O Pedrouzo, A Coruña",
+    "phone": "+34 686 871 215",
+    "checkIn": null,
+    "confirmationStatus": "confirmed",
+    "notes": "Reserva pagada. Cama en dormitorio compartido. Desayuno no incluido. Sábana bajera, funda de almohada y mantas disponibles.",
+    "coordinates": { "lat": 42.907043, "lng": -8.359888 }
+  },
+  "notes": "Origen real: Casa Garea (Castañeda), antes del núcleo de Arzúa. La línea de ruta reutiliza el trazado oficial Arzúa→O Pedrouzo (el origen real queda unos km antes de Arzúa); la distancia de 23 km es la estimación comercial del itinerario, no una medición GPS exacta del tramo parcial. Transporte de mochila incluido para esta etapa."
+}

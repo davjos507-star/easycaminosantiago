@@ -1,0 +1,26 @@
+{
+  "number": 3,
+  "date": "2026-10-28",
+  "checkOutDate": "2026-10-29",
+  "nights": 1,
+  "origin": "Palas de Rei",
+  "destination": "Casa Garea (Castañeda)",
+  "km": 25.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": "Exigente",
+  "estimatedTime": "6–7 h",
+  "coordinates": { "start": { "lat": 42.873217, "lng": -7.868968 }, "end": { "lat": 42.9318935, "lng": -8.1135139 } },
+  "routeFile": "routes/camino-frances/003-palas-de-rei-arzua.geojson",
+  "accommodation": {
+    "name": "Casa Garea",
+    "locality": "Castañeda (Arzúa)",
+    "address": "Lugar da Portela, s/n, Castañeda, 15819 Arzúa, A Coruña",
+    "phone": "+34 619 967 675",
+    "checkIn": null,
+    "confirmationStatus": "confirmed",
+    "notes": "Reserva confirmada. Habitación individual. Desayuno incluido. Importante: el destino es Casa Garea, en Castañeda — no el centro de Arzúa.",
+    "coordinates": { "lat": 42.9318935, "lng": -8.1135139 }
+  },
+  "notes": "Destino real: Casa Garea (Castañeda), unos km antes del núcleo de Arzúa siguiendo el Camino. La línea de ruta reutiliza el trazado oficial Palas de Rei→Arzúa (continúa unos km más allá de Castañeda); la distancia de 25 km es la estimación comercial del itinerario, no una medición GPS exacta del tramo parcial. Transporte de mochila incluido para esta etapa."
+}

@@ -1,0 +1,26 @@
+{
+  "number": 5,
+  "date": "2026-10-30",
+  "checkOutDate": "2026-10-31",
+  "nights": 1,
+  "origin": "O Pedrouzo",
+  "destination": "Santiago de Compostela",
+  "km": 20.0,
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": "Moderada",
+  "estimatedTime": "5–6 h",
+  "coordinates": { "start": { "lat": 42.912301, "lng": -8.357313 }, "end": { "lat": 42.880928, "lng": -8.544470 } },
+  "routeFile": "routes/camino-frances/005-o-pedrouzo-santiago.geojson",
+  "accommodation": {
+    "name": "Pensión Santa Rita",
+    "locality": "Santiago de Compostela",
+    "address": "Rúa de Frei Rosendo Salvado, 4, 15701 Santiago de Compostela, A Coruña",
+    "phone": "+34 653 592 079",
+    "checkIn": null,
+    "confirmationStatus": "confirmed",
+    "notes": "Reserva confirmada. Habitación individual. Desayuno no incluido. Salida el sábado 31 de octubre.",
+    "coordinates": { "lat": 42.874180, "lng": -8.550020 }
+  },
+  "notes": "Transporte de mochila incluido para esta etapa (última de las 5 contratadas)."
+}

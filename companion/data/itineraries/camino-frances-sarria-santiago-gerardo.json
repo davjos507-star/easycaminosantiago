@@ -1,0 +1,14 @@
+{
+  "id": "camino-frances-sarria-santiago-gerardo",
+  "name": "Camino Francés desde Sarria hasta Santiago",
+  "caminoId": "camino-frances",
+  "routeFile": "routes/mario-camino-frances.geojson",
+  "stages": [
+    { "path": "stages/camino-frances-gerardo/000-sarria-arrival.json" },
+    { "path": "stages/camino-frances-gerardo/001-sarria-portomarin.json" },
+    { "path": "stages/camino-frances-gerardo/002-portomarin-palas-de-rei.json" },
+    { "path": "stages/camino-frances-gerardo/003-palas-de-rei-casa-garea.json" },
+    { "path": "stages/camino-frances-gerardo/004-casa-garea-o-pedrouzo.json" },
+    { "path": "stages/camino-frances-gerardo/005-o-pedrouzo-santiago.json" }
+  ]
+}
