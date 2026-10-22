@@ -3,6 +3,7 @@
   "name": "Camino Francés desde Sarria hasta Santiago",
   "caminoId": "camino-frances",
   "routeFile": "routes/mario-camino-frances.geojson",
+  "showStayDetails": true,
   "stages": [
     { "path": "stages/camino-frances-gerardo/000-sarria-arrival.json" },
     { "path": "stages/camino-frances-gerardo/001-sarria-portomarin.json" },

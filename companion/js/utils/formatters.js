@@ -6,7 +6,8 @@ export function formatPending(locale = 'en') {
 
 export function formatKm(value, locale = 'en') {
   if (value === null || value === undefined || Number.isNaN(value)) return formatPending(locale);
-  return `${value.toFixed(1)} km`;
+  const text = value.toFixed(1);
+  return `${locale === 'es' ? text.replace('.', ',') : text} km`;
 }
 
 // Distancia medida realmente (GPS registrado en EN CAMINO, o restante por
@@ -33,6 +34,24 @@ export function formatDate(isoDate, locale = 'en') {
       day: 'numeric',
       month: 'short',
     }).format(date);
+  } catch (err) {
+    return isoDate;
+  }
+}
+
+// "domingo, 25 de octubre de 2026" — día de la semana y fecha completa.
+// Con { year: false }: "domingo 25 de octubre".
+export function formatLongDate(isoDate, locale = 'en', { year = true } = {}) {
+  if (!isoDate) return formatPending(locale);
+  try {
+    const date = new Date(`${isoDate}T00:00:00`);
+    const formatted = new Intl.DateTimeFormat(locale === 'es' ? 'es-ES' : 'en-GB', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      ...(year ? { year: 'numeric' } : {}),
+    }).format(date);
+    return year ? formatted : formatted.replace(',', '');
   } catch (err) {
     return isoDate;
   }

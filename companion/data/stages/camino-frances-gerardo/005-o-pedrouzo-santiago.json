@@ -5,22 +5,43 @@
   "nights": 1,
   "origin": "O Pedrouzo",
   "destination": "Santiago de Compostela",
-  "km": 20.0,
+  "km": 21.5,
+  "kmNote": "Medido de alojamiento a alojamiento siguiendo el Camino: unos 20,4 km hasta la Catedral y unos 1,1 km más desde la Catedral hasta la Pensión Santa Rita.",
   "elevationGain": null,
   "elevationLoss": null,
   "difficulty": "Moderada",
   "estimatedTime": "5–6 h",
-  "coordinates": { "start": { "lat": 42.912301, "lng": -8.357313 }, "end": { "lat": 42.880928, "lng": -8.544470 } },
+  "coordinates": {
+    "start": {
+      "lat": 42.907043,
+      "lng": -8.359888
+    },
+    "end": {
+      "lat": 42.87418,
+      "lng": -8.55002
+    }
+  },
   "routeFile": "routes/camino-frances/005-o-pedrouzo-santiago.geojson",
   "accommodation": {
     "name": "Pensión Santa Rita",
-    "locality": "Santiago de Compostela",
+    "locality": "Santiago de Compostela (A Coruña)",
     "address": "Rúa de Frei Rosendo Salvado, 4, 15701 Santiago de Compostela, A Coruña",
     "phone": "+34 653 592 079",
+    "phones": [
+      {
+        "number": "+34 653 592 079"
+      }
+    ],
+    "roomType": "Habitación individual",
+    "breakfast": "Desayuno no incluido",
+    "bookingStatus": "Reserva confirmada",
     "checkIn": null,
     "confirmationStatus": "confirmed",
     "notes": "Reserva confirmada. Habitación individual. Desayuno no incluido. Salida el sábado 31 de octubre.",
-    "coordinates": { "lat": 42.874180, "lng": -8.550020 }
+    "coordinates": {
+      "lat": 42.87418,
+      "lng": -8.55002
+    }
   },
   "notes": "Transporte de mochila incluido para esta etapa (última de las 5 contratadas)."
 }

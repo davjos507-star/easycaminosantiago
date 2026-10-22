@@ -5,22 +5,47 @@
   "nights": 1,
   "origin": "Palas de Rei",
   "destination": "Casa Garea (Castañeda)",
-  "km": 25.0,
+  "km": 26.3,
+  "kmNote": "Medido de alojamiento a alojamiento siguiendo el Camino. Incluye unos 1,1 km de acceso desde el Camino hasta Casa Garea (A Portela, Castañeda), antes de Ribadiso y Arzúa.",
   "elevationGain": null,
   "elevationLoss": null,
   "difficulty": "Exigente",
-  "estimatedTime": "6–7 h",
-  "coordinates": { "start": { "lat": 42.873217, "lng": -7.868968 }, "end": { "lat": 42.9318935, "lng": -8.1135139 } },
+  "estimatedTime": "6,5–7,5 h",
+  "coordinates": {
+    "start": {
+      "lat": 42.872743,
+      "lng": -7.867917
+    },
+    "end": {
+      "lat": 42.931832,
+      "lng": -8.113587
+    }
+  },
   "routeFile": "routes/camino-frances/003-palas-de-rei-arzua.geojson",
   "accommodation": {
     "name": "Casa Garea",
-    "locality": "Castañeda (Arzúa)",
+    "locality": "A Portela, Castañeda (Arzúa, A Coruña)",
     "address": "Lugar da Portela, s/n, Castañeda, 15819 Arzúa, A Coruña",
     "phone": "+34 619 967 675",
+    "phones": [
+      {
+        "number": "+34 619 967 675",
+        "label": "Reservas"
+      },
+      {
+        "number": "+34 981 500 400"
+      }
+    ],
+    "roomType": "Habitación individual",
+    "breakfast": "Desayuno incluido",
+    "bookingStatus": "Reserva confirmada",
     "checkIn": null,
     "confirmationStatus": "confirmed",
     "notes": "Reserva confirmada. Habitación individual. Desayuno incluido. Importante: el destino es Casa Garea, en Castañeda — no el centro de Arzúa.",
-    "coordinates": { "lat": 42.9318935, "lng": -8.1135139 }
+    "coordinates": {
+      "lat": 42.931832,
+      "lng": -8.113587
+    }
   },
-  "notes": "Destino real: Casa Garea (Castañeda), unos km antes del núcleo de Arzúa siguiendo el Camino. La línea de ruta reutiliza el trazado oficial Palas de Rei→Arzúa (continúa unos km más allá de Castañeda); la distancia de 25 km es la estimación comercial del itinerario, no una medición GPS exacta del tramo parcial. Transporte de mochila incluido para esta etapa."
+  "notes": "Destino real: Casa Garea, en A Portela (Castañeda), unos km antes del núcleo de Arzúa. Transporte de mochila incluido para esta etapa."
 }

@@ -6,21 +6,47 @@
   "origin": "Sarria",
   "destination": "Portomarín",
   "km": 22.0,
+  "kmNote": "Medido de alojamiento a alojamiento siguiendo el Camino.",
   "elevationGain": 440,
   "elevationLoss": null,
   "difficulty": "Moderada",
   "estimatedTime": "5–6 h",
-  "coordinates": { "start": { "lat": 42.777421, "lng": -7.414834 }, "end": { "lat": 42.804966, "lng": -7.616855 } },
+  "coordinates": {
+    "start": {
+      "lat": 42.777004,
+      "lng": -7.41683
+    },
+    "end": {
+      "lat": 42.805913,
+      "lng": -7.617251
+    }
+  },
   "routeFile": "routes/camino-frances/001-sarria-portomarin.geojson",
   "accommodation": {
-    "name": "Pensión Pons Minea",
-    "locality": "Portomarín",
-    "address": "Avenida de Sarria, 11, Portomarín, Lugo",
+    "name": "Pensión Albergue Pons Minea",
+    "locality": "Portomarín (Lugo)",
+    "address": "Avenida de Sarria, 11, 27170 Portomarín, Lugo",
     "phone": "+34 610 737 995",
+    "phones": [
+      {
+        "number": "+34 610 737 995",
+        "label": "Reservas"
+      },
+      {
+        "number": "+34 686 456 931"
+      }
+    ],
+    "email": "info@ponsminea.es",
+    "roomType": "Dormitorio compartido",
+    "breakfast": "Desayuno incluido",
+    "bookingStatus": "Reserva confirmada",
     "checkIn": null,
     "confirmationStatus": "confirmed",
     "notes": "Reserva confirmada. Cama en dormitorio compartido. Desayuno incluido. Sábana bajera y mantas disponibles.",
-    "coordinates": { "lat": 42.806010, "lng": -7.617190 }
+    "coordinates": {
+      "lat": 42.805913,
+      "lng": -7.617251
+    }
   },
   "notes": "Transporte de mochila incluido para esta etapa."
 }

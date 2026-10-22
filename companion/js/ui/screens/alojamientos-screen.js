@@ -1,6 +1,7 @@
 import { t, getLocale } from '../../utils/i18n.js';
 import { formatPending, formatDate } from '../../utils/formatters.js';
 import { icon } from '../components/icons.js';
+import { isStayDetailsEnabled, renderStayDetails } from '../components/stay-details.js';
 import { renderLoading, renderError, renderEmpty } from '../components/state-views.js';
 
 export function renderStaysLoading(container) {
@@ -18,8 +19,9 @@ export function renderStaysError(container, message) {
  * `onNavigateTo` los conecta app.js con las funciones correspondientes de
  * map-screen.js.
  */
-export function renderStays(container, { stages }, { onViewOnMap, onNavigateTo } = {}) {
+export function renderStays(container, { stages, itinerary }, { onViewOnMap, onNavigateTo } = {}) {
   const locale = getLocale();
+  const showDetails = isStayDetailsEnabled(itinerary);
   const withAccommodation = (stages || []).filter((s) => s.accommodation);
 
   if (withAccommodation.length === 0) {
@@ -35,12 +37,18 @@ export function renderStays(container, { stages }, { onViewOnMap, onNavigateTo }
         <div class="cc-card">
           <div class="cc-eyebrow">${formatDate(stage.date, locale)} · ${acc.locality || formatPending(locale)}</div>
           <div style="font-weight:800; font-family:var(--cc-font-heading); margin-bottom:4px" class="${acc.name ? '' : 'cc-pending'}">${acc.name || formatPending(locale)}</div>
-          <div class="${acc.address ? '' : 'cc-pending'}" style="color:var(--cc-text-muted); font-size:0.9rem; margin-bottom:12px">${acc.address || formatPending(locale)}</div>
+          ${showDetails
+            ? `${renderStayDetails(stage)}
+          <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px">
+            <button type="button" class="cc-btn cc-btn--secondary cc-btn--sm cc-btn--auto" data-action="view" data-idx="${idx}" ${hasCoords ? '' : 'disabled'}>${icon('pin')} ${t('stays.view_on_map')}</button>
+            <button type="button" class="cc-btn cc-btn--secondary cc-btn--sm cc-btn--auto" data-action="navigate" data-idx="${idx}" ${hasCoords ? '' : 'disabled'}>${icon('locationArrow')} ${t('stays.take_me_there')}</button>
+          </div>`
+            : `<div class="${acc.address ? '' : 'cc-pending'}" style="color:var(--cc-text-muted); font-size:0.9rem; margin-bottom:12px">${acc.address || formatPending(locale)}</div>
           <div style="display:flex; gap:8px; flex-wrap:wrap">
             <button type="button" class="cc-btn cc-btn--secondary cc-btn--sm" data-action="view" data-idx="${idx}" ${hasCoords ? '' : 'disabled'}>${icon('pin')} ${t('stays.view_on_map')}</button>
             <button type="button" class="cc-btn cc-btn--secondary cc-btn--sm" data-action="navigate" data-idx="${idx}" ${hasCoords ? '' : 'disabled'}>${icon('locationArrow')} ${t('stays.take_me_there')}</button>
             <a class="cc-btn cc-btn--secondary cc-btn--sm" ${acc.phone ? `href="tel:${acc.phone}"` : 'disabled'}>${icon('phone')} ${t('stays.call')}</a>
-          </div>
+          </div>`}
         </div>`;
     })
     .join('');

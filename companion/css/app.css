@@ -136,6 +136,9 @@ body.cc-app {
 .cc-btn--primary { background: var(--cc-teal-dark); color: #fff; }
 .cc-btn--accent { background: var(--cc-orange); color: #1c1305; }
 .cc-btn--secondary { background: transparent; color: var(--cc-teal-dark); border: 1.5px solid var(--cc-teal); }
+/* <a class="cc-btn">: ".cc-app a" ganaba en especificidad (texto teal sobre fondo teal, subrayado) */
+.cc-app a.cc-btn { text-decoration: none; }
+.cc-app a.cc-btn--primary { color: #fff; }
 .cc-btn--danger { background: var(--cc-danger); color: #fff; }
 .cc-btn--ghost { background: transparent; color: var(--cc-text-muted); font-weight: 600; }
 .cc-btn--auto { width: auto; padding: 0 var(--cc-space-4); }

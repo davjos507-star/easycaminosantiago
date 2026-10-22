@@ -1,6 +1,7 @@
 import { t, getLocale } from '../../utils/i18n.js';
-import { formatKm, formatPending, formatTime, formatDistanceMeters, isStageActiveOn } from '../../utils/formatters.js';
+import { formatKm, formatPending, formatTime, formatDistanceMeters, formatLongDate, isStageActiveOn } from '../../utils/formatters.js';
 import { icon } from '../components/icons.js';
+import { isStayDetailsEnabled, renderStayDetails } from '../components/stay-details.js';
 import { renderLoading, renderError, renderEmpty } from '../components/state-views.js';
 import { appStore } from '../../state/store.js';
 import {
@@ -216,8 +217,9 @@ export function initTodayScreen() {
   });
 }
 
-export function renderToday(container, { pilgrim, stages }) {
+export function renderToday(container, { pilgrim, stages, itinerary }) {
   const locale = getLocale();
+  const showDetails = isStayDetailsEnabled(itinerary);
   const name = pilgrim?.name || formatPending(locale);
 
   if (!stages || stages.length === 0) {
@@ -260,12 +262,19 @@ export function renderToday(container, { pilgrim, stages }) {
          <span class="cc-icon-chevron">${icon('chevronRight')}</span>
          <span class="${isPendingDest ? 'cc-pending' : ''}">${stage.destination || formatPending(locale)}</span>
        </div>
-       <p style="margin-bottom:16px">${t('today.km_remaining', { km: formatKm(stage.km, locale) })}</p>`;
+       <p style="margin-bottom:${showDetails && stage.kmNote ? '4px' : '16px'}">${t('today.km_remaining', { km: formatKm(stage.km, locale) })}</p>
+       ${showDetails && stage.kmNote ? `<p style="margin-bottom:16px; color:var(--cc-text-muted); font-size:0.8rem">${stage.kmNote}</p>` : ''}`;
+
+  // Con detalle activado (itinerary.showStayDetails): fecha completa y
+  // número de etapa (solo en jornadas a pie) en vez del genérico "ETAPA DE HOY".
+  const eyebrowHtml = showDetails && stage.date
+    ? `${formatLongDate(stage.date, locale)}${isArrivalDay ? '' : ` · ${t('camino.stage_number', { number: stage.number ?? idx + 1 })}`}`
+    : t('today.todays_stage');
 
   container.innerHTML = `
     <div class="cc-screen-header">
       <div>
-        <div class="cc-eyebrow">${t('today.todays_stage')}</div>
+        <div class="cc-eyebrow">${eyebrowHtml}</div>
         <h1>${t('today.greeting', { name })}</h1>
       </div>
     </div>
@@ -279,6 +288,7 @@ export function renderToday(container, { pilgrim, stages }) {
       <div class="cc-eyebrow" style="margin-bottom:8px">${t('today.accommodation_tonight')}</div>
       <div style="font-weight:700" class="${accommodation.name ? '' : 'cc-pending'}">${accommodation.name || formatPending(locale)}</div>
       <div class="${accommodation.locality ? 'cc-text-muted' : 'cc-pending'}" style="color:var(--cc-text-muted); font-size:0.9rem;">${accommodation.locality || formatPending(locale)}</div>
+      ${showDetails ? renderStayDetails(stage) : ''}
     </div>
   `;
 

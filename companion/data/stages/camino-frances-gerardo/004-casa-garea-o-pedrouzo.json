@@ -5,22 +5,43 @@
   "nights": 1,
   "origin": "Casa Garea (Castañeda)",
   "destination": "O Pedrouzo",
-  "km": 23.0,
+  "km": 25.2,
+  "kmNote": "Medido de alojamiento a alojamiento siguiendo el Camino. Incluye unos 1,1 km para volver al Camino desde Casa Garea y unos 0,9 km de acceso al albergue en O Pedrouzo.",
   "elevationGain": null,
   "elevationLoss": null,
   "difficulty": "Moderada",
-  "estimatedTime": "5–6 h",
-  "coordinates": { "start": { "lat": 42.9318935, "lng": -8.1135139 }, "end": { "lat": 42.912301, "lng": -8.357313 } },
+  "estimatedTime": "6–7 h",
+  "coordinates": {
+    "start": {
+      "lat": 42.931832,
+      "lng": -8.113587
+    },
+    "end": {
+      "lat": 42.907043,
+      "lng": -8.359888
+    }
+  },
   "routeFile": "routes/camino-frances/004-arzua-o-pedrouzo.geojson",
   "accommodation": {
     "name": "Albergue Mirador de Pedrouzo",
-    "locality": "O Pedrouzo",
+    "locality": "O Pedrouzo, O Pino (A Coruña)",
     "address": "Avenida de Lugo, 27, 15821 O Pedrouzo, A Coruña",
     "phone": "+34 686 871 215",
+    "phones": [
+      {
+        "number": "+34 686 871 215"
+      }
+    ],
+    "roomType": "Dormitorio compartido",
+    "breakfast": "Desayuno no incluido",
+    "bookingStatus": "Reserva pagada",
     "checkIn": null,
     "confirmationStatus": "confirmed",
     "notes": "Reserva pagada. Cama en dormitorio compartido. Desayuno no incluido. Sábana bajera, funda de almohada y mantas disponibles.",
-    "coordinates": { "lat": 42.907043, "lng": -8.359888 }
+    "coordinates": {
+      "lat": 42.907043,
+      "lng": -8.359888
+    }
   },
-  "notes": "Origen real: Casa Garea (Castañeda), antes del núcleo de Arzúa. La línea de ruta reutiliza el trazado oficial Arzúa→O Pedrouzo (el origen real queda unos km antes de Arzúa); la distancia de 23 km es la estimación comercial del itinerario, no una medición GPS exacta del tramo parcial. Transporte de mochila incluido para esta etapa."
+  "notes": "Origen real: Casa Garea, en A Portela (Castañeda), unos km antes del núcleo de Arzúa. Transporte de mochila incluido para esta etapa."
 }

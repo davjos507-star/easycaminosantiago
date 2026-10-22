@@ -97,11 +97,15 @@
     "updated": "Updated {{time}}"
   },
   "camino": {
+    "accommodation": "Accommodation",
     "title": "My Camino",
     "empty": "Stages will appear here once your itinerary is loaded.",
     "stage_number": "Stage {{number}}"
   },
   "stays": {
+    "directions": "Directions",
+    "check_out_date": "Check-out",
+    "check_in_date": "Check-in",
     "title": "My accommodations",
     "empty": "Your accommodation list will appear here once confirmed.",
     "check_in": "Check-in",
@@ -164,6 +168,7 @@
     "routing_detail": "Walking directions to your accommodation only send the two points needed to calculate the route (your position and the accommodation) — never a history of your movements."
   },
   "profile": {
+    "stages_nights": "{{stages}} stages / {{nights}} nights",
     "title": "Profile",
     "pilgrim": "Pilgrim",
     "itinerary": "Itinerary",

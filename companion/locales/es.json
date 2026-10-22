@@ -97,11 +97,15 @@
     "updated": "Actualizado {{time}}"
   },
   "camino": {
+    "accommodation": "Alojamiento",
     "title": "Mi Camino",
     "empty": "Las etapas aparecerán aquí en cuanto se cargue tu itinerario.",
     "stage_number": "Etapa {{number}}"
   },
   "stays": {
+    "directions": "Cómo llegar",
+    "check_out_date": "Salida",
+    "check_in_date": "Entrada",
     "title": "Mis alojamientos",
     "empty": "Tu lista de alojamientos aparecerá aquí en cuanto esté confirmada.",
     "check_in": "Check-in",
@@ -164,6 +168,7 @@
     "routing_detail": "La navegación a pie hasta tu alojamiento solo envía las dos coordenadas necesarias para calcular la ruta (tu posición y el alojamiento) — nunca un historial de tus movimientos."
   },
   "profile": {
+    "stages_nights": "{{stages}} etapas / {{nights}} noches",
     "title": "Perfil",
     "pilgrim": "Peregrino",
     "itinerary": "Itinerario",
