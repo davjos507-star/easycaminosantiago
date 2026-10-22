@@ -180,6 +180,12 @@ async function boot() {
 
   if (!preferredLocale && pilgrim.language && pilgrim.language !== getLocale()) {
     await initI18n(pilgrim.language);
+    // applyStaticI18n() ya se había pintado en inglés (línea 136, antes de
+    // conocer el idioma del peregrino) y nunca se repetía — así que el menú
+    // inferior y el resto de textos estáticos se quedaban en inglés para
+    // cualquier peregrino con idioma distinto del de respaldo, aunque
+    // strings internamente ya estuviera en el idioma correcto.
+    applyStaticI18n();
   }
   appStore.setState({ pilgrim });
 
