@@ -1,6 +1,6 @@
 import './data/poi/mock-poi-provider.js';
 import { initI18n, getLocale, applyStaticI18n } from './utils/i18n.js';
-import { getString, setString, setStorageScope, KEYS } from './state/storage.js';
+import { getString, setString, KEYS } from './state/storage.js';
 import { appStore } from './state/store.js';
 import { initRouter } from './router.js';
 import { resolvePilgrimId } from './data/pilgrim-resolver.js';
@@ -135,14 +135,6 @@ async function boot() {
   await initI18n(preferredLocale || 'en');
   applyStaticI18n();
 
-  // Se resuelve aquí, antes de hidratar cualquier dato con ámbito de
-  // peregrino (ver state/storage.js, setStorageScope), para que el
-  // progreso de etapa de cada peregrino no se mezcle con el de otro en el
-  // mismo dispositivo (p. ej. los perfiles de un mismo grupo). La carga
-  // real del peregrino (loadPilgrim, más abajo) no cambia.
-  const pilgrimRef = resolvePilgrimId();
-  if (pilgrimRef) setStorageScope(pilgrimRef.id);
-
   initConnectivityBanner();
   registerServiceWorker();
   initInstallPrompt();
@@ -164,6 +156,7 @@ async function boot() {
     },
   });
 
+  const pilgrimRef = resolvePilgrimId();
   if (!pilgrimRef) {
     renderFatalError('No pilgrim identified.');
     return;
