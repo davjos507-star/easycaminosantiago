@@ -5,12 +5,12 @@
   "nights": 1,
   "origin": "Palas de Rei",
   "destination": "Casa Garea (Castañeda)",
-  "km": 26.3,
-  "kmNote": "Medido de alojamiento a alojamiento siguiendo el Camino. Incluye unos 1,1 km de acceso desde el Camino hasta Casa Garea (A Portela, Castañeda), antes de Ribadiso y Arzúa.",
+  "km": 24.7,
+  "kmNote": "Medido de alojamiento a alojamiento siguiendo el Camino. Incluye entre 0,7 y 0,9 km de acceso desde el Camino hasta Casa Garea (A Portela, Castañeda, junto a la N-547), antes de Ribadiso y Arzúa.",
   "elevationGain": null,
   "elevationLoss": null,
   "difficulty": "Exigente",
-  "estimatedTime": "6,5–7,5 h",
+  "estimatedTime": "6–7 h",
   "coordinates": {
     "start": {
       "lat": 42.872743,
