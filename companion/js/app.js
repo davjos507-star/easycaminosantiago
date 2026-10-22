@@ -1,6 +1,6 @@
 import './data/poi/mock-poi-provider.js';
 import { initI18n, getLocale, applyStaticI18n } from './utils/i18n.js';
-import { getString, setString, KEYS } from './state/storage.js';
+import { getString, setString, setStorageScope, KEYS } from './state/storage.js';
 import { appStore } from './state/store.js';
 import { initRouter } from './router.js';
 import { resolvePilgrimId } from './data/pilgrim-resolver.js';
@@ -27,6 +27,7 @@ import { renderMore } from './ui/screens/mas-screen.js';
 import { initDebugPanel } from './ui/components/debug-panel.js';
 import { qs } from './utils/dom.js';
 import { navigateTo } from './router.js';
+import { isStageActiveOn } from './utils/formatters.js';
 
 const screens = {
   today: () => qs('[data-screen="today"]'),
@@ -134,6 +135,14 @@ async function boot() {
   await initI18n(preferredLocale || 'en');
   applyStaticI18n();
 
+  // Se resuelve aquí, antes de hidratar cualquier dato con ámbito de
+  // peregrino (ver state/storage.js, setStorageScope), para que el
+  // progreso de etapa de cada peregrino no se mezcle con el de otro en el
+  // mismo dispositivo (p. ej. los perfiles de un mismo grupo). La carga
+  // real del peregrino (loadPilgrim, más abajo) no cambia.
+  const pilgrimRef = resolvePilgrimId();
+  if (pilgrimRef) setStorageScope(pilgrimRef.id);
+
   initConnectivityBanner();
   registerServiceWorker();
   initInstallPrompt();
@@ -155,7 +164,6 @@ async function boot() {
     },
   });
 
-  const pilgrimRef = resolvePilgrimId();
   if (!pilgrimRef) {
     renderFatalError('No pilgrim identified.');
     return;
@@ -178,7 +186,14 @@ async function boot() {
   try {
     const itinerary = await loadItinerary(pilgrim.itineraryId);
     const stages = await loadAllStages(itinerary);
-    appStore.setState({ itinerary, stages });
+    // currentStageIndex nunca se calculaba (quedaba en null desde el
+    // estado inicial) — lo usa emergency-modal.js para mostrar el
+    // alojamiento actual en el cuadro de asistencia. Misma regla que
+    // today-screen.js: la primera etapa activa hoy, o la primera del
+    // itinerario si ninguna lo está todavía (viaje aún no empezado).
+    const activeIdx = stages.findIndex((stage) => isStageActiveOn(stage));
+    const currentStageIndex = activeIdx === -1 ? (stages.length ? 0 : null) : activeIdx;
+    appStore.setState({ itinerary, stages, currentStageIndex });
   } catch (err) {
     console.error('[app] error cargando itinerario:', err);
     renderFatalError(err.message);

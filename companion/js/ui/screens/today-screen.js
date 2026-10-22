@@ -64,7 +64,15 @@ function renderSessionGpsLine(session) {
   return `<div class="cc-gps-chip cc-gps-chip--active"><span class="cc-gps-chip-dot"></span>${parts.join(' · ')}</div>`;
 }
 
-function renderIdleWidget() {
+function renderIdleWidget(ctx) {
+  // Jornada de llegada (sin km que caminar): no se ofrece "Empezar etapa"
+  // — no hay caminata ni posición GPS que registrar ese día. Si ya existe
+  // una sesión activa/pausada/finalizada (p. ej. se pulsó por error antes
+  // de este cambio), eso se sigue gestionando con normalidad más abajo;
+  // esto solo evita arrancar una sesión NUEVA en un día de llegada.
+  if (ctx?.isArrivalDay) {
+    return `<p class="cc-pending" style="margin:0">${t('today.arrival_no_tracking')}</p>`;
+  }
   return `
     <button type="button" class="cc-btn cc-btn--primary" id="start-stage-btn">
       ${icon('walk')} ${t('today.start_stage')}
@@ -176,7 +184,7 @@ function renderSessionWidget(ctx) {
     widget.innerHTML = renderFinishedWidget(session);
     wireFinishedWidget();
   } else {
-    widget.innerHTML = renderIdleWidget();
+    widget.innerHTML = renderIdleWidget(ctx);
     wireIdleWidget(ctx);
   }
 }
@@ -231,12 +239,28 @@ export function renderToday(container, { pilgrim, stages }) {
   const accommodation = stage.accommodation || {};
   const isPendingOrigin = !stage.origin;
   const isPendingDest = !stage.destination;
+  // Jornada de llegada: sin km que caminar (p. ej. el primer día, antes de
+  // empezar el Camino). No es un dato "pendiente de cargar" — es que ese
+  // día no se camina, así que no hay km ni sesión de etapa que ofrecer.
+  const isArrivalDay = stage.km == null;
 
   currentStageCtx = {
     stageKey: stage.number ?? idx,
     origin: stage.origin || null,
     destination: stage.destination || null,
+    isArrivalDay,
   };
+
+  const stageHeaderHtml = isArrivalDay
+    ? `<div style="font-family:var(--cc-font-heading); font-weight:800; font-size:1.15rem; margin-bottom:16px;">
+         ${t('today.arrival_title', { destination: stage.destination || formatPending(locale) })}
+       </div>`
+    : `<div style="display:flex; align-items:center; gap:8px; font-family:var(--cc-font-heading); font-weight:800; font-size:1.15rem; margin-bottom:8px;">
+         <span class="${isPendingOrigin ? 'cc-pending' : ''}">${stage.origin || formatPending(locale)}</span>
+         <span class="cc-icon-chevron">${icon('chevronRight')}</span>
+         <span class="${isPendingDest ? 'cc-pending' : ''}">${stage.destination || formatPending(locale)}</span>
+       </div>
+       <p style="margin-bottom:16px">${t('today.km_remaining', { km: formatKm(stage.km, locale) })}</p>`;
 
   container.innerHTML = `
     <div class="cc-screen-header">
@@ -247,12 +271,7 @@ export function renderToday(container, { pilgrim, stages }) {
     </div>
 
     <div class="cc-card">
-      <div style="display:flex; align-items:center; gap:8px; font-family:var(--cc-font-heading); font-weight:800; font-size:1.15rem; margin-bottom:8px;">
-        <span class="${isPendingOrigin ? 'cc-pending' : ''}">${stage.origin || formatPending(locale)}</span>
-        <span class="cc-icon-chevron">${icon('chevronRight')}</span>
-        <span class="${isPendingDest ? 'cc-pending' : ''}">${stage.destination || formatPending(locale)}</span>
-      </div>
-      <p style="margin-bottom:16px">${t('today.km_remaining', { km: formatKm(stage.km, locale) })}</p>
+      ${stageHeaderHtml}
       <div id="stage-session-widget"></div>
     </div>
 

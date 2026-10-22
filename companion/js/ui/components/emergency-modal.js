@@ -8,10 +8,10 @@ export function initEmergencyModal() {
   const backdrop = document.getElementById('emergency-modal');
   if (!backdrop) return;
 
-  function currentAccommodationLabel() {
+  function currentAccommodation() {
     const state = appStore.getState();
     const stage = state.stages?.[state.currentStageIndex];
-    return stage?.accommodation?.name || formatPending(getLocale());
+    return stage?.accommodation || null;
   }
 
   function currentLocationLabel() {
@@ -23,6 +23,7 @@ export function initEmergencyModal() {
   function render() {
     const pos = appStore.getState().gps.lastPosition;
     const coordsText = pos ? `${pos.lat.toFixed(5)}, ${pos.lng.toFixed(5)}` : null;
+    const accommodation = currentAccommodation();
 
     backdrop.innerHTML = `
       <div class="cc-modal" role="dialog" aria-modal="true" aria-labelledby="emergency-title">
@@ -44,7 +45,10 @@ export function initEmergencyModal() {
 
         <div class="cc-card">
           <div class="cc-eyebrow">${t('emergency.current_accommodation')}</div>
-          <p class="${currentAccommodationLabel() === formatPending(getLocale()) ? 'cc-pending' : ''}" style="margin:4px 0 0">${currentAccommodationLabel()}</p>
+          <p class="${accommodation?.name ? '' : 'cc-pending'}" style="margin:4px 0 0; font-weight:700">${accommodation?.name || formatPending(getLocale())}</p>
+          ${accommodation?.phone
+            ? `<a href="tel:${accommodation.phone}" style="margin:2px 0 0; display:block; color:var(--cc-teal-dark)">${icon('phone')} ${accommodation.phone}</a>`
+            : `<p class="cc-pending" style="margin:2px 0 0">${formatPending(getLocale())}</p>`}
         </div>
 
         <div class="cc-card">

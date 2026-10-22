@@ -28,12 +28,15 @@ export function initInfoModal({ onLanguageToggle } = {}) {
         <span style="color:var(--cc-text-muted)">${label}</span>
         <strong class="${pending ? 'cc-pending' : ''}">${value}</strong>
       </div>`;
+    // Solo cuenta etapas a pie (con km) — una jornada de llegada (km null,
+    // p. ej. stages/*/000-*-arrival.json) no es una etapa caminada.
+    const walkingStages = (stages || []).filter((s) => s.km != null);
     return `
       ${row(t('profile.pilgrim'), pilgrim?.name || formatPending(locale), !pilgrim?.name)}
       ${row(t('profile.itinerary'), itinerary?.name || formatPending(locale), !itinerary?.name)}
       ${row(t('profile.language'), locale.toUpperCase(), false)}
       ${row(t('profile.start_date'), pilgrim?.startDate ? formatDate(pilgrim.startDate, locale) : formatPending(locale), !pilgrim?.startDate)}
-      ${row(t('profile.total_stages'), stages?.length ?? formatPending(locale), !stages?.length)}
+      ${row(t('profile.total_stages'), walkingStages.length || formatPending(locale), !walkingStages.length)}
     `;
   }
 

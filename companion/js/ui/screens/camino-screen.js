@@ -25,13 +25,19 @@ export function renderCamino(container, { stages }) {
     .map((stage, i) => {
       const status = i < todayIdx ? 'done' : i === todayIdx ? 'current' : 'upcoming';
       const marker = status === 'done' ? icon('checkCircle') : status === 'current' ? '' : icon('circle');
+      // Jornada de llegada (sin km): "Llegada a X", no "Pendiente de cargar → X"
+      // — el origen no está pendiente de cargar, es que ese día no se camina.
+      const isArrivalDay = stage.km == null;
+      const titleHtml = isArrivalDay
+        ? `${t('today.arrival_title', { destination: stage.destination || formatPending(locale) })}`
+        : `${stage.origin || formatPending(locale)} → ${stage.destination || formatPending(locale)}`;
       return `
         <li class="cc-timeline-item cc-timeline-item--${status}">
           <span class="cc-timeline-marker">${marker}</span>
           <div class="cc-timeline-content">
             <button type="button" data-stage-index="${i}">
               <div class="cc-eyebrow">${t('camino.stage_number', { number: stage.number ?? i + 1 })}</div>
-              <div style="font-weight:700" class="${stage.origin ? '' : 'cc-pending'}">${stage.origin || formatPending(locale)} → ${stage.destination || formatPending(locale)}</div>
+              <div style="font-weight:700" class="${!isArrivalDay && !stage.origin ? 'cc-pending' : ''}">${titleHtml}</div>
             </button>
           </div>
         </li>`;

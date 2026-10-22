@@ -2,7 +2,7 @@
   "app": {
     "name": "Easy Camino Companion"
   },
-  "nav": {
+  "tabs": {
     "today": "Hoy",
     "map": "Mapa",
     "camino": "Camino",
@@ -24,6 +24,8 @@
     "greeting": "Buenos días, {{name}}",
     "todays_stage": "ETAPA DE HOY",
     "km_remaining": "{{km}} restantes",
+    "arrival_title": "Llegada a {{destination}}",
+    "arrival_no_tracking": "Jornada de llegada — sin caminata ni seguimiento GPS.",
     "start_stage": "Empezar etapa",
     "in_route": "En camino",
     "accommodation_tonight": "Alojamiento de esta noche",
