@@ -98,7 +98,7 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
 
 <!-- PAGE TITLE -->
 <div class="page-title-bar">
-  <h1>Completa tu pago final</h1>
+  <h1>Pago final recibido</h1>
   <p>Camino Francés desde Sarria</p>
 </div>
 
@@ -135,16 +135,17 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
     <div class="pay-amount">
       <div class="pa-row"><span>Precio total</span><strong>610 €</strong></div>
       <div class="pa-row"><span>Depósito ya pagado</span><strong>122 €</strong></div>
+      <div class="pa-row"><span>Pago final recibido</span><strong>488 €</strong></div>
       <div class="pa-now">
-        <span class="pa-now-label">Saldo a pagar ahora</span>
-        <span class="pa-now-value">488 €</span>
+        <span class="pa-now-label">Saldo pendiente</span>
+        <span class="pa-now-value">0 €</span>
       </div>
     </div>
 
     <p style="font-size:0.85rem; color:var(--gris); line-height:1.6;">Este pago corresponde al saldo final (80%) de tu reserva, ya confirmada. Al completarlo, tu Camino Francés desde Sarria queda totalmente abonado.</p>
 
     <div class="notice-box">
-      Una vez recibamos este pago, tu reserva queda completamente cerrada. Tus alojamientos de cada etapa ya están confirmados: los tienes en tu itinerario y en la app Easy Camino Companion.
+      Con este pago, tu reserva queda completamente cerrada. Tus alojamientos de cada etapa ya están confirmados: los tienes en tu itinerario y en la app Easy Camino Companion.
     </div>
 
     <!-- CONDICIONES DE RESERVA Y CANCELACIÓN -->
@@ -156,8 +157,11 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
     </div>
 
     <!-- STRIPE -->
-    <h3 class="section-h3">Pago con tarjeta</h3>
-    <div id="stripe-section">
+    <h3 class="section-h3">Estado del pago</h3>
+    <div class="notice-box" style="margin-top:0;">
+      <strong>Hemos recibido tu pago final de 488 €.</strong> Tu reserva está totalmente abonada y no tienes que realizar ningún pago más. Si tienes cualquier duda, escríbenos o llámanos al +34 982 907 629.
+    </div>
+    <div id="stripe-section" style="display:none;">
       <div class="field-group">
         <label>Email</label>
         <input type="email" id="input-email" class="stripe-field" value="gemartinezt@gmail.com" placeholder="tu@email.com" autocomplete="email" required style="width:100%; font-family:'Lato',sans-serif; font-size:15px; color:#2D4A52;">
@@ -334,7 +338,8 @@ function initStripe(){
   state.cardCvc.mount('#card-cvc-element');
   state.stripeInit = true;
 }
-requestAnimationFrame(() => { if (!state.stripeInit) initStripe(); });
+// Saldo final ya recibido (24/10/2026): el formulario de pago queda desactivado.
+// El servidor también rechaza cualquier nuevo cobro de saldo para esta reserva.
 
 async function procesarPago(){
   const btn = document.getElementById('btn-pay');

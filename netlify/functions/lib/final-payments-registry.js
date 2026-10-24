@@ -16,6 +16,18 @@ const registry = {
     amountEUR: 488,
     cliente:   'Gerardo Martínez Trejo',
     ruta:      'Camino Francés desde Sarria',
+    // Saldo final cobrado y confirmado por Stripe (evento payment_intent.succeeded
+    // con firma verificada, recibido por stripe-webhook el 24/10/2026 10:48:30 UTC).
+    // El webhook no pudo guardarlo en el almacén (Netlify Blobs no disponible en
+    // producción), así que la confirmación queda fijada aquí: bloquea en el
+    // servidor cualquier nuevo cobro de saldo para esta reserva.
+    saldoConfirmado: {
+      reservaId:       'ECS-SARRIA-GM2026',
+      paymentIntentId: 'pi_3UU2UwLdy1SiD5iF1CqW9Kbq',
+      stripeEventId:   'evt_3UU2UwLdy1SiD5iF1ONwPDTF',
+      amountEUR:       488,
+      confirmedAt:     '2026-10-24T10:48:30.404Z',
+    },
   },
 };
 

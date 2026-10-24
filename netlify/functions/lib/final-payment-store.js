@@ -9,6 +9,7 @@
 // verificar la firma de Stripe y procesar un evento payment_intent.succeeded
 // real — nunca desde el navegador ni desde create-payment-intent.js.
 const { getStore } = require('./kv-store');
+const FINAL_PAYMENTS_REGISTRY = require('./final-payments-registry');
 
 // BLOBS_NAMESPACE_SUFFIX: vacío en producción (comportamiento sin cambios).
 // Para pruebas locales con Netlify Blobs real (netlify dev + .env local) se
@@ -27,6 +28,12 @@ async function marcarSaldoFinalConfirmado(reservaId, paymentIntentId) {
 }
 
 async function obtenerSaldoFinalConfirmado(reservaId) {
+  // Confirmaciones fijadas a mano en el registro (solo reservas cuyo pago real
+  // de Stripe está verificado pero el webhook no pudo guardar) — ver
+  // final-payments-registry.js. Las demás reservas siguen leyendo del almacén.
+  const reserva = FINAL_PAYMENTS_REGISTRY[reservaId];
+  if (reserva && reserva.saldoConfirmado) return reserva.saldoConfirmado;
+
   const store = getStore(NAMESPACE);
   return store.get(reservaId);
 }
