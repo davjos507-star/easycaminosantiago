@@ -1,5 +1,5 @@
 import { t, getLocale } from '../../utils/i18n.js';
-import { formatKm, formatPending, formatTime, formatDistanceMeters, formatLongDate, isStageActiveOn } from '../../utils/formatters.js';
+import { formatKm, formatPending, formatTime, formatDistanceMeters, formatLongDate, isStageActiveOn, toLocalIsoDate } from '../../utils/formatters.js';
 import { icon } from '../components/icons.js';
 import { isStayDetailsEnabled, renderStayDetails } from '../components/stay-details.js';
 import { findBreakfastOn, renderBreakfast } from '../components/breakfast-card.js';
@@ -22,6 +22,13 @@ let subscribed = false;
 function findTodayStageIndex(stages) {
   const idx = stages.findIndex((stage) => isStageActiveOn(stage));
   return idx === -1 ? (stages.length ? 0 : -1) : idx;
+}
+
+// Mañana de salida del último alojamiento (solo alcanzable cuando hay
+// desayunos en los datos — ver getCaminoCompletionDate en app.js).
+function isDepartureDay(stages) {
+  const last = stages[stages.length - 1];
+  return Boolean(last?.checkOutDate && toLocalIsoDate(new Date()) === last.checkOutDate);
 }
 
 export function renderTodayLoading(container) {
@@ -237,7 +244,8 @@ export function renderToday(container, { pilgrim, stages, itinerary }) {
     return;
   }
 
-  const idx = findTodayStageIndex(stages);
+  const departureDay = isDepartureDay(stages);
+  const idx = departureDay ? stages.length - 1 : findTodayStageIndex(stages);
   const stage = stages[idx];
   const accommodation = stage.accommodation || {};
   const isPendingOrigin = !stage.origin;
@@ -254,7 +262,12 @@ export function renderToday(container, { pilgrim, stages, itinerary }) {
     isArrivalDay,
   };
 
-  const stageHeaderHtml = isArrivalDay
+  const stageHeaderHtml = departureDay
+    ? `<div style="font-family:var(--cc-font-heading); font-weight:800; font-size:1.15rem; margin-bottom:6px;">
+         ${t('today.departure_title', { destination: stage.destination || formatPending(locale) })}
+       </div>
+       <p style="margin:0; color:var(--cc-text-muted)">${t('today.departure_note')}</p>`
+    : isArrivalDay
     ? `<div style="font-family:var(--cc-font-heading); font-weight:800; font-size:1.15rem; margin-bottom:16px;">
          ${t('today.arrival_title', { destination: stage.destination || formatPending(locale) })}
        </div>`
@@ -268,7 +281,9 @@ export function renderToday(container, { pilgrim, stages, itinerary }) {
 
   // Con detalle activado (itinerary.showStayDetails): fecha completa y
   // número de etapa (solo en jornadas a pie) en vez del genérico "ETAPA DE HOY".
-  const eyebrowHtml = showDetails && stage.date
+  const eyebrowHtml = departureDay
+    ? formatLongDate(stage.checkOutDate, locale)
+    : showDetails && stage.date
     ? `${formatLongDate(stage.date, locale)}${isArrivalDay ? '' : ` · ${t('camino.stage_number', { number: stage.number ?? idx + 1 })}`}`
     : t('today.todays_stage');
 
@@ -284,16 +299,16 @@ export function renderToday(container, { pilgrim, stages, itinerary }) {
 
     <div class="cc-card">
       ${stageHeaderHtml}
-      <div id="stage-session-widget"></div>
+      ${departureDay ? '' : '<div id="stage-session-widget"></div>'}
     </div>
 
     <div class="cc-card">
-      <div class="cc-eyebrow" style="margin-bottom:8px">${t('today.accommodation_tonight')}</div>
+      <div class="cc-eyebrow" style="margin-bottom:8px">${departureDay ? t('today.accommodation_last_night') : t('today.accommodation_tonight')}</div>
       <div style="font-weight:700" class="${accommodation.name ? '' : 'cc-pending'}">${accommodation.name || formatPending(locale)}</div>
       <div class="${accommodation.locality ? 'cc-text-muted' : 'cc-pending'}" style="color:var(--cc-text-muted); font-size:0.9rem;">${accommodation.locality || formatPending(locale)}</div>
       ${showDetails ? renderStayDetails(stage) : ''}
     </div>
   `;
 
-  renderSessionWidget(currentStageCtx);
+  if (!departureDay) renderSessionWidget(currentStageCtx);
 }

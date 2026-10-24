@@ -52,7 +52,10 @@
     "confirm_finish": "¿Finalizar esta etapa? Se dejará de registrar tu posición.",
     "close_summary": "Aceptar",
     "location_required": "Activa la ubicación para registrar esta etapa.",
-    "gps_points_recorded": "Puntos GPS registrados"
+    "gps_points_recorded": "Puntos GPS registrados",
+    "departure_title": "Salida de {{destination}}",
+    "departure_note": "Hoy termina tu viaje. ¡Buen Camino!",
+    "accommodation_last_night": "Alojamiento de anoche"
   },
   "map": {
     "center_me": "Centrar en mí",
@@ -198,6 +201,9 @@
   "breakfast": {
     "title": "Tu desayuno",
     "at_accommodation": "En tu alojamiento",
-    "external": "Fuera del alojamiento"
+    "external": "Fuera del alojamiento",
+    "nav_title": "IR AL DESAYUNO",
+    "route_failed": "No se ha podido calcular la ruta a pie hasta el desayuno.",
+    "back": "Volver al desayuno"
   }
 }

@@ -52,7 +52,10 @@
     "confirm_finish": "Finish this stage? This will stop recording your position.",
     "close_summary": "OK",
     "location_required": "Turn on location to record this stage.",
-    "gps_points_recorded": "GPS points recorded"
+    "gps_points_recorded": "GPS points recorded",
+    "departure_title": "Departure from {{destination}}",
+    "departure_note": "Your trip ends today. Buen Camino!",
+    "accommodation_last_night": "Last night's accommodation"
   },
   "map": {
     "center_me": "Center on me",
@@ -198,6 +201,9 @@
   "breakfast": {
     "title": "Your breakfast",
     "at_accommodation": "At your accommodation",
-    "external": "Outside your accommodation"
+    "external": "Outside your accommodation",
+    "nav_title": "GO TO BREAKFAST",
+    "route_failed": "The walking route to breakfast could not be calculated.",
+    "back": "Back to breakfast"
   }
 }

@@ -55,6 +55,10 @@
     "address": "Av. Ourense, 24, Palas de Rei",
     "phone": "609 080 655",
     "description": "Desayuno básico",
-    "mapsQuery": "Albergue Castro, Av. Ourense 24, Palas de Rei, Lugo"
+    "coordinates": {
+      "lat": 42.8729463,
+      "lng": -7.8685391
+    },
+    "coordinatesSource": "OpenStreetMap: «Albergue Castro», Avenida de Ourense, 24, Palas de Rei"
   }
 }

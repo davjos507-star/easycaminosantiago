@@ -24,6 +24,7 @@ import {
 import { renderCaminoLoading, renderCaminoError, renderCamino } from './ui/screens/camino-screen.js';
 import { renderStaysLoading, renderStaysError, renderStays } from './ui/screens/alojamientos-screen.js';
 import { renderMore } from './ui/screens/mas-screen.js';
+import { breakfastNavTarget } from './ui/components/breakfast-card.js';
 import { initDebugPanel } from './ui/components/debug-panel.js';
 import { qs } from './utils/dom.js';
 import { navigateTo } from './router.js';
@@ -50,8 +51,28 @@ function openMapThen(action, accommodation) {
   });
 }
 
+/*
+ * "Cómo llegar" de los desayunos (ui/components/breakfast-card.js): un solo
+ * listener delegado, porque las tarjetas se pintan como HTML en Hoy y Mi
+ * Camino. Abre el mapa de Companion con la misma navegación peatonal que
+ * "Llévame al alojamiento" — nunca Google Maps ni otra app externa.
+ */
+function initBreakfastNavigation() {
+  document.addEventListener('click', (event) => {
+    const btn = event.target.closest('[data-breakfast-nav]');
+    if (!btn) return;
+    const { stages = [], activeScreen } = appStore.getState();
+    const breakfast = stages.map((s) => s.breakfast).find((b) => b && b.date === btn.dataset.breakfastNav);
+    const target = breakfastNavTarget(breakfast, activeScreen || 'today');
+    if (target) openMapThen(startAccommodationNavigation, target);
+  });
+}
+
 function getCaminoCompletionDate(stages = []) {
-  const dates = stages.map((stage) => stage.date).filter(Boolean).sort();
+  // Incluye la fecha de los desayunos (stage.breakfast.date) para que la
+  // mañana de salida del último alojamiento siga visible; sin desayunos en
+  // los datos, el bloqueo es exactamente el mismo que antes.
+  const dates = stages.flatMap((stage) => [stage.date, stage.breakfast?.date]).filter(Boolean).sort();
   return dates.length ? dates[dates.length - 1] : null;
 }
 
@@ -143,6 +164,7 @@ async function boot() {
   initInfoModal({ onLanguageToggle: handleLanguageToggle });
   initDebugPanel();
   initTodayScreen();
+  initBreakfastNavigation();
   hydrateStageSession();
 
   renderTodayLoading(screens.today());

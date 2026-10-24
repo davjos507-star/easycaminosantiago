@@ -51,6 +51,10 @@
     "address": "Rúa de Santiago del Estero, 6, bajo, Santiago de Compostela",
     "phone": "633 303 374",
     "description": "Café, zumo y tostada",
-    "mapsQuery": "Bo&Go Specialty Coffee, Rúa de Santiago del Estero 6, Santiago de Compostela"
+    "coordinates": {
+      "lat": 42.8745109,
+      "lng": -8.5501531
+    },
+    "coordinatesSource": "OpenStreetMap: «Bo&Go Specialty Coffee», Rúa de Santiago del Estero, 6, Santiago de Compostela"
   }
 }

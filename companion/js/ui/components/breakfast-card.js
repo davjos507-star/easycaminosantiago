@@ -10,18 +10,33 @@ import { formatLongDate, toLocalIsoDate } from '../../utils/formatters.js';
  *
  * breakfast.location: 'accommodation' (se sirve en el propio alojamiento) o
  * 'external' (cafetería/bar fuera del alojamiento). "Cómo llegar" solo se
- * ofrece para los exteriores y abre Google Maps con el nombre y la dirección
- * (mapsQuery) — no se inventan coordenadas. Solo pinta los campos que existen:
- * sin horarios salvo que vengan en los datos (breakfast.hours).
+ * ofrece para los exteriores con coordenadas verificadas (breakfast.coordinates)
+ * y abre el mapa de Companion — nunca Google Maps ni otra app externa (el clic
+ * lo gestiona app.js vía [data-breakfast-nav]). Solo pinta los campos que
+ * existen: sin horarios salvo que vengan en los datos (breakfast.hours).
  */
 
 function telHref(number) {
   return `tel:${String(number).replace(/[^\d+]/g, '')}`;
 }
 
-function googleMapsUrl(breakfast) {
-  if (!breakfast.mapsQuery) return null;
-  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(breakfast.mapsQuery)}&travelmode=walking`;
+function hasCoordinates(breakfast) {
+  const c = breakfast?.coordinates;
+  return Boolean(c && Number.isFinite(c.lat) && Number.isFinite(c.lng));
+}
+
+/** Destino para la navegación dentro de Companion (map-screen.js). */
+export function breakfastNavTarget(breakfast, returnScreen) {
+  if (!hasCoordinates(breakfast)) return null;
+  return {
+    kind: 'breakfast',
+    name: breakfast.name,
+    address: breakfast.address || null,
+    date: breakfast.date,
+    lat: breakfast.coordinates.lat,
+    lng: breakfast.coordinates.lng,
+    returnScreen,
+  };
 }
 
 export function findBreakfastOn(stages, referenceDate = new Date()) {
@@ -41,14 +56,14 @@ export function renderBreakfast(breakfast, { nested = false } = {}) {
   if (breakfast.address) lines.push(`<div style="${muted} margin-top:4px">${breakfast.address}</div>`);
   if (breakfast.hours) lines.push(`<div style="${muted} margin-top:4px">${breakfast.hours}</div>`);
 
-  const mapsUrl = isExternal ? googleMapsUrl(breakfast) : null;
+  const canNavigate = isExternal && hasCoordinates(breakfast);
   const buttons = [
-    mapsUrl ? `<a class="cc-btn cc-btn--primary cc-btn--sm cc-btn--auto" href="${mapsUrl}" target="_blank" rel="noopener">${icon('locationArrow')} ${t('stays.directions')}</a>` : '',
+    canNavigate ? `<button type="button" class="cc-btn cc-btn--primary cc-btn--sm cc-btn--auto" data-breakfast-nav="${breakfast.date}">${icon('locationArrow')} ${t('stays.directions')}</button>` : '',
     breakfast.phone ? `<a class="cc-btn cc-btn--secondary cc-btn--sm cc-btn--auto" href="${telHref(breakfast.phone)}">${icon('phone')} ${breakfast.phone}</a>` : '',
   ].join('');
 
   return `
-    <div class="cc-card"${nested ? ' style="margin:10px 0 0"' : ''}>
+    <div class="cc-card" data-breakfast-card="${breakfast.date}"${nested ? ' style="margin:10px 0 0"' : ''}>
       <div class="cc-eyebrow" style="margin-bottom:4px">${t('breakfast.title')} · ${formatLongDate(breakfast.date, locale, { year: false })}</div>
       <div style="font-weight:700">${breakfast.name}</div>
       ${badge}

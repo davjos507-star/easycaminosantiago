@@ -51,6 +51,10 @@
     "address": "Avenida Santiago, 7, O Pedrouzo",
     "phone": "637 551 380",
     "description": "Desayuno básico",
-    "mapsQuery": "Arca Gourmet, Avenida Santiago 7, O Pedrouzo, A Coruña"
+    "coordinates": {
+      "lat": 42.9042508,
+      "lng": -8.3634498
+    },
+    "coordinatesSource": "OpenStreetMap: portal Avenida de Santiago, 7, O Pedrouzo (Arca) — el local no figura por nombre en OSM; ubicado por dirección"
   }
 }

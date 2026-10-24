@@ -23,6 +23,7 @@ import { startAccommodationNav, stopAccommodationNav } from '../../accommodation
 import { findBestCaminoAccess, MAX_CANDIDATE_STRAIGHT_LINE_M } from '../../accommodation/camino-access-finder.js';
 import { appStore } from '../../state/store.js';
 import { setDebugMapEngine } from '../components/debug-panel.js';
+import { navigateTo } from '../../router.js';
 
 let sheet = null;
 let mapEngine = null;
@@ -237,6 +238,8 @@ function formatWalkingDuration(seconds) {
  * navegación activa para que cada dato tenga una fuente inequívoca.
  */
 function renderCaminoAccessBlock(accommodation) {
+  // Desayunos: el "acceso desde el Camino" solo tiene sentido para alojamientos.
+  if (accommodation?.kind === 'breakfast') return '';
   const access = getCaminoAccessState(accommodation);
   if (access === undefined) return '';
   if (access === 'loading') {
@@ -427,7 +430,21 @@ export async function startAccommodationNavigation(accommodation) {
   requestAndStartWatch();
   startAccommodationNav(accommodation);
   renderMapSheet(appStore.getState());
-  ensureCaminoAccess(accommodation);
+  if (accommodation.kind !== 'breakfast') ensureCaminoAccess(accommodation);
+}
+
+/**
+ * "Volver al desayuno": cierra la navegación y vuelve a la pantalla desde la
+ * que se pulsó "Cómo llegar" (Hoy o Mi Camino), con la ficha a la vista.
+ * Botón explícito porque en iPhone (app instalada) no hay botón "atrás".
+ */
+function returnToBreakfast(target) {
+  stopAccommodationNavigation();
+  navigateTo(target?.returnScreen || 'today');
+  requestAnimationFrame(() => {
+    document.querySelector(`[data-screen="${target?.returnScreen || 'today'}"] [data-breakfast-card="${target?.date}"]`)
+      ?.scrollIntoView({ block: 'center' });
+  });
 }
 
 /** Botón "Terminar"/"Cerrar": no toca EN CAMINO ni ningún otro estado. */
@@ -447,16 +464,22 @@ function renderNavGpsLine(nav) {
 
 function renderNavigatingSheet(nav) {
   const arrived = nav.status === 'arrived';
+  const isBreakfast = nav.accommodation?.kind === 'breakfast';
+  const backButton = isBreakfast
+    ? `<button type="button" class="cc-btn cc-btn--secondary" id="nav-back-breakfast-btn" style="margin-top:8px;">${t('breakfast.back')}</button>`
+    : '';
 
   sheet.setSummary(`
-    <div class="cc-eyebrow">${t('nav.title')}</div>
+    <div class="cc-eyebrow">${isBreakfast ? t('breakfast.nav_title') : t('nav.title')}</div>
     <strong>${nav.accommodation?.name || ''}</strong>
+    ${isBreakfast && nav.accommodation.address ? `<div style="color:var(--cc-text-muted); font-size:0.85rem">${nav.accommodation.address}</div>` : ''}
   `);
 
   if (arrived) {
     sheet.setBody(`
       <p style="font-weight:700; margin:0 0 12px">${t('nav.arrived', { name: nav.accommodation?.name || '' })}</p>
       <button type="button" class="cc-btn cc-btn--secondary" id="nav-close-btn">${t('nav.close')}</button>
+      ${backButton}
     `);
   } else {
     const routeFailed = nav.routeStatus === 'failed';
@@ -486,7 +509,7 @@ function renderNavigatingSheet(nav) {
 
     sheet.setBody(`
       ${renderCaminoAccessBlock(nav.accommodation)}
-      ${routeFailed ? `<p class="cc-pending" style="margin:0 0 10px">${t('nav.route_failed')}</p>` : ''}
+      ${routeFailed ? `<p class="cc-pending" style="margin:0 0 10px">${isBreakfast ? t('breakfast.route_failed') : t('nav.route_failed')}</p>` : ''}
       ${
         gpsOutOfStageContext
           ? `<p class="cc-pending" style="margin:0 0 10px">${t('nav.gps_out_of_context')}</p>`
@@ -500,7 +523,8 @@ function renderNavigatingSheet(nav) {
         <button type="button" class="cc-btn cc-btn--secondary" id="nav-recenter-btn" style="flex:1 1 120px;">${t('nav.recenter')}</button>
         <button type="button" class="cc-btn cc-btn--primary" id="nav-close-btn" style="flex:1 1 120px;">${t('nav.finish')}</button>
       </div>
-      ${routeFailed ? renderOpenInMapsFallback(nav.accommodation) : ''}
+      ${backButton}
+      ${routeFailed && !isBreakfast ? renderOpenInMapsFallback(nav.accommodation) : ''}
     `);
   }
 
@@ -512,6 +536,9 @@ function renderNavigatingSheet(nav) {
   });
   document.getElementById('nav-close-btn')?.addEventListener('click', () => {
     stopAccommodationNavigation();
+  });
+  document.getElementById('nav-back-breakfast-btn')?.addEventListener('click', () => {
+    returnToBreakfast(nav.accommodation);
   });
 }
 

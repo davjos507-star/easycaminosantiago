@@ -45,6 +45,10 @@
     "address": "Praza da Constitución, Sarria",
     "phone": "982 535 276",
     "description": "Desayuno básico",
-    "mapsQuery": "Bar O Tapas, Praza da Constitución, Sarria, Lugo"
+    "coordinates": {
+      "lat": 42.777089,
+      "lng": -7.4165453
+    },
+    "coordinatesSource": "OpenStreetMap: «Mesón O Tapas», Praza da Constitución / Rúa Maior, Sarria"
   }
 }
