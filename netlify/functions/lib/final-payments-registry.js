@@ -12,6 +12,11 @@ const registry = {
     cliente:   'Pilar Rodríguez Gámez',
     ruta:      'Camino del Norte — Irún a Bilbao',
   },
+  'ECS-SARRIA-GM2026': {
+    amountEUR: 488,
+    cliente:   'Gerardo Martínez Trejo',
+    ruta:      'Camino Francés desde Sarria',
+  },
 };
 
 // Reserva FICTICIA solo para pruebas locales (netlify dev / Stripe test mode) —
