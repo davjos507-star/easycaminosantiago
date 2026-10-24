@@ -47,5 +47,14 @@
       "lng": -7.867917
     }
   },
-  "notes": "Transporte de mochila incluido para esta etapa."
+  "notes": "Transporte de mochila incluido para esta etapa.",
+  "breakfast": {
+    "date": "2026-10-28",
+    "location": "external",
+    "name": "Albergue Castro",
+    "address": "Av. Ourense, 24, Palas de Rei",
+    "phone": "609 080 655",
+    "description": "Desayuno básico",
+    "mapsQuery": "Albergue Castro, Av. Ourense 24, Palas de Rei, Lugo"
+  }
 }

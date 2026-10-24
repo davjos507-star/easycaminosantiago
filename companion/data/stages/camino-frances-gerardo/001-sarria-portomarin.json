@@ -48,5 +48,11 @@
       "lng": -7.617251
     }
   },
-  "notes": "Transporte de mochila incluido para esta etapa."
+  "notes": "Transporte de mochila incluido para esta etapa.",
+  "breakfast": {
+    "date": "2026-10-27",
+    "location": "accommodation",
+    "name": "Pensión Pons Minea",
+    "address": "Portomarín"
+  }
 }

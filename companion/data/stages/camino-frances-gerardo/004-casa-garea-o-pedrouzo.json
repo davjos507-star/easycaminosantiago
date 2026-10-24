@@ -33,7 +33,7 @@
       }
     ],
     "roomType": "Dormitorio compartido",
-    "breakfast": "Desayuno no incluido",
+    "breakfast": "No se sirve desayuno en el alojamiento",
     "bookingStatus": "Reserva pagada",
     "checkIn": null,
     "confirmationStatus": "confirmed",
@@ -43,5 +43,14 @@
       "lng": -8.359888
     }
   },
-  "notes": "Origen real: Casa Garea, en A Portela (Castañeda), unos km antes del núcleo de Arzúa. Transporte de mochila incluido para esta etapa."
+  "notes": "Origen real: Casa Garea, en A Portela (Castañeda), unos km antes del núcleo de Arzúa. Transporte de mochila incluido para esta etapa.",
+  "breakfast": {
+    "date": "2026-10-30",
+    "location": "external",
+    "name": "Arca Gourmet",
+    "address": "Avenida Santiago, 7, O Pedrouzo",
+    "phone": "637 551 380",
+    "description": "Desayuno básico",
+    "mapsQuery": "Arca Gourmet, Avenida Santiago 7, O Pedrouzo, A Coruña"
+  }
 }

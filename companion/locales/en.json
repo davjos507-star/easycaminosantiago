@@ -194,5 +194,10 @@
     "update_available": "New version available",
     "update_now": "Update",
     "install_added": "Easy Camino is installed"
+  },
+  "breakfast": {
+    "title": "Your breakfast",
+    "at_accommodation": "At your accommodation",
+    "external": "Outside your accommodation"
   }
 }

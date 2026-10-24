@@ -37,5 +37,14 @@
       "lng": -7.41683
     }
   },
-  "notes": "Día de llegada, sin caminata."
+  "notes": "Día de llegada, sin caminata.",
+  "breakfast": {
+    "date": "2026-10-26",
+    "location": "external",
+    "name": "Bar O Tapas",
+    "address": "Praza da Constitución, Sarria",
+    "phone": "982 535 276",
+    "description": "Desayuno básico",
+    "mapsQuery": "Bar O Tapas, Praza da Constitución, Sarria, Lugo"
+  }
 }

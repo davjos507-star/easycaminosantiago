@@ -2,6 +2,7 @@ import { t, getLocale } from '../../utils/i18n.js';
 import { formatPending, formatKm, formatLongDate, isStageActiveOn } from '../../utils/formatters.js';
 import { icon } from '../components/icons.js';
 import { isStayDetailsEnabled, renderStayDetails } from '../components/stay-details.js';
+import { renderBreakfast } from '../components/breakfast-card.js';
 import { renderLoading, renderError, renderEmpty } from '../components/state-views.js';
 
 export function renderCaminoLoading(container) {
@@ -45,7 +46,8 @@ export function renderCamino(container, { stages, itinerary }) {
                 <div class="cc-eyebrow" style="margin-bottom:4px">${t('camino.accommodation')}</div>
                 <div style="font-weight:700">${stage.accommodation.name}</div>
                 ${renderStayDetails(stage)}
-              </div>` : ''}`
+              </div>` : ''}
+            ${renderBreakfast(stage.breakfast, { nested: true })}`
         : '';
       return `
         <li class="cc-timeline-item cc-timeline-item--${status}">

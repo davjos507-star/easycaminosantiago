@@ -33,7 +33,7 @@
       }
     ],
     "roomType": "Habitación individual",
-    "breakfast": "Desayuno no incluido",
+    "breakfast": "No se sirve desayuno en el alojamiento",
     "bookingStatus": "Reserva confirmada",
     "checkIn": null,
     "confirmationStatus": "confirmed",
@@ -43,5 +43,14 @@
       "lng": -8.55002
     }
   },
-  "notes": "Transporte de mochila incluido para esta etapa (última de las 5 contratadas)."
+  "notes": "Transporte de mochila incluido para esta etapa (última de las 5 contratadas).",
+  "breakfast": {
+    "date": "2026-10-31",
+    "location": "external",
+    "name": "Bo&Go Specialty Coffee",
+    "address": "Rúa de Santiago del Estero, 6, bajo, Santiago de Compostela",
+    "phone": "633 303 374",
+    "description": "Café, zumo y tostada",
+    "mapsQuery": "Bo&Go Specialty Coffee, Rúa de Santiago del Estero 6, Santiago de Compostela"
+  }
 }

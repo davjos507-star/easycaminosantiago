@@ -2,6 +2,7 @@ import { t, getLocale } from '../../utils/i18n.js';
 import { formatKm, formatPending, formatTime, formatDistanceMeters, formatLongDate, isStageActiveOn } from '../../utils/formatters.js';
 import { icon } from '../components/icons.js';
 import { isStayDetailsEnabled, renderStayDetails } from '../components/stay-details.js';
+import { findBreakfastOn, renderBreakfast } from '../components/breakfast-card.js';
 import { renderLoading, renderError, renderEmpty } from '../components/state-views.js';
 import { appStore } from '../../state/store.js';
 import {
@@ -278,6 +279,8 @@ export function renderToday(container, { pilgrim, stages, itinerary }) {
         <h1>${t('today.greeting', { name })}</h1>
       </div>
     </div>
+
+    ${renderBreakfast(findBreakfastOn(stages))}
 
     <div class="cc-card">
       ${stageHeaderHtml}

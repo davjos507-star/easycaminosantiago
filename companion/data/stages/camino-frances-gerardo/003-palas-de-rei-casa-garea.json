@@ -47,5 +47,11 @@
       "lng": -8.113587
     }
   },
-  "notes": "Destino real: Casa Garea, en A Portela (Castañeda), unos km antes del núcleo de Arzúa. Transporte de mochila incluido para esta etapa."
+  "notes": "Destino real: Casa Garea, en A Portela (Castañeda), unos km antes del núcleo de Arzúa. Transporte de mochila incluido para esta etapa.",
+  "breakfast": {
+    "date": "2026-10-29",
+    "location": "accommodation",
+    "name": "Casa Garea",
+    "address": "Castañeda (Arzúa)"
+  }
 }
