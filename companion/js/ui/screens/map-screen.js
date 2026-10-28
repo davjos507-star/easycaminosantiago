@@ -371,6 +371,7 @@ async function mountMap() {
       if (nav.routeCoordinates && nav.routeCoordinates !== lastDrawnRouteCoords) {
         navRouteLayer.setRoute(nav.routeCoordinates);
         lastDrawnRouteCoords = nav.routeCoordinates;
+        if (nav.accommodation?.kind === 'stay') frameStayNavigation(nav.accommodation, nav.routeCoordinates);
       }
       renderMapSheet(state);
     }
@@ -431,6 +432,32 @@ export async function startAccommodationNavigation(accommodation) {
   startAccommodationNav(accommodation);
   renderMapSheet(appStore.getState());
   if (accommodation.kind !== 'breakfast') ensureCaminoAccess(accommodation);
+  if (accommodation.kind === 'stay') {
+    // Ficha de alojamiento: el mapa se queda en el alojamiento (sin
+    // "seguirme", que lo recentraría en el peregrino a cada fix) y el
+    // marcador queda a la vista por encima de la hoja expandida. Cuando
+    // llega la ruta, se encuadra la ruta completa (ver subscribe más arriba).
+    setFollowMode(false);
+    requestAnimationFrame(() => frameStayNavigation(accommodation));
+  }
+}
+
+/**
+ * Encuadra el alojamiento (y la ruta a pie, si ya existe) en la parte del
+ * mapa que queda visible por encima de la hoja inferior.
+ */
+function frameStayNavigation(accommodation, routeCoordinates = null) {
+  const points = [[accommodation.lng, accommodation.lat], ...(routeCoordinates || [])];
+  const lngs = points.map((p) => p[0]);
+  const lats = points.map((p) => p[1]);
+  const pad = 0.0008; // ~80 m de margen alrededor de un único punto
+  const bounds = [
+    [Math.min(...lngs) - pad, Math.min(...lats) - pad],
+    [Math.max(...lngs) + pad, Math.max(...lats) + pad],
+  ];
+  const sheetHeight = document.getElementById('today-sheet')?.offsetHeight || 0;
+  const bottom = Math.min(sheetHeight, window.innerHeight * 0.65) + 24;
+  mapEngine.fitBounds(bounds, { padding: { top: 110, right: 40, bottom, left: 40 }, maxZoom: 17, duration: 500 });
 }
 
 /**

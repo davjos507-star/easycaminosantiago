@@ -1,5 +1,5 @@
 /* Service Worker — Easy Camino Companion */
-const CACHE_VERSION = 'easy-camino-companion-v9';
+const CACHE_VERSION = 'easy-camino-companion-v10';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 const DATA_CACHE = `${CACHE_VERSION}-data`;
