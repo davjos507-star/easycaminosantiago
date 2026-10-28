@@ -1,6 +1,8 @@
 import { icon } from './icons.js';
 import { t, getLocale } from '../../utils/i18n.js';
 import { formatLongDate } from '../../utils/formatters.js';
+import { navigateTo } from '../../router.js';
+import { startAccommodationNavigation } from '../screens/map-screen.js';
 
 /*
  * Bloque de detalle de un alojamiento (entrada/salida, dirección,
@@ -11,9 +13,11 @@ import { formatLongDate } from '../../utils/formatters.js';
  * exactamente las mismas pantallas que antes. Solo pinta los campos que
  * existen en los datos: nunca rellena huecos con "Pendiente de cargar".
  *
- * "Cómo llegar" sí abre Google Maps (pestaña externa), a diferencia de
- * "Ver en mapa"/"Llévame al alojamiento" de alojamientos-screen.js, que se
- * quedan dentro del mapa de Companion.
+ * "Cómo llegar" / "Llévame al alojamiento" abren SIEMPRE la navegación a pie
+ * dentro del mapa de Companion — nunca Google Maps, Apple Maps ni ninguna
+ * página externa. Mismo patrón que breakfast-card.js: el clic se gestiona
+ * aquí (listener delegado) y el destino viaja en los data-* del botón, con
+ * la pantalla de origen para el botón "Volver al alojamiento" del mapa.
  */
 
 export function isStayDetailsEnabled(itinerary) {
@@ -24,18 +28,61 @@ function telHref(number) {
   return `tel:${String(number).replace(/[^\d+]/g, '')}`;
 }
 
-export function googleMapsDirectionsUrl(accommodation) {
-  const c = accommodation?.coordinates;
-  if (!c || !Number.isFinite(c.lat) || !Number.isFinite(c.lng)) return null;
-  return `https://www.google.com/maps/dir/?api=1&destination=${c.lat},${c.lng}&travelmode=walking`;
+function escapeAttr(value) {
+  return String(value ?? '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
+
+function hasCoordinates(accommodation) {
+  const c = accommodation?.coordinates;
+  return Boolean(c && Number.isFinite(c.lat) && Number.isFinite(c.lng));
+}
+
+/** Atributos data-* del botón que abre la navegación interna a un alojamiento. */
+export function stayNavAttributes(stage) {
+  const acc = stage?.accommodation;
+  if (!hasCoordinates(acc)) return '';
+  return `data-stay-nav="${escapeAttr(stage.date)}" data-lat="${acc.coordinates.lat}" data-lng="${acc.coordinates.lng}" data-name="${escapeAttr(acc.name)}" data-address="${escapeAttr(acc.address)}"`;
+}
+
+function handleStayNavClick(event) {
+  const origin = event.target instanceof Element ? event.target : event.target?.parentElement;
+  const btn = origin?.closest('[data-stay-nav]');
+  if (!btn) return;
+  const lat = Number(btn.dataset.lat);
+  const lng = Number(btn.dataset.lng);
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+  event.preventDefault();
+  const target = {
+    kind: 'stay',
+    name: btn.dataset.name || '',
+    address: btn.dataset.address || null,
+    date: btn.dataset.stayNav,
+    lat,
+    lng,
+    returnScreen: btn.closest('[data-screen]')?.dataset.screen || 'today',
+  };
+  navigateTo('map');
+  // Igual que breakfast-card.js: dejar que el mapa se muestre antes de
+  // centrar y arrancar la navegación.
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      startAccommodationNavigation(target).catch((err) => console.error('[stay] navegación:', err));
+    });
+  });
+}
+
+document.addEventListener('click', handleStayNavClick);
 
 function accommodationPhones(accommodation) {
   if (Array.isArray(accommodation?.phones) && accommodation.phones.length) return accommodation.phones;
   return accommodation?.phone ? [{ number: accommodation.phone }] : [];
 }
 
-export function renderStayDetails(stage) {
+/**
+ * `directions: false` omite "Cómo llegar" (Alojamientos ya tiene su propio
+ * "Llévame al alojamiento", que usa este mismo flujo).
+ */
+export function renderStayDetails(stage, { directions = true } = {}) {
   const locale = getLocale();
   const acc = stage?.accommodation;
   if (!acc) return '';
@@ -55,12 +102,14 @@ export function renderStayDetails(stage) {
   const phoneButtons = accommodationPhones(acc)
     .map((p) => `<a class="cc-btn cc-btn--secondary cc-btn--sm cc-btn--auto" href="${telHref(p.number)}">${icon('phone')} ${p.number}${p.label ? ` · ${p.label}` : ''}</a>`)
     .join('');
-  const mapsUrl = googleMapsDirectionsUrl(acc);
-  const mapsButton = mapsUrl
-    ? `<a class="cc-btn cc-btn--primary cc-btn--sm cc-btn--auto" href="${mapsUrl}" target="_blank" rel="noopener">${icon('locationArrow')} ${t('stays.directions')}</a>`
+  const navAttrs = directions ? stayNavAttributes(stage) : '';
+  const mapsButton = navAttrs
+    ? `<button type="button" class="cc-btn cc-btn--primary cc-btn--sm cc-btn--auto" ${navAttrs}>${icon('locationArrow')} ${t('stays.directions')}</button>`
     : '';
 
   return `
-    ${lines.join('')}
-    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px">${mapsButton}${phoneButtons}</div>`;
+    <div data-stay-card="${escapeAttr(stage.date)}">
+      ${lines.join('')}
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:12px">${mapsButton}${phoneButtons}</div>
+    </div>`;
 }

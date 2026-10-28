@@ -434,15 +434,18 @@ export async function startAccommodationNavigation(accommodation) {
 }
 
 /**
- * "Volver al desayuno": cierra la navegación y vuelve a la pantalla desde la
- * que se pulsó "Cómo llegar" (Hoy o Mi Camino), con la ficha a la vista.
- * Botón explícito porque en iPhone (app instalada) no hay botón "atrás".
+ * "Volver al desayuno" / "Volver al alojamiento": cierra la navegación y
+ * vuelve a la pantalla desde la que se pulsó "Cómo llegar" (Hoy, Mi Camino
+ * o Alojamientos), con la ficha a la vista. Botón explícito porque en
+ * iPhone (app instalada) no hay botón "atrás".
  */
-function returnToBreakfast(target) {
+function returnToOrigin(target) {
+  const screen = target?.returnScreen || 'today';
+  const cardAttr = target?.kind === 'stay' ? 'data-stay-card' : 'data-breakfast-card';
   stopAccommodationNavigation();
-  navigateTo(target?.returnScreen || 'today');
+  navigateTo(screen);
   requestAnimationFrame(() => {
-    document.querySelector(`[data-screen="${target?.returnScreen || 'today'}"] [data-breakfast-card="${target?.date}"]`)
+    document.querySelector(`[data-screen="${screen}"] [${cardAttr}="${target?.date}"]`)
       ?.scrollIntoView({ block: 'center' });
   });
 }
@@ -465,14 +468,19 @@ function renderNavGpsLine(nav) {
 function renderNavigatingSheet(nav) {
   const arrived = nav.status === 'arrived';
   const isBreakfast = nav.accommodation?.kind === 'breakfast';
-  const backButton = isBreakfast
-    ? `<button type="button" class="cc-btn cc-btn--secondary" id="nav-back-breakfast-btn" style="margin-top:8px;">${t('breakfast.back')}</button>`
+  const isStay = nav.accommodation?.kind === 'stay';
+  // Sin salidas a Google/Apple Maps: desayunos, fichas de alojamiento y
+  // cualquier itinerario con detalle activado (itinerary.showStayDetails)
+  // navegan siempre solo dentro de Companion.
+  const inAppOnly = isBreakfast || isStay || appStore.getState().itinerary?.showStayDetails === true;
+  const backButton = isBreakfast || isStay
+    ? `<button type="button" class="cc-btn cc-btn--secondary" id="nav-back-origin-btn" style="margin-top:8px;">${isBreakfast ? t('breakfast.back') : t('stays.back')}</button>`
     : '';
 
   sheet.setSummary(`
     <div class="cc-eyebrow">${isBreakfast ? t('breakfast.nav_title') : t('nav.title')}</div>
     <strong>${nav.accommodation?.name || ''}</strong>
-    ${isBreakfast && nav.accommodation.address ? `<div style="color:var(--cc-text-muted); font-size:0.85rem">${nav.accommodation.address}</div>` : ''}
+    ${(isBreakfast || isStay) && nav.accommodation.address ? `<div style="color:var(--cc-text-muted); font-size:0.85rem">${nav.accommodation.address}</div>` : ''}
   `);
 
   if (arrived) {
@@ -524,7 +532,7 @@ function renderNavigatingSheet(nav) {
         <button type="button" class="cc-btn cc-btn--primary" id="nav-close-btn" style="flex:1 1 120px;">${t('nav.finish')}</button>
       </div>
       ${backButton}
-      ${routeFailed && !isBreakfast ? renderOpenInMapsFallback(nav.accommodation) : ''}
+      ${routeFailed && !inAppOnly ? renderOpenInMapsFallback(nav.accommodation) : ''}
     `);
   }
 
@@ -537,8 +545,8 @@ function renderNavigatingSheet(nav) {
   document.getElementById('nav-close-btn')?.addEventListener('click', () => {
     stopAccommodationNavigation();
   });
-  document.getElementById('nav-back-breakfast-btn')?.addEventListener('click', () => {
-    returnToBreakfast(nav.accommodation);
+  document.getElementById('nav-back-origin-btn')?.addEventListener('click', () => {
+    returnToOrigin(nav.accommodation);
   });
 }
 

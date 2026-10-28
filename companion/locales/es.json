@@ -106,6 +106,7 @@
     "stage_number": "Etapa {{number}}"
   },
   "stays": {
+    "back": "Volver al alojamiento",
     "directions": "Cómo llegar",
     "check_out_date": "Salida",
     "check_in_date": "Entrada",

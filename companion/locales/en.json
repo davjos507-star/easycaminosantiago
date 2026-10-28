@@ -106,6 +106,7 @@
     "stage_number": "Stage {{number}}"
   },
   "stays": {
+    "back": "Back to accommodation",
     "directions": "Directions",
     "check_out_date": "Check-out",
     "check_in_date": "Check-in",
