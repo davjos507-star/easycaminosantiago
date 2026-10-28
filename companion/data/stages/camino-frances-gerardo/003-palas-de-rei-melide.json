@@ -1,0 +1,45 @@
+{
+  "number": 3,
+  "date": "2026-10-28",
+  "checkOutDate": "2026-10-29",
+  "nights": 1,
+  "origin": "Palas de Rei",
+  "destination": "Melide",
+  "km": 15.0,
+  "kmNote": "Medido de alojamiento a alojamiento siguiendo el Camino. La Pensión Orois está en el centro de Melide, a unos 170 m del Camino.",
+  "elevationGain": null,
+  "elevationLoss": null,
+  "difficulty": "Moderada",
+  "estimatedTime": "3,5–4,5 h",
+  "coordinates": {
+    "start": {
+      "lat": 42.872743,
+      "lng": -7.867917
+    },
+    "end": {
+      "lat": 42.9127617,
+      "lng": -8.014852
+    }
+  },
+  "routeFile": "routes/camino-frances/003-palas-de-rei-arzua.geojson",
+  "accommodation": {
+    "name": "Pensión Orois",
+    "locality": "Melide (A Coruña)",
+    "address": "Rúa Alexandre Bóveda, 13, 15800 Melide, A Coruña",
+    "phone": "+34 981 507 097",
+    "phones": [
+      {
+        "number": "+34 981 507 097"
+      }
+    ],
+    "roomType": "Habitación individual",
+    "checkIn": null,
+    "confirmationStatus": "confirmed",
+    "notes": "Noche añadida el 28/10/2026 (nueva reserva). Habitación individual según la nueva reserva. Desayuno: sin información en la documentación — no se muestra ninguno para el 29/10.",
+    "coordinates": {
+      "lat": 42.9127617,
+      "lng": -8.014852
+    }
+  },
+  "notes": "Etapa nueva: la jornada original Palas de Rei → Casa Garea se divide en dos (noche en Melide). Transporte de mochila Palas de Rei → Melide: contratado originalmente hasta Casa Garea; confirmar el nuevo destino con el proveedor."
+}

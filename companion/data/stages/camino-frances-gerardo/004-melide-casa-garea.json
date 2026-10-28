@@ -1,20 +1,20 @@
 {
-  "number": 3,
-  "date": "2026-10-28",
-  "checkOutDate": "2026-10-29",
+  "number": 4,
+  "date": "2026-10-29",
+  "checkOutDate": "2026-10-30",
   "nights": 1,
-  "origin": "Palas de Rei",
+  "origin": "Melide",
   "destination": "Casa Garea (Castañeda)",
-  "km": 24.7,
+  "km": 10.0,
   "kmNote": "Medido de alojamiento a alojamiento siguiendo el Camino. Incluye entre 0,7 y 0,9 km de acceso desde el Camino hasta Casa Garea (A Portela, Castañeda, junto a la N-547), antes de Ribadiso y Arzúa.",
   "elevationGain": null,
   "elevationLoss": null,
-  "difficulty": "Exigente",
-  "estimatedTime": "6–7 h",
+  "difficulty": "Moderada",
+  "estimatedTime": "2,5–3 h",
   "coordinates": {
     "start": {
-      "lat": 42.872743,
-      "lng": -7.867917
+      "lat": 42.9127617,
+      "lng": -8.014852
     },
     "end": {
       "lat": 42.931832,
@@ -47,9 +47,9 @@
       "lng": -8.113587
     }
   },
-  "notes": "Destino real: Casa Garea, en A Portela (Castañeda), unos km antes del núcleo de Arzúa. Transporte de mochila incluido para esta etapa.",
+  "notes": "Destino real: Casa Garea, en A Portela (Castañeda), unos km antes del núcleo de Arzúa. Etapa nueva tras añadir la noche en Melide (28/10): transporte de mochila Melide → Casa Garea pendiente de confirmar, no dar por contratado.",
   "breakfast": {
-    "date": "2026-10-29",
+    "date": "2026-10-30",
     "location": "accommodation",
     "name": "Casa Garea",
     "address": "Castañeda (Arzúa)"

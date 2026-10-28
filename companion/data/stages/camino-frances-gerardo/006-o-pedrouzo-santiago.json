@@ -1,7 +1,7 @@
 {
-  "number": 5,
-  "date": "2026-10-30",
-  "checkOutDate": "2026-10-31",
+  "number": 6,
+  "date": "2026-10-31",
+  "checkOutDate": "2026-11-01",
   "nights": 1,
   "origin": "O Pedrouzo",
   "destination": "Santiago de Compostela",
@@ -37,15 +37,15 @@
     "bookingStatus": "Reserva confirmada",
     "checkIn": null,
     "confirmationStatus": "confirmed",
-    "notes": "Reserva confirmada. Habitación individual. Desayuno no incluido. Salida el sábado 31 de octubre.",
+    "notes": "Reserva confirmada. Habitación individual. Desayuno no incluido. Salida el domingo 1 de noviembre.",
     "coordinates": {
       "lat": 42.87418,
       "lng": -8.55002
     }
   },
-  "notes": "Transporte de mochila incluido para esta etapa (última de las 5 contratadas).",
+  "notes": "Transporte de mochila contratado para esta etapa; desplazado del 30/10 al 31/10 — confirmar la nueva fecha con el proveedor.",
   "breakfast": {
-    "date": "2026-10-31",
+    "date": "2026-11-01",
     "location": "external",
     "name": "Bo&Go Specialty Coffee",
     "address": "Rúa de Santiago del Estero, 6, bajo, Santiago de Compostela",

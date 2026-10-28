@@ -1,7 +1,7 @@
 {
-  "number": 4,
-  "date": "2026-10-29",
-  "checkOutDate": "2026-10-30",
+  "number": 5,
+  "date": "2026-10-30",
+  "checkOutDate": "2026-10-31",
   "nights": 1,
   "origin": "Casa Garea (Castañeda)",
   "destination": "O Pedrouzo",
@@ -43,9 +43,9 @@
       "lng": -8.359888
     }
   },
-  "notes": "Origen real: Casa Garea, en A Portela (Castañeda), unos km antes del núcleo de Arzúa. Transporte de mochila incluido para esta etapa.",
+  "notes": "Origen real: Casa Garea, en A Portela (Castañeda), unos km antes del núcleo de Arzúa. Transporte de mochila contratado para esta etapa; desplazado del 29/10 al 30/10 — confirmar la nueva fecha con el proveedor.",
   "breakfast": {
-    "date": "2026-10-30",
+    "date": "2026-10-31",
     "location": "external",
     "name": "Arca Gourmet",
     "address": "Avenida Santiago, 7, O Pedrouzo",
