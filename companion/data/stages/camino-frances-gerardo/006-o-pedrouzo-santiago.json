@@ -5,16 +5,16 @@
   "nights": 1,
   "origin": "O Pedrouzo",
   "destination": "Santiago de Compostela",
-  "km": 21.4,
-  "kmNote": "Medido de alojamiento a alojamiento siguiendo el Camino: unos 20,3 km hasta la Catedral y unos 1,1 km más desde la Catedral hasta la Pensión Santa Rita.",
+  "km": 19.7,
+  "kmNote": "Medido de alojamiento a alojamiento siguiendo el Camino: unos 18,6 km desde la Pensión Diana 2 hasta la Catedral y unos 1,1 km más desde la Catedral hasta la Pensión Santa Rita.",
   "elevationGain": null,
   "elevationLoss": null,
   "difficulty": "Moderada",
   "estimatedTime": "5–6 h",
   "coordinates": {
     "start": {
-      "lat": 42.907043,
-      "lng": -8.359888
+      "lat": 42.903517,
+      "lng": -8.367288
     },
     "end": {
       "lat": 42.87418,
