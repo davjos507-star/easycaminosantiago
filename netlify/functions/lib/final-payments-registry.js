@@ -29,6 +29,14 @@ const registry = {
       confirmedAt:     '2026-10-24T10:48:30.404Z',
     },
   },
+  // Pago ADICIONAL de la misma reserva (cambios de alojamientos y gestión del
+  // transporte de equipaje), con identificador propio para no chocar con el
+  // anticipo (122 €) ni con el saldo final (488 €, ya confirmado arriba).
+  'ECS-SARRIA-GM2026-ADIC1': {
+    amountEUR: 155,
+    cliente:   'Gerardo Martínez Trejo',
+    ruta:      'Camino Francés desde Sarria — pago adicional',
+  },
 };
 
 // Reserva FICTICIA solo para pruebas locales (netlify dev / Stripe test mode) —
