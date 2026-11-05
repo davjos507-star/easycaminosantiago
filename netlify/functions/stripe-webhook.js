@@ -12,6 +12,7 @@
 const https  = require('https');
 const crypto = require('crypto');
 const { marcarSaldoFinalConfirmado } = require('./lib/final-payment-store');
+const { GRUPOS, progresoDelGrupo } = require('./lib/group-deposits');
 
 // ── Verificación de firma Stripe ────────────────────────────────────────────
 // Stripe firma el payload con HMAC-SHA256 usando el webhook secret.
@@ -187,7 +188,47 @@ async function findDealForContact(token, contactId, pipelinesInfo) {
   return { dealId: dealIds[0], pipelineId: null };
 }
 
-async function updateDealOnPaymentSuccess(token, contactId, pi) {
+// ── Anticipos de grupo por familia (tipo_pago === 'deposito_familia') ───────
+// Progreso del grupo según Stripe (lib/group-deposits.js). Si no se puede calcular
+// devuelve null: la nota lo dice y el negocio NO se mueve de etapa.
+async function calcularProgresoGrupo(pi, importeRecibido) {
+  const grupoRef = pi.metadata && pi.metadata.referencia_general;
+  const secretKey = process.env.STRIPE_SECRET_KEY;
+  if (!grupoRef || !GRUPOS[grupoRef] || !secretKey) return null;
+  try {
+    return await progresoDelGrupo(grupoRef, secretKey, {
+      reservaId: pi.metadata.reserva_id, paymentIntentId: pi.id, amountEUR: importeRecibido,
+    });
+  } catch (err) {
+    console.error('[STRIPE-WEBHOOK] no se pudo calcular el progreso del anticipo de grupo:', err.message);
+    return null;
+  }
+}
+
+function notaDepositoFamilia(pi, importeRecibido, progreso) {
+  const m = pi.metadata || {};
+  // es-ES no agrupa millares en números de 4 cifras ("1500,00"): formato explícito "1.500,00 €".
+  const eur = n => {
+    const [ent, dec] = n.toFixed(2).split('.');
+    return ent.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ',' + dec + ' €';
+  };
+  return [
+    'Evento Stripe: payment_intent.succeeded',
+    'Anticipo de FAMILIA pagado vía Stripe — pago parcial del anticipo del grupo',
+    'PaymentIntent ID: ' + pi.id,
+    importeRecibido !== undefined ? 'Importe recibido: ' + eur(importeRecibido) : null,
+    'Familia: ' + (m.familia || '—') + ' (' + (m.peregrinos || '—') + ' peregrinos)',
+    'Referencia individual: ' + (m.reserva_id || '—'),
+    'Referencia del grupo: ' + (m.referencia_general || '—'),
+    progreso
+      ? 'Anticipo del grupo: ' + progreso.familiasPagadas + ' de ' + progreso.familiasTotal + ' familias · ' + eur(progreso.pagadoEUR) + ' de ' + eur(progreso.totalEUR)
+        + (progreso.completo ? ' — COMPLETO' : ' — pendientes: ' + progreso.pendientes.join(', '))
+      : 'Anticipo del grupo: progreso no disponible — revisar en Stripe por referencia del grupo',
+  ];
+}
+
+async function updateDealOnPaymentSuccess(token, contactId, pi, progresoGrupo) {
+  const esDepositoFamilia = !!(pi.metadata && pi.metadata.tipo_pago === 'deposito_familia');
   // tipo_pago === 'saldo' identifica el pago FINAL de una reserva (vs. el depósito
   // inicial). No existe en el pipeline una etapa "pagado completo" — por eso, a
   // diferencia del depósito, el saldo final no mueve el negocio de etapa
@@ -209,6 +250,10 @@ async function updateDealOnPaymentSuccess(token, contactId, pi) {
 
   if (esSaldoFinal) {
     console.log('[STRIPE-WEBHOOK] pago de saldo final — no se cambia de etapa (sin etapa "pagado completo" configurada) | negocio:', target.dealId);
+  } else if (esDepositoFamilia && !(progresoGrupo && progresoGrupo.completo)) {
+    // Solo ha pagado parte de las familias (o no se pudo comprobar): el negocio del
+    // grupo NO pasa a "depósito pagado" hasta que el anticipo del grupo esté completo.
+    console.log('[STRIPE-WEBHOOK] anticipo parcial de grupo — no se cambia de etapa | negocio:', target.dealId);
   } else {
     const info = target.pipelineId ? pipelinesInfo.get(target.pipelineId) : null;
     if (info && info.depositStageId) {
@@ -226,7 +271,7 @@ async function updateDealOnPaymentSuccess(token, contactId, pi) {
   }
 
   const importeRecibido = typeof pi.amount_received === 'number' ? pi.amount_received / 100 : undefined;
-  const dealNoteLines = [
+  const dealNoteLines = esDepositoFamilia ? notaDepositoFamilia(pi, importeRecibido, progresoGrupo).filter(Boolean).join('\n') : [
     'Evento Stripe: payment_intent.succeeded',
     esSaldoFinal ? 'Saldo final pagado vía Stripe' : 'Depósito pagado vía Stripe',
     'PaymentIntent ID: ' + pi.id,
@@ -376,6 +421,10 @@ exports.handler = async function(event) {
   const fechaEvento = new Date().toLocaleString('es-ES', { timeZone: 'Europe/Madrid' });
   let properties = {};
   let noteLines  = [];
+  // tipo_pago === 'deposito_familia': anticipo de una familia dentro de una reserva
+  // de grupo (lib/group-deposits.js). Ningún otro pago lo lleva.
+  const esDepositoFamilia = !!(pi.metadata && pi.metadata.tipo_pago === 'deposito_familia');
+  let progresoGrupo = null;
 
   if (eventType === 'payment_intent.succeeded') {
     console.log('[STRIPE-WEBHOOK] pago correcto | pi:', pi.id, '| email:', email);
@@ -403,6 +452,18 @@ exports.handler = async function(event) {
       ? pi.amount_received / 100
       : undefined;
 
+    if (esDepositoFamilia) {
+      progresoGrupo = await calcularProgresoGrupo(pi, importeRecibido);
+      // Anticipo de UNA familia de una reserva de grupo: no se marca el contacto como
+      // deposito_pagado ni se escribe importe_deposito (se leerían como el anticipo
+      // del grupo). El importe y la referencia individual quedan en la nota.
+      properties = {
+        stripe_payment_id:    pi.id,
+        metodo_pago_reserva:  'Tarjeta bancaria',
+      };
+      noteLines = notaDepositoFamilia(pi, importeRecibido, progresoGrupo).concat(['Email: ' + email, 'Fecha: ' + fechaEvento]);
+    } else {
+
     properties = {
       estado_reserva:       esSaldoFinal ? 'saldo_pagado' : 'deposito_pagado',
       stripe_payment_id:    pi.id,
@@ -419,6 +480,7 @@ exports.handler = async function(event) {
       'Email: ' + email,
       'Fecha: ' + fechaEvento,
     ];
+    }
 
   } else if (eventType === 'payment_intent.payment_failed') {
     console.log('[STRIPE-WEBHOOK] pago fallido | pi:', pi.id, '| email:', email);
@@ -429,7 +491,8 @@ exports.handler = async function(event) {
     const errorMsg = pi.last_payment_error && pi.last_payment_error.message;
 
     properties = {
-      estado_reserva:       'pendiente_pago',
+      // Anticipo de familia: estado_reserva lo gestiona el equipo (ver rama succeeded).
+      ...(!esDepositoFamilia && { estado_reserva: 'pendiente_pago' }),
       stripe_payment_id:    pi.id,
       metodo_pago_reserva:  'Tarjeta bancaria',
     };
@@ -467,7 +530,7 @@ exports.handler = async function(event) {
       // nunca se crea uno nuevo. En payment_failed no se toca el negocio: sigue "Pago pendiente".
       if (eventType === 'payment_intent.succeeded') {
         try {
-          await updateDealOnPaymentSuccess(hubspotToken, contactId, pi);
+          await updateDealOnPaymentSuccess(hubspotToken, contactId, pi, progresoGrupo);
         } catch (err) {
           console.error('[STRIPE-WEBHOOK] error al actualizar negocio:', err.message);
         }

@@ -190,9 +190,10 @@ body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dar
 // ─── DATOS FIJOS DE ESTA ENTRADA (20 %) — Família Elaine, ECS-SARRIA-MB2027-ELAINE ───
 // Una de las tres páginas de entrada de la reserva de grupo ECS-SARRIA-MB2027
 // (Meire Brasil, 9 peregrinos en 3 familias: 666,67 + 500,00 + 333,33 = 1.500 €).
-// Mismo flujo que el depósito de pago-gerardo-martinez-sarria.html
-// (tipo_pago 'deposito' → el webhook registra deposito_pagado) y misma estructura
-// que pago-adicional-gerardo-martinez.html: no se envía nada a Netlify Forms ni a
+// tipo_pago 'deposito_familia': el servidor fija importe y metadatos desde
+// netlify/functions/lib/group-deposits.js, rechaza un segundo cobro si Stripe ya
+// tiene esta referencia pagada, y el webhook registra el anticipo como pago parcial
+// del grupo. Misma estructura que pago-adicional-gerardo-martinez.html: no se envía nada a Netlify Forms ni a
 // HubSpot antes de cobrar y no se dispara send-booking-email (plantilla en español
 // y de reserva individual) — el pago se registra solo vía webhook de Stripe.
 const RESERVA = {
@@ -281,7 +282,7 @@ async function procesarPago(){
         description: RESERVA.concepto + ' · ' + RESERVA.ref + ' — Easy Camino Santiago',
         metadata: {
           tipo:                'entrada-reserva-familia',
-          tipo_pago:           'deposito',
+          tipo_pago:           'deposito_familia',
           concepto:            RESERVA.concepto,
           ruta:                RESERVA.ruta,
           cliente:             RESERVA.nombre,
@@ -299,7 +300,16 @@ async function procesarPago(){
     });
 
     const data = await res.json();
-    if (!data.clientSecret) throw new Error(data.error || 'Error al crear el pago');
+    if (!data.clientSecret) {
+      // Comprobación real en el servidor (create-payment-intent.js consulta a Stripe).
+      if (data.alreadyPaid) {
+        try { localStorage.setItem(PAGADO_STORAGE_KEY, '1'); } catch(e) {}
+        errEl.textContent = 'Esta entrada já está paga. Se tiver qualquer dúvida, fale conosco pelo +34 625 875 316.';
+        btn.textContent = 'Entrada já paga';
+        return;
+      }
+      throw new Error(data.error || 'Error al crear el pago');
+    }
 
     const result = await state.stripeInstance.confirmCardPayment(data.clientSecret, {
       payment_method: {

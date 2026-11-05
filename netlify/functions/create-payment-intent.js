@@ -1,6 +1,7 @@
 const https = require('https');
 const FINAL_PAYMENTS_REGISTRY = require('./lib/final-payments-registry');
 const { obtenerSaldoFinalConfirmado } = require('./lib/final-payment-store');
+const { buscarFamilia, anticiposPagadosDelGrupo, estadoPaymentIntent } = require('./lib/group-deposits');
 
 // idempotencyKey (opcional): cuando se pasa, Stripe garantiza que varias
 // llamadas con la MISMA clave devuelven siempre el MISMO PaymentIntent en vez
@@ -150,6 +151,67 @@ exports.handler = async function(event) {
     idempotencyKey = 'saldo-final:' + reservaId;
   }
 
+  // ── Anticipos de GRUPO por familia (tipo_pago === 'deposito_familia') ──
+  // Solo lo usan las páginas de anticipo por familia (lib/group-deposits.js).
+  // Ningún otro flujo lo atraviesa. Importe, email, descripción y metadatos salen
+  // del registro server-side — así la petición es siempre idéntica para la misma
+  // familia y la Idempotency-Key es válida en los reintentos.
+  if (metadata && metadata.tipo_pago === 'deposito_familia') {
+    const reservaId = typeof metadata.reserva_id === 'string' ? metadata.reserva_id.trim() : '';
+    const familia = reservaId && buscarFamilia(reservaId);
+    if (!familia) {
+      return {
+        statusCode: 400,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: 'Reserva no reconocida para anticipo de familia' })
+      };
+    }
+
+    // "Ya pagado" según Stripe: solo cuentan PaymentIntents 'succeeded', así que
+    // un intento fallido o abandonado no bloquea el siguiente. Si la consulta falla
+    // se corta sin cobrar (falla cerrado): mejor un reintento que un cobro doble.
+    let pagados;
+    try {
+      pagados = await anticiposPagadosDelGrupo(familia.grupoRef, secretKey);
+    } catch (err) {
+      console.error('[create-payment-intent] no se pudo comprobar si el anticipo de familia ya está pagado:', err.message);
+      return {
+        statusCode: 503,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: 'No se ha podido comprobar el estado del pago. Inténtalo de nuevo en unos minutos.' })
+      };
+    }
+    if (pagados.some(p => p.reservaId === reservaId)) {
+      return {
+        statusCode: 409,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: 'Este anticipo ya está pagado.', alreadyPaid: true })
+      };
+    }
+
+    amount = familia.amountEUR;
+    description = `Entrada de 20% — Caminho de Santiago — Família ${familia.familia} — ${familia.peregrinos} peregrinos · ${reservaId} — Easy Camino Santiago`;
+    metadata = {
+      tipo:               'entrada-reserva-familia',
+      tipo_pago:          'deposito_familia',
+      reserva_id:         reservaId,
+      referencia_general: familia.grupoRef,
+      familia:            familia.familia,
+      cliente:            familia.responsable,
+      nombre:             familia.responsable,
+      email:              familia.email,
+      peregrinos:         familia.peregrinos,
+      total_familia:      familia.totalFamiliaEUR,
+      saldo_pendiente:    familia.saldoEUR,
+      ruta:               familia.grupo.ruta,
+    };
+
+    // Misma clave para todos los intentos de la familia: Stripe devuelve el mismo
+    // PaymentIntent (reintentable con otra tarjeta si el primero falló) y cubre los
+    // segundos en que un pago recién completado aún no aparece en la búsqueda.
+    idempotencyKey = 'deposito-familia:' + reservaId;
+  }
+
   // El frontend envía euros; Stripe requiere céntimos
   const amountCents = Math.round(amount * 100);
 
@@ -175,6 +237,27 @@ exports.handler = async function(event) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ error: stripe.error?.message || 'Error al crear el pago' })
       };
+    }
+
+    // Con la Idempotency-Key repetida Stripe devuelve la respuesta GUARDADA del primer
+    // intento, así que se consulta el estado actual: si ese PaymentIntent ya se cobró
+    // (hace segundos, aún sin indexar en la búsqueda) se responde "ya pagado". Aunque
+    // esta consulta fallase no habría cobro doble: es el mismo PaymentIntent y Stripe
+    // no permite confirmar otra vez uno ya cobrado.
+    if (metadata && metadata.tipo_pago === 'deposito_familia') {
+      let estadoActual = null;
+      try {
+        estadoActual = await estadoPaymentIntent(stripe.id, secretKey);
+      } catch (err) {
+        console.warn('[create-payment-intent] no se pudo consultar el estado actual del PaymentIntent:', err.message);
+      }
+      if (estadoActual === 'succeeded' || estadoActual === 'processing') {
+        return {
+          statusCode: 409,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ error: 'Este anticipo ya está pagado.', alreadyPaid: true })
+        };
+      }
     }
 
     return {
