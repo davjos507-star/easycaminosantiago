@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CERD8SRPBP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-CERD8SRPBP');
+  </script>
+<meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#56A1A4">
+<meta name="robots" content="noindex, nofollow">
+<title>Entrada da reserva | Easy Camino Santiago</title>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;700;800;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+:root {
+  --azul: #56A1A4;
+  --azul-dark: #2D4A52;
+  --naranja: #F3A949;
+  --crema: #ECE7E2;
+  --gris: #5a6b6a;
+  --bg: #f0f4f4;
+  --white: #ffffff;
+  --border: #d8e8e8;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Lato',sans-serif; background:var(--bg); color:var(--azul-dark); }
+
+/* NAV */
+.res-nav { background:var(--white); border-bottom:1px solid var(--border); padding:12px 32px; display:flex; align-items:center; }
+.res-nav img { height:40px; width:auto; }
+
+/* PAGE TITLE */
+.page-title-bar { max-width:640px; margin:32px auto 0; padding:0 20px; }
+.page-title-bar h1 { font-family:'Raleway',sans-serif; font-size:1.5rem; font-weight:900; color:var(--azul-dark); text-transform:uppercase; letter-spacing:1px; }
+.page-title-bar p { color:var(--gris); font-size:0.9rem; margin-top:6px; }
+
+/* MAIN */
+.res-main { max-width:640px; margin:24px auto 60px; padding:0 20px; }
+
+/* CARD */
+.res-card { background:var(--white); border-radius:12px; padding:32px; margin-bottom:20px; }
+.section-h3 { font-size:0.95rem; font-weight:700; color:var(--azul-dark); margin:28px 0 16px; padding-bottom:8px; border-bottom:2px solid var(--azul); }
+.section-h3:first-child { margin-top:0; }
+
+/* SUMMARY (client / trip details, read-only) */
+.summary-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px 20px; margin-bottom:4px; }
+.summary-item { display:flex; flex-direction:column; gap:3px; }
+.summary-item.full { grid-column:1 / -1; }
+.summary-key { font-size:0.72rem; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:var(--gris); }
+.summary-val { font-size:0.98rem; font-weight:700; color:var(--azul-dark); overflow-wrap:anywhere; }
+@media (max-width:540px) { .summary-grid { grid-template-columns:1fr; } }
+
+/* PAY AMOUNT PREVIEW */
+.pay-amount { background:#f0f9f9; border-radius:10px; padding:18px 20px; margin:20px 0; }
+.pay-amount .pa-row { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:4px 12px; padding:4px 0; font-size:0.88rem; color:var(--gris); }
+.pay-amount .pa-row strong { color:var(--azul-dark); }
+.pay-amount .pa-now { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:4px 12px; padding-top:10px; margin-top:6px; border-top:1px solid var(--border); }
+.pay-amount .pa-now-label { font-size:0.82rem; color:var(--gris); text-transform:uppercase; letter-spacing:0.5px; font-weight:700; }
+.pay-amount .pa-now-value { font-size:1.8rem; font-weight:900; font-family:'Raleway',sans-serif; color:var(--azul); }
+
+/* PRUDENT NOTE */
+.notice-box { margin-top:16px; padding:14px 16px; background:var(--crema); border-left:4px solid var(--azul); border-radius:0 8px 8px 0; font-size:0.83rem; color:var(--azul-dark); line-height:1.6; }
+
+/* STRIPE */
+.field-group { display:flex; flex-direction:column; gap:6px; margin-bottom:14px; }
+.field-group label { font-size:0.8rem; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:var(--gris); }
+.form-grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media (max-width:540px) { .form-grid-2 { grid-template-columns:1fr; } }
+.stripe-field { border:1.5px solid var(--border); border-radius:8px; padding:14px; margin-bottom:16px; background:var(--white); }
+.stripe-field:focus-within { border-color:var(--azul); }
+#stripe-error { color:#e53e3e; font-size:0.83rem; margin-top:8px; min-height:20px; }
+
+/* BUTTON */
+.btn-pay { background:var(--naranja); color:var(--white); border:none; padding:16px 48px; border-radius:8px; font-family:'Raleway',sans-serif; font-weight:800; font-size:1rem; cursor:pointer; text-transform:uppercase; letter-spacing:1px; transition:filter 0.2s; width:100%; margin-top:8px; }
+.btn-pay:hover { filter:brightness(0.9); }
+.btn-pay:disabled { opacity:0.6; cursor:not-allowed; }
+
+/* FOOTER */
+.res-footer { background:var(--azul-dark); padding:20px 32px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+.res-footer p { color:rgba(255,255,255,0.55); font-size:0.78rem; }
+.res-footer a { color:var(--naranja); text-decoration:none; font-size:0.78rem; }
+.pay-logos { display:flex; gap:10px; align-items:center; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="res-nav">
+  <a href="index.html"><img src="easy-camino-santiago-logo.png" alt="Easy Camino Santiago"></a>
+</nav>
+
+<!-- PAGE TITLE -->
+<div class="page-title-bar">
+  <h1>Entrada da reserva</h1>
+  <p>Caminho Francês · Sarria → Santiago · 16 a 25 de maio de 2027</p>
+</div>
+
+<!-- MAIN -->
+<div class="res-main">
+
+  <div class="res-card">
+
+    <!-- RESUMEN DE LA RESERVA -->
+    <h3 class="section-h3">Sua reserva</h3>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <span class="summary-key">Responsável</span>
+        <span class="summary-val">Meire Elen Colombo Kaiser</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-key">Referência</span>
+        <span class="summary-val">ECS-SARRIA-MB2027-MEIRE</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-key">Família</span>
+        <span class="summary-val">Família Meire · 3 peregrinos</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-key">Tipo de pagamento</span>
+        <span class="summary-val">Entrada de 20%</span>
+      </div>
+      <div class="summary-item full">
+        <span class="summary-key">Viagem</span>
+        <span class="summary-val">Caminho de Santiago para 9 peregrinos (reserva ECS-SARRIA-MB2027), de 16 a 25 de maio de 2027</span>
+      </div>
+    </div>
+
+    <div class="pay-amount">
+      <div class="pa-row"><span>Parte da Família Meire na viagem</span><strong>2.500,00 €</strong></div>
+      <div class="pa-row"><span>Saldo (80%), a pagar mais tarde</span><strong>2.000,00 €</strong></div>
+      <div class="pa-now">
+        <span class="pa-now-label">Valor a pagar agora</span>
+        <span class="pa-now-value">500,00 €</span>
+      </div>
+    </div>
+
+    <p style="font-size:0.85rem; color:var(--gris); line-height:1.6;">Este pagamento corresponde à entrada de 20% da parte da sua família no valor total da viagem do grupo (7.500 € para os 9 peregrinos). O saldo é pago quando os serviços estiverem confirmados e coordenados, sempre antes do início do Caminho. Condições de cancelamento: <a href="politica-cancelacion.html" style="color:var(--azul);">política de cancelamento</a>.</p>
+
+    <div class="notice-box" id="aviso-pagina">
+      Se tiver qualquer dúvida sobre este valor, fale conosco pelo +34 625 875 316 (WhatsApp ou telefone) antes de pagar.
+    </div>
+
+    <!-- STRIPE -->
+    <h3 class="section-h3">Pagamento com cartão</h3>
+    <div id="stripe-section">
+      <div class="field-group">
+        <label>E-mail</label>
+        <input type="email" id="input-email" class="stripe-field" value="meireck@hotmail.com" readonly required style="width:100%; font-family:'Lato',sans-serif; font-size:15px; color:#2D4A52;">
+      </div>
+      <div class="field-group">
+        <label>Número do cartão</label>
+        <div class="stripe-field" id="card-number-element"></div>
+      </div>
+      <div class="form-grid-2">
+        <div class="field-group">
+          <label>Validade</label>
+          <div class="stripe-field" id="card-expiry-element"></div>
+        </div>
+        <div class="field-group">
+          <label>Código de segurança (CVC)</label>
+          <div class="stripe-field" id="card-cvc-element"></div>
+        </div>
+      </div>
+      <div id="stripe-error"></div>
+      <p style="font-size:0.78rem;color:var(--gris);line-height:1.5;text-align:center;margin-top:4px;">Seu pagamento é processado com segurança pela Stripe. Assim que for confirmado, seguimos com a organização da reserva.</p>
+      <button class="btn-pay" id="btn-pay" onclick="procesarPago()">Pagar 500,00 €</button>
+    </div>
+
+  </div>
+
+</div><!-- /res-main -->
+
+<!-- FOOTER (mismo pie que pago-adicional-gerardo-martinez.html) -->
+<footer class="res-footer">
+  <p>© 2026 Easy Camino Santiago · CIF B75750562 · <a href="politica-reservas.html">Política de privacidade</a> · <a href="aviso-legal.html">Aviso legal</a></p>
+  <div class="pay-logos">
+    <svg width="44" height="24" viewBox="0 0 44 24"><rect width="44" height="24" rx="4" fill="white" opacity="0.15"/><text x="22" y="16" text-anchor="middle" font-family="Arial,sans-serif" font-weight="900" font-size="11" fill="rgba(255,255,255,0.85)" letter-spacing="1">VISA</text></svg>
+    <svg width="40" height="24" viewBox="0 0 40 24"><rect width="40" height="24" rx="4" fill="white" opacity="0.1"/><circle cx="15" cy="12" r="8" fill="#EB001B" opacity="0.8"/><circle cx="25" cy="12" r="8" fill="#F79E1B" opacity="0.8"/></svg>
+  </div>
+</footer>
+
+<script>
+// ─── DATOS FIJOS DE ESTA ENTRADA (20 %) — Família Meire, ECS-SARRIA-MB2027-MEIRE ───
+// Una de las tres páginas de entrada de la reserva de grupo ECS-SARRIA-MB2027
+// (Meire Brasil, 9 peregrinos en 3 familias: 666,67 + 500,00 + 333,33 = 1.500 €).
+// Mismo flujo que el depósito de pago-gerardo-martinez-sarria.html
+// (tipo_pago 'deposito' → el webhook registra deposito_pagado) y misma estructura
+// que pago-adicional-gerardo-martinez.html: no se envía nada a Netlify Forms ni a
+// HubSpot antes de cobrar y no se dispara send-booking-email (plantilla en español
+// y de reserva individual) — el pago se registra solo vía webhook de Stripe.
+const RESERVA = {
+  ref:          'ECS-SARRIA-MB2027-MEIRE',
+  refGeneral:   'ECS-SARRIA-MB2027',
+  familia:      'Meire',
+  nombre:       'Meire Elen Colombo Kaiser',
+  peregrinos:   3,
+  ruta:         'Camino Francés desde Sarria',
+  totalFamilia: 2500.00,
+  importe:      500.00,
+  saldo:        2000.00,
+  concepto:     'Entrada de 20% — Caminho de Santiago — Família Meire — 3 peregrinos — Maio 2027'
+};
+const IMPORTE_TXT = '500,00 €';
+
+// ─── STRIPE PUBLIC KEY — misma clave pública que pago-adicional-gerardo-martinez.html ───
+const STRIPE_PUBLIC_KEY = 'pk_live_51KHQyDLdy1SiD5iFtf5Vja5WbadI1LJeYXbzUzaL1K2pFV1s9YJg1Pi2UiWQ3scujJp5PEiMxCTRkuRQok3WKoQr00qHl6XbXK';
+// ──────────────────────────────────────────────────────────────────
+
+const PAGADO_STORAGE_KEY = 'ecs_entrada_pagada_' + RESERVA.ref;
+
+const state = {
+  stripeInstance: null, cardNumber: null, cardExpiry: null, cardCvc: null,
+  stripeInit: false
+};
+
+function emailValido(email){
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// Evita un segundo cobro desde el mismo navegador tras un pago correcto.
+function yaPagadoEnEsteNavegador(){
+  try { return localStorage.getItem(PAGADO_STORAGE_KEY) === '1'; } catch(e) { return false; }
+}
+if (yaPagadoEnEsteNavegador()) {
+  document.getElementById('aviso-pagina').textContent = 'Esta entrada já foi paga neste navegador. Se tiver qualquer dúvida, fale conosco pelo +34 625 875 316.';
+  document.getElementById('btn-pay').disabled = true;
+}
+
+// ─── STRIPE ───
+function initStripe(){
+  if (!STRIPE_PUBLIC_KEY.startsWith('pk_')) { console.warn('Configura STRIPE_PUBLIC_KEY'); return; }
+  state.stripeInstance = Stripe(STRIPE_PUBLIC_KEY, { locale: 'pt-BR' });
+  const elements = state.stripeInstance.elements({ locale: 'pt-BR' });
+  const style = { base:{ fontFamily:"'Lato',sans-serif", fontSize:'15px', color:'#2D4A52', '::placeholder':{ color:'#9ab5b6' } } };
+  state.cardNumber = elements.create('cardNumber', {style});
+  state.cardExpiry = elements.create('cardExpiry', {style});
+  state.cardCvc   = elements.create('cardCvc', {style});
+  state.cardNumber.mount('#card-number-element');
+  state.cardExpiry.mount('#card-expiry-element');
+  state.cardCvc.mount('#card-cvc-element');
+  state.stripeInit = true;
+}
+requestAnimationFrame(() => { if (!state.stripeInit) initStripe(); });
+
+async function procesarPago(){
+  const btn = document.getElementById('btn-pay');
+  const errEl = document.getElementById('stripe-error');
+  const emailInput = document.getElementById('input-email');
+  errEl.textContent = '';
+
+  if (yaPagadoEnEsteNavegador()) return;
+
+  const email = emailInput.value.trim();
+  if (!emailValido(email)) {
+    errEl.textContent = 'Informe um e-mail válido antes de pagar.';
+    emailInput.focus();
+    return;
+  }
+
+  if (!state.stripeInit || !state.stripeInstance) {
+    errEl.textContent = 'Erro: o sistema de pagamento não carregou. Fale conosco pelo +34 625 875 316.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Processando...';
+
+  try {
+    const res = await fetch('/.netlify/functions/create-payment-intent', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        amount: RESERVA.importe,
+        description: RESERVA.concepto + ' · ' + RESERVA.ref + ' — Easy Camino Santiago',
+        metadata: {
+          tipo:                'entrada-reserva-familia',
+          tipo_pago:           'deposito',
+          concepto:            RESERVA.concepto,
+          ruta:                RESERVA.ruta,
+          cliente:             RESERVA.nombre,
+          nombre:              RESERVA.nombre,
+          email:               email,
+          familia:             RESERVA.familia,
+          peregrinos:          RESERVA.peregrinos,
+          total:               RESERVA.totalFamilia,
+          saldo_pendiente:     RESERVA.saldo,
+          origen:              'pago-entrada-meire-brasil-meire',
+          reserva_id:          RESERVA.ref,
+          referencia_general:  RESERVA.refGeneral
+        }
+      })
+    });
+
+    const data = await res.json();
+    if (!data.clientSecret) throw new Error(data.error || 'Error al crear el pago');
+
+    const result = await state.stripeInstance.confirmCardPayment(data.clientSecret, {
+      payment_method: {
+        card: state.cardNumber,
+        billing_details: { name: RESERVA.nombre, email: email }
+      }
+    });
+
+    if (result.error) {
+      const errores = {
+        card_declined:      'Cartão recusado. Use outro cartão ou fale com o seu banco.',
+        insufficient_funds: 'Saldo insuficiente. Use outro cartão.',
+        incorrect_cvc:      'Código de segurança (CVC) incorreto. Confira os dados e tente novamente.',
+        expired_card:       'O cartão está vencido. Use outro cartão.',
+        incorrect_number:   'Número do cartão incorreto. Confira os dados e tente novamente.',
+        processing_error:   'Erro ao processar o pagamento. Tente novamente.',
+        do_not_honor:       'Pagamento não autorizado pelo banco. Fale com o seu banco ou use outro cartão.',
+        generic_decline:    'Cartão recusado. Fale com o seu banco ou use outro cartão.',
+      };
+      errEl.textContent = errores[result.error.code] || 'Não foi possível concluir o pagamento. Confira os dados ou use outro cartão.';
+      console.error('[Stripe result.error]', result.error);
+      state.cardNumber.clear();
+      state.cardExpiry.clear();
+      state.cardCvc.clear();
+      btn.disabled = false;
+      btn.textContent = 'Pagar ' + IMPORTE_TXT;
+    } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
+      try { localStorage.setItem(PAGADO_STORAGE_KEY, '1'); } catch(e) {}
+      window.location.href = 'gracias-meire-brasil.html';
+    } else {
+      errEl.textContent = 'Não foi possível verificar o status do pagamento. Fale conosco pelo +34 625 875 316 antes de tentar novamente.';
+      btn.disabled = false;
+      btn.textContent = 'Pagar ' + IMPORTE_TXT;
+    }
+  } catch (err) {
+    errEl.textContent = 'Não foi possível concluir o pagamento. Tente novamente ou fale conosco.';
+    console.error('[procesarPago catch]', err);
+    state.cardNumber.clear();
+    state.cardExpiry.clear();
+    state.cardCvc.clear();
+    btn.disabled = false;
+    btn.textContent = 'Pagar ' + IMPORTE_TXT;
+  }
+}
+</script>
+<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/148622668.js"></script>
+</body>
+</html>
